@@ -1,0 +1,26 @@
+{
+  "functions": {
+    "source": "functions"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "buildConfigurations": {
+          ".": {
+            "projectId": "aphidex-scanner-2026",
+            "appId": "1:1030397416684:android:ba6a1db7d3036d1f17c1c9",
+            "fileOutput": "android/app/google-services.json"
+          }
+        }
+      }
+    },
+    "dart": {
+      "lib/firebase_options.dart": {
+        "projectId": "aphidex-scanner-2026",
+        "configurations": {
+          "android": "1:1030397416684:android:ba6a1db7d3036d1f17c1c9"
+        }
+      }
+    }
+  }
+}

@@ -1,62 +1,41 @@
 # Aphidex
 
-Aphidex is an offline-first companion app for Grounded players, designed to help analyze enemies, discover weaknesses, and build effective strategies.
+Offline-first companion app for Grounded players. Aphidex bundles creature data,
+weak points, effects, resistances, boss phases, and reference assets for
+Grounded 1 and Grounded 2 in a single Flutter app.
 
-## Purpose
-Aphidex works as a "Pokedex-like" system for Grounded and Grounded 2, where players can:
+## What It Includes
 
-- Explore enemy data
-- Identify weaknesses and resistances
-- Plan combat strategies
-- Build optimized loadouts
+- Curated enemy data for both games
+- Multilingual entries (`en`, `es`, `ru`)
+- Weak point and damage-type analysis
+- Boss phase breakdowns for major encounters
+- Offline assets used directly by the mobile app
 
-## Vision
-Create a complete companion system that helps players understand the game deeply and make better decisions in combat and progression.
+## Tech Stack
 
-## Screenshots
-### Enemy Information
-![Enemy Screen](./assets/Screenshot_1768358831.png)
-### Menu
-![Menu_Screen](./assets/Captura_de_pantalla_2026-01-13_205642.png)
+- Flutter
+- Hive
+- Google Mobile Ads
+- Google Play Billing
 
+## Repository Notes
 
-## Core Features
-- Offline functionality (no internet required)
-- Structured enemy database
-- Weakness and damage analysis
-- Expandable system for future content
+- This repository contains the main app and its bundled data.
+- Signing keys, local release config, and research PDFs are intentionally
+  excluded from version control.
+- Reference PDFs used during curation are kept outside shipped assets and are
+  not part of the public repository.
 
-## Architecture
-Aphidex is built with a separation of layers:
+## Development
 
-- App logic (UI and processing)
-- Data layer (JSON-based system)
+```bash
+flutter pub get
+flutter test
+flutter run
+```
 
-## How It Works
+## Disclaimer
 
-- The app loads structured JSON data
-- Processes enemy stats, weaknesses, and resistances
-- Displays information for decision-making (combat, builds)
-- Works fully offline without external APIs
-## Data Layer
-Aphidex uses a structured JSON system for its data.
-
-Repository:
-https://github.com/ByteShark-dev/Aphidex-Data
-
-## My Role
-- Designed the system concept
-- Defined the JSON data structure
-- Built the foundation for an offline-first application
-- Organized how the app consumes structured data
-
-## Status
-Work in progress.
-Available on Google Play:
-https://play.google.com/store/apps/details?id=...
-
-
-Core data system is already defined.  
-Application layer is under development.
-
-
+Aphidex is an unofficial fan-made project and is not affiliated with Obsidian
+Entertainment or Xbox Game Studios.

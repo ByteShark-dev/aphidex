@@ -1,0 +1,4 @@
+Se corrigieron datos, traducciones y texto dañado en Grounded 1 y Grounded 2.
+Los jefes y la Madre Araña Infectada ahora muestran fases y ataques más precisos.
+Se arreglaron weak points en ambos juegos, incluyendo los escorpiones con dos puntos débiles.
+También se corrigieron fotos mezcladas y filtros exclusivos por juego.

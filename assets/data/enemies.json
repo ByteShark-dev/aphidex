@@ -1,0 +1,36 @@
+[
+  {
+    "id": "aphid",
+    "name": "Aphid",
+    "game": "g1",
+    "tier": 1,
+    "danger": "baja",
+    "isBoss": false,
+    "order": 1,
+    "defaultGold": false,
+
+    "cardNormal": "assets/g1/creatures/cards/normal/Creaturecard_Aphid.webp",
+    "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Aphid.webp",
+    "photo": "assets/g1/creatures/photos/Aphid.webp",
+
+    "weaknesses": ["chopping", "fresh"],
+    "resistances": ["stabbing"]
+  },
+
+  {
+    "id": "wolf_spider",
+    "name": "Wolf Spider",
+    "game": "g1",
+    "tier": 3,
+    "danger": "muy_alta",
+    "isBoss": false,
+    "order": 12,
+
+    "cardNormal": "assets/g1/creatures/cards/normal/Creaturecard_Wolf_Spider.webp",
+    "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Wolf_Spider.webp",
+    "photo": "assets/g1/creatures/photos/Wolf_Spider.webp",
+
+    "weaknesses": ["fresh", "slashing"],
+    "resistances": ["stabbing", "explosive"]
+  }
+]

@@ -1,0 +1,54 @@
+name: aphidex
+description: "Aphidex"
+publish_to: 'none'
+
+version: 1.0.7+7
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_image_compress: ^2.4.0
+  google_mlkit_image_labeling: ^0.14.2
+  google_mobile_ads: ^8.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  image_picker: ^1.2.0
+  in_app_purchase: ^3.2.3
+  url_launcher: ^6.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/g1/creatures/cards/normal/
+    - assets/g1/creatures/cards/gold/
+    - assets/g1/creatures/photos/
+    - assets/g2/creatures/cards/
+    - assets/g2/creatures/cards_golden/
+    - assets/g2/creatures/photos/
+    - assets/data/
+    - assets/global/
+    - assets/global/effects_damage/
+    - assets/global/rewards/
+    - assets/global/weak_points/
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/global/Aphidex-icon.png"
+  # opcional (Android 8+)
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/global/Aphidex-icon.png"
