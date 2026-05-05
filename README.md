@@ -26,6 +26,14 @@ Grounded 1 and Grounded 2 in a single Flutter app.
   excluded from version control.
 - Reference PDFs used during curation are kept outside shipped assets and are
   not part of the public repository.
+- The repository is source-available, not open source. Private use and local
+  modification are allowed, but redistribution, public forks, commercial use,
+  and reuse of Aphidex branding are not allowed without written permission.
+
+## License
+
+- Code and repository contents: `Aphidex Source-Available License 1.0`
+- Name, logo, and branding: see `TRADEMARKS.md`
 
 ## Development
 

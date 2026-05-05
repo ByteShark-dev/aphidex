@@ -1,21 +1,67 @@
-MIT License
+Aphidex Source-Available License 1.0
 
 Copyright (c) 2026 ByteShark
+All rights reserved, except as expressly stated below.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Grant of permission
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+You are granted a limited, revocable, non-exclusive, non-transferable license
+to:
+
+- view this source code;
+- copy it as reasonably necessary to run, study, and modify it for yourself;
+- create private modifications for personal, educational, research, archival,
+  or internal evaluation purposes.
+
+2. What you may not do
+
+Without prior written permission from the copyright holder, you may not:
+
+- distribute, publish, share, sublicense, sell, rent, lease, or otherwise
+  make the Software or any modified version available to any third party;
+- publish public or private forks intended for third-party access or reuse;
+- redistribute source code, compiled builds, APKs, AABs, patches, extracted
+  assets, or derivative works;
+- use the Software or any derivative work for commercial purposes;
+- remove or alter copyright, attribution, ownership, or legal notices;
+- imply endorsement by the author of any fork, modification, mirror, or
+  derivative project.
+
+3. Branding, data, and assets
+
+The names "Aphidex" and "ByteShark", the logo, visual identity, screenshots,
+store assets, curated data text, and bundled media/assets are not licensed for
+reuse except as strictly necessary for your permitted private use of this
+repository.
+
+Trademark and branding rights are reserved separately. See `TRADEMARKS.md`.
+
+4. Contributions
+
+Unless the copyright holder agrees otherwise in writing, any contribution you
+submit for this project is provided with permission for the copyright holder to
+use, modify, relicense, and distribute that contribution as part of Aphidex.
+
+5. Ownership
+
+This license does not transfer ownership of the Software or any intellectual
+property rights in it. All rights not expressly granted are reserved.
+
+6. Termination
+
+This license ends automatically if you violate any term of it. Upon
+termination, you must stop using and distributing all copies in your control,
+except to the extent the law does not allow that requirement.
+
+7. No warranty
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+8. Limitation of liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COPYRIGHT HOLDER SHALL NOT BE
+LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT,
+OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OF THE SOFTWARE.
