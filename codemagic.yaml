@@ -45,7 +45,10 @@ workflows:
 
       - name: Install CocoaPods
         script: |
+          rm -rf ios/Pods
+          rm -f ios/Podfile.lock
           cd ios
+          pod deintegrate || true
           pod install --repo-update
           cd ..
 
