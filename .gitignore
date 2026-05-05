@@ -62,4 +62,5 @@ app.*.map.json
 /flutter_*.log
 /test_run.log
 /tmp_*.json
+/.lh/
 /functions/node_modules/
