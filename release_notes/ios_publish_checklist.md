@@ -3,11 +3,14 @@
 Current repo status:
 
 - iOS bundle identifier aligned to `com.byteshark.aphidex`
+- iOS minimum deployment target is `15.5`
 - No camera or photo-library permission strings are shipped yet
 - App-level privacy manifest added
 - Review prompt disabled on iOS until a real App Store ID is assigned
 - Ads and remove-ads purchase remain Android-only in app code
 - Scanner is not active for the first iOS release
+- The first Codemagic iOS build failed because the deployment target was too low for `google_mlkit_commons`
+- That issue was corrected by raising the project minimum to iOS `15.5`
 
 What still needs to happen on a Mac:
 
@@ -66,6 +69,7 @@ Current Apple requirements to keep in mind:
 - App uploads must use a current supported Xcode/SDK combination.
 - App Store submissions require valid privacy manifests for the app and certain third-party SDKs.
 - If App Store Connect reports a missing or invalid privacy manifest from a dependency, update that SDK before submitting again.
+- Aphidex iOS now requires iOS `15.5+` because `google_mlkit_commons` / ML Kit requires that minimum.
 
 Nice-to-have before release:
 
