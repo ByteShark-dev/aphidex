@@ -1,0 +1,105 @@
+workflows:
+  ios-release-build:
+    name: iOS Release Build
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      vars:
+        APP_NAME: "Aphidex"
+        BUNDLE_ID: "com.byteshark.aphidex"
+        APPLE_DEVELOPER_TEAM_ID: "TODO_TEAM_ID"
+
+      # TODO: Create a secret group in Codemagic UI for iOS signing, for example:
+      # ios_signing_credentials
+      #
+      # Add these secret variables there, not in the repository:
+      # - APP_STORE_CONNECT_KEY_IDENTIFIER
+      # - APP_STORE_CONNECT_ISSUER_ID
+      # - APP_STORE_CONNECT_PRIVATE_KEY
+      # - CERTIFICATE_PRIVATE_KEY
+      #
+      # Optional later, for publishing/TestFlight:
+      # - APP_STORE_APPLE_ID
+      #
+      # If you prefer Codemagic Team Integrations instead of raw env vars,
+      # connect App Store Connect in the Codemagic UI and wire code signing there.
+
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+        - ios/Pods
+
+    scripts:
+      - name: Flutter clean
+        script: |
+          flutter clean
+
+      - name: Flutter pub get
+        script: |
+          flutter pub get
+
+      - name: Install CocoaPods
+        script: |
+          cd ios
+          pod install --repo-update
+          cd ..
+
+      - name: Prepare optional iOS signing
+        script: |
+          set -e
+
+          if [[ -n "$APP_STORE_CONNECT_KEY_IDENTIFIER" && \
+                -n "$APP_STORE_CONNECT_ISSUER_ID" && \
+                -n "$APP_STORE_CONNECT_PRIVATE_KEY" && \
+                -n "$CERTIFICATE_PRIVATE_KEY" ]]; then
+            echo "iOS signing secrets detected. Preparing automatic signing."
+            keychain initialize
+            app-store-connect fetch-signing-files "$BUNDLE_ID" \
+              --type IOS_APP_STORE \
+              --create
+            keychain add-certificates
+            xcode-project use-profiles
+          else
+            echo "Signing secrets are missing. The workflow will continue without code signing."
+            echo "A signed IPA usually requires automatic signing or uploaded certificates/profiles."
+          fi
+
+      - name: Flutter analyze
+        script: |
+          flutter analyze
+
+      - name: Flutter test
+        script: |
+          flutter test
+
+      - name: Flutter build ipa --release
+        script: |
+          set -e
+
+          if [[ -n "$APP_STORE_CONNECT_KEY_IDENTIFIER" && \
+                -n "$APP_STORE_CONNECT_ISSUER_ID" && \
+                -n "$APP_STORE_CONNECT_PRIVATE_KEY" && \
+                -n "$CERTIFICATE_PRIVATE_KEY" ]]; then
+            flutter build ipa --release
+          else
+            # TODO: To enable signed IPA generation in Codemagic:
+            # 1. Configure APP_STORE_CONNECT_KEY_IDENTIFIER
+            # 2. Configure APP_STORE_CONNECT_ISSUER_ID
+            # 3. Configure APP_STORE_CONNECT_PRIVATE_KEY
+            # 4. Configure CERTIFICATE_PRIVATE_KEY
+            # 5. Confirm Apple Developer Team ID in Codemagic/Xcode signing
+            # 6. Keep bundle identifier aligned with com.byteshark.aphidex
+            #
+            # This fallback is useful for the first cloud attempt when signing is not ready yet.
+            flutter build ipa --release --no-codesign
+          fi
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/archive/*.xcarchive
+      - /tmp/xcodebuild_logs/*.log

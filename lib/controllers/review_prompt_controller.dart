@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +17,8 @@ class ReviewPromptController with WidgetsBindingObserver {
   static const Duration idleThreshold = Duration(minutes: 5);
   static const Duration cooldown = Duration(hours: 1);
   static const String _androidPackageId = 'com.byteshark.aphidex';
+  // Fill this once the App Store record exists and the first iOS build is live.
+  static const String _iosAppStoreId = '';
 
   static const String _kCloseCount = 'review_prompt_close_count';
   static const String _kLastCloseAt = 'review_prompt_last_close_at';
@@ -29,8 +32,19 @@ class ReviewPromptController with WidgetsBindingObserver {
   bool _isDialogVisible = false;
   DateTime Function() now = DateTime.now;
 
+  bool get isSupportedPlatform {
+    if (kIsWeb) {
+      return false;
+    }
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return true;
+    }
+    return defaultTargetPlatform == TargetPlatform.iOS &&
+        _iosAppStoreId.isNotEmpty;
+  }
+
   void initialize() {
-    if (_isInitialized) {
+    if (_isInitialized || !isSupportedPlatform) {
       return;
     }
     WidgetsBinding.instance.addObserver(this);
@@ -39,13 +53,16 @@ class ReviewPromptController with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!isSupportedPlatform) {
+      return;
+    }
     if (state == AppLifecycleState.resumed && _isPendingStoreReturn) {
       _showReviewConfirmationIfNeeded();
     }
   }
 
   Future<void> registerScreenClose(BuildContext context) async {
-    if (_isOptedOut) {
+    if (!isSupportedPlatform || _isOptedOut) {
       return;
     }
 
@@ -153,21 +170,28 @@ class ReviewPromptController with WidgetsBindingObserver {
   }
 
   Future<void> _openStore(BuildContext context) async {
-    final marketUri = Uri.parse('market://details?id=$_androidPackageId');
-    final webUri = Uri.parse(
-      'https://play.google.com/store/apps/details?id=$_androidPackageId',
-    );
+    final Uri primaryUri;
+    final Uri fallbackUri;
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      primaryUri = Uri.parse('itms-apps://itunes.apple.com/app/id$_iosAppStoreId');
+      fallbackUri = Uri.parse('https://apps.apple.com/app/id$_iosAppStoreId');
+    } else {
+      primaryUri = Uri.parse('market://details?id=$_androidPackageId');
+      fallbackUri = Uri.parse(
+        'https://play.google.com/store/apps/details?id=$_androidPackageId',
+      );
+    }
     final messenger = ScaffoldMessenger.maybeOf(context);
     final navigator = Navigator.of(context);
     final openLinkError = context.l10n.openLinkError;
 
     final opened = await launchUrl(
-      marketUri,
+      primaryUri,
       mode: LaunchMode.externalApplication,
     );
     final fallbackOpened = opened
         ? true
-        : await launchUrl(webUri, mode: LaunchMode.externalApplication);
+        : await launchUrl(fallbackUri, mode: LaunchMode.externalApplication);
 
     if (!fallbackOpened) {
       messenger?.showSnackBar(SnackBar(content: Text(openLinkError)));

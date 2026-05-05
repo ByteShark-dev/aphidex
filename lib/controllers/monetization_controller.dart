@@ -44,7 +44,11 @@ class MonetizationController {
 
   bool _initialized = false;
 
-  bool get isSupportedPlatform => !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+  bool get isSupportedPlatform =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+
+  bool get isIosTechnicalRelease =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
 
   bool get shouldShowAds => isSupportedPlatform && !adsRemoved.value;
 
