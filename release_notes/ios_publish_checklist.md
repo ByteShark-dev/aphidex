@@ -39,11 +39,11 @@ What still needs to happen on a Mac:
 
 Do not commit these to the repository. Configure them in Codemagic UI only:
 
+- `APPLE_DEVELOPER_TEAM_ID`
 - `APP_STORE_CONNECT_KEY_IDENTIFIER`
 - `APP_STORE_CONNECT_ISSUER_ID`
 - `APP_STORE_CONNECT_PRIVATE_KEY`
 - `CERTIFICATE_PRIVATE_KEY`
-- Apple Developer Team ID
 - Bundle ID confirmation: `com.byteshark.aphidex`
 
 Notes:
@@ -51,6 +51,18 @@ Notes:
 - The current workflow is prepared to attempt an unsigned iOS archive when signing is not configured yet.
 - A proper distributable `.ipa` normally requires working iOS code signing.
 - The first goal is to validate that the iOS project builds in Codemagic macOS.
+- The workflow now imports the Codemagic variable group `ios_signing_credentials`.
+- With the current automatic-signing approach, `CERTIFICATE_PRIVATE_KEY` is still required.
+
+How to generate `CERTIFICATE_PRIVATE_KEY` for Codemagic automatic signing:
+
+1. On a Mac, generate a new RSA 2048 private key:
+   `ssh-keygen -t rsa -b 2048 -m PEM -f ~/Desktop/ios_distribution_private_key -q -N ""`
+2. Or, if you already have the matching iOS Distribution certificate on a Mac:
+   export it from Keychain Access as `.p12`.
+3. Then extract the private key from that `.p12`:
+   `openssl pkcs12 -in IOS_DISTRIBUTION.p12 -nodes -nocerts | openssl rsa -out ios_distribution_private_key`
+4. Save the resulting PEM text as the Codemagic secret `CERTIFICATE_PRIVATE_KEY`.
 
 App Store Connect tasks:
 

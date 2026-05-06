@@ -5,18 +5,20 @@ workflows:
     instance_type: mac_mini_m2
 
     environment:
+      groups:
+        - ios_signing_credentials
       flutter: stable
       xcode: latest
       cocoapods: default
       vars:
         APP_NAME: "Aphidex"
         BUNDLE_ID: "com.byteshark.aphidex"
-        APPLE_DEVELOPER_TEAM_ID: "TODO_TEAM_ID"
 
       # TODO: Create a secret group in Codemagic UI for iOS signing, for example:
       # ios_signing_credentials
       #
       # Add these secret variables there, not in the repository:
+      # - APPLE_DEVELOPER_TEAM_ID
       # - APP_STORE_CONNECT_KEY_IDENTIFIER
       # - APP_STORE_CONNECT_ISSUER_ID
       # - APP_STORE_CONNECT_PRIVATE_KEY
@@ -69,6 +71,7 @@ workflows:
             xcode-project use-profiles
           else
             echo "Signing secrets are missing. The workflow will continue without code signing."
+            echo "Automatic signing with this workflow requires CERTIFICATE_PRIVATE_KEY in addition to the App Store Connect API variables."
             echo "A signed IPA usually requires automatic signing or uploaded certificates/profiles."
           fi
 
@@ -91,11 +94,11 @@ workflows:
             flutter build ipa --release
           else
             # TODO: To enable signed IPA generation in Codemagic:
-            # 1. Configure APP_STORE_CONNECT_KEY_IDENTIFIER
-            # 2. Configure APP_STORE_CONNECT_ISSUER_ID
-            # 3. Configure APP_STORE_CONNECT_PRIVATE_KEY
-            # 4. Configure CERTIFICATE_PRIVATE_KEY
-            # 5. Confirm Apple Developer Team ID in Codemagic/Xcode signing
+            # 1. Configure APPLE_DEVELOPER_TEAM_ID
+            # 2. Configure APP_STORE_CONNECT_KEY_IDENTIFIER
+            # 3. Configure APP_STORE_CONNECT_ISSUER_ID
+            # 4. Configure APP_STORE_CONNECT_PRIVATE_KEY
+            # 5. Configure CERTIFICATE_PRIVATE_KEY
             # 6. Keep bundle identifier aligned with com.byteshark.aphidex
             #
             # This fallback is useful for the first cloud attempt when signing is not ready yet.
