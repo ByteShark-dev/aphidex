@@ -3,6 +3,9 @@
 Current repo status:
 
 - iOS bundle identifier aligned to `com.byteshark.aphidex`
+- App Store Connect Apple ID: `6766727089`
+- App Store Connect SKU: `aphidex-ios`
+- Primary language: `Español (México)`
 - iOS minimum deployment target is `15.5`
 - No camera or photo-library permission strings are shipped yet
 - App-level privacy manifest added
@@ -11,6 +14,9 @@ Current repo status:
 - Scanner is not active for the first iOS release
 - The first Codemagic iOS build failed because the deployment target was too low for `google_mlkit_commons`
 - That issue was corrected by raising the project minimum to iOS `15.5`
+- A signed `Aphidex.ipa` has already been generated successfully in Codemagic
+- Build 6 generated a signed IPA correctly, but it only published internal artifacts and did not upload to TestFlight
+- The Codemagic YAML has now been corrected for real App Store Connect / TestFlight upload
 
 What still needs to happen on a Mac:
 
@@ -33,7 +39,8 @@ What still needs to happen on a Mac:
 8. Run the workflow `ios-release-build`.
 9. Review build logs, especially `xcodebuild` logs if present.
 10. Download the `.ipa` artifact if one is generated.
-11. Only after that, enable publishing to TestFlight.
+11. Confirm that `APP_STORE_APPLE_ID=6766727089` stays aligned in Codemagic if you duplicate or fork the workflow.
+12. Run `ios-release-build` again and verify the uploaded build in App Store Connect > TestFlight.
 
 ### Codemagic secrets and signing TODOs
 
@@ -44,6 +51,7 @@ Do not commit these to the repository. Configure them in Codemagic UI only:
 - `APP_STORE_CONNECT_ISSUER_ID`
 - `APP_STORE_CONNECT_PRIVATE_KEY`
 - `CERTIFICATE_PRIVATE_KEY`
+- `APP_STORE_APPLE_ID` = `6766727089`
 - Bundle ID confirmation: `com.byteshark.aphidex`
 
 Notes:
@@ -53,6 +61,9 @@ Notes:
 - The first goal is to validate that the iOS project builds in Codemagic macOS.
 - The workflow now imports the Codemagic variable group `ios_signing_credentials`.
 - With the current automatic-signing approach, `CERTIFICATE_PRIVATE_KEY` is still required.
+- The workflow now uses a direct `publishing.app_store_connect` block with `submit_to_testflight: true`.
+- That change was made because build 6 only showed artifact publishing and did not perform a real TestFlight upload.
+- This workflow is now intended to behave as a real `testflight-release` flow, not just as an IPA artifact generator.
 
 How to generate `CERTIFICATE_PRIVATE_KEY` for Codemagic automatic signing:
 
@@ -70,6 +81,16 @@ App Store Connect tasks:
 2. Upload iPhone screenshots and iPad screenshots if you keep iPad enabled.
 3. Complete the App Privacy questionnaire.
 4. Decide whether iOS launch will be ad-free or whether AdMob will be enabled later.
+5. Copy the numeric Apple ID from App Store Connect > App Information into `APP_STORE_APPLE_ID`.
+6. Trigger `ios-release-build` and verify the build appears in App Store Connect > TestFlight after Codemagic post-processing finishes.
+
+App metadata currently registered:
+
+- App name: `Aphidex`
+- Bundle ID: `com.byteshark.aphidex`
+- SKU: `aphidex-ios`
+- Apple ID: `6766727089`
+- Primary language: `Español (México)`
 
 iOS monetization status:
 

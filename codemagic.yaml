@@ -13,6 +13,7 @@ workflows:
       vars:
         APP_NAME: "Aphidex"
         BUNDLE_ID: "com.byteshark.aphidex"
+        APP_STORE_APPLE_ID: "6766727089"
 
       # TODO: Create a secret group in Codemagic UI for iOS signing, for example:
       # ios_signing_credentials
@@ -24,8 +25,10 @@ workflows:
       # - APP_STORE_CONNECT_PRIVATE_KEY
       # - CERTIFICATE_PRIVATE_KEY
       #
-      # Optional later, for publishing/TestFlight:
-      # - APP_STORE_APPLE_ID
+      # App Store Connect metadata already aligned for this app:
+      # - APP_STORE_APPLE_ID = 6766727089
+      # - Bundle ID = com.byteshark.aphidex
+      # - SKU = aphidex-ios
       #
       # If you prefer Codemagic Team Integrations instead of raw env vars,
       # connect App Store Connect in the Codemagic UI and wire code signing there.
@@ -104,6 +107,15 @@ workflows:
             # This fallback is useful for the first cloud attempt when signing is not ready yet.
             flutter build ipa --release --no-codesign
           fi
+
+    publishing:
+      app_store_connect:
+        # Upload the signed IPA to App Store Connect using the API key stored in
+        # Codemagic environment variables.
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: true
 
     artifacts:
       - build/ios/ipa/*.ipa
