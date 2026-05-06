@@ -10,8 +10,12 @@ class EnemyRepository {
   }
 
   static Future<List<Enemy>> _loadFile(String path) async {
-    final raw = await rootBundle.loadString(path);
-    final List data = json.decode(raw);
-    return data.map((e) => Enemy.fromJson(e)).toList();
+    try {
+      final raw = await rootBundle.loadString(path);
+      final List data = json.decode(raw);
+      return data.map((e) => Enemy.fromJson(e)).toList();
+    } catch (error) {
+      throw StateError('Failed to load enemy data from $path: $error');
+    }
   }
 }

@@ -17,6 +17,8 @@ Current repo status:
 - A signed `Aphidex.ipa` has already been generated successfully in Codemagic
 - Build 6 generated a signed IPA correctly, but it only published internal artifacts and did not upload to TestFlight
 - The Codemagic YAML has now been corrected for real App Store Connect / TestFlight upload
+- A later TestFlight build showed a white screen and immediate crash on launch
+- The startup path was hardened in Dart, and iOS `Info.plist` now includes a temporary AdMob test app ID because the Google Mobile Ads SDK can crash iOS at launch if `GADApplicationIdentifier` is missing
 
 What still needs to happen on a Mac:
 
@@ -64,6 +66,8 @@ Notes:
 - The workflow now uses a direct `publishing.app_store_connect` block with `submit_to_testflight: true`.
 - That change was made because build 6 only showed artifact publishing and did not perform a real TestFlight upload.
 - This workflow is now intended to behave as a real `testflight-release` flow, not just as an IPA artifact generator.
+- Even with ads disabled in Dart on iOS, the bundled Google Mobile Ads SDK still expects `GADApplicationIdentifier` in `Info.plist`.
+- Until Aphidex gets real iOS AdMob setup, the project uses Google's sample iOS app ID only to prevent SDK startup crashes in TestFlight.
 
 How to generate `CERTIFICATE_PRIVATE_KEY` for Codemagic automatic signing:
 
