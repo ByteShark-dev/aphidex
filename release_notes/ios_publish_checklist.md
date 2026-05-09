@@ -9,8 +9,9 @@ Current repo status:
 - iOS minimum deployment target is `15.5`
 - No camera or photo-library permission strings are shipped yet
 - App-level privacy manifest added
-- Review prompt disabled on iOS until a real App Store ID is assigned
-- Ads and remove-ads purchase remain Android-only in app code
+- Review prompt is enabled on iOS and opens the App Store page for Apple ID `6766727089`
+- iOS AdMob app ID is configured in `Info.plist`
+- iOS remove-ads purchase is wired to `com.byteshark.aphidex.no_ads`
 - Scanner is not active for the first iOS release
 - The first Codemagic iOS build failed because the deployment target was too low for `google_mlkit_commons`
 - That issue was corrected by raising the project minimum to iOS `15.5`
@@ -18,7 +19,7 @@ Current repo status:
 - Build 6 generated a signed IPA correctly, but it only published internal artifacts and did not upload to TestFlight
 - The Codemagic YAML has now been corrected for real App Store Connect / TestFlight upload
 - A later TestFlight build showed a white screen and immediate crash on launch
-- The startup path was hardened in Dart, and iOS `Info.plist` now includes a temporary AdMob test app ID because the Google Mobile Ads SDK can crash iOS at launch if `GADApplicationIdentifier` is missing
+- The startup path was hardened in Dart, and iOS `Info.plist` now includes the real AdMob app ID because the Google Mobile Ads SDK can crash iOS at launch if `GADApplicationIdentifier` is missing
 
 What still needs to happen on a Mac:
 
@@ -66,8 +67,8 @@ Notes:
 - The workflow now uses a direct `publishing.app_store_connect` block with `submit_to_testflight: true`.
 - That change was made because build 6 only showed artifact publishing and did not perform a real TestFlight upload.
 - This workflow is now intended to behave as a real `testflight-release` flow, not just as an IPA artifact generator.
-- Even with ads disabled in Dart on iOS, the bundled Google Mobile Ads SDK still expects `GADApplicationIdentifier` in `Info.plist`.
-- Until Aphidex gets real iOS AdMob setup, the project uses Google's sample iOS app ID only to prevent SDK startup crashes in TestFlight.
+- The bundled Google Mobile Ads SDK expects `GADApplicationIdentifier` in `Info.plist`, even before every ad surface is fully tuned.
+- Aphidex now uses the real iOS AdMob app ID in `Info.plist`.
 
 How to generate `CERTIFICATE_PRIVATE_KEY` for Codemagic automatic signing:
 
@@ -98,8 +99,9 @@ App metadata currently registered:
 
 iOS monetization status:
 
-- The current code does not initialize ads or in-app purchases on iOS.
-- That means an initial iOS release can ship without ads and without the `remove ads` purchase flow.
+- Ads can initialize on iOS with the configured AdMob app ID.
+- The remove-ads flow now queries the iOS product `com.byteshark.aphidex.no_ads`.
+- `Restore purchases` is available in the shared settings flow for iOS and Android.
 
 Current Apple requirements to keep in mind:
 
@@ -110,7 +112,7 @@ Current Apple requirements to keep in mind:
 
 Nice-to-have before release:
 
-1. Add the real iOS App Store ID to `ReviewPromptController` once the app exists.
+1. Optionally replace the external App Store review flow with Apple's in-app review sheet later.
 2. Test camera scan, gallery scan, credits flow, and external links on a real iPhone.
 3. Decide whether to keep iPad support or restrict the target to iPhone only.
 
@@ -119,9 +121,7 @@ Nice-to-have before release:
 Pendientes para una version futura:
 
 1. Crear la app iOS en AdMob.
-2. Agregar el `GADApplicationIdentifier` real a `ios/Runner/Info.plist`.
-3. Agregar `SKAdNetworkItems` completos segun la documentacion vigente de AdMob.
-4. Crear el IAP `com.byteshark.aphidex.no_ads`.
-5. Implementar y probar `restore purchases` en iOS.
-6. Actualizar App Privacy en App Store Connect segun el stack final de monetizacion.
-7. Activar el App Store ID real en `ReviewPromptController` para el review prompt de iOS.
+2. Agregar `SKAdNetworkItems` completos segun la documentacion vigente de AdMob.
+3. Terminar la validacion real del IAP `com.byteshark.aphidex.no_ads` en sandbox/TestFlight.
+4. Confirmar visualmente que `restore purchases` funciona en iOS.
+5. Actualizar App Privacy en App Store Connect segun el stack final de monetizacion.

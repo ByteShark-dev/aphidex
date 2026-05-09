@@ -1201,7 +1201,7 @@ class AppLocalizations {
           'Si la app te está ayudando, una calificación en Google Play ayuda mucho al proyecto.',
       'reviewNeverAction': 'No volver a mostrar',
       'reviewLaterAction': 'Después',
-      'reviewRateAction': 'Calificar en Google Play',
+      'reviewRateAction': 'Calificar la app',
       'reviewConfirmTitle': '¿Pudiste dejar tu reseña?',
       'reviewConfirmMessage':
           'Si ya calificaste Aphidex, dejaremos de mostrar este aviso.',
@@ -1366,7 +1366,7 @@ class AppLocalizations {
           'If the app is helping you, rating it on Google Play would help the project a lot.',
       'reviewNeverAction': 'Never show again',
       'reviewLaterAction': 'Later',
-      'reviewRateAction': 'Rate on Google Play',
+      'reviewRateAction': 'Rate the app',
       'reviewConfirmTitle': 'Were you able to leave a review?',
       'reviewConfirmMessage':
           'If you already rated Aphidex, we will stop showing this reminder.',
@@ -1521,7 +1521,7 @@ class AppLocalizations {
           'Если приложение тебе помогает, оценка в Google Play сильно поддержит проект.',
       'reviewNeverAction': 'Больше не показывать',
       'reviewLaterAction': 'Позже',
-      'reviewRateAction': 'Оценить в Google Play',
+      'reviewRateAction': 'Оценить приложение',
       'reviewConfirmTitle': 'Удалось оставить отзыв?',
       'reviewConfirmMessage':
           'Если ты уже оценил Aphidex, мы больше не будем показывать это напоминание.',

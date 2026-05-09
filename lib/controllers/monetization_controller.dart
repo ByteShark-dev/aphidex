@@ -19,17 +19,25 @@ class MonetizationController {
 
   static final MonetizationController instance = MonetizationController._();
 
-  static const String removeAdsProductId = 'no_ads_aphidex';
+  static const String removeAdsProductIdAndroid = 'no_ads_aphidex';
+  static const String removeAdsProductIdIos = 'com.byteshark.aphidex.no_ads';
   static const String _kAdsRemoved = 'monetization_ads_removed';
 
   static const String adMobAppIdAndroid =
       'ca-app-pub-4936553988627836~8729320683';
+  static const String adMobAppIdIos = 'ca-app-pub-4936553988627836~4005814918';
   static const String bannerAdUnitIdAndroid =
       'ca-app-pub-4936553988627836/2887691866';
+  static const String bannerAdUnitIdIos =
+      'ca-app-pub-4936553988627836/8804891629';
   static const String interstitialAdUnitIdAndroid =
       'ca-app-pub-4936553988627836/1256194779';
+  static const String interstitialAdUnitIdIos =
+      'ca-app-pub-4936553988627836/8012508533';
   static const String nativeAdUnitIdAndroid =
       'ca-app-pub-4936553988627836/4940199620';
+  static const String nativeAdUnitIdIos =
+      'ca-app-pub-4936553988627836/9856907393';
   static const String appOpenAdUnitIdAndroid =
       'ca-app-pub-4936553988627836/9657428973';
 
@@ -44,17 +52,45 @@ class MonetizationController {
 
   bool _initialized = false;
 
-  bool get isSupportedPlatform =>
-      !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+  bool get isAdsSupportedPlatform =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS);
 
-  bool get isIosTechnicalRelease =>
-      !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+  bool get isStoreSupportedPlatform =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS);
 
-  bool get shouldShowAds => isSupportedPlatform && !adsRemoved.value;
+  bool get isSupportedPlatform => isStoreSupportedPlatform;
+
+  bool get shouldShowAds => isAdsSupportedPlatform && !adsRemoved.value;
+
+  String? get currentRemoveAdsProductId {
+    if (kIsWeb) {
+      return null;
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return removeAdsProductIdAndroid;
+      case TargetPlatform.iOS:
+        return removeAdsProductIdIos;
+      default:
+        return null;
+    }
+  }
+
+  Set<String> get knownRemoveAdsProductIds => {
+    removeAdsProductIdAndroid,
+    removeAdsProductIdIos,
+  };
 
   String get bannerAdUnitId {
     if (kDebugMode) {
       return _testBannerAdUnitIdAndroid;
+    }
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return bannerAdUnitIdIos;
     }
     return bannerAdUnitIdAndroid;
   }
@@ -66,11 +102,15 @@ class MonetizationController {
     _initialized = true;
     adsRemoved.value = LocalStorage.getBool(_kAdsRemoved, fallback: false);
 
-    if (!isSupportedPlatform) {
+    if (!isAdsSupportedPlatform) {
       return;
     }
 
     await MobileAds.instance.initialize();
+    if (!isStoreSupportedPlatform) {
+      return;
+    }
+
     InAppPurchase.instance.purchaseStream.listen(
       _handlePurchaseUpdates,
       onError: (_) => isBusy.value = false,
@@ -79,7 +119,14 @@ class MonetizationController {
   }
 
   Future<void> refreshStore() async {
-    if (!isSupportedPlatform) {
+    if (!isStoreSupportedPlatform) {
+      storeAvailable.value = false;
+      removeAdsProduct.value = null;
+      return;
+    }
+
+    final productId = currentRemoveAdsProductId;
+    if (productId == null) {
       storeAvailable.value = false;
       removeAdsProduct.value = null;
       return;
@@ -94,7 +141,7 @@ class MonetizationController {
     }
 
     final response = await inAppPurchase.queryProductDetails({
-      removeAdsProductId,
+      productId,
     });
     if (response.error != null || response.productDetails.isEmpty) {
       removeAdsProduct.value = null;
@@ -104,7 +151,7 @@ class MonetizationController {
   }
 
   Future<MonetizationActionResult> buyRemoveAds() async {
-    if (!isSupportedPlatform) {
+    if (!isStoreSupportedPlatform) {
       return MonetizationActionResult.unsupportedPlatform;
     }
     if (adsRemoved.value) {
@@ -141,7 +188,7 @@ class MonetizationController {
   }
 
   Future<MonetizationActionResult> restoreRemoveAds() async {
-    if (!isSupportedPlatform) {
+    if (!isStoreSupportedPlatform) {
       return MonetizationActionResult.unsupportedPlatform;
     }
     if (!storeAvailable.value) {
@@ -158,7 +205,7 @@ class MonetizationController {
 
   Future<void> _handlePurchaseUpdates(List<PurchaseDetails> purchases) async {
     for (final purchase in purchases) {
-      if (purchase.productID != removeAdsProductId) {
+      if (!knownRemoveAdsProductIds.contains(purchase.productID)) {
         if (purchase.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchase);
         }

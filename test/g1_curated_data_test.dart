@@ -97,6 +97,77 @@ void main() {
     }
   });
 
+  test('g1 umbrella entries for O.R.C. and infused creatures stay explanatory', () {
+    final orc = entry('g1_enemy_orc');
+    final infused = entry('g1_enemy_infused');
+
+    expect(orc['collectionGroup'], 'other');
+    expect((orc['abilities'] as List), isNotEmpty);
+    expect((orc['attacks'] as List), isEmpty);
+    expect(
+      orc['description']['en'],
+      contains('Project O.R.C.'),
+    );
+
+    expect(infused['collectionGroup'], 'anomaly');
+    expect((infused['abilities'] as List), isNotEmpty);
+    expect((infused['attacks'] as List), isEmpty);
+    expect(infused.containsKey('health'), isFalse);
+    expect(
+      infused['description']['en'],
+      contains('New Game+ infused creatures'),
+    );
+  });
+
+  test('g1 system entries cover raids, MIX.R defenses, JavaMatic, and Spicy Coaltana', () {
+    final raids = entry('g1_factional_raids');
+    final mixr = entry('g1_mixr_defenses');
+    final javamatic = entry('g1_javamatic_cable_defense');
+    final coaltana = entry('g1_spicy_coaltana_event');
+
+    expect(raids['isBoss'], isFalse);
+    expect(raids['description']['en'], contains('factional raids'));
+    expect(
+      (raids['abilities'] as List).whereType<Map>().any(
+        (ability) => ability['name']['en'] == 'Payback Has Arrived!',
+      ),
+      isTrue,
+    );
+
+    expect(mixr['description']['en'], contains('JavaMatic'));
+    expect(
+      (mixr['specialTraits'] as List).whereType<Map>().any(
+        (trait) => (trait['en'] as String).contains('SUPER MIX.R'),
+      ),
+      isTrue,
+    );
+
+    expect(javamatic['description']['en'], contains('several cables'));
+    expect(
+      (javamatic['abilities'] as List).whereType<Map>().any(
+        (ability) => ability['name']['en'] == 'Multiple Cables',
+      ),
+      isTrue,
+    );
+
+    expect(coaltana['description']['en'], contains('Spicy Coaltana'));
+    expect(
+      (coaltana['abilities'] as List).whereType<Map>().any(
+        (ability) => ability['name']['en'] == 'Ladybird Larva Waves',
+      ),
+      isTrue,
+    );
+
+    for (final event in [raids, mixr, javamatic, coaltana]) {
+      expect(
+        (event['abilities'] as List).whereType<Map>().any(
+          (ability) => ability['name']['en'] == 'Guard Dog Progress',
+        ),
+        isTrue,
+      );
+    }
+  });
+
   test('g1 weak points stay aligned with the curated creature table', () {
     const expectedWeakPoints = {
       'g1_ruz_t': {'part': 'back', 'susceptibleDamage': 'any'},

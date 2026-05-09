@@ -17,8 +17,9 @@ class ReviewPromptController with WidgetsBindingObserver {
   static const Duration idleThreshold = Duration(minutes: 5);
   static const Duration cooldown = Duration(hours: 1);
   static const String _androidPackageId = 'com.byteshark.aphidex';
-  // Fill this once the App Store record exists and the first iOS build is live.
-  static const String _iosAppStoreId = '';
+  static const String _iosAppStoreId = '6766727089';
+  static const String _iosAppStoreUrl =
+      'https://apps.apple.com/mx/app/aphidex/id6766727089';
 
   static const String _kCloseCount = 'review_prompt_close_count';
   static const String _kLastCloseAt = 'review_prompt_last_close_at';
@@ -173,8 +174,10 @@ class ReviewPromptController with WidgetsBindingObserver {
     final Uri primaryUri;
     final Uri fallbackUri;
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      primaryUri = Uri.parse('itms-apps://itunes.apple.com/app/id$_iosAppStoreId');
-      fallbackUri = Uri.parse('https://apps.apple.com/app/id$_iosAppStoreId');
+      primaryUri = Uri.parse(
+        'itms-apps://itunes.apple.com/app/id$_iosAppStoreId',
+      );
+      fallbackUri = Uri.parse(_iosAppStoreUrl);
     } else {
       primaryUri = Uri.parse('market://details?id=$_androidPackageId');
       fallbackUri = Uri.parse(

@@ -24153,16 +24153,154 @@
     }
   },
   {
+    "id": "g1_enemy_infused",
+    "speciesKey": "g1_enemy_infused",
+    "name": {
+      "es": "Criaturas infusionadas",
+      "en": "Infused Creatures",
+      "ru": "Инфузные существа"
+    },
+    "game": "g1",
+    "tier": 4,
+    "danger": "extrema",
+    "isBoss": false,
+    "order": 175,
+    "defaultGold": true,
+    "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
+    "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
+    "photo": "assets/g1/creatures/photos/Infused_Insects.jpg",
+    "weaknesses": [],
+    "resistances": [],
+    "temperament": "anomaly",
+    "description": {
+      "es": "Entrada global para las criaturas infusionadas de New Game+ en Grounded. No es una especie concreta: resume el sistema de infusiones que altera enemigos ya existentes con propiedades nuevas.",
+      "en": "Global entry for Grounded's New Game+ infused creatures. It is not one species: it summarizes the infusion system that alters existing enemies with new properties.",
+      "ru": "Глобальная запись для инфузных существ New Game+ в Grounded. Это не отдельный вид: запись суммирует систему инфузий, которая меняет уже существующих врагов новыми свойствами."
+    },
+    "behavior": {
+      "es": "Una criatura infusionada mantiene gran parte de la identidad de su especie, pero gana capas extra de poder, anomalías elementales o efectos que cambian mucho el riesgo real del encuentro.",
+      "en": "An infused creature keeps much of its original species identity, but gains extra layers of power, elemental anomalies, or effects that can radically change the real danger of the encounter.",
+      "ru": "Инфузное существо сохраняет большую часть идентичности исходного вида, но получает дополнительные слои силы, элементальные аномалии или эффекты, которые могут радикально менять реальную опасность встречи."
+    },
+    "interactionWithPlayer": {
+      "es": "Debe leerse como una advertencia del sistema NG+. La ficha base sigue importando, pero ya no basta por sí sola: la infusión puede volver letal a una criatura que antes era manejable.",
+      "en": "It should be read as an NG+ system warning. The base page still matters, but it is no longer enough on its own: infusion can make a formerly manageable creature lethal.",
+      "ru": "Эту запись стоит читать как предупреждение о системе NG+. Базовая страница по-прежнему важна, но её уже недостаточно: инфузия способна сделать смертельным существо, которое раньше было управляемым."
+    },
+    "interactionWithCreatures": {
+      "es": "No define una relación fija entre especies: cada enemigo infusionado hereda la base de su especie y encima suma propiedades que pueden endurecer daño, control de espacio o presión elemental.",
+      "en": "It does not define a fixed relationship between species: each infused enemy inherits its base species and then layers on properties that can harden damage, space control, or elemental pressure.",
+      "ru": "Эта запись не задаёт фиксированные отношения между видами: каждый инфузный враг наследует базу своего вида и сверху получает свойства, усиливающие урон, контроль пространства или элементальное давление."
+    },
+    "strategy": {
+      "es": "La regla general es entrar con mucho más respeto, revisar resistencias y debilidades reales, y asumir que un patrón ya conocido puede venir acompañado por castigos nuevos. En NG+ la infusión importa tanto como la especie base.",
+      "en": "The general rule is to approach with far more respect, re-check the real weaknesses and resistances, and assume that a familiar moveset may now carry new punishments. In NG+, the infusion matters almost as much as the base species.",
+      "ru": "Общее правило — подходить с гораздо большим уважением, перепроверять реальные слабости и сопротивления и считать, что знакомый набор атак теперь может нести новые наказания. В NG+ инфузия важна почти так же, как и базовый вид."
+    },
+    "environments": [
+      {
+        "es": "Ciclos New Game+",
+        "en": "New Game+ cycles",
+        "ru": "Циклы New Game+"
+      },
+      {
+        "es": "Anomalías dimensionales y encuentros de alto nivel",
+        "en": "Dimensional anomalies and high-tier encounters",
+        "ru": "Пространственные аномалии и высокоуровневые встречи"
+      }
+    ],
+    "loot": [
+      {
+        "section": "passive",
+        "item": {
+          "es": "Entrada de sistema: revisa la especie base y la infusión activa",
+          "en": "System entry: check the base species and active infusion",
+          "ru": "Системная запись: смотрите базовый вид и активную инфузию"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      }
+    ],
+    "combatStats": {
+      "attackDamageSummary": {
+        "es": "Variable según la criatura y la infusión activa. El mismo enemigo puede cambiar mucho entre ciclos o combinaciones.",
+        "en": "Varies by creature and active infusion. The same enemy can change dramatically between cycles or property combinations.",
+        "ru": "Зависит от существа и активной инфузии. Один и тот же враг может сильно меняться между циклами или комбинациями свойств."
+      }
+    },
+    "collectionGroup": "anomaly",
+    "attacks": [],
+    "abilities": [
+      {
+        "name": {
+          "es": "Propiedad infusionada",
+          "en": "Infused Property",
+          "ru": "Инфузное свойство"
+        },
+        "description": {
+          "es": "Cada criatura infusionada obtiene una o más propiedades añadidas que modifican su daño, su control de zona o la forma en que castiga errores.",
+          "en": "Each infused creature gains one or more added properties that modify its damage, zone control, or the way it punishes mistakes.",
+          "ru": "Каждое инфузное существо получает одно или несколько дополнительных свойств, меняющих урон, контроль зоны или то, как оно наказывает за ошибки."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Escalado de NG+",
+          "en": "NG+ Scaling",
+          "ru": "Скалирование NG+"
+        },
+        "description": {
+          "es": "Además del moveset base, la amenaza sube por escalado general de New Game+, así que incluso especies conocidas pueden borrar errores con mucha más facilidad.",
+          "en": "On top of the base moveset, the threat rises through New Game+ scaling, so even familiar species can erase mistakes far more easily.",
+          "ru": "Помимо базового набора атак, угроза растёт из-за общего скалирования New Game+, поэтому даже знакомые виды могут намного легче стирать ошибки."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Combinaciones anómalas",
+          "en": "Anomalous Combinations",
+          "ru": "Аномальные комбинации"
+        },
+        "description": {
+          "es": "La infusión puede mezclar daño o efectos que no esperarías en la versión base, así que conviene volver a leer resistencias, debilidades y presión elemental antes de confiarse.",
+          "en": "Infusion can combine damage or effects you would not expect from the base version, so it is worth re-reading resistances, weaknesses, and elemental pressure before getting comfortable.",
+          "ru": "Инфузия может смешивать урон или эффекты, которых вы не ждёте от базовой версии, поэтому перед самоуверенной игрой стоит заново читать сопротивления, слабости и элементальное давление."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "No es una criatura única: resume el sistema infusionado de NG+.",
+        "en": "This is not a single creature: it summarizes the NG+ infused system.",
+        "ru": "Это не одно существо: запись обобщает инфузную систему NG+."
+      },
+      {
+        "es": "Una criatura base manejable puede volverse extrema si la infusión adecuada la acompaña.",
+        "en": "A manageable base creature can become extreme if the right infusion is layered onto it.",
+        "ru": "Управляемое базовое существо может стать экстремальным, если на него накладывается подходящая инфузия."
+      }
+    ]
+  },
+  {
     "id": "g1_enemy_orc",
     "speciesKey": "g1_enemy_orc",
     "name": {
-      "es": "ORC",
-      "en": "ORC",
-      "ru": "ORC"
+      "es": "Criaturas O.R.C.",
+      "en": "O.R.C. Creatures",
+      "ru": "Существа O.R.C."
     },
     "game": "g1",
     "tier": 3,
-    "danger": "alta",
+    "danger": "muy_alta",
     "isBoss": false,
     "order": 176,
     "defaultGold": true,
@@ -24174,31 +24312,7 @@
       "sour"
     ],
     "resistances": [],
-    "attacks": [
-      {
-        "name": {
-          "es": "Generico",
-          "en": "Generic",
-          "ru": ""
-        },
-        "tags": [],
-        "tell": {
-          "es": "",
-          "en": "",
-          "ru": ""
-        },
-        "howToAvoid": {
-          "es": "",
-          "en": "",
-          "ru": ""
-        },
-        "notes": {
-          "es": "Sus ataques son los mismos que con su version normal, lo unico que cambia es que son suceptibles al agrio, sal y no se atacan entre si",
-          "en": "",
-          "ru": ""
-        }
-      }
-    ],
+    "attacks": [],
     "elementalWeaknesses": [
       {
         "type": "salty",
@@ -24211,44 +24325,49 @@
     ],
     "temperament": "other",
     "description": {
-      "es": "Entrada global para el sistema O.R.C.: enemigos controlados o reforzados por tecnología de Ominent. No representa una sola criatura, sino una categoría especial de variantes hostiles.",
-      "en": "Global entry for the O.R.C. system: enemies controlled or enhanced by Ominent technology. It does not represent one creature, but a special class of hostile variants.",
-      "ru": "Глобальная запись для системы O.R.C.: враги, управляемые или усиленные технологией Ominent. Это не одно существо, а особый класс враждебных вариантов."
+      "es": "Entrada global para las criaturas O.R.C. de Grounded. No representa una sola especie, sino a las variantes controladas o reforzadas por la tecnología de Ominent y Project O.R.C.",
+      "en": "Global entry for Grounded's O.R.C. creatures. It does not represent one species, but the variants controlled or enhanced by Ominent technology and Project O.R.C.",
+      "ru": "Глобальная запись для существ O.R.C. из Grounded. Это не один вид, а варианты, контролируемые или усиленные технологией Ominent и Project O.R.C."
     },
     "behavior": {
-      "es": "Las variantes O.R.C. conservan la base de sus especies originales, pero suelen ganar agresividad inmediata y soporte técnico adicional.",
-      "en": "O.R.C. variants keep the base behavior of their original species, but usually gain immediate aggression and extra technological support.",
-      "ru": "Варианты O.R.C. сохраняют основу поведения исходного вида, но обычно получают мгновенную агрессию и дополнительную технологическую поддержку."
+      "es": "Una criatura O.R.C. conserva la base de su especie original, pero entra al combate con agresión inmediata y suele actuar como parte de una red hostil coordinada.",
+      "en": "An O.R.C. creature keeps the base of its original species, but enters combat with immediate aggression and usually behaves as part of a coordinated hostile network.",
+      "ru": "Существо O.R.C. сохраняет основу исходного вида, но вступает в бой с мгновенной агрессией и обычно действует как часть скоординированной враждебной сети."
     },
     "interactionWithPlayer": {
-      "es": "Se deben tratar como amenazas activas creadas para presionar al jugador. La mejor referencia siempre es la ficha específica de la criatura O.R.C. correspondiente.",
-      "en": "They should be treated as active threats designed to pressure the player. The best reference is always the specific O.R.C. creature entry tied to that species.",
-      "ru": "Их следует рассматривать как активные угрозы, созданные для давления на игрока. Лучший ориентир — всегда конкретная запись соответствующего O.R.C.-существа."
+      "es": "Hay que leerlas como una advertencia de variante, no como una ficha cerrada de moveset. Si el juego te pone delante una versión O.R.C., casi siempre debes esperar más presión que en la criatura base.",
+      "en": "They should be read as a variant warning rather than as a closed moveset page. If the game puts an O.R.C. version in front of you, you should almost always expect more pressure than from the base creature.",
+      "ru": "Эту запись стоит читать как предупреждение о варианте, а не как закрытую страницу мувсета. Если игра ставит перед вами версию O.R.C., почти всегда нужно ждать большего давления, чем от базового существа."
     },
     "interactionWithCreatures": {
-      "es": "Suelen actuar como extensiones de los planes de Ominent y cooperan con otras amenazas del laboratorio o de los eventos donde aparecen.",
-      "en": "They usually act as extensions of Ominent's plans and cooperate with other lab threats or event enemies where they appear.",
-      "ru": "Они обычно выступают продолжением планов Ominent и взаимодействуют с другими лабораторными угрозами или врагами событий, где появляются."
+      "es": "No suelen pelear entre sí y a menudo priorizan el mismo objetivo, lo que vuelve mucho más peligrosas las emboscadas o los eventos donde varias unidades comparten arena.",
+      "en": "They usually do not fight each other and often prioritize the same target, which makes ambushes and event fights far more dangerous when several units share the arena.",
+      "ru": "Обычно они не сражаются друг с другом и часто приоритизируют одну цель, из-за чего засады и событийные бои становятся куда опаснее, когда арену делят несколько таких юнитов."
     },
     "strategy": {
-      "es": "Como entrada general, lo útil es verla como una advertencia: las variantes O.R.C. casi siempre son más peligrosas que sus equivalentes base y conviene consultar la ficha concreta antes de enfrentarlas.",
-      "en": "As a general entry, it should be read as a warning: O.R.C. variants are almost always more dangerous than their base counterparts, so the specific creature page matters more than this umbrella page.",
-      "ru": "Как общую запись, ее стоит читать как предупреждение: варианты O.R.C. почти всегда опаснее базовых аналогов, поэтому важнее смотреть конкретную страницу существа, а не эту сводную запись."
+      "es": "La regla general es respetar más el daño, limpiar apoyos antes y comprobar siempre la ficha específica de la especie O.R.C. correspondiente. Esta entrada sirve para entender el sistema, no para reemplazar cada variante concreta.",
+      "en": "The general rule is to respect the damage more, clear support first, and always check the specific O.R.C. species page. This entry exists to explain the system, not to replace each concrete variant.",
+      "ru": "Общее правило — сильнее уважать урон, сначала убирать поддержку и всегда проверять конкретную страницу соответствующего вида O.R.C. Эта запись объясняет систему, а не заменяет каждую отдельную вариацию."
     },
     "environments": [
       {
-        "es": "Eventos O.R.C. y laboratorios de Ominent",
-        "en": "O.R.C. events and Ominent labs",
-        "ru": "События O.R.C. и лаборатории Ominent"
+        "es": "Eventos O.R.C. del patio",
+        "en": "Yard O.R.C. events",
+        "ru": "События O.R.C. во дворе"
+      },
+      {
+        "es": "Castle Moldorc y laboratorios de Ominent",
+        "en": "Castle Moldorc and Ominent labs",
+        "ru": "Castle Moldorc и лаборатории Ominent"
       }
     ],
     "loot": [
       {
         "section": "passive",
         "item": {
-          "es": "Consulta fichas O.R.C. específicas",
-          "en": "See specific O.R.C. entries",
-          "ru": "Смотрите конкретные записи O.R.C."
+          "es": "Entrada de sistema: consulta la variante O.R.C. concreta",
+          "en": "System entry: check the specific O.R.C. variant",
+          "ru": "Системная запись: смотрите конкретный вариант O.R.C."
         },
         "minCount": 0,
         "maxCount": 0
@@ -24256,75 +24375,147 @@
     ],
     "combatStats": {
       "attackDamageSummary": {
-        "es": "Variable según la criatura. Esta entrada resume la categoría, no un enemigo individual.",
-        "en": "Varies by creature. This entry summarizes the category, not a single enemy.",
-        "ru": "Зависит от существа. Эта запись описывает категорию, а не отдельного врага."
+        "es": "Variable según la especie O.R.C. concreta. La amenaza real viene de la agresión extra, la coordinación y el entorno del encuentro.",
+        "en": "Varies by the specific O.R.C. species. The real danger comes from the added aggression, coordination, and encounter environment.",
+        "ru": "Зависит от конкретного вида O.R.C. Реальная угроза исходит из дополнительной агрессии, координации и окружения боя."
       }
-    }
+    },
+    "collectionGroup": "other",
+    "abilities": [
+      {
+        "name": {
+          "es": "Sobrecarga O.R.C.",
+          "en": "O.R.C. Override",
+          "ru": "Перехват O.R.C."
+        },
+        "description": {
+          "es": "La criatura está intervenida por tecnología de Ominent, así que responde con agresión inmediata en vez del comportamiento base más neutro o territorial.",
+          "en": "The creature is overridden by Ominent technology, so it responds with immediate aggression instead of the more neutral or territorial base behavior.",
+          "ru": "Существо перехвачено технологией Ominent, поэтому отвечает мгновенной агрессией вместо более нейтрального или территориального базового поведения."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Enfoque compartido",
+          "en": "Shared Targeting",
+          "ru": "Общая цель"
+        },
+        "description": {
+          "es": "Las variantes O.R.C. tienden a concentrarse en el mismo objetivo y a funcionar mejor en grupo que sus equivalentes normales.",
+          "en": "O.R.C. variants tend to collapse on the same target and function better in groups than their normal counterparts.",
+          "ru": "Варианты O.R.C. склонны наваливаться на одну и ту же цель и действуют в группе лучше обычных аналогов."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Debilidad al agrio y salado",
+          "en": "Sour and Salty Weakness",
+          "ru": "Слабость к sour и salty"
+        },
+        "description": {
+          "es": "Como regla general, las criaturas O.R.C. son especialmente vulnerables al daño agrio y, en varios casos, también al salado.",
+          "en": "As a general rule, O.R.C. creatures are especially vulnerable to sour damage and, in several cases, to salty as well.",
+          "ru": "Как общее правило, существа O.R.C. особенно уязвимы к урону sour и во многих случаях также к salty."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "No es una criatura única: resume un tipo de variante hostil.",
+        "en": "This is not a single creature: it summarizes a hostile variant class.",
+        "ru": "Это не одно существо: запись обобщает класс враждебных вариантов."
+      },
+      {
+        "es": "Suelen aparecer en eventos, defensas y encuentros ligados a Ominent.",
+        "en": "They usually appear in events, defenses, and Ominent-linked encounters.",
+        "ru": "Обычно появляются в событиях, оборонах и встречах, связанных с Ominent."
+      }
+    ]
   },
   {
-    "id": "g1_enemy_infused",
-    "speciesKey": "g1_enemy_infused",
+    "id": "g1_factional_raids",
+    "speciesKey": "g1_factional_raids",
+    "collectionGroup": "other",
     "name": {
-      "es": "Insectos Infusionados",
-      "en": "Infused Insects",
-      "ru": ""
+      "es": "Incursiones de facción",
+      "en": "Factional Raids",
+      "ru": "Набеги фракций"
     },
     "game": "g1",
-    "tier": 4,
-    "danger": "imposible",
+    "tier": 3,
+    "danger": "muy_alta",
     "isBoss": false,
-    "order": 175,
+    "order": 177,
     "defaultGold": true,
-    "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
-    "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
-    "photo": "assets/g1/creatures/photos/Infused_Insects.jpg",
+    "cardNormal": "assets/global/effects_damage/Generic_Damage.webp",
+    "cardGold": "assets/global/effects_damage/Generic_Damage.webp",
+    "photo": "assets/global/effects_damage/Generic_Damage.webp",
     "weaknesses": [],
     "resistances": [],
-    "health": {
-      "rating": 5,
-      "value": 10000
-    },
-    "temperament": "anomaly",
+    "temperament": "other",
     "description": {
-      "es": "Entrada global para insectos infusionados de New Game+. Resume el sistema de infusionados, no una criatura concreta.",
-      "en": "Global entry for New Game+ infused insects. It summarizes the infused system rather than one specific creature.",
-      "ru": "Глобальная запись для инфузных насекомых New Game+. Она описывает систему инфузии, а не конкретное существо."
+      "es": "Entrada de sistema para las incursiones de facción de Grounded 1. Resume los ataques a tu base que ocurren cuando irritas demasiado a una facción y esta decide cobrar venganza.",
+      "en": "System entry for Grounded 1 factional raids. It summarizes the attacks on your base that occur when you irritate a faction enough for it to come collect payback.",
+      "ru": "Системная запись о набегах фракций в Grounded 1. Она описывает атаки на вашу базу, которые начинаются, когда вы достаточно разозлили фракцию и она приходит за расплатой."
     },
     "behavior": {
-      "es": "Un insecto infusionado conserva la base de su especie, pero gana propiedades extra, más peligrosidad y a menudo combinaciones elementales o efectos anómalos.",
-      "en": "An infused insect keeps the base of its species but gains extra properties, more danger, and often elemental or anomalous combinations.",
-      "ru": "Инфузное насекомое сохраняет основу своего вида, но получает дополнительные свойства, большую опасность и часто элементальные или аномальные сочетания."
+      "es": "Las raids no funcionan como un encuentro normal: la mayoría de las criaturas priorizan estructuras, utilidades y puntos sensibles de la base antes que un duelo limpio contigo.",
+      "en": "Raids do not behave like normal encounters: most creatures prioritize structures, utilities, and soft points in the base before they care about taking a clean duel with you.",
+      "ru": "Набеги работают не как обычная драка: большинство существ в первую очередь бьют по постройкам, утилитам и уязвимым точкам базы, а уже потом заботятся о честной схватке с игроком."
     },
     "interactionWithPlayer": {
-      "es": "Debe interpretarse como una advertencia general del sistema NG+. Para saber cómo cambia una criatura infusionada concreta, conviene revisar su ficha base y las propiedades que gane en ese ciclo.",
-      "en": "It should be read as a general NG+ system warning. To understand a specific infused creature, the player should review its base entry plus the properties gained in that cycle.",
-      "ru": "Ее стоит читать как общее предупреждение о системе NG+. Чтобы понять конкретное инфузное существо, нужно смотреть базовую запись и свойства, которые оно получает в этом цикле."
+      "es": "Se disparan al enfadar facciones concretas o al forzar ataques con el Waft Emitter. El mensaje de “Payback Has Arrived!” es la señal de que ya no estás en exploración, sino en defensa de base.",
+      "en": "They are triggered by angering specific factions or by forcing attacks with the Waft Emitter. The “Payback Has Arrived!” warning is the sign that you are no longer exploring, but actively defending your base.",
+      "ru": "Они запускаются, если разозлить конкретные фракции или принудительно вызвать атаку через Waft Emitter. Сообщение “Payback Has Arrived!” означает, что вы больше не исследуете мир, а уже защищаете базу."
     },
     "interactionWithCreatures": {
-      "es": "No define una relación única: cada infusionado hereda gran parte del comportamiento de su especie y solo añade capas de poder o alteraciones nuevas.",
-      "en": "It does not define one unique relationship: each infused creature inherits most of its species behavior and only layers on extra power or altered effects.",
-      "ru": "Она не задает одну уникальную модель: каждое инфузное существо наследует большую часть поведения своего вида и лишь получает дополнительные силы или измененные эффекты."
+      "es": "Las oleadas suelen compartir objetivo y no pelean entre sí. Algunas raids además escalan con el progreso, la facción implicada y el tamaño real de la base expuesta.",
+      "en": "The waves usually share a target and do not fight each other. Some raids also scale with progression, the faction involved, and the real size of the exposed base.",
+      "ru": "Волны обычно бьют по одной цели и не сражаются друг с другом. Некоторые набеги также масштабируются от прогресса, вовлечённой фракции и реального размера открытой базы."
     },
     "strategy": {
-      "es": "La regla general es respetar más el daño, asumir patrones más castigadores y revisar debilidades/resistencias de la criatura concreta, porque la infusión cambia mucho el riesgo real.",
-      "en": "The general rule is to respect the damage more, expect harsher patterns, and double-check weaknesses and resistances on the specific creature because infusion changes the real threat a lot.",
-      "ru": "Общее правило — сильнее уважать урон, ожидать более жестких паттернов и перепроверять слабости и сопротивления конкретного существа, потому что инфузия сильно меняет реальную угрозу."
+      "es": "La regla general es construir con rutas claras, proteger utilidades, elevar lo que no deba tocar el suelo y usar Guard Dog si ya estás jugando mucho contenido defensivo. Si una raid terrestre no puede llegar, muchas veces se desarma sola.",
+      "en": "The general rule is to build with clear lanes, protect utilities, elevate anything that should not touch the ground, and use Guard Dog if you are already playing a lot of defense content. If a ground raid cannot path to the base, it will often collapse on its own.",
+      "ru": "Общее правило — строить с понятными проходами, защищать утилиты, поднимать всё важное над землёй и использовать Guard Dog, если вы часто играете защитный контент. Если наземный набег не может добраться до базы, он нередко сам разваливается."
     },
     "environments": [
       {
-        "es": "New Game+",
-        "en": "New Game+",
-        "ru": "New Game+"
+        "es": "Bases del patio trasero",
+        "en": "Backyard bases",
+        "ru": "Базы на заднем дворе"
+      },
+      {
+        "es": "Waft Emitter",
+        "en": "Waft Emitter",
+        "ru": "Waft Emitter"
       }
     ],
     "loot": [
       {
         "section": "passive",
         "item": {
-          "es": "Variable según la criatura infusionada",
-          "en": "Varies by infused creature",
-          "ru": "Зависит от конкретного инфузного существа"
+          "es": "Entrada de sistema: varía según la facción atacante",
+          "en": "System entry: varies by attacking faction",
+          "ru": "Системная запись: зависит от атакующей фракции"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      },
+      {
+        "section": "passive",
+        "item": {
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardi?n",
+          "en": "Can contribute to unlocking or upgrading Guard Dog",
+          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
         },
         "minCount": 0,
         "maxCount": 0
@@ -24332,10 +24523,580 @@
     ],
     "combatStats": {
       "attackDamageSummary": {
-        "es": "Variable según la criatura y la infusión activa.",
-        "en": "Varies by creature and active infusion.",
-        "ru": "Зависит от существа и активной инфузии."
+        "es": "Variable según la facción, el nivel de raid y la base atacada.",
+        "en": "Varies by faction, raid level, and the base being attacked.",
+        "ru": "Зависит от фракции, уровня набега и атакуемой базы."
       }
-    }
+    },
+    "abilities": [
+      {
+        "name": {
+          "es": "Medidor de enfado",
+          "en": "Faction Enrage",
+          "ru": "Ярость фракции"
+        },
+        "description": {
+          "es": "Matar, robar huevos o invadir territorios va llenando el enfado hasta permitir que una facción te ataque.",
+          "en": "Killing members, stealing eggs, or invading territory builds enrage until a faction is allowed to attack you.",
+          "ru": "Убийства, кража яиц и вторжение на территорию накапливают ярость, пока фракция не получит право напасть."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Payback Has Arrived!",
+          "en": "Payback Has Arrived!",
+          "ru": "Расплата прибыла!"
+        },
+        "description": {
+          "es": "La raid empieza con un aviso y un punto de aproximación; desde ahí lo importante es cortar el camino hacia tu base, no buscar kills bonitas.",
+          "en": "The raid begins with a warning and an approach marker; from there the real job is cutting the path to your base, not chasing pretty kills.",
+          "ru": "Набег начинается с предупреждения и метки подхода; дальше ваша задача — перекрыть путь к базе, а не собирать красивые убийства."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Guard Dog",
+          "en": "Guard Dog",
+          "ru": "Guard Dog"
+        },
+        "description": {
+          "es": "La mutación Guard Dog mejora el daño durante defensa de base y eventos defensivos, así que vale mucho más aquí que en exploración normal.",
+          "en": "The Guard Dog mutation boosts damage during base defense and other defense events, so it matters much more here than in normal exploration.",
+          "ru": "Мутация Guard Dog усиливает урон во время защиты базы и других оборонительных событий, поэтому здесь она ценнее, чем в обычном исследовании."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Progreso de Perro Guardi?n",
+          "en": "Guard Dog Progress",
+          "ru": "???????? Guard Dog"
+        },
+        "description": {
+          "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutaci?n Perro Guardi?n.",
+          "en": "Defensive event participation can unlock or advance the Guard Dog mutation.",
+          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "No es una criatura: resume una mecánica de defensa reactiva.",
+        "en": "This is not a creature: it summarizes a reactive defense mechanic.",
+        "ru": "Это не существо: запись суммирует реактивную механику обороны."
+      },
+      {
+        "es": "Solo existe en Grounded 1 dentro de Aphidex; Grounded 2 se trata aparte.",
+        "en": "Inside Aphidex this only exists for Grounded 1; Grounded 2 is handled separately.",
+        "ru": "В Aphidex эта запись существует только для Grounded 1; Grounded 2 разбирается отдельно."
+      },
+      {
+        "es": "Aphidex la trata tambi?n como entrada ?til para seguir el progreso de Perro Guardi?n.",
+        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
+        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+      }
+    ]
+  },
+  {
+    "id": "g1_mixr_defenses",
+    "speciesKey": "g1_mixr_defenses",
+    "collectionGroup": "other",
+    "name": {
+      "es": "Defensas MIX.R",
+      "en": "MIX.R Defenses",
+      "ru": "Обороны MIX.R"
+    },
+    "game": "g1",
+    "tier": 3,
+    "danger": "imposible",
+    "isBoss": false,
+    "order": 178,
+    "defaultGold": true,
+    "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
+    "cardGold": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/global/effects_damage/Summon_HP.webp",
+    "weaknesses": [],
+    "resistances": [],
+    "temperament": "other",
+    "description": {
+      "es": "Entrada de sistema para los eventos de defensa MIX.R, SUPER MIX.R y el tramo final de defensa de JavaMatic en Grounded 1. No resume a un enemigo, sino la familia de defensas de objetivo más importante del juego.",
+      "en": "System entry for Grounded 1 MIX.R, SUPER MIX.R, and late-game JavaMatic defense events. It does not describe one enemy, but the game’s main family of point-defense scenarios.",
+      "ru": "Системная запись о событиях защиты MIX.R, SUPER MIX.R и поздней обороне JavaMatic в Grounded 1. Она описывает не одного врага, а главное семейство сценариев защиты точки в игре."
+    },
+    "behavior": {
+      "es": "Una defensa MIX.R se gana por control de oleadas, rutas y tiempo, no por matar lo primero que se te cruce. Muchas criaturas ignoran el duelo y se van directo al objetivo si les abres línea.",
+      "en": "A MIX.R defense is won through wave control, lanes, and time management, not by killing the first thing you see. Many creatures ignore the duel and run straight to the objective if you give them a lane.",
+      "ru": "Оборона MIX.R выигрывается контролем волн, маршрутов и времени, а не убийством первой попавшейся твари. Многие существа игнорируют дуэль и идут прямо к цели, если вы даёте им коридор."
+    },
+    "interactionWithPlayer": {
+      "es": "Cada MIX.R tiene composición y terreno propios, así que la preparación importa tanto como el equipo. En JavaMatic la defensa deja de ser local y se convierte en control de varias líneas a la vez.",
+      "en": "Each MIX.R has its own composition and terrain, so preparation matters as much as gear. In the JavaMatic defense, the fight stops being local and becomes multi-lane control.",
+      "ru": "У каждого MIX.R свои составы волн и рельеф, поэтому подготовка важна не меньше экипировки. В обороне JavaMatic бой перестаёт быть локальным и превращается в контроль сразу нескольких линий."
+    },
+    "interactionWithCreatures": {
+      "es": "Las oleadas están pensadas para mezclar tipos de presión: bichos rápidos para colarse, tanques para absorber tiempo y amenazas a distancia que te obligan a moverte.",
+      "en": "The waves are designed to mix pressure types: fast bugs that slip through, tanks that waste your time, and ranged threats that force you to reposition.",
+      "ru": "Волны задуманы как смесь разных форм давления: быстрые жуки, которые проскальзывают, танки, которые съедают ваше время, и дальние угрозы, заставляющие постоянно смещаться."
+    },
+    "strategy": {
+      "es": "Funciona mejor construir embudos, dejar repair materials listos y pensar la arena por carriles. Guard Dog, trampas bien puestas y armas de limpieza rápida suelen valer más que perseguir objetivos aislados demasiado lejos del MIX.R.",
+      "en": "It works best when you build funnels, keep repair materials ready, and think of the arena as lanes. Guard Dog, well-placed traps, and fast-clearing weapons usually matter more than chasing isolated targets too far from the MIX.R.",
+      "ru": "Лучше всего работают воронки, готовые материалы для ремонта и мышление по линиям. Guard Dog, грамотно поставленные ловушки и оружие для быстрой зачистки обычно важнее, чем погоня за одиночными целями слишком далеко от MIX.R."
+    },
+    "environments": [
+      {
+        "es": "MIX.R y SUPER MIX.R del patio",
+        "en": "Backyard MIX.R and SUPER MIX.R sites",
+        "ru": "Точки MIX.R и SUPER MIX.R во дворе"
+      },
+      {
+        "es": "Defensa de JavaMatic",
+        "en": "JavaMatic defense",
+        "ru": "Оборона JavaMatic"
+      }
+    ],
+    "loot": [
+      {
+        "section": "passive",
+        "item": {
+          "es": "Entrada de sistema: revisa la composición del evento concreto",
+          "en": "System entry: check the composition of the specific defense",
+          "ru": "Системная запись: смотрите состав конкретной обороны"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      },
+      {
+        "section": "passive",
+        "item": {
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardi?n",
+          "en": "Can contribute to unlocking or upgrading Guard Dog",
+          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      }
+    ],
+    "combatStats": {
+      "attackDamageSummary": {
+        "es": "Variable según el evento, la arena y las criaturas de cada oleada.",
+        "en": "Varies by event, arena, and the creatures in each wave.",
+        "ru": "Зависит от события, арены и существ в каждой волне."
+      }
+    },
+    "abilities": [
+      {
+        "name": {
+          "es": "Objetivo de defensa",
+          "en": "Defense Objective",
+          "ru": "Цель обороны"
+        },
+        "description": {
+          "es": "Si el objetivo cae, el evento se pierde aunque sigas vivo. No se juega como un duelo tradicional.",
+          "en": "If the objective falls, the event is lost even if you survive. It is not played like a traditional duel.",
+          "ru": "Если цель падает, событие проиграно, даже если вы живы. Это не традиционная дуэль."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Oleadas mixtas",
+          "en": "Mixed Waves",
+          "ru": "Смешанные волны"
+        },
+        "description": {
+          "es": "Cada defensa mezcla criaturas con funciones distintas para romper defensas lineales simples.",
+          "en": "Each defense mixes creatures with different jobs to break simple linear defenses.",
+          "ru": "Каждая оборона смешивает существ с разными ролями, чтобы ломать слишком простую линейную защиту."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Reparación activa",
+          "en": "Active Repairs",
+          "ru": "Активный ремонт"
+        },
+        "description": {
+          "es": "No basta con matar: reparar a tiempo y no perder estructura crítica es parte central del evento.",
+          "en": "Killing is not enough: repairing on time and not losing critical structure is a core part of the event.",
+          "ru": "Одних убийств недостаточно: своевременный ремонт и сохранение ключевых построек — центральная часть события."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Progreso de Perro Guardi?n",
+          "en": "Guard Dog Progress",
+          "ru": "???????? Guard Dog"
+        },
+        "description": {
+          "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutaci?n Perro Guardi?n.",
+          "en": "Defensive event participation can unlock or advance the Guard Dog mutation.",
+          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Incluye MIX.R, SUPER MIX.R y la defensa de JavaMatic.",
+        "en": "Includes MIX.R, SUPER MIX.R, and the JavaMatic defense.",
+        "ru": "Включает MIX.R, SUPER MIX.R и оборону JavaMatic."
+      },
+      {
+        "es": "No es una criatura única: resume la lógica de las defensas de objetivo en G1.",
+        "en": "This is not a single creature: it summarizes objective-defense logic in G1.",
+        "ru": "Это не одно существо: запись суммирует логику защиты точки в G1."
+      },
+      {
+        "es": "Aphidex la trata tambi?n como entrada ?til para seguir el progreso de Perro Guardi?n.",
+        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
+        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+      }
+    ]
+  },
+  {
+    "id": "g1_spicy_coaltana_event",
+    "speciesKey": "g1_spicy_coaltana_event",
+    "collectionGroup": "other",
+    "name": {
+      "es": "Defensa de la Spicy Coaltana",
+      "en": "Spicy Coaltana Defense",
+      "ru": "Оборона Spicy Coaltana"
+    },
+    "game": "g1",
+    "tier": 3,
+    "danger": "muy_alta",
+    "isBoss": false,
+    "order": 179,
+    "defaultGold": true,
+    "cardNormal": "assets/global/effects_damage/Damagetype_Spicy.webp",
+    "cardGold": "assets/global/effects_damage/Damagetype_Spicy.webp",
+    "photo": "assets/global/effects_damage/Damagetype_Spicy.webp",
+    "weaknesses": [],
+    "resistances": [],
+    "temperament": "other",
+    "description": {
+      "es": "Entrada de sistema para el evento de defensa de la Spicy Coaltana en la bolsa de carbón del BBQ Spill. Es una defensa tipo MIX.R centrada en soportar el calor mientras proteges la espada.",
+      "en": "System entry for the Spicy Coaltana defense event inside the EverChar Coal Bag at the BBQ Spill. It is a MIX.R-style defense focused on surviving the heat while protecting the sword.",
+      "ru": "Системная запись о событии защиты Spicy Coaltana внутри мешка с углём в BBQ Spill. Это оборона в стиле MIX.R, где нужно переживать жар и одновременно защищать меч."
+    },
+    "behavior": {
+      "es": "Toda la presión gira alrededor del calor ambiental y de oleadas compuestas enteramente por Ladybird Larvae que salen del suelo para ir por la espada o por ti.",
+      "en": "The entire event revolves around ambient heat and waves made entirely of Ladybird Larvae that emerge from the ground to attack either the sword or the player.",
+      "ru": "Всё событие построено вокруг фонового жара и волн, полностью состоящих из Ladybird Larvae, которые вылезают из земли и идут либо к мечу, либо к игроку."
+    },
+    "interactionWithPlayer": {
+      "es": "El evento empieza al interactuar con la espada atrapada en la bolsa de carbón. Si la dejas caer a cero o abandonas la secuencia sin reiniciarla bien, tendrás que volver a levantar el evento.",
+      "en": "The event begins when you interact with the sword trapped in the coal bag. If you let it break or fail the sequence, you need to properly reset and start the defense again.",
+      "ru": "Событие начинается при взаимодействии с мечом, застрявшим в мешке с углём. Если дать ему сломаться или провалить этап, оборону придётся заново сбрасывать и запускать."
+    },
+    "interactionWithCreatures": {
+      "es": "Las Ladybird Larvae del evento no existen para duelarte de forma limpia; su trabajo es saturar la zona, enterrarse, reaparecer y obligarte a decidir entre enfriarte o proteger la espada.",
+      "en": "The event larvae do not exist to duel you cleanly; their job is to flood the area, burrow, re-emerge, and force you to choose between cooling off and protecting the sword.",
+      "ru": "Личинки события существуют не для честной дуэли; их задача — затопить арену, зарываться, снова вылезать и вынуждать вас выбирать между охлаждением и защитой меча."
+    },
+    "strategy": {
+      "es": "La preparación manda: protección alta al sizzle, buena curación y daño fresh hacen enorme diferencia. Mint Mace y otros counters a Ladybird Larva suelen convertir un evento brutal en algo ya controlable, siempre que no pierdas el centro de la arena.",
+      "en": "Preparation decides the event: high sizzle protection, good healing, and fresh damage make a huge difference. The Mint Mace and other Ladybird Larva counters can turn a brutal defense into something manageable, as long as you do not lose the center of the arena.",
+      "ru": "Подготовка решает всё: высокая защита от sizzle, хорошее лечение и fresh-урон меняют бой очень сильно. Mint Mace и другие контрмеры против Ladybird Larva могут превратить жестокую оборону в управляемую, если вы не теряете центр арены."
+    },
+    "environments": [
+      {
+        "es": "Bolsa de carbón del BBQ Spill",
+        "en": "EverChar Coal Bag at the BBQ Spill",
+        "ru": "Мешок с углём в BBQ Spill"
+      }
+    ],
+    "loot": [
+      {
+        "section": "passive",
+        "item": {
+          "es": "Desbloquea la receta de la Spicy Coaltana",
+          "en": "Unlocks the Spicy Coaltana recipe",
+          "ru": "Открывает рецепт Spicy Coaltana"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      },
+      {
+        "section": "passive",
+        "item": {
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardi?n",
+          "en": "Can contribute to unlocking or upgrading Guard Dog",
+          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      }
+    ],
+    "combatStats": {
+      "attackDamageSummary": {
+        "es": "La presión real viene del sizzle ambiental y de oleadas de Ladybird Larvae, no de un solo enemigo fijo.",
+        "en": "The real pressure comes from ambient sizzle and repeated Ladybird Larva waves, not from one fixed enemy.",
+        "ru": "Реальное давление исходит от фонового sizzle и повторяющихся волн Ladybird Larva, а не от одного фиксированного врага."
+      }
+    },
+    "abilities": [
+      {
+        "name": {
+          "es": "Sizzle constante",
+          "en": "Constant Sizzle",
+          "ru": "Постоянный sizzle"
+        },
+        "description": {
+          "es": "El centro de la arena castiga de forma pasiva todo el evento, así que no puedes defender como si fuera una arena neutra.",
+          "en": "The center of the arena punishes you passively for the entire event, so you cannot defend as if it were a neutral arena.",
+          "ru": "Центр арены пассивно наказывает вас всё событие, поэтому защищаться как на нейтральной площадке нельзя."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Oleadas de Ladybird Larva",
+          "en": "Ladybird Larva Waves",
+          "ru": "Волны Ladybird Larva"
+        },
+        "description": {
+          "es": "Todas las oleadas están compuestas por Ladybird Larvae que emergen del suelo y obligan a vigilar el perímetro cercano a la espada.",
+          "en": "All waves are made of Ladybird Larvae that emerge from the ground and force you to watch the perimeter around the sword.",
+          "ru": "Все волны состоят из Ladybird Larva, которые вылезают из земли и заставляют следить за периметром вокруг меча."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Defensa de receta",
+          "en": "Recipe Defense",
+          "ru": "Оборона ради рецепта"
+        },
+        "description": {
+          "es": "El premio es la receta, no el arma gratis, así que el evento sigue siendo un paso de progreso y no un drop directo.",
+          "en": "The reward is the recipe, not the weapon for free, so the event remains a progression gate instead of a direct drop.",
+          "ru": "Награда — рецепт, а не бесплатное оружие, поэтому событие остаётся этапом прогрессии, а не прямым дропом."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Progreso de Perro Guardi?n",
+          "en": "Guard Dog Progress",
+          "ru": "???????? Guard Dog"
+        },
+        "description": {
+          "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutaci?n Perro Guardi?n.",
+          "en": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation.",
+          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "El evento se parece más a una defensa especial que a una pelea de jefe.",
+        "en": "The event feels more like a special defense than a boss fight.",
+        "ru": "Событие ощущается скорее как особая оборона, чем как бой с боссом."
+      },
+      {
+        "es": "Toda la defensa gira alrededor de Ladybird Larvae y manejo del calor.",
+        "en": "The entire defense revolves around Ladybird Larvae and heat management.",
+        "ru": "Вся оборона крутится вокруг Ladybird Larva и контроля жара."
+      },
+      {
+        "es": "Aphidex la trata tambi?n como entrada ?til para seguir el progreso de Perro Guardi?n.",
+        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
+        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+      }
+    ]
+  },
+  {
+    "id": "g1_javamatic_cable_defense",
+    "speciesKey": "g1_javamatic_cable_defense",
+    "collectionGroup": "other",
+    "name": {
+      "es": "Defensa de los cables de JavaMatic",
+      "en": "JavaMatic Cable Defense",
+      "ru": "Оборона кабелей JavaMatic"
+    },
+    "game": "g1",
+    "tier": 3,
+    "danger": "extrema",
+    "isBoss": false,
+    "order": 180,
+    "defaultGold": true,
+    "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
+    "cardGold": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/global/effects_damage/Summon_HP.webp",
+    "weaknesses": [],
+    "resistances": [],
+    "temperament": "other",
+    "description": {
+      "es": "Entrada de sistema para la defensa final de JavaMatic en Grounded 1. A diferencia de un MIX.R normal, aquí no proteges un solo nodo: proteges varios cables a la vez mientras el patio entero intenta colapsar la máquina.",
+      "en": "System entry for Grounded 1's final JavaMatic defense. Unlike a normal MIX.R, you are not protecting one node here: you are protecting several cables at once while the whole yard tries to collapse the machine.",
+      "ru": "Системная запись о финальной обороне JavaMatic в Grounded 1. В отличие от обычного MIX.R, здесь вы защищаете не один узел, а сразу несколько кабелей, пока весь двор пытается обрушить машину."
+    },
+    "behavior": {
+      "es": "El evento funciona como una defensa multivía. Las oleadas no llegan para darte una pelea ordenada, sino para colarse por el cable más débil y forzarte a abandonar otra línea sin atender.",
+      "en": "The event works as a multi-lane defense. The waves are not there to give you an orderly fight; they are there to slip through the weakest cable line and force you to abandon another lane.",
+      "ru": "Событие работает как многоуровневая оборона по нескольким линиям. Волны приходят не ради упорядоченной драки, а чтобы прорваться по самому слабому кабелю и заставить вас бросить другую линию."
+    },
+    "interactionWithPlayer": {
+      "es": "El evento empieza tras activar JavaMatic en el tramo final del juego. La dificultad real no está en una criatura concreta, sino en rotar entre cables, reparar bajo presión y no perder visión global de la arena.",
+      "en": "The event begins after activating the JavaMatic in the late game. The real difficulty is not one specific creature, but rotating between cables, repairing under pressure, and never losing the global read of the arena.",
+      "ru": "Событие начинается после активации JavaMatic в поздней стадии игры. Реальная сложность не в одном существе, а в ротации между кабелями, ремонте под давлением и постоянном глобальном чтении арены."
+    },
+    "interactionWithCreatures": {
+      "es": "Las oleadas mezclan rapidez, tanques y presión a distancia. El castigo clásico es perseguir demasiado a una amenaza en una línea mientras otra criatura ya empezó a romper el cable del lado opuesto.",
+      "en": "The waves mix speed, tanks, and ranged pressure. The classic punishment is overcommitting to one lane while another creature has already started breaking the opposite cable.",
+      "ru": "Волны смешивают скорость, танков и дальнее давление. Классическое наказание — слишком увлечься одной линией, пока другое существо уже ломает кабель на противоположной стороне."
+    },
+    "strategy": {
+      "es": "Se gana mejor pensando en carriles, no en kills sueltas. Construir embudos, dejar materiales de reparación listos, usar Guard Dog y reservar movilidad para rotar entre cables suele importar más que maximizar daño puro.",
+      "en": "It is won more by thinking in lanes than by chasing isolated kills. Building funnels, keeping repair materials ready, using Guard Dog, and preserving mobility to rotate between cables usually matter more than maximizing raw damage.",
+      "ru": "Побеждается это скорее мышлением по линиям, чем погоней за отдельными убийствами. Воронки, готовые материалы для ремонта, Guard Dog и сохранение мобильности для ротации между кабелями обычно важнее, чем максимизация чистого урона."
+    },
+    "environments": [
+      {
+        "es": "JavaMatic",
+        "en": "JavaMatic",
+        "ru": "JavaMatic"
+      }
+    ],
+    "loot": [
+      {
+        "section": "passive",
+        "item": {
+          "es": "Entrada de sistema: defensa final de progreso",
+          "en": "System entry: final progression defense",
+          "ru": "Системная запись: финальная оборона прогрессии"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      },
+      {
+        "section": "passive",
+        "item": {
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
+          "en": "Can contribute to unlocking or upgrading Guard Dog",
+          "ru": "Может способствовать открытию или улучшению Guard Dog"
+        },
+        "minCount": 0,
+        "maxCount": 0
+      }
+    ],
+    "combatStats": {
+      "attackDamageSummary": {
+        "es": "La presión real viene de varias líneas activas, reparaciones urgentes y oleadas mezcladas del tramo final.",
+        "en": "The real pressure comes from several active lanes, urgent repairs, and mixed late-game waves.",
+        "ru": "Реальное давление исходит от нескольких активных линий, срочного ремонта и смешанных поздних волн."
+      }
+    },
+    "abilities": [
+      {
+        "name": {
+          "es": "Múltiples cables",
+          "en": "Multiple Cables",
+          "ru": "Несколько кабелей"
+        },
+        "description": {
+          "es": "No existe un único objetivo; la defensa se pierde por acumulación de fallos entre varias líneas.",
+          "en": "There is no single objective; the defense is lost through accumulated failures across several lines.",
+          "ru": "Здесь нет одной цели; оборона проигрывается через накопление ошибок сразу на нескольких линиях."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Rotación forzada",
+          "en": "Forced Rotation",
+          "ru": "Принудительная ротация"
+        },
+        "description": {
+          "es": "El evento obliga a moverte de cable en cable. Quedarte demasiado tiempo en un lado suele significar perder otro.",
+          "en": "The event forces you to move from cable to cable. Staying on one side for too long usually means losing another.",
+          "ru": "Событие вынуждает вас бегать от кабеля к кабелю. Слишком долго держаться на одной стороне обычно значит потерять другую."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Cierre de JavaMatic",
+          "en": "JavaMatic Endgame",
+          "ru": "Финал JavaMatic"
+        },
+        "description": {
+          "es": "Es la defensa más amplia de Grounded 1 y se siente más como examen final de construcción y control de oleadas que como pelea aislada.",
+          "en": "It is the broadest defense in Grounded 1 and feels more like a final exam of building and wave control than like an isolated fight.",
+          "ru": "Это самая масштабная оборона в Grounded 1 и ощущается скорее как финальный экзамен по строительству и контролю волн, чем как отдельная драка."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      },
+      {
+        "name": {
+          "es": "Progreso de Perro Guardián",
+          "en": "Guard Dog Progress",
+          "ru": "Прогресс Guard Dog"
+        },
+        "description": {
+          "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
+          "en": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation.",
+          "ru": "Участие и успешное завершение такой защиты помогает открыть или улучшить мутацию Guard Dog."
+        },
+        "blockable": false,
+        "breaksGuard": false,
+        "staggers": false
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Aunque pertenece a la familia MIX.R, merece ficha propia por el enfoque en varios cables simultáneos.",
+        "en": "Although it belongs to the MIX.R family, it deserves its own page because of the simultaneous cable focus.",
+        "ru": "Хотя оно относится к семейству MIX.R, оно заслуживает отдельную страницу из-за одновременной защиты нескольких кабелей."
+      },
+      {
+        "es": "Es la defensa de objetivo más amplia de Grounded 1.",
+        "en": "It is the broadest objective defense in Grounded 1.",
+        "ru": "Это самая масштабная оборона цели в Grounded 1."
+      },
+      {
+        "es": "Aphidex también la trata como una entrada útil para seguir el progreso de Perro Guardián.",
+        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
+        "ru": "Aphidex также рассматривает эту запись как полезную для отслеживания прогресса Guard Dog."
+      }
+    ]
   }
 ]
