@@ -278,7 +278,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         .values[LocalStorage.getInt(_kGamePick, fallback: GamePick.g1.index)];
     query = LocalStorage.getString(_kQuery) ?? '';
     _searchController = TextEditingController(text: query);
-    enemiesFuture = EnemyRepository.loadAll();
+    enemiesFuture = _loadEnemiesForCurrentGame();
   }
 
   @override
@@ -400,6 +400,17 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         return enemies.where((enemy) => enemy.game == 'g2').toList();
       case GamePick.all:
         return enemies;
+    }
+  }
+
+  Future<List<Enemy>> _loadEnemiesForCurrentGame() {
+    switch (gamePick) {
+      case GamePick.g1:
+        return EnemyRepository.loadGame('g1');
+      case GamePick.g2:
+        return EnemyRepository.loadGame('g2');
+      case GamePick.all:
+        return EnemyRepository.loadAll();
     }
   }
 
@@ -1529,7 +1540,10 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       builder: (_) => _GamePickerSheet(
         selected: gamePick,
         onPick: (pick) {
-          setState(() => gamePick = pick);
+          setState(() {
+            gamePick = pick;
+            enemiesFuture = _loadEnemiesForCurrentGame();
+          });
           LocalStorage.setInt(_kGamePick, pick.index);
           Navigator.pop(context);
         },

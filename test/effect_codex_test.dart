@@ -203,10 +203,12 @@ void main() {
 
     testWidgets('opens from the home app bar button', (tester) async {
       await tester.pumpWidget(_buildTestApp(const EnemyListScreen()));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
 
       await tester.tap(find.byKey(const ValueKey('open-effect-codex')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 400));
 
       expect(find.text('Effect Codex'), findsOneWidget);
       expect(
