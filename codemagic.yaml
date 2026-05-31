@@ -48,6 +48,14 @@ workflows:
         script: |
           flutter pub get
 
+      - name: Flutter analyze
+        script: |
+          flutter analyze lib test
+
+      - name: Flutter test
+        script: |
+          flutter test
+
       - name: Install CocoaPods
         script: |
           rm -rf ios/Pods
@@ -77,14 +85,6 @@ workflows:
             echo "Automatic signing with this workflow requires CERTIFICATE_PRIVATE_KEY in addition to the App Store Connect API variables."
             echo "A signed IPA usually requires automatic signing or uploaded certificates/profiles."
           fi
-
-      - name: Flutter analyze
-        script: |
-          flutter analyze
-
-      - name: Flutter test
-        script: |
-          flutter test
 
       - name: Flutter build ipa --release
         script: |
