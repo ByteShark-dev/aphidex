@@ -1672,9 +1672,14 @@ class EnemyTile extends StatelessWidget {
                 initialGame: enemy.game,
               ),
             ),
-          ).then((_) {
-            if (context.mounted) {
-              ReviewPromptController.instance.registerScreenClose(context);
+          ).then((_) async {
+            if (!context.mounted) {
+              return;
+            }
+            final consumedByAdsPrompt = await MonetizationController.instance
+                .registerEnemySheetClose(context);
+            if (context.mounted && !consumedByAdsPrompt) {
+              await ReviewPromptController.instance.registerScreenClose(context);
             }
           });
         },

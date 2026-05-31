@@ -330,6 +330,48 @@ class AppLocalizations {
     }
   }
 
+  String get interstitialPitchTitle {
+    switch (languageCode) {
+      case 'en':
+        return 'Keep Aphidex ad-free';
+      case 'ru':
+        return 'Уберите рекламу в Aphidex';
+      default:
+        return 'Quita los anuncios de Aphidex';
+    }
+  }
+
+  String interstitialPitchMessage(String? price) {
+    switch (languageCode) {
+      case 'en':
+        if (price == null || price.isEmpty) {
+          return 'You already reviewed several creature sheets. You can remove ads permanently to keep browsing without interruptions, or continue with the occasional interstitial.';
+        }
+        return 'You already reviewed several creature sheets. Remove ads permanently for $price to keep browsing without interruptions, or continue with the occasional interstitial.';
+      case 'ru':
+        if (price == null || price.isEmpty) {
+          return 'Вы уже просмотрели несколько карточек существ. Можно отключить рекламу навсегда и продолжить без лишних прерываний, либо оставить редкие полноэкранные объявления.';
+        }
+        return 'Вы уже просмотрели несколько карточек существ. Отключите рекламу навсегда за $price и продолжайте без лишних прерываний, либо оставьте редкие полноэкранные объявления.';
+      default:
+        if (price == null || price.isEmpty) {
+          return 'Ya revisaste varias fichas de insectos. Puedes quitar los anuncios para siempre y seguir navegando sin interrupciones, o continuar con un intersticial ocasional.';
+        }
+        return 'Ya revisaste varias fichas de insectos. Puedes quitar los anuncios para siempre por $price y seguir navegando sin interrupciones, o continuar con un intersticial ocasional.';
+    }
+  }
+
+  String get interstitialPitchKeepAdsAction {
+    switch (languageCode) {
+      case 'en':
+        return 'Keep ads';
+      case 'ru':
+        return 'Оставить рекламу';
+      default:
+        return 'Seguir con anuncios';
+    }
+  }
+
   String get adLabel {
     switch (languageCode) {
       case 'en':

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/locale_controller.dart';
@@ -15,20 +14,6 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   static const String donateUrl = 'https://www.patreon.com/cw/bytesharkdev';
-
-  String _displayStorePrice(ProductDetails product) {
-    final price = product.price.trim();
-    final currencyCode = product.currencyCode.trim().toUpperCase();
-    final currencySymbol = product.currencySymbol.trim();
-
-    if (price.isEmpty || currencyCode.isEmpty) {
-      return price;
-    }
-    if (currencySymbol == r'$' && !price.toUpperCase().contains(currencyCode)) {
-      return '$price $currencyCode';
-    }
-    return price;
-  }
 
   Future<void> _openDonate(BuildContext context) async {
     final uri = Uri.parse(donateUrl);
@@ -219,7 +204,7 @@ class SettingsScreen extends StatelessWidget {
                   final busy = monetization.isBusy.value;
                   final displayPrice = product == null
                       ? null
-                      : _displayStorePrice(product);
+                      : MonetizationController.displayStorePrice(product);
                   final subtitle = adsRemoved
                       ? l10n.adsRemovedSubtitle
                       : (product != null
