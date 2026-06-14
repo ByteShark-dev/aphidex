@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #040d10;
+  }
+
+  body {
+    overflow-x: hidden;
+    background:
+      radial-gradient(circle at top, rgb(124 224 167 / 0.16), transparent 34%),
+      radial-gradient(circle at 82% 18%, rgb(240 193 93 / 0.12), transparent 22%),
+      linear-gradient(180deg, #071518 0%, #040d10 46%, #081417 100%);
+    color: #f3fcfa;
+    font-family: Montserrat, sans-serif;
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    @apply outline-none;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-primary-container ring-offset-2 ring-offset-surface;
+  }
+
+  img {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: linear-gradient(180deg, rgb(13 35 40 / 0.8), rgb(7 19 21 / 0.94));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .site-navbar {
+    background:
+      linear-gradient(to bottom, rgb(20 50 57 / 0.97), rgb(4 13 16 / 0.86)),
+      rgb(4 13 16 / 0.78);
+    box-shadow: 0 0 40px rgb(124 224 167 / 0.12);
+    transition:
+      background-color 200ms ease,
+      box-shadow 200ms ease,
+      backdrop-filter 200ms ease;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .site-navbar.is-scrolled {
+    background:
+      linear-gradient(to bottom, rgb(20 50 57 / 0.99), rgb(4 13 16 / 0.95)),
+      rgb(4 13 16 / 0.96);
+    box-shadow: 0 0 48px rgb(124 224 167 / 0.18);
+  }
+
+  .section-shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-outline-variant/50 px-4 py-2 font-label text-[11px] font-bold uppercase tracking-[0.26em] text-primary-container;
+    background-color: rgb(28 69 79 / 0.4);
+  }
+
+  .section-title {
+    @apply font-headline text-4xl font-bold tracking-tight text-on-surface sm:text-5xl;
+  }
+
+  .section-copy {
+    @apply max-w-2xl text-base leading-7 text-on-surface-variant sm:text-lg;
+  }
+
+  .cta-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary-container px-6 py-3 font-label text-sm font-bold uppercase tracking-[0.18em] text-on-primary-container transition hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0;
+  }
+
+  .cta-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-outline-variant/70 bg-surface-container-low/60 px-6 py-3 font-label text-sm font-bold uppercase tracking-[0.18em] text-on-surface transition hover:border-primary-container/70 hover:bg-surface-container active:translate-y-0;
+  }
+
+  .info-card {
+    @apply rounded-[26px] border border-outline-variant/30 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_18px_50px_rgba(0,0,0,0.18)];
+    background-color: rgb(13 35 40 / 0.82);
+  }
+
+  .signal-chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-outline-variant/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-secondary;
+    background-color: rgb(20 50 57 / 0.7);
+  }
+
+  .hero-grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .radial-ring {
+    background:
+      radial-gradient(circle at center, rgb(124 224 167 / 0.32), transparent 52%),
+      radial-gradient(circle at center, rgb(240 193 93 / 0.12), transparent 68%);
+  }
+
+  .store-badge {
+    @apply inline-flex max-w-[220px] rounded-2xl border border-outline-variant/35 bg-black/20 p-2 transition hover:border-primary-container/60;
+  }
+
+  .phone-frame {
+    @apply overflow-hidden rounded-[28px] border border-outline-variant/30 shadow-[0_18px_50px_rgba(0,0,0,0.22)];
+    background-color: rgb(13 35 40 / 0.88);
+  }
+
+  .metric-value {
+    @apply font-headline text-5xl font-bold tracking-tight text-on-surface;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+
+  .text-wrap-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}

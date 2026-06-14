@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="66" viewBox="0 0 220 66" role="img" aria-labelledby="title desc">
+  <title id="title">Get it on Google Play</title>
+  <desc id="desc">Google Play style badge placeholder for Aphidex downloads.</desc>
+  <rect width="220" height="66" rx="14" fill="#0B0B0F"/>
+  <rect x="1.5" y="1.5" width="217" height="63" rx="12.5" fill="none" stroke="#40465A"/>
+  <g transform="translate(16 13)">
+    <path d="M8 4 26 22 8 40c-2-1.1-3.2-3.3-3.2-6.4V10.4C4.8 7.3 6 5.1 8 4Z" fill="#00D4FF"/>
+    <path d="m26 22 7.7 4.4c2.5 1.4 2.5 3.8 0 5.2L19.2 40 10 30.8 26 22Z" fill="#FFD54A"/>
+    <path d="M33.7 17.6 26 22 10 13.2 19.2 4l14.5 8.4c2.5 1.4 2.5 3.8 0 5.2Z" fill="#7CFF8A"/>
+    <path d="M10 13.2 19.2 4 26 22 10 30.8 4.8 25.6V18.4L10 13.2Z" fill="#FF6B8B"/>
+  </g>
+  <text x="72" y="24" fill="#D6DBE7" font-family="Montserrat, Arial, sans-serif" font-size="9" letter-spacing="1.9">GET IT ON</text>
+  <text x="72" y="46" fill="#FFFFFF" font-family="Montserrat, Arial, sans-serif" font-size="20" font-weight="700">Google Play</text>
+</svg>
