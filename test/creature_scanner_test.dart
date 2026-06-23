@@ -8,10 +8,14 @@ import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/scanner/creature_alias_matcher.dart';
 import 'package:aphidex/scanner/creature_scanner_page.dart';
 import 'package:aphidex/scanner/creature_scanner_service.dart';
+import 'package:aphidex/scanner/remote_creature_scanner_service.dart';
+import 'package:aphidex/scanner/scanner_image_compressor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() {
@@ -468,6 +472,225 @@ void main() {
       await tester.pump();
     },
   );
+
+  testWidgets('remote scanner beta is hidden by default', (tester) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          serviceOverride: _FakeScannerService(
+            allEnemies: [enemy],
+            selectedGameScope: scannerGameScopeG2,
+            handler: (_) async => const CreatureScannerResult(
+              matches: [],
+              rawLabels: [],
+              rawWebEntities: [],
+              hasClearMatch: false,
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('Smart beta analysis'), findsNothing);
+  });
+
+  testWidgets('remote scanner beta shows smart analysis controls', (
+    tester,
+  ) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    expect(find.text('Smart Scanner Beta'), findsOneWidget);
+    expect(find.text('Smart beta analysis'), findsOneWidget);
+    expect(find.text('Beta: it can be wrong.'), findsOneWidget);
+    expect(
+      find.text(
+        'Smart analysis sends the image to a ByteShark server to identify possible creatures.',
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('remote scanner shows no-token message', (tester) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            scanHandler: (_) async => throw const CreatureScannerException(
+              CreatureScannerErrorType.outOfTokens,
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('No scanner tokens remaining.'), findsOneWidget);
+    expect(find.text('Search manually'), findsOneWidget);
+    expect(find.text('Try another image'), findsOneWidget);
+  });
+
+  testWidgets('remote scanner opens lazy detail from exact candidate id', (
+    tester,
+  ) async {
+    final enemy = _enemy(
+      id: 'g2_wolf_spider',
+      speciesKey: 'wolf_spider',
+      game: 'g2',
+      name: 'Wolf Spider G2',
+    );
+    final match = CreatureScannerMatch(
+      creatureId: enemy.speciesKey,
+      displayName: enemy.name,
+      confidence: 0.91,
+      sourceLabels: const ['visible markings'],
+      variants: [enemy],
+      previewEnemy: enemy,
+      isExactIdMatch: true,
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            scanHandler: (_) async => CreatureScannerResult(
+              matches: [match],
+              rawLabels: const [],
+              rawWebEntities: const [],
+              hasClearMatch: true,
+              weak: false,
+              tokens: _tokens(tokens: 9, usedToday: 1),
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 150));
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 250));
+
+    expect(find.text('Wolf Spider G2'), findsWidgets);
+    await tester.pageBack();
+    await tester.pump();
+  });
+
+  testWidgets('remote scanner network failure shows recoverable error', (
+    tester,
+  ) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            scanHandler: (_) async => throw const CreatureScannerException(
+              CreatureScannerErrorType.network,
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'I could not reach the scanner service. Check your internet and try again.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Try another image'), findsOneWidget);
+  });
+
+  test('remote scanner filters allowedCreatures by selected scope', () async {
+    final g1 = _enemy(
+      id: 'g1_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g1',
+      name: 'Ladybug G1',
+    );
+    final g2 = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    expect(await _capturedAllowedIds(scannerGameScopeG1, [g1, g2]), [
+      'g1_ladybug',
+    ]);
+    expect(await _capturedAllowedIds(scannerGameScopeG2, [g1, g2]), [
+      'g2_ladybug',
+    ]);
+    expect(await _capturedAllowedIds(scannerGameScopeAll, [g1, g2]), [
+      'g1_ladybug',
+      'g2_ladybug',
+    ]);
+  });
 }
 
 Widget _buildApp(Widget home) {
@@ -488,6 +711,15 @@ Future<XFile?> _fakePicker(ImageSource source) async {
     mimeType: 'image/jpeg',
     name: source == ImageSource.camera ? 'camera.jpg' : 'gallery.jpg',
   );
+}
+
+Future<void> _scrollToRemoteAnalyze(WidgetTester tester) async {
+  await tester.scrollUntilVisible(
+    find.byKey(const ValueKey('scanner-remote-analyze')),
+    180,
+    scrollable: find.byType(Scrollable),
+  );
+  await tester.pumpAndSettle();
 }
 
 EnemyIndexEntry _enemy({
@@ -532,6 +764,39 @@ class _FakeScannerService extends CreatureScannerService {
   Future<CreatureScannerResult> scanFile(XFile file) => handler(file);
 }
 
+class _FakeRemoteScannerService implements RemoteCreatureScannerClient {
+  final Future<CreatureScannerResult> Function(XFile file)? scanHandler;
+
+  _FakeRemoteScannerService({this.scanHandler});
+
+  @override
+  Future<RemoteScannerTokenState> loadTokens() {
+    return Future.value(_tokens());
+  }
+
+  @override
+  Future<CreatureScannerResult> scanFile(XFile file) {
+    return scanHandler?.call(file) ??
+        Future.value(
+          CreatureScannerResult(
+            matches: const [],
+            rawLabels: const [],
+            rawWebEntities: const [],
+            hasClearMatch: false,
+            weak: true,
+            tokens: _tokens(),
+          ),
+        );
+  }
+}
+
+class _PassthroughCompressor implements ScannerImageCompressor {
+  const _PassthroughCompressor();
+
+  @override
+  Future<XFile> compressFile(XFile file) async => file;
+}
+
 class _UnusedRecognitionProvider implements CreatureRecognitionProvider {
   const _UnusedRecognitionProvider();
 
@@ -539,6 +804,68 @@ class _UnusedRecognitionProvider implements CreatureRecognitionProvider {
   Future<CreatureRecognitionPayload> analyzeImageFile(XFile file) {
     throw UnimplementedError('This provider should not be called in tests.');
   }
+}
+
+RemoteScannerTokenState _tokens({int tokens = 10, int usedToday = 0}) {
+  return RemoteScannerTokenState(
+    plan: 'free',
+    tokens: tokens,
+    maxTokens: 100,
+    dailyRefill: 10,
+    dailyLimit: 25,
+    usedToday: usedToday,
+    usageDate: '2026-06-23',
+    lastRefillDate: '2026-06-23',
+  );
+}
+
+Future<List<String>> _capturedAllowedIds(
+  String scope,
+  List<EnemyIndexEntry> enemies,
+) async {
+  var captured = const <String>[];
+  final service = RemoteCreatureScannerService(
+    apiBaseUrl: 'https://scanner.test',
+    clientToken: 'client-token',
+    allEnemies: enemies,
+    selectedGameScope: scope,
+    languageCode: 'en',
+    deviceIdOverride: 'test-device-12345',
+    imageCompressor: const _PassthroughCompressor(),
+    httpClient: MockClient((request) async {
+      final body = jsonDecode(request.body) as Map<String, dynamic>;
+      captured = (body['allowedCreatures'] as List<dynamic>)
+          .cast<Map<dynamic, dynamic>>()
+          .map((item) => item['id'].toString())
+          .toList(growable: false);
+      return http.Response(
+        jsonEncode({
+          'candidates': <Map<String, dynamic>>[],
+          'weak': true,
+          'tokens': {
+            'plan': 'free',
+            'tokens': 9,
+            'maxTokens': 100,
+            'dailyRefill': 10,
+            'dailyLimit': 25,
+            'usedToday': 1,
+            'usageDate': '2026-06-23',
+            'lastRefillDate': '2026-06-23',
+          },
+        }),
+        200,
+      );
+    }),
+  );
+
+  await service.scanFile(
+    XFile.fromData(
+      Uint8List.fromList(const [1, 2, 3, 4]),
+      mimeType: 'image/jpeg',
+      name: 'test.jpg',
+    ),
+  );
+  return captured;
 }
 
 class _TestAssetBundle extends CachingAssetBundle {

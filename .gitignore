@@ -64,3 +64,5 @@ app.*.map.json
 /tmp_*.json
 /.lh/
 /functions/node_modules/
+/cloudflare/aphidex-scanner-worker/node_modules/
+/cloudflare/aphidex-scanner-worker/.wrangler/

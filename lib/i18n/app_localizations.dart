@@ -559,6 +559,105 @@ class AppLocalizations {
     }
   }
 
+  String get scannerRemoteTitle {
+    switch (languageCode) {
+      case 'en':
+        return 'Smart Scanner Beta';
+      case 'ru':
+        return '\u0423\u043C\u043D\u044B\u0439 \u0441\u043A\u0430\u043D\u0435\u0440 beta';
+      default:
+        return 'Esc\u00E1ner inteligente beta';
+    }
+  }
+
+  String get scannerRemoteAnalyzeAction {
+    switch (languageCode) {
+      case 'en':
+        return 'Smart beta analysis';
+      case 'ru':
+        return '\u0423\u043C\u043D\u044B\u0439 \u0430\u043D\u0430\u043B\u0438\u0437 beta';
+      default:
+        return 'An\u00E1lisis inteligente beta';
+    }
+  }
+
+  String get scannerRemotePrivacyNotice {
+    switch (languageCode) {
+      case 'en':
+        return 'Smart analysis sends the image to a ByteShark server to identify possible creatures.';
+      case 'ru':
+        return '\u0423\u043C\u043D\u044B\u0439 \u0430\u043D\u0430\u043B\u0438\u0437 \u043E\u0442\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 ByteShark \u0434\u043B\u044F \u043F\u043E\u0438\u0441\u043A\u0430 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u044B\u0445 \u0441\u0443\u0449\u0435\u0441\u0442\u0432.';
+      default:
+        return 'El an\u00E1lisis inteligente env\u00EDa la imagen a un servidor de ByteShark para identificar posibles criaturas.';
+    }
+  }
+
+  String get scannerRemoteBetaNotice {
+    switch (languageCode) {
+      case 'en':
+        return 'Beta: it can be wrong.';
+      case 'ru':
+        return 'Beta: \u043C\u043E\u0436\u0435\u0442 \u043E\u0448\u0438\u0431\u0430\u0442\u044C\u0441\u044F.';
+      default:
+        return 'Beta: puede equivocarse.';
+    }
+  }
+
+  String scannerTokensRemaining(int tokens, int dailyLimit, int usedToday) {
+    switch (languageCode) {
+      case 'en':
+        return 'Tokens: $tokens remaining. Daily: $usedToday/$dailyLimit.';
+      case 'ru':
+        return '\u0422\u043E\u043A\u0435\u043D\u044B: $tokens \u043E\u0441\u0442\u0430\u043B\u043E\u0441\u044C. \u0414\u0435\u043D\u044C: $usedToday/$dailyLimit.';
+      default:
+        return 'Tokens: $tokens restantes. Diario: $usedToday/$dailyLimit.';
+    }
+  }
+
+  String get scannerNoTokensMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'No scanner tokens remaining.';
+      case 'ru':
+        return '\u0422\u043E\u043A\u0435\u043D\u044B \u0441\u043A\u0430\u043D\u0435\u0440\u0430 \u0437\u0430\u043A\u043E\u043D\u0447\u0438\u043B\u0438\u0441\u044C.';
+      default:
+        return 'No quedan tokens del scanner.';
+    }
+  }
+
+  String get scannerDailyLimitReachedMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'Daily scanner limit reached. Try again tomorrow.';
+      case 'ru':
+        return '\u0414\u043D\u0435\u0432\u043D\u043E\u0439 \u043B\u0438\u043C\u0438\u0442 \u0441\u043A\u0430\u043D\u0435\u0440\u0430 \u0438\u0441\u0447\u0435\u0440\u043F\u0430\u043D. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0437\u0430\u0432\u0442\u0440\u0430.';
+      default:
+        return 'L\u00EDmite diario del scanner alcanzado. Int\u00E9ntalo ma\u00F1ana.';
+    }
+  }
+
+  String get scannerManualSearchAction {
+    switch (languageCode) {
+      case 'en':
+        return 'Search manually';
+      case 'ru':
+        return '\u0418\u0441\u043A\u0430\u0442\u044C \u0432\u0440\u0443\u0447\u043D\u0443\u044E';
+      default:
+        return 'Buscar manualmente';
+    }
+  }
+
+  String get scannerTryAnotherImageAction {
+    switch (languageCode) {
+      case 'en':
+        return 'Try another image';
+      case 'ru':
+        return '\u0414\u0440\u0443\u0433\u043E\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435';
+      default:
+        return 'Intentar otra imagen';
+    }
+  }
+
   String get scannerGenericErrorMessage {
     switch (languageCode) {
       case 'en':

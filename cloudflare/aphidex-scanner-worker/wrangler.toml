@@ -1,0 +1,15 @@
+name = "aphidex-scanner-worker"
+main = "src/index.ts"
+compatibility_date = "2026-06-23"
+workers_dev = true
+
+[vars]
+GEMINI_MODEL = "gemini-2.5-flash-lite"
+# Optional: set to a single origin or "*" if browser CORS is needed.
+# CORS_ALLOWED_ORIGIN = "https://example.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aphidex-scanner-beta"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
