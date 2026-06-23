@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aphidex/controllers/tutorial_controller.dart';
+import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/data/enemy_variants.dart';
 import 'package:aphidex/data/local_storage.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
@@ -41,6 +42,7 @@ void main() {
 
   setUp(() async {
     await Hive.box('aphidex').clear();
+    EnemyRepository.clearCaches();
     await LocalStorage.setBool(TutorialController.completionKey, true);
     await LocalStorage.setInt('ui_game_pick', GamePick.all.index);
 
@@ -66,13 +68,29 @@ void main() {
       if (key == 'FontManifest.json') {
         return _stringData('[]');
       }
-      if (key.endsWith('assets/data/enemies_g1.json')) {
-        return _stringData(jsonEncode([_g1BlackWorkerAntJson]));
+      if (key.endsWith('assets/data/creatures/en/index_g1.json')) {
+        return _stringData(jsonEncode([_indexEntry(_g1BlackWorkerAntJson)]));
       }
-      if (key.endsWith('assets/data/enemies_g2.json')) {
+      if (key.endsWith('assets/data/creatures/en/index_g2.json')) {
         return _stringData(
-          jsonEncode([_g2BlackWorkerAntJson, _g2CricketJson, _g2CrowJson]),
+          jsonEncode([
+            _indexEntry(_g2BlackWorkerAntJson),
+            _indexEntry(_g2CricketJson),
+            _indexEntry(_g2CrowJson),
+          ]),
         );
+      }
+      for (final entry in [
+        _g1BlackWorkerAntJson,
+        _g2BlackWorkerAntJson,
+        _g2CricketJson,
+        _g2CrowJson,
+      ]) {
+        if (key.endsWith(
+          'assets/data/creatures/en/details/${entry['id']}.json',
+        )) {
+          return _stringData(jsonEncode(entry));
+        }
       }
       return _transparentImage;
     };
@@ -116,20 +134,15 @@ void main() {
       ..._g2CricketJson,
       'id': 'g2_test_scorpion',
       'speciesKey': 'test_scorpion',
-      'name': {'es': 'Escorpión de prueba', 'en': 'Test Scorpion', 'ru': 'Test Scorpion'},
-      'weakPoint': {
-        'part': 'stinger',
-        'susceptibleDamage': 'stabbing',
+      'name': {
+        'es': 'Escorpión de prueba',
+        'en': 'Test Scorpion',
+        'ru': 'Test Scorpion',
       },
+      'weakPoint': {'part': 'stinger', 'susceptibleDamage': 'stabbing'},
       'weakPoints': [
-        {
-          'part': 'stinger',
-          'susceptibleDamage': 'stabbing',
-        },
-        {
-          'part': 'rump',
-          'susceptibleDamage': 'any',
-        },
+        {'part': 'stinger', 'susceptibleDamage': 'stabbing'},
+        {'part': 'rump', 'susceptibleDamage': 'any'},
       ],
     });
 
@@ -142,14 +155,17 @@ void main() {
   });
 
   test('groups shared species once in both games', () {
-    final entries = groupEnemyListEntries(
-      [g1BlackWorkerAnt, g2BlackWorkerAnt, g2Cricket],
-      mergeSharedSpecies: true,
-    );
+    final entries = groupEnemyListEntries([
+      g1BlackWorkerAnt,
+      g2BlackWorkerAnt,
+      g2Cricket,
+    ], mergeSharedSpecies: true);
 
     expect(entries, hasLength(2));
     expect(
-      entries.firstWhere((entry) => entry.speciesKey == 'black_worker_ant').variants,
+      entries
+          .firstWhere((entry) => entry.speciesKey == 'black_worker_ant')
+          .variants,
       hasLength(2),
     );
     expect(
@@ -159,10 +175,10 @@ void main() {
   });
 
   test('shared species entries prefer the G2 variant by default', () {
-    final entry = groupEnemyListEntries(
-      [g1BlackWorkerAnt, g2BlackWorkerAnt],
-      mergeSharedSpecies: true,
-    ).single;
+    final entry = groupEnemyListEntries([
+      g1BlackWorkerAnt,
+      g2BlackWorkerAnt,
+    ], mergeSharedSpecies: true).single;
 
     expect(entry.preferredVariant(preferG2Default: true).game, 'g2');
     expect(entry.preferredVariant(preferredGame: 'g1').game, 'g1');
@@ -184,24 +200,32 @@ void main() {
     expect(find.text('Cricket'), findsOneWidget);
   });
 
-  testWidgets('detail shows inflicts icon row and collapsible sections start closed', (
+  testWidgets(
+    'detail shows inflicts icon row and collapsible sections start closed',
+    (tester) async {
+      await tester.pumpWidget(
+        _buildTestApp(EnemyDetailScreen(enemy: g2Cricket)),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const ValueKey('inflicts-effect-stabbing')),
+        findsOneWidget,
+      );
+      expect(find.text('Cricket Drumstick'), findsNothing);
+      expect(find.text('Fabulous Femur'), findsNothing);
+
+      await tester.tap(find.text('Loot'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Cricket Drumstick'), findsOneWidget);
+      expect(find.text('Fabulous Femur'), findsOneWidget);
+    },
+  );
+
+  testWidgets('detail shows dedicated boss phases when available', (
     tester,
   ) async {
-    await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: g2Cricket)));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const ValueKey('inflicts-effect-stabbing')), findsOneWidget);
-    expect(find.text('Cricket Drumstick'), findsNothing);
-    expect(find.text('Fabulous Femur'), findsNothing);
-
-    await tester.tap(find.text('Loot'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Cricket Drumstick'), findsOneWidget);
-    expect(find.text('Fabulous Femur'), findsOneWidget);
-  });
-
-  testWidgets('detail shows dedicated boss phases when available', (tester) async {
     final boss = Enemy.fromJson(_g2BossPhaseJson);
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: boss)));
@@ -219,10 +243,11 @@ void main() {
   });
 
   test('grouping without merge keeps real game variants separate', () {
-    final entries = groupEnemyListEntries(
-      [g1BlackWorkerAnt, g2BlackWorkerAnt, g2Cricket],
-      mergeSharedSpecies: false,
-    );
+    final entries = groupEnemyListEntries([
+      g1BlackWorkerAnt,
+      g2BlackWorkerAnt,
+      g2Cricket,
+    ], mergeSharedSpecies: false);
 
     expect(entries, hasLength(3));
     expect(
@@ -249,6 +274,32 @@ ByteData _stringData(String value) {
   return ByteData.view(bytes.buffer);
 }
 
+Map<String, dynamic> _indexEntry(Map<String, dynamic> json) {
+  final enemy = Enemy.fromJson(json);
+  return {
+    'id': enemy.id,
+    'speciesKey': enemy.speciesKey,
+    'name': enemy.name.resolve('en'),
+    'game': enemy.game,
+    'tier': enemy.tier,
+    'danger': enemy.danger,
+    'isBoss': enemy.isBoss,
+    'order': enemy.order,
+    'defaultGold': enemy.defaultGold,
+    'cardNormal': enemy.cardNormal,
+    'cardGold': enemy.cardGold,
+    'weaknesses': enemy.weaknesses,
+    'resistances': enemy.resistances,
+    if (enemy.temperament != null) 'temperament': enemy.temperament,
+    if (enemy.health != null)
+      'health': {
+        'rating': enemy.health!.rating,
+        if (enemy.health!.value != null) 'value': enemy.health!.value,
+      },
+    if (enemy.collectionGroup != null) 'collectionGroup': enemy.collectionGroup,
+  };
+}
+
 final ByteData _transparentImage = ByteData.view(
   Uint8List.fromList(
     base64Decode(
@@ -273,7 +324,11 @@ class _TestAssetBundle extends CachingAssetBundle {
 const Map<String, dynamic> _g1BlackWorkerAntJson = {
   'id': 'g1_black_worker_ant',
   'speciesKey': 'black_worker_ant',
-  'name': {'es': 'Hormiga obrera negra', 'en': 'Black Worker Ant', 'ru': 'Чёрный рабочий муравей'},
+  'name': {
+    'es': 'Hormiga obrera negra',
+    'en': 'Black Worker Ant',
+    'ru': 'Чёрный рабочий муравей',
+  },
   'game': 'g1',
   'temperament': 'neutral',
   'tier': 2,
@@ -281,8 +336,10 @@ const Map<String, dynamic> _g1BlackWorkerAntJson = {
   'isBoss': false,
   'order': 102,
   'defaultGold': false,
-  'cardNormal': 'assets/g1/creatures/cards/normal/Creaturecard_Black_Worker_Ant.webp',
-  'cardGold': 'assets/g1/creatures/cards/gold/Creaturecardgold_Black_Worker_Ant.webp',
+  'cardNormal':
+      'assets/g1/creatures/cards/normal/Creaturecard_Black_Worker_Ant.webp',
+  'cardGold':
+      'assets/g1/creatures/cards/gold/Creaturecardgold_Black_Worker_Ant.webp',
   'photo': 'assets/g1/creatures/photos/Black_Worker_Ant.webp',
   'description': {
     'es': 'Una hormiga más resistente del hormiguero negro.',
@@ -290,7 +347,11 @@ const Map<String, dynamic> _g1BlackWorkerAntJson = {
     'ru': 'Более крепкий муравей из Чёрного муравейника.',
   },
   'environments': [
-    {'es': 'Hormiguero negro', 'en': 'Black Anthill', 'ru': 'Чёрный муравейник'},
+    {
+      'es': 'Hormiguero negro',
+      'en': 'Black Anthill',
+      'ru': 'Чёрный муравейник',
+    },
   ],
   'weaknesses': ['spicy', 'stabbing'],
   'resistances': ['fresh'],
@@ -307,14 +368,22 @@ const Map<String, dynamic> _g1BlackWorkerAntJson = {
   'loot': [
     {
       'section': 'loot',
-      'item': {'es': 'Cabeza de hormiga negra', 'en': 'Black Ant Head', 'ru': 'Голова чёрного муравья'},
+      'item': {
+        'es': 'Cabeza de hormiga negra',
+        'en': 'Black Ant Head',
+        'ru': 'Голова чёрного муравья',
+      },
       'minCount': 0,
       'maxCount': 1,
     },
   ],
   'advancedLootTable': [
     {
-      'item': {'es': 'Cabeza de hormiga negra', 'en': 'Black Ant Head', 'ru': 'Голова чёрного муравья'},
+      'item': {
+        'es': 'Cabeza de hormiga negra',
+        'en': 'Black Ant Head',
+        'ru': 'Голова чёрного муравья',
+      },
       'countLabel': 'x1',
       'chancePct': 30,
     },
@@ -368,7 +437,11 @@ const Map<String, dynamic> _g1BlackWorkerAntJson = {
 const Map<String, dynamic> _g2BlackWorkerAntJson = {
   'id': 'g2_black_worker_ant',
   'speciesKey': 'black_worker_ant',
-  'name': {'es': 'Hormiga obrera negra', 'en': 'Black Worker Ant', 'ru': 'Чёрный рабочий муравей'},
+  'name': {
+    'es': 'Hormiga obrera negra',
+    'en': 'Black Worker Ant',
+    'ru': 'Чёрный рабочий муравей',
+  },
   'game': 'g2',
   'temperament': 'neutral',
   'tier': 2,
@@ -377,7 +450,8 @@ const Map<String, dynamic> _g2BlackWorkerAntJson = {
   'order': 201,
   'defaultGold': false,
   'cardNormal': 'assets/g2/creatures/cards/Creaturecard_Black_Worker_AntG2.png',
-  'cardGold': 'assets/g2/creatures/cards_golden/Creaturecardgold_Black_Worker_Ant.png',
+  'cardGold':
+      'assets/g2/creatures/cards_golden/Creaturecardgold_Black_Worker_Ant.png',
   'photo': 'assets/g1/creatures/photos/Black_Worker_Ant.webp',
   'description': {
     'es': 'Ahora aparece en el huerto vegetal y el hormiguero en guerra.',
@@ -404,14 +478,22 @@ const Map<String, dynamic> _g2BlackWorkerAntJson = {
   'loot': [
     {
       'section': 'loot',
-      'item': {'es': 'Cabeza de hormiga negra', 'en': 'Black Ant Head', 'ru': 'Голова чёрного муравья'},
+      'item': {
+        'es': 'Cabeza de hormiga negra',
+        'en': 'Black Ant Head',
+        'ru': 'Голова чёрного муравья',
+      },
       'minCount': 0,
       'maxCount': 1,
     },
   ],
   'advancedLootTable': [
     {
-      'item': {'es': 'Huevo de hormiga negra', 'en': 'Black Ant Egg', 'ru': 'Яйцо чёрного муравья'},
+      'item': {
+        'es': 'Huevo de hormiga negra',
+        'en': 'Black Ant Egg',
+        'ru': 'Яйцо чёрного муравья',
+      },
       'countLabel': 'x2',
       'chancePct': 1,
     },
@@ -430,7 +512,11 @@ const Map<String, dynamic> _g2BlackWorkerAntJson = {
     {'es': 'Daño cortante', 'en': 'Chopping damage', 'ru': 'Рубящий урон'},
   ],
   'specialTraits': [
-    {'es': 'Debilidad al agua: +100%', 'en': 'Water weakness: +100%', 'ru': 'Слабость к воде: +100%'},
+    {
+      'es': 'Debilidad al agua: +100%',
+      'en': 'Water weakness: +100%',
+      'ru': 'Слабость к воде: +100%',
+    },
   ],
   'abilities': [
     {
@@ -502,14 +588,22 @@ const Map<String, dynamic> _g2CricketJson = {
   'loot': [
     {
       'section': 'loot',
-      'item': {'es': 'Muslo de grillo', 'en': 'Cricket Drumstick', 'ru': 'Ножка сверчка'},
+      'item': {
+        'es': 'Muslo de grillo',
+        'en': 'Cricket Drumstick',
+        'ru': 'Ножка сверчка',
+      },
       'minCount': 0,
       'maxCount': 2,
     },
   ],
   'advancedLootTable': [
     {
-      'item': {'es': 'Fémur fabuloso', 'en': 'Fabulous Femur', 'ru': 'Чудесная бедренная кость'},
+      'item': {
+        'es': 'Fémur fabuloso',
+        'en': 'Fabulous Femur',
+        'ru': 'Чудесная бедренная кость',
+      },
       'countLabel': 'x1',
       'chancePct': 4,
     },
@@ -530,7 +624,11 @@ const Map<String, dynamic> _g2CricketJson = {
   ],
   'abilities': [
     {
-      'name': {'es': 'Salto mortal', 'en': 'Leap of Faith', 'ru': 'Прыжок веры'},
+      'name': {
+        'es': 'Salto mortal',
+        'en': 'Leap of Faith',
+        'ru': 'Прыжок веры',
+      },
       'blockable': false,
       'breaksGuard': false,
       'staggers': false,
@@ -558,16 +656,8 @@ const Map<String, dynamic> _g2CrowJson = {
   'cardNormal': 'assets/g2/creatures/cards/Creaturecard_Crow.png',
   'cardGold': 'assets/g2/creatures/cards_golden/Creaturecardgold_Crow.png',
   'photo': 'assets/g1/creatures/photos/Crow.jpg',
-  'description': {
-    'es': 'Cuervo.',
-    'en': 'Crow.',
-    'ru': 'Crow.',
-  },
-  'behavior': {
-    'es': 'Neutral.',
-    'en': 'Neutral.',
-    'ru': 'Neutral.',
-  },
+  'description': {'es': 'Cuervo.', 'en': 'Crow.', 'ru': 'Crow.'},
+  'behavior': {'es': 'Neutral.', 'en': 'Neutral.', 'ru': 'Neutral.'},
   'interactionWithPlayer': {
     'es': 'Neutral.',
     'en': 'Neutral.',
@@ -579,7 +669,11 @@ const Map<String, dynamic> _g2BossPhaseJson = {
   'id': 'g2_masked_stranger',
   'speciesKey': 'masked_stranger',
   'collectionGroup': 'angry',
-  'name': {'es': 'Desconocida Enmascarada', 'en': 'Masked Stranger', 'ru': 'Masked Stranger'},
+  'name': {
+    'es': 'Desconocida Enmascarada',
+    'en': 'Masked Stranger',
+    'ru': 'Masked Stranger',
+  },
   'game': 'g2',
   'temperament': 'aggressive',
   'tier': 5,
@@ -588,7 +682,8 @@ const Map<String, dynamic> _g2BossPhaseJson = {
   'order': 256,
   'defaultGold': false,
   'cardNormal': 'assets/g2/creatures/cards/Creaturecard_Masked_Stranger.png',
-  'cardGold': 'assets/g2/creatures/cards_golden/Creaturecardgold_Masked_Stranger.png',
+  'cardGold':
+      'assets/g2/creatures/cards_golden/Creaturecardgold_Masked_Stranger.png',
   'photo': 'assets/global/Aphidex_Proximamente.webp',
   'description': {
     'es': 'Jefe de historia de Grounded 2.',
@@ -600,12 +695,24 @@ const Map<String, dynamic> _g2BossPhaseJson = {
     {
       'id': 'phase1',
       'label': {'es': 'Fase 1', 'en': 'Phase 1', 'ru': 'Фаза 1'},
-      'summary': {'es': 'Fase inicial de duelo.', 'en': 'Opening duel phase.', 'ru': 'Opening duel phase.'},
+      'summary': {
+        'es': 'Fase inicial de duelo.',
+        'en': 'Opening duel phase.',
+        'ru': 'Opening duel phase.',
+      },
       'attacks': [
         {
-          'name': {'es': 'Ataque básico', 'en': 'Basic Attack', 'ru': 'Basic Attack'},
+          'name': {
+            'es': 'Ataque básico',
+            'en': 'Basic Attack',
+            'ru': 'Basic Attack',
+          },
           'tags': ['melee'],
-          'notes': {'es': 'Tajo base.', 'en': 'Base slash.', 'ru': 'Base slash.'},
+          'notes': {
+            'es': 'Tajo base.',
+            'en': 'Base slash.',
+            'ru': 'Base slash.',
+          },
         },
       ],
     },
@@ -613,12 +720,28 @@ const Map<String, dynamic> _g2BossPhaseJson = {
       'id': 'phase2',
       'label': {'es': 'Fase 2', 'en': 'Phase 2', 'ru': 'Фаза 2'},
       'startsAtHealthPct': 40,
-      'summary': {'es': 'Escala la presión.', 'en': 'Escalates with faster pressure.', 'ru': 'Escalates with faster pressure.'},
-      'aggressionChange': {'es': 'Más agresiva.', 'en': 'More aggressive.', 'ru': 'More aggressive.'},
+      'summary': {
+        'es': 'Escala la presión.',
+        'en': 'Escalates with faster pressure.',
+        'ru': 'Escalates with faster pressure.',
+      },
+      'aggressionChange': {
+        'es': 'Más agresiva.',
+        'en': 'More aggressive.',
+        'ru': 'More aggressive.',
+      },
       'abilities': [
         {
-          'name': {'es': 'Combo giratorio', 'en': 'Spin Combo', 'ru': 'Spin Combo'},
-          'description': {'es': 'Combo más rápido.', 'en': 'Faster combo.', 'ru': 'Faster combo.'},
+          'name': {
+            'es': 'Combo giratorio',
+            'en': 'Spin Combo',
+            'ru': 'Spin Combo',
+          },
+          'description': {
+            'es': 'Combo más rápido.',
+            'en': 'Faster combo.',
+            'ru': 'Faster combo.',
+          },
         },
       ],
     },

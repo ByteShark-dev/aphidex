@@ -39,7 +39,7 @@ flutter:
     - assets/g2/creatures/cards/
     - assets/g2/creatures/cards_golden/
     - assets/g2/creatures/photos/
-    - assets/data/
+    - assets/data/creatures/
     - assets/global/
     - assets/global/effects_damage/
     - assets/global/rewards/

@@ -3,14 +3,13 @@ import 'package:image_picker/image_picker.dart';
 
 import '../data/local_storage.dart';
 import '../i18n/app_localizations.dart';
-import '../models/enemy.dart';
+import '../models/enemy_index_entry.dart';
 import '../screens/enemy_detail_screen.dart';
 import 'creature_alias_matcher.dart';
 import 'creature_scanner_service.dart';
 import 'scanner_result_page.dart';
 
-typedef ScannerImagePicker =
-    Future<XFile?> Function(ImageSource source);
+typedef ScannerImagePicker = Future<XFile?> Function(ImageSource source);
 
 class CreatureScannerComingSoonPage extends StatelessWidget {
   const CreatureScannerComingSoonPage({super.key});
@@ -37,7 +36,10 @@ class CreatureScannerComingSoonPage extends StatelessWidget {
                 Text(
                   l10n.scannerComingSoonTitle,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
@@ -54,7 +56,7 @@ class CreatureScannerComingSoonPage extends StatelessWidget {
 }
 
 class CreatureScannerPage extends StatefulWidget {
-  final List<Enemy> enemies;
+  final List<EnemyIndexEntry> enemies;
   final String selectedGameScope;
   final CreatureScannerService? serviceOverride;
   final ScannerImagePicker? imagePickerOverride;
@@ -182,15 +184,17 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       context,
       MaterialPageRoute(
         builder: (_) => EnemyDetailScreen(
-          enemy: selectedEnemy,
-          variants: match.variants,
+          summary: selectedEnemy,
+          variantSummaries: match.variants,
           initialGame: selectedEnemy.game,
         ),
       ),
     );
   }
 
-  Future<Enemy?> _resolveEnemyForMatch(CreatureScannerMatch match) async {
+  Future<EnemyIndexEntry?> _resolveEnemyForMatch(
+    CreatureScannerMatch match,
+  ) async {
     if (widget.selectedGameScope == scannerGameScopeG1 ||
         widget.selectedGameScope == scannerGameScopeG2) {
       return preferredScannerVariant(
@@ -231,9 +235,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       builder: (dialogContext) => AlertDialog(
         title: Text(context.l10n.scannerChooseGameTitle),
         content: Text(
-          context.l10n.scannerChooseGameMessage(
-            match.previewEnemy.name.resolve(context.l10n.languageCode),
-          ),
+          context.l10n.scannerChooseGameMessage(match.previewEnemy.name),
         ),
         actions: [
           TextButton(
@@ -299,22 +301,26 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
               Text(
                 l10n.scannerTitle,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
               const SizedBox(height: 10),
-              Text(
-                l10n.scannerNeedsInternet,
-                textAlign: TextAlign.center,
-              ),
+              Text(l10n.scannerNeedsInternet, textAlign: TextAlign.center),
               const SizedBox(height: 24),
               FilledButton.icon(
-                onPressed: _isAnalyzing ? null : () => _scan(ImageSource.camera),
+                onPressed: _isAnalyzing
+                    ? null
+                    : () => _scan(ImageSource.camera),
                 icon: const Icon(Icons.photo_camera),
                 label: Text(l10n.scannerTakePhotoAction),
               ),
               const SizedBox(height: 12),
               OutlinedButton.icon(
-                onPressed: _isAnalyzing ? null : () => _scan(ImageSource.gallery),
+                onPressed: _isAnalyzing
+                    ? null
+                    : () => _scan(ImageSource.gallery),
                 icon: const Icon(Icons.photo_library),
                 label: Text(l10n.scannerPickImageAction),
               ),
@@ -367,4 +373,5 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
   }
 }
 
-String _variantPreferenceKey(String speciesKey) => 'species_variant:$speciesKey';
+String _variantPreferenceKey(String speciesKey) =>
+    'species_variant:$speciesKey';

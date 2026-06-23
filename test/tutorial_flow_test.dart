@@ -4,8 +4,10 @@ import 'dart:io';
 
 import 'package:aphidex/controllers/review_prompt_controller.dart';
 import 'package:aphidex/controllers/tutorial_controller.dart';
+import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
+import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/screens/enemy_detail_screen.dart';
 import 'package:aphidex/screens/enemy_list_screen.dart';
 import 'package:aphidex/screens/effect_codex_screen.dart';
@@ -40,6 +42,7 @@ void main() {
 
   setUp(() async {
     await Hive.box('aphidex').clear();
+    EnemyRepository.clearCaches();
     TutorialController.instance.debugResetForTests();
 
     handler = (message) async {
@@ -59,13 +62,26 @@ void main() {
       if (key == 'FontManifest.json') {
         return _stringData('[]');
       }
-      if (key.endsWith('assets/data/enemies_g1.json')) {
+      if (key.endsWith('assets/data/creatures/en/index_g1.json')) {
         return _stringData(
-          jsonEncode([_tutorialEnemyJson, _invalidTutorialEnemyJson]),
+          jsonEncode([
+            _indexEntry(_tutorialEnemyJson),
+            _indexEntry(_invalidTutorialEnemyJson),
+          ]),
         );
       }
-      if (key.endsWith('assets/data/enemies_g2.json')) {
-        return _stringData(jsonEncode([_tutorialEnemyG2Json]));
+      if (key.endsWith('assets/data/creatures/en/index_g2.json')) {
+        return _stringData(jsonEncode([_indexEntry(_tutorialEnemyG2Json)]));
+      }
+      if (key.endsWith(
+        'assets/data/creatures/en/details/g1_tutorial_enemy.json',
+      )) {
+        return _stringData(jsonEncode(_tutorialEnemyJson));
+      }
+      if (key.endsWith(
+        'assets/data/creatures/en/details/g2_tutorial_enemy.json',
+      )) {
+        return _stringData(jsonEncode(_tutorialEnemyG2Json));
       }
       return _transparentImage;
     };
@@ -104,9 +120,7 @@ void main() {
     expect(picked!.map((enemy) => enemy.game), containsAll(['g1', 'g2']));
   });
 
-  testWidgets('maybeStart asks before launching the tutorial', (
-    tester,
-  ) async {
+  testWidgets('maybeStart asks before launching the tutorial', (tester) async {
     await tester.pumpWidget(_buildTutorialApp(const EnemyListScreen()));
     await _pumpAppReady(tester);
 
@@ -185,11 +199,37 @@ Future<void> _requestTutorial(WidgetTester tester) async {
   final context = tester.element(find.byType(EnemyListScreen));
   unawaited(
     TutorialController.instance.maybeStart(context, [
-      Enemy.fromJson(_tutorialEnemyJson),
-      Enemy.fromJson(_tutorialEnemyG2Json),
+      EnemyIndexEntry.fromEnemy(Enemy.fromJson(_tutorialEnemyJson), 'en'),
+      EnemyIndexEntry.fromEnemy(Enemy.fromJson(_tutorialEnemyG2Json), 'en'),
     ]),
   );
   await _pumpAppReady(tester);
+}
+
+Map<String, dynamic> _indexEntry(Map<String, dynamic> json) {
+  final enemy = Enemy.fromJson(json);
+  return {
+    'id': enemy.id,
+    'speciesKey': enemy.speciesKey,
+    'name': enemy.name.resolve('en'),
+    'game': enemy.game,
+    'tier': enemy.tier,
+    'danger': enemy.danger,
+    'isBoss': enemy.isBoss,
+    'order': enemy.order,
+    'defaultGold': enemy.defaultGold,
+    'cardNormal': enemy.cardNormal,
+    'cardGold': enemy.cardGold,
+    'weaknesses': enemy.weaknesses,
+    'resistances': enemy.resistances,
+    if (enemy.temperament != null) 'temperament': enemy.temperament,
+    if (enemy.health != null)
+      'health': {
+        'rating': enemy.health!.rating,
+        if (enemy.health!.value != null) 'value': enemy.health!.value,
+      },
+    if (enemy.collectionGroup != null) 'collectionGroup': enemy.collectionGroup,
+  };
 }
 
 final ByteData _transparentImage = ByteData.view(
@@ -278,6 +318,8 @@ final Map<String, dynamic> _tutorialEnemyG2Json = {
   'cardNormal': 'assets/test/Card.webp',
   'cardGold': 'assets/test/Card_Gold.webp',
   'photo': 'assets/test/Photo.webp',
+  'weaknesses': ['fresh'],
+  'resistances': ['gas'],
   'health': {'rating': 3, 'value': 150},
   'elementalWeaknesses': [
     {'type': 'fresh', 'bonusPct': 50},

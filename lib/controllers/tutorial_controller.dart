@@ -9,6 +9,7 @@ import '../data/local_storage.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
 import '../models/enemy.dart';
+import '../models/enemy_index_entry.dart';
 import '../screens/effect_codex_screen.dart';
 import '../screens/enemy_detail_screen.dart';
 import 'review_prompt_controller.dart';
@@ -103,6 +104,29 @@ List<String> tutorialEffectIdsForEnemy(Enemy enemy) {
   return ids;
 }
 
+List<String> tutorialEffectIdsForEnemySummary(EnemyIndexEntry enemy) {
+  final ids = <String>[];
+
+  void addId(String rawId) {
+    final canonicalId = canonicalEffectId(rawId);
+    if (effectCatalogEntryById(canonicalId) == null) {
+      return;
+    }
+    if (!ids.contains(canonicalId)) {
+      ids.add(canonicalId);
+    }
+  }
+
+  for (final item in enemy.weaknesses) {
+    addId(item);
+  }
+  for (final item in enemy.resistances) {
+    addId(item);
+  }
+
+  return ids;
+}
+
 Enemy? pickTutorialEnemy(List<Enemy> enemies, {Random? random}) {
   final candidates = enemies.where(_isValidTutorialEnemy).toList();
 
@@ -121,7 +145,9 @@ List<Enemy>? pickTutorialEnemyVariants(List<Enemy> enemies, {Random? random}) {
   }
 
   final sharedCandidates = grouped.values
-      .where((variants) => variants.map((enemy) => enemy.game).toSet().length > 1)
+      .where(
+        (variants) => variants.map((enemy) => enemy.game).toSet().length > 1,
+      )
       .map((variants) {
         variants.sort((a, b) {
           if (a.game == b.game) {
@@ -151,6 +177,71 @@ List<Enemy>? pickTutorialEnemyVariants(List<Enemy> enemies, {Random? random}) {
   return [fallback];
 }
 
+bool _isValidTutorialEnemySummary(EnemyIndexEntry enemy) {
+  final hasDetails =
+      enemy.health != null ||
+      enemy.weaknesses.isNotEmpty ||
+      enemy.resistances.isNotEmpty;
+
+  return hasDetails && tutorialEffectIdsForEnemySummary(enemy).isNotEmpty;
+}
+
+EnemyIndexEntry? pickTutorialEnemySummary(
+  List<EnemyIndexEntry> enemies, {
+  Random? random,
+}) {
+  final candidates = enemies.where(_isValidTutorialEnemySummary).toList();
+
+  if (candidates.isEmpty) {
+    return null;
+  }
+
+  final picker = random ?? Random();
+  return candidates[picker.nextInt(candidates.length)];
+}
+
+List<EnemyIndexEntry>? pickTutorialEnemySummaryVariants(
+  List<EnemyIndexEntry> enemies, {
+  Random? random,
+}) {
+  final grouped = <String, List<EnemyIndexEntry>>{};
+  for (final enemy in enemies.where(_isValidTutorialEnemySummary)) {
+    grouped.putIfAbsent(enemy.speciesKey, () => <EnemyIndexEntry>[]).add(enemy);
+  }
+
+  final sharedCandidates = grouped.values
+      .where(
+        (variants) => variants.map((enemy) => enemy.game).toSet().length > 1,
+      )
+      .map((variants) {
+        variants.sort((a, b) {
+          if (a.game == b.game) {
+            return (a.order ?? 999999).compareTo(b.order ?? 999999);
+          }
+          if (a.game == 'g1') {
+            return -1;
+          }
+          if (b.game == 'g1') {
+            return 1;
+          }
+          return a.game.compareTo(b.game);
+        });
+        return variants;
+      })
+      .toList();
+
+  if (sharedCandidates.isNotEmpty) {
+    final picker = random ?? Random();
+    return sharedCandidates[picker.nextInt(sharedCandidates.length)];
+  }
+
+  final fallback = pickTutorialEnemySummary(enemies, random: random);
+  if (fallback == null) {
+    return null;
+  }
+  return [fallback];
+}
+
 class TutorialController extends ChangeNotifier {
   TutorialController._();
 
@@ -162,8 +253,8 @@ class TutorialController extends ChangeNotifier {
   bool _autoStartChecked = false;
   bool _promptVisible = false;
   TutorialStep? _step;
-  Enemy? _demoEnemy;
-  List<Enemy> _demoVariants = const [];
+  EnemyIndexEntry? _demoEnemy;
+  List<EnemyIndexEntry> _demoVariants = const [];
   String? _demoEffectId;
 
   TutorialStep? get step => _step;
@@ -205,7 +296,10 @@ class TutorialController extends ChangeNotifier {
     return topLeft & targetBox.size;
   }
 
-  Future<void> maybeStart(BuildContext context, List<Enemy> enemies) async {
+  Future<void> maybeStart(
+    BuildContext context,
+    List<EnemyIndexEntry> enemies,
+  ) async {
     if (_autoStartChecked || isActive || _promptVisible) {
       return;
     }
@@ -230,9 +324,10 @@ class TutorialController extends ChangeNotifier {
       return;
     }
 
+    final languageCode = navigator.context.l10n.languageCode;
     navigator.popUntil((route) => route.isFirst);
     await Future<void>.delayed(const Duration(milliseconds: 250));
-    final enemies = await EnemyRepository.loadAll();
+    final enemies = await EnemyRepository.loadAll(languageCode);
     await _start(enemies, force: true);
   }
 
@@ -347,7 +442,10 @@ class TutorialController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _start(List<Enemy> enemies, {bool force = false}) async {
+  Future<void> _start(
+    List<EnemyIndexEntry> enemies, {
+    bool force = false,
+  }) async {
     if (isActive) {
       return;
     }
@@ -355,7 +453,7 @@ class TutorialController extends ChangeNotifier {
       return;
     }
 
-    final variants = pickTutorialEnemyVariants(enemies);
+    final variants = pickTutorialEnemySummaryVariants(enemies);
     if (variants == null || variants.isEmpty) {
       return;
     }
@@ -367,7 +465,7 @@ class TutorialController extends ChangeNotifier {
         break;
       }
     }
-    final effectIds = tutorialEffectIdsForEnemy(enemy);
+    final effectIds = tutorialEffectIdsForEnemySummary(enemy);
     if (effectIds.isEmpty) {
       return;
     }
@@ -424,8 +522,8 @@ class TutorialController extends ChangeNotifier {
       navigator.push(
         MaterialPageRoute(
           builder: (_) => EnemyDetailScreen(
-            enemy: enemy,
-            variants: _demoVariants,
+            summary: enemy,
+            variantSummaries: _demoVariants,
             initialGame: enemy.game,
           ),
         ),

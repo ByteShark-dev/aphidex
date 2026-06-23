@@ -6,7 +6,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
 
 import '../data/enemy_variants.dart';
-import '../models/enemy.dart';
+import '../models/enemy_index_entry.dart';
 import 'creature_alias_matcher.dart';
 
 const String scannerGameScopeAll = 'all';
@@ -33,8 +33,8 @@ class CreatureScannerMatch {
   final String displayName;
   final double confidence;
   final List<String> sourceLabels;
-  final List<Enemy> variants;
-  final Enemy previewEnemy;
+  final List<EnemyIndexEntry> variants;
+  final EnemyIndexEntry previewEnemy;
 
   const CreatureScannerMatch({
     required this.creatureId,
@@ -80,7 +80,9 @@ class MlKitRecognitionProvider implements CreatureRecognitionProvider {
   @override
   Future<CreatureRecognitionPayload> analyzeImageFile(XFile file) async {
     if (file.path.isEmpty) {
-      throw const CreatureScannerException(CreatureScannerErrorType.invalidImage);
+      throw const CreatureScannerException(
+        CreatureScannerErrorType.invalidImage,
+      );
     }
 
     final labeler = ImageLabeler(
@@ -90,12 +92,13 @@ class MlKitRecognitionProvider implements CreatureRecognitionProvider {
     try {
       final inputImage = InputImage.fromFilePath(file.path);
       final labels = await labeler.processImage(inputImage).timeout(_timeout);
-      final rawLabels = labels
-          .map((label) => label.label.trim())
-          .where((label) => label.isNotEmpty)
-          .toSet()
-          .toList()
-        ..sort();
+      final rawLabels =
+          labels
+              .map((label) => label.label.trim())
+              .where((label) => label.isNotEmpty)
+              .toSet()
+              .toList()
+            ..sort();
 
       return CreatureRecognitionPayload(
         rawLabels: rawLabels,
@@ -124,7 +127,7 @@ class CreatureScannerService {
 
   final CreatureRecognitionProvider provider;
   final CreatureAliasMatcher matcher;
-  final List<Enemy> allEnemies;
+  final List<EnemyIndexEntry> allEnemies;
   final String selectedGameScope;
 
   const CreatureScannerService({
@@ -139,7 +142,9 @@ class CreatureScannerService {
     try {
       final payload = await provider.analyzeImageFile(compressedFile);
       if (payload.rawLabels.isEmpty && payload.rawWebEntities.isEmpty) {
-        throw const CreatureScannerException(CreatureScannerErrorType.emptyResponse);
+        throw const CreatureScannerException(
+          CreatureScannerErrorType.emptyResponse,
+        );
       }
 
       final matchResult = matcher.match(
@@ -156,13 +161,16 @@ class CreatureScannerService {
         matches: resolvedMatches,
         rawLabels: matchResult.rawLabels,
         rawWebEntities: matchResult.rawWebEntities,
-        hasClearMatch: matcher.isClearSingleMatch(matchResult.matches) &&
+        hasClearMatch:
+            matcher.isClearSingleMatch(matchResult.matches) &&
             resolvedMatches.length == 1,
       );
     } finally {
       if (compressedFile.path != file.path) {
         unawaited(
-          File(compressedFile.path).delete().then((_) => null).catchError((_) => null),
+          File(
+            compressedFile.path,
+          ).delete().then((_) => null).catchError((_) => null),
         );
       }
     }
@@ -171,7 +179,9 @@ class CreatureScannerService {
   Future<XFile> _compressFile(XFile file) async {
     final inputBytes = await file.readAsBytes();
     if (inputBytes.isEmpty) {
-      throw const CreatureScannerException(CreatureScannerErrorType.invalidImage);
+      throw const CreatureScannerException(
+        CreatureScannerErrorType.invalidImage,
+      );
     }
 
     final compressed = await FlutterImageCompress.compressWithList(
@@ -199,7 +209,9 @@ class CreatureScannerService {
     }
 
     if (outputBytes.isEmpty) {
-      throw const CreatureScannerException(CreatureScannerErrorType.invalidImage);
+      throw const CreatureScannerException(
+        CreatureScannerErrorType.invalidImage,
+      );
     }
     if (outputBytes.length > maxImageBytes) {
       throw const CreatureScannerException(
@@ -212,17 +224,24 @@ class CreatureScannerService {
         '${directory.path}${Platform.pathSeparator}scan_${DateTime.now().microsecondsSinceEpoch}.jpg';
     final tempFile = File(outputPath);
     await tempFile.writeAsBytes(outputBytes, flush: true);
-    return XFile(tempFile.path, mimeType: 'image/jpeg', name: tempFile.uri.pathSegments.last);
+    return XFile(
+      tempFile.path,
+      mimeType: 'image/jpeg',
+      name: tempFile.uri.pathSegments.last,
+    );
   }
 }
 
 List<CreatureScannerMatch> resolveScannerMatches({
   required List<CreatureAliasMatch> rawMatches,
-  required List<Enemy> allEnemies,
+  required List<EnemyIndexEntry> allEnemies,
   required String selectedGameScope,
 }) {
   final grouped = {
-    for (final item in groupEnemyListEntries(allEnemies, mergeSharedSpecies: true))
+    for (final item in groupEnemyIndexEntries(
+      allEnemies,
+      mergeSharedSpecies: true,
+    ))
       item.speciesKey: item,
   };
 
@@ -234,8 +253,10 @@ List<CreatureScannerMatch> resolveScannerMatches({
     }
 
     final variants = switch (selectedGameScope) {
-      scannerGameScopeG1 => entry.variants.where((enemy) => enemy.game == 'g1').toList(),
-      scannerGameScopeG2 => entry.variants.where((enemy) => enemy.game == 'g2').toList(),
+      scannerGameScopeG1 =>
+        entry.variants.where((enemy) => enemy.game == 'g1').toList(),
+      scannerGameScopeG2 =>
+        entry.variants.where((enemy) => enemy.game == 'g2').toList(),
       _ => [...entry.variants],
     };
 
@@ -255,7 +276,7 @@ List<CreatureScannerMatch> resolveScannerMatches({
     resolved.add(
       CreatureScannerMatch(
         creatureId: match.creatureId,
-        displayName: previewEnemy.name.resolve('en'),
+        displayName: previewEnemy.name,
         confidence: match.confidence,
         sourceLabels: match.sourceLabels,
         variants: variants,
@@ -267,8 +288,8 @@ List<CreatureScannerMatch> resolveScannerMatches({
   return resolved;
 }
 
-Enemy? preferredScannerVariant(
-  List<Enemy> variants, {
+EnemyIndexEntry? preferredScannerVariant(
+  List<EnemyIndexEntry> variants, {
   required String selectedGameScope,
   String? storedPreferredGame,
 }) {
@@ -286,7 +307,9 @@ Enemy? preferredScannerVariant(
   }
 
   if (storedPreferredGame != null) {
-    final preferred = variants.where((enemy) => enemy.game == storedPreferredGame);
+    final preferred = variants.where(
+      (enemy) => enemy.game == storedPreferredGame,
+    );
     if (preferred.isNotEmpty) {
       return preferred.first;
     }

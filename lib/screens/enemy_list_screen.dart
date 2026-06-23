@@ -12,7 +12,7 @@ import '../data/enemy_variants.dart';
 import '../data/local_storage.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
-import '../models/enemy.dart';
+import '../models/enemy_index_entry.dart';
 import '../widgets/icon_badge.dart';
 import '../widgets/fallback_asset_image.dart';
 import '../widgets/inline_banner_ad_card.dart';
@@ -85,114 +85,6 @@ class EnemyListScreen extends StatefulWidget {
 }
 
 class _EnemyListScreenState extends State<EnemyListScreen> {
-  static const _g2NeutralOrder = <String>[
-    'Red Worker Ant',
-    'Ladybug',
-    'Bee',
-    'Blue Butterfly',
-    'Cockroach Nymph',
-    'Cockroach',
-    'Black Worker Ant',
-    'Cricket',
-    'Firefly',
-    'Potato Beetle',
-    'Garter Snake',
-  ];
-
-  static const _g2OrcOrder = <String>[
-    'O.R.C. Red Soldier Ant',
-    'O.R.C. Larva',
-    'O.R.C. Weaver Jr.',
-    'O.R.C. Spiderling',
-    'O.R.C. Ladybug',
-    'O.R.C. Bee',
-    'O.R.C. Mosquito',
-    'O.R.C. Stinkbug',
-    'O.R.C. Weaver',
-    'O.R.C. Bombardier Beetle',
-    'O.R.C. Weevil',
-    'O.R.C. Northern Scorpling',
-    'O.R.C. Northern Scorpion',
-    'O.R.C. Northern Scorpion Jr.',
-    'O.R.C. Blue Butterfly',
-    'O.R.C. Cockroach Nymph',
-    'O.R.C. Cockroach',
-    'O.R.C. Cockroach Queen',
-    'O.R.C. Wolf Spider',
-    'O.R.C. Praying Mantis Nymph',
-    'O.R.C. Cricket',
-    'O.R.C. Wasp',
-    'O.R.C. Wasp Drone',
-    'O.R.C. Pincher Earwig',
-    'O.R.C. Whipper Earwig',
-    'O.R.C. Potato Beetle',
-    'O.R.C. Rust Beetle',
-    'O.R.C. Firefly',
-    'O.R.C. Black Soldier Ant',
-    'O.R.C. Broodmother',
-  ];
-
-  static const _g2BuggyOrder = <String>[
-    'Red Soldier Ant Buggy',
-    'Orb Weaver Buggy',
-    'Ladybuggy',
-    'Black Soldier Ant Buggy',
-  ];
-
-  static const _g2AngryOrder = <String>[
-    'Red Soldier Ant',
-    'Lawn Mite',
-    'Larva',
-    'Orb Weaver Jr.',
-    'Spiderling',
-    'Mosquito',
-    'Stinkbug',
-    'Orb Weaver',
-    'Bombardier Beetle',
-    'Northern Scorpling',
-    'Northern Scorpion',
-    'Northern Scorpion Jr.',
-    'Cockroach Queen',
-    'Wolf Spider',
-    'Masked Stranger',
-    'Praying Mantis Nymph',
-    'Black Soldier Ant',
-    'Pincher Earwig',
-    'Rust Beetle',
-    'Wasp',
-    'Wasp Drone',
-    'Axl',
-    'King Dozer',
-    'Whipper Earwig',
-    'Masked Fighter',
-  ];
-
-  static const _g2HarmlessOrder = <String>[
-    'Aphid',
-    'Weevil',
-    'Grub',
-    'Gnat',
-    'Caterpillar',
-    'Baby Garden Snail',
-    'Garden Snail',
-    'Woolly Aphid',
-    'Crow',
-  ];
-
-  static const _g2OgrrOrder = <String>[
-    'O.G.R.R. Northern Scorpion',
-    'O.G.R.R. Blue Butterfly',
-    'O.G.R.R. Ladybug',
-    'O.G.R.R. Cricket',
-    'O.G.R.R. Rust Beetle',
-    'O.G.R.R. Pincher Earwig',
-    'O.G.R.R. Whipper Earwig',
-    'O.G.R.R. Wasp',
-    'O.G.R.R. Wasp Drone',
-    'O.G.R.R. Praying Mantis Nymph',
-    'O.G.R.R. Wolf Spider',
-  ];
-
   SortMode sortMode = SortMode.defaultOrder;
   GamePick gamePick = GamePick.g1;
   bool sortDescending = false;
@@ -216,14 +108,16 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   static const _kGamePick = 'ui_game_pick';
   static const _kQuery = 'ui_query';
 
-  late Future<List<Enemy>> enemiesFuture;
+  late Future<List<EnemyIndexEntry>> enemiesFuture;
+  String? _loadedLanguageCode;
   bool _tutorialQueued = false;
 
   @override
   void initState() {
     super.initState();
 
-    final hasNewFilterState = LocalStorage.hasKey(_kFilterFavorites) ||
+    final hasNewFilterState =
+        LocalStorage.hasKey(_kFilterFavorites) ||
         LocalStorage.hasKey(_kFilterGold) ||
         LocalStorage.hasKey(_kTierFilters) ||
         LocalStorage.hasKey(_kClassFilters) ||
@@ -240,10 +134,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         LocalStorage.getStringSet(_kDangerFilters).map(_canonicalDanger),
       );
     } else {
-      final legacyFilter = LocalStorage.getInt(
-        _kLegacyFilter,
-        fallback: 0,
-      );
+      final legacyFilter = LocalStorage.getInt(_kLegacyFilter, fallback: 0);
       switch (legacyFilter) {
         case 1:
           filterFavorites = true;
@@ -278,7 +169,17 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         .values[LocalStorage.getInt(_kGamePick, fallback: GamePick.g1.index)];
     query = LocalStorage.getString(_kQuery) ?? '';
     _searchController = TextEditingController(text: query);
-    enemiesFuture = _loadEnemiesForCurrentGame();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final languageCode = context.l10n.languageCode;
+    if (_loadedLanguageCode == languageCode) {
+      return;
+    }
+    _loadedLanguageCode = languageCode;
+    enemiesFuture = _loadEnemiesForCurrentGame(languageCode);
   }
 
   @override
@@ -287,53 +188,15 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     super.dispose();
   }
 
-  bool _isGold(Enemy enemy, Set<String> goldIds) =>
+  bool _isGold(EnemyIndexEntry enemy, Set<String> goldIds) =>
       enemy.defaultGold ||
       goldIds.contains(enemy.id) ||
       (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
 
-  EnemyDisplayGroup? _officialG2Group(String englishName) {
-    if (_g2NeutralOrder.contains(englishName)) return EnemyDisplayGroup.neutral;
-    if (_g2BuggyOrder.contains(englishName)) return EnemyDisplayGroup.buggy;
-    if (_g2OrcOrder.contains(englishName)) return EnemyDisplayGroup.orc;
-    if (_g2AngryOrder.contains(englishName)) return EnemyDisplayGroup.angry;
-    if (_g2HarmlessOrder.contains(englishName)) return EnemyDisplayGroup.harmless;
-    if (_g2OgrrOrder.contains(englishName)) return EnemyDisplayGroup.ogrr;
-    return null;
-  }
-
-  int _officialG2Order(String englishName) {
-    final groups = [
-      _g2NeutralOrder,
-      _g2BuggyOrder,
-      _g2OrcOrder,
-      _g2AngryOrder,
-      _g2HarmlessOrder,
-      _g2OgrrOrder,
-    ];
-    var offset = 200;
-    for (final group in groups) {
-      final index = group.indexOf(englishName);
-      if (index != -1) {
-        return offset + index + 1;
-      }
-      offset += group.length;
-    }
-    return 999999;
-  }
-
-  int _displayOrder(Enemy enemy) {
-    if (enemy.game == 'g2') {
-      final official = _officialG2Order(enemy.name.resolve('en'));
-      if (official != 999999) {
-        return official;
-      }
-    }
-    return enemy.order ?? 999999;
-  }
+  int _displayOrder(EnemyIndexEntry enemy) => enemy.order ?? 999999;
 
   bool _matchesActiveFilters(
-    Enemy enemy,
+    EnemyIndexEntry enemy,
     Set<String> favoriteIds,
     Set<String> goldIds,
     Set<String> effectiveTierFilters,
@@ -381,18 +244,19 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     }
   }
 
-  _TierFilterOptions _tierFilterOptions(List<Enemy> enemies) {
-    final tiers = enemies
-        .where((enemy) => !enemy.isBoss)
-        .map((enemy) => enemy.tier)
-        .toSet()
-        .toList()
-      ..sort();
+  _TierFilterOptions _tierFilterOptions(List<EnemyIndexEntry> enemies) {
+    final tiers =
+        enemies
+            .where((enemy) => !enemy.isBoss)
+            .map((enemy) => enemy.tier)
+            .toSet()
+            .toList()
+          ..sort();
     final hasBoss = enemies.any((enemy) => enemy.isBoss);
     return _TierFilterOptions(tiers: tiers, hasBoss: hasBoss);
   }
 
-  List<Enemy> _enemiesForCurrentGame(List<Enemy> enemies) {
+  List<EnemyIndexEntry> _enemiesForCurrentGame(List<EnemyIndexEntry> enemies) {
     switch (gamePick) {
       case GamePick.g1:
         return enemies.where((enemy) => enemy.game == 'g1').toList();
@@ -403,22 +267,24 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     }
   }
 
-  Future<List<Enemy>> _loadEnemiesForCurrentGame() {
+  Future<List<EnemyIndexEntry>> _loadEnemiesForCurrentGame(
+    String languageCode,
+  ) {
     switch (gamePick) {
       case GamePick.g1:
-        return EnemyRepository.loadGame('g1');
+        return EnemyRepository.loadGame('g1', languageCode);
       case GamePick.g2:
-        return EnemyRepository.loadGame('g2');
+        return EnemyRepository.loadGame('g2', languageCode);
       case GamePick.all:
-        return EnemyRepository.loadAll();
+        return EnemyRepository.loadAll(languageCode);
     }
   }
 
-  List<EnemyDisplayGroup> _availableClassGroups(List<Enemy> enemies) {
+  List<EnemyDisplayGroup> _availableClassGroups(List<EnemyIndexEntry> enemies) {
     final available = enemies.map(_groupForEnemy).toSet();
-    return _groupOrder(false)
-        .where((group) => available.contains(group))
-        .toList();
+    return _groupOrder(
+      false,
+    ).where((group) => available.contains(group)).toList();
   }
 
   Set<String> _effectiveTierFilters(_TierFilterOptions options) {
@@ -444,9 +310,11 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     required Set<String> effectiveClassFilters,
     required Set<String> effectiveDangerFilters,
   }) {
-    final tierChanged = tierFilters.length != effectiveTierFilters.length ||
+    final tierChanged =
+        tierFilters.length != effectiveTierFilters.length ||
         !tierFilters.containsAll(effectiveTierFilters);
-    final classChanged = classFilters.length != effectiveClassFilters.length ||
+    final classChanged =
+        classFilters.length != effectiveClassFilters.length ||
         !classFilters.containsAll(effectiveClassFilters);
     final dangerChanged =
         dangerFilters.length != effectiveDangerFilters.length ||
@@ -486,10 +354,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     }
 
     final labels = <String>[];
-    final tierValues = effectiveTierFilters
-        .where((value) => value != 'boss')
-        .toList()
-      ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
+    final tierValues =
+        effectiveTierFilters.where((value) => value != 'boss').toList()
+          ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
     for (final value in tierValues) {
       labels.add(_tierLabel(int.parse(value)));
     }
@@ -549,10 +416,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       tooltip: l10n.filterTiers,
       onSelected: _toggleTierFilter,
       itemBuilder: (_) => [
-        PopupMenuItem<String>(
-          value: 'clear',
-          child: Text(l10n.filterTiers),
-        ),
+        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterTiers)),
         const PopupMenuDivider(),
         for (final tier in options.tiers)
           CheckedPopupMenuItem<String>(
@@ -607,10 +471,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       tooltip: l10n.filterClass,
       onSelected: _toggleClassFilter,
       itemBuilder: (_) => [
-        PopupMenuItem<String>(
-          value: 'clear',
-          child: Text(l10n.filterClass),
-        ),
+        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterClass)),
         const PopupMenuDivider(),
         for (final group in groups)
           CheckedPopupMenuItem<String>(
@@ -659,10 +520,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       tooltip: l10n.filterDanger,
       onSelected: _toggleDangerFilter,
       itemBuilder: (_) => [
-        PopupMenuItem<String>(
-          value: 'clear',
-          child: Text(l10n.filterDanger),
-        ),
+        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterDanger)),
         const PopupMenuDivider(),
         for (final danger in dangers)
           CheckedPopupMenuItem<String>(
@@ -708,19 +566,14 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     return EnemyDisplayGroup.other;
   }
 
-  EnemyDisplayGroup _groupForEnemy(Enemy enemy) {
+  EnemyDisplayGroup _groupForEnemy(EnemyIndexEntry enemy) {
     final explicitPeaceful = {
       'g1_red_ant_queen',
       'g1_black_ant_queen',
       'g1_fire_ant_queen',
     };
-    final explicitAnomaly = {
-      'g1_infected_ant_queen',
-      'g1_enemy_infused',
-    };
-    final explicitOther = {
-      'g1_enemy_orc',
-    };
+    final explicitAnomaly = {'g1_infected_ant_queen', 'g1_enemy_infused'};
+    final explicitOther = {'g1_enemy_orc'};
     if (explicitPeaceful.contains(enemy.id) ||
         explicitPeaceful.contains(enemy.speciesKey)) {
       return EnemyDisplayGroup.peaceful;
@@ -732,25 +585,6 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     if (explicitOther.contains(enemy.id) ||
         explicitOther.contains(enemy.speciesKey)) {
       return EnemyDisplayGroup.other;
-    }
-
-    EnemyDisplayGroup? resolved;
-    if (enemy.game == 'g2') {
-      final official = _officialG2Group(enemy.name.resolve('en'));
-      if (official != null) {
-        resolved = official;
-      }
-    }
-
-    if (resolved != null) {
-      switch (resolved) {
-        case EnemyDisplayGroup.angry:
-          return EnemyDisplayGroup.aggressive;
-        case EnemyDisplayGroup.harmless:
-          return EnemyDisplayGroup.peaceful;
-        default:
-          return resolved;
-      }
     }
 
     if (enemy.game == 'g2' && enemy.collectionGroup != null) {
@@ -767,6 +601,8 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
           return EnemyDisplayGroup.ogrr;
         case 'buggy':
           return EnemyDisplayGroup.buggy;
+        case 'other':
+          return EnemyDisplayGroup.other;
       }
     }
 
@@ -836,8 +672,10 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     }
   }
 
-  int _groupIndex(EnemyDisplayGroup temperament, List<EnemyDisplayGroup> order) =>
-      order.indexOf(temperament);
+  int _groupIndex(
+    EnemyDisplayGroup temperament,
+    List<EnemyDisplayGroup> order,
+  ) => order.indexOf(temperament);
 
   static const List<String> _dangerOrder = [
     'baja',
@@ -876,7 +714,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     }
   }
 
-  List<String> _availableDangers(List<Enemy> enemies) {
+  List<String> _availableDangers(List<EnemyIndexEntry> enemies) {
     final values = enemies
         .map((enemy) => _canonicalDanger(enemy.danger))
         .toSet()
@@ -929,9 +767,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   String? _storedPreferredGame(String speciesKey) =>
       LocalStorage.getString(_variantPreferenceKey(speciesKey));
 
-  Enemy _selectActiveVariant(
-    EnemyListEntry entry,
-    List<Enemy> variants, {
+  EnemyIndexEntry _selectActiveVariant(
+    EnemyIndexListEntry entry,
+    List<EnemyIndexEntry> variants, {
     required bool preferG2Default,
   }) {
     final preferredGame = gamePick == GamePick.g1
@@ -966,16 +804,15 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   }
 
   List<ResolvedEnemyEntry> _applyFilterAndSearch(
-    List<Enemy> enemies,
+    List<EnemyIndexEntry> enemies,
     Set<String> favoriteIds,
     Set<String> goldIds,
-    String languageCode,
     Set<String> effectiveTierFilters,
     Set<String> effectiveClassFilters,
     Set<String> effectiveDangerFilters,
   ) {
     final mergeSharedSpecies = gamePick == GamePick.all;
-    final entries = groupEnemyListEntries(
+    final entries = groupEnemyIndexEntries(
       enemies,
       mergeSharedSpecies: mergeSharedSpecies,
     );
@@ -995,10 +832,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
 
       if (normalizedQuery.isNotEmpty) {
         final matchesQuery = visibleVariants.any(
-          (enemy) => enemy.name
-              .resolve(languageCode)
-              .toLowerCase()
-              .contains(normalizedQuery),
+          (enemy) => enemy.name.toLowerCase().contains(normalizedQuery),
         );
         if (!matchesQuery) {
           continue;
@@ -1047,16 +881,15 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
           if (groupCompare != 0) {
             result = groupCompare;
           } else {
-            result = _displayOrder(aSortEnemy).compareTo(_displayOrder(bSortEnemy));
+            result = _displayOrder(
+              aSortEnemy,
+            ).compareTo(_displayOrder(bSortEnemy));
           }
           break;
         case SortMode.name:
-          result = a.activeEnemy.name
-              .resolve(languageCode)
-              .toLowerCase()
-              .compareTo(
-                b.activeEnemy.name.resolve(languageCode).toLowerCase(),
-              );
+          result = a.activeEnemy.name.toLowerCase().compareTo(
+            b.activeEnemy.name.toLowerCase(),
+          );
           break;
         case SortMode.danger:
           result = _dangerRank(
@@ -1084,7 +917,6 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final languageCode = l10n.languageCode;
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
     final baseColor = gameColorForPick(gamePick);
@@ -1252,9 +1084,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
             key: TutorialController.instance.keyFor(tutorialAnchorListSort),
             child: PopupMenuButton<SortMenuAction>(
               key: const ValueKey('open-sort-menu'),
-              icon: Icon(
-                sortDescending ? Icons.arrow_downward : Icons.sort,
-              ),
+              icon: Icon(sortDescending ? Icons.arrow_downward : Icons.sort),
               onSelected: (mode) {
                 switch (mode) {
                   case SortMenuAction.toggleDirection:
@@ -1263,7 +1093,10 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                     break;
                   case SortMenuAction.defaultOrder:
                     setState(() => sortMode = SortMode.defaultOrder);
-                    LocalStorage.setInt(_kSortMode, SortMode.defaultOrder.index);
+                    LocalStorage.setInt(
+                      _kSortMode,
+                      SortMode.defaultOrder.index,
+                    );
                     break;
                   case SortMenuAction.name:
                     setState(() => sortMode = SortMode.name);
@@ -1285,7 +1118,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                   child: Row(
                     children: [
                       Icon(
-                        sortDescending ? Icons.arrow_downward : Icons.arrow_upward,
+                        sortDescending
+                            ? Icons.arrow_downward
+                            : Icons.arrow_upward,
                         size: 18,
                       ),
                       const SizedBox(width: 10),
@@ -1329,7 +1164,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
             return ValueListenableBuilder<Set<String>>(
               valueListenable: favorites.favorites,
               builder: (context, favoriteIds, _) {
-                return FutureBuilder<List<Enemy>>(
+                return FutureBuilder<List<EnemyIndexEntry>>(
                   future: enemiesFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
@@ -1344,7 +1179,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                       );
                     }
 
-                    final enemies = snapshot.data ?? <Enemy>[];
+                    final enemies = snapshot.data ?? <EnemyIndexEntry>[];
                     if (!_tutorialQueued) {
                       _tutorialQueued = true;
                       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1380,7 +1215,6 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                       enemies,
                       favoriteIds,
                       goldIds,
-                      languageCode,
                       effectiveTierFilters,
                       effectiveClassFilters,
                       effectiveDangerFilters,
@@ -1483,7 +1317,8 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                         const SizedBox(height: 6),
                         Expanded(
                           child: ListenableBuilder(
-                            listenable: MonetizationController.instance.adsRemoved,
+                            listenable:
+                                MonetizationController.instance.adsRemoved,
                             builder: (context, _) {
                               final showInlineAd =
                                   MonetizationController.instance.shouldShowAds;
@@ -1504,14 +1339,11 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                                       groupLabel: (temperament) =>
                                           _groupLabel(temperament, l10n),
                                     )
-                                  : ListView(
-                                      padding: const EdgeInsets.only(bottom: 4),
-                                      children: _buildFlatEnemyTiles(
-                                        filtered,
-                                        favoriteIds,
-                                        goldIds,
-                                        showInlineAd: showInlineAd,
-                                      ),
+                                  : _FlatEnemyList(
+                                      entries: filtered,
+                                      favIds: favoriteIds,
+                                      goldIds: goldIds,
+                                      showInlineAd: showInlineAd,
                                     );
                             },
                           ),
@@ -1542,7 +1374,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         onPick: (pick) {
           setState(() {
             gamePick = pick;
-            enemiesFuture = _loadEnemiesForCurrentGame();
+            enemiesFuture = _loadEnemiesForCurrentGame(
+              _loadedLanguageCode ?? context.l10n.languageCode,
+            );
           });
           LocalStorage.setInt(_kGamePick, pick.index);
           Navigator.pop(context);
@@ -1554,29 +1388,48 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   Future<void> _openScanner(BuildContext context) async {
     await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => const CreatureScannerComingSoonPage(),
-      ),
+      MaterialPageRoute(builder: (_) => const CreatureScannerComingSoonPage()),
     );
   }
 }
 
-List<Widget> _buildFlatEnemyTiles(
-  List<ResolvedEnemyEntry> entries,
-  Set<String> favIds,
-  Set<String> goldIds, {
-  required bool showInlineAd,
-}) {
-  final widgets = <Widget>[];
-  for (var i = 0; i < entries.length; i++) {
-    widgets.add(EnemyTile(entry: entries[i], favIds: favIds, goldIds: goldIds));
-    if (showInlineAd &&
-        entries.length >= _minTilesForFlatInlineAd &&
-        i + 1 == _flatInlineAdAfterTile) {
-      widgets.add(const InlineBannerAdCard());
+class _FlatEnemyList extends StatelessWidget {
+  final List<ResolvedEnemyEntry> entries;
+  final Set<String> favIds;
+  final Set<String> goldIds;
+  final bool showInlineAd;
+
+  const _FlatEnemyList({
+    required this.entries,
+    required this.favIds,
+    required this.goldIds,
+    required this.showInlineAd,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = <ResolvedEnemyEntry?>[];
+    for (var i = 0; i < entries.length; i++) {
+      rows.add(entries[i]);
+      if (showInlineAd &&
+          entries.length >= _minTilesForFlatInlineAd &&
+          i + 1 == _flatInlineAdAfterTile) {
+        rows.add(null);
+      }
     }
+
+    return ListView.builder(
+      padding: const EdgeInsets.only(bottom: 4),
+      itemCount: rows.length,
+      itemBuilder: (context, index) {
+        final entry = rows[index];
+        if (entry == null) {
+          return const InlineBannerAdCard();
+        }
+        return EnemyTile(entry: entry, favIds: favIds, goldIds: goldIds);
+      },
+    );
   }
-  return widgets;
 }
 
 class EnemyTile extends StatelessWidget {
@@ -1593,7 +1446,6 @@ class EnemyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languageCode = context.l10n.languageCode;
     final enemy = entry.activeEnemy;
     final isFavorite = favIds.contains(enemy.id);
     final isGold =
@@ -1616,7 +1468,7 @@ class EnemyTile extends StatelessWidget {
           children: [
             Expanded(
               child: OverflowMarqueeText(
-                enemy.name.resolve(languageCode),
+                enemy.name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -1667,8 +1519,8 @@ class EnemyTile extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (_) => EnemyDetailScreen(
-                enemy: enemy,
-                variants: entry.entry.variants,
+                summary: enemy,
+                variantSummaries: entry.entry.variants,
                 initialGame: enemy.game,
               ),
             ),
@@ -1679,7 +1531,9 @@ class EnemyTile extends StatelessWidget {
             final consumedByAdsPrompt = await MonetizationController.instance
                 .registerEnemySheetClose(context);
             if (context.mounted && !consumedByAdsPrompt) {
-              await ReviewPromptController.instance.registerScreenClose(context);
+              await ReviewPromptController.instance.registerScreenClose(
+                context,
+              );
             }
           });
         },
@@ -1709,7 +1563,7 @@ class _SectionedEnemyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sections = <Widget>[];
+    final rows = <_SectionedEnemyRow>[];
 
     for (final group in groupOrder) {
       final groupItems = entries
@@ -1717,33 +1571,56 @@ class _SectionedEnemyList extends StatelessWidget {
           .toList();
       if (groupItems.isEmpty) continue;
 
-      sections.add(
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-          child: Text(
-            groupLabel(group),
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-          ),
-        ),
-      );
+      rows.add(_SectionedEnemyRow.header(groupLabel(group)));
 
       var groupTileCount = 0;
       for (final entry in groupItems) {
-        sections.add(EnemyTile(entry: entry, favIds: favIds, goldIds: goldIds));
+        rows.add(_SectionedEnemyRow.entry(entry));
         groupTileCount++;
         if (showInlineAd &&
             groupItems.length >= _minTilesForSectionInlineAd &&
             groupTileCount == _sectionInlineAdAfterTile) {
-          sections.add(const InlineBannerAdCard());
+          rows.add(const _SectionedEnemyRow.ad());
         }
       }
     }
 
-    return ListView(
+    return ListView.builder(
       padding: const EdgeInsets.only(bottom: 4),
-      children: sections,
+      itemCount: rows.length,
+      itemBuilder: (context, index) {
+        final row = rows[index];
+        if (row.isAd) {
+          return const InlineBannerAdCard();
+        }
+        final label = row.headerLabel;
+        if (label != null) {
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+            child: Text(
+              label,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+            ),
+          );
+        }
+        return EnemyTile(entry: row.entry!, favIds: favIds, goldIds: goldIds);
+      },
     );
   }
+}
+
+class _SectionedEnemyRow {
+  final String? headerLabel;
+  final ResolvedEnemyEntry? entry;
+  final bool isAd;
+
+  const _SectionedEnemyRow.header(this.headerLabel)
+    : entry = null,
+      isAd = false;
+
+  const _SectionedEnemyRow.entry(this.entry) : headerLabel = null, isAd = false;
+
+  const _SectionedEnemyRow.ad() : headerLabel = null, entry = null, isAd = true;
 }
 
 class _GamePickerSheet extends StatelessWidget {
@@ -1822,23 +1699,18 @@ class _GamePickerSheet extends StatelessWidget {
 }
 
 class ResolvedEnemyEntry {
-  final EnemyListEntry entry;
-  final Enemy activeEnemy;
+  final EnemyIndexListEntry entry;
+  final EnemyIndexEntry activeEnemy;
 
-  const ResolvedEnemyEntry({
-    required this.entry,
-    required this.activeEnemy,
-  });
+  const ResolvedEnemyEntry({required this.entry, required this.activeEnemy});
 }
 
 class _TierFilterOptions {
   final List<int> tiers;
   final bool hasBoss;
 
-  const _TierFilterOptions({
-    required this.tiers,
-    required this.hasBoss,
-  });
+  const _TierFilterOptions({required this.tiers, required this.hasBoss});
 }
 
-String _variantPreferenceKey(String speciesKey) => 'species_variant:$speciesKey';
+String _variantPreferenceKey(String speciesKey) =>
+    'species_variant:$speciesKey';

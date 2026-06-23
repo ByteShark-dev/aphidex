@@ -140,7 +140,8 @@ class Enemy {
         return raw
             .whereType<Map>()
             .map(
-              (item) => AdvancedLootEntry.fromJson(item.cast<String, dynamic>()),
+              (item) =>
+                  AdvancedLootEntry.fromJson(item.cast<String, dynamic>()),
             )
             .toList();
       }
@@ -152,7 +153,9 @@ class Enemy {
       if (raw is List) {
         return raw
             .whereType<Map>()
-            .map((item) => RewardUnlockInfo.fromJson(item.cast<String, dynamic>()))
+            .map(
+              (item) => RewardUnlockInfo.fromJson(item.cast<String, dynamic>()),
+            )
             .toList();
       }
       return const [];
@@ -510,7 +513,9 @@ class CombatStats {
     health: json['health'] as int?,
     stunThreshold: json['stunThreshold'] as int?,
     stunCooldownSeconds: json['stunCooldownSeconds'] as int?,
-    attackDamageSummary: LocalizedText.maybeFromJson(json['attackDamageSummary']),
+    attackDamageSummary: LocalizedText.maybeFromJson(
+      json['attackDamageSummary'],
+    ),
   );
 }
 

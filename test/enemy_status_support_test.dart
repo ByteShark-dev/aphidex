@@ -120,9 +120,9 @@ void main() {
         'Impossible Superior',
       );
       expect(
-        AppLocalizations(const Locale('es')).dangerLevelLabel(
-          'imposible_superior',
-        ),
+        AppLocalizations(
+          const Locale('es'),
+        ).dangerLevelLabel('imposible_superior'),
         'Imposible Superior',
       );
     });
@@ -131,15 +131,15 @@ void main() {
   group('AppLocalizations susceptibleDamageLabel', () {
     test('labels the mantis nymph eye rule', () {
       expect(
-        AppLocalizations(const Locale('es')).susceptibleDamageLabel(
-          'stabbing_bows_and_spears',
-        ),
+        AppLocalizations(
+          const Locale('es'),
+        ).susceptibleDamageLabel('stabbing_bows_and_spears'),
         'Perforación (arcos / ballestas / lanzas)',
       );
       expect(
-        AppLocalizations(const Locale('en')).susceptibleDamageLabel(
-          'stabbing_bows_and_spears',
-        ),
+        AppLocalizations(
+          const Locale('en'),
+        ).susceptibleDamageLabel('stabbing_bows_and_spears'),
         'Stabbing (bows / crossbows / spears)',
       );
     });

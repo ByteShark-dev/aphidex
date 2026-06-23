@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aphidex/controllers/tutorial_controller.dart';
+import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/data/effect_catalog.dart';
 import 'package:aphidex/data/local_storage.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
@@ -117,6 +118,7 @@ void main() {
 
     setUp(() async {
       await Hive.box('aphidex').clear();
+      EnemyRepository.clearCaches();
       await LocalStorage.setBool(TutorialController.completionKey, true);
       handler = (message) async {
         final key = utf8.decode(
@@ -137,11 +139,16 @@ void main() {
         if (key == 'FontManifest.json') {
           return _stringData('[]');
         }
-        if (key.endsWith('assets/data/enemies_g1.json')) {
-          return _stringData(jsonEncode([_sampleEnemyJson]));
+        if (key.endsWith('assets/data/creatures/en/index_g1.json')) {
+          return _stringData(jsonEncode([_indexEntry(_sampleEnemyJson)]));
         }
-        if (key.endsWith('assets/data/enemies_g2.json')) {
+        if (key.endsWith('assets/data/creatures/en/index_g2.json')) {
           return _stringData('[]');
+        }
+        if (key.endsWith(
+          'assets/data/creatures/en/details/g1_test_enemy.json',
+        )) {
+          return _stringData(jsonEncode(_sampleEnemyJson));
         }
         return _transparentImage;
       };
@@ -257,6 +264,30 @@ Widget _buildTestApp(Widget home) {
 ByteData _stringData(String value) {
   final bytes = Uint8List.fromList(utf8.encode(value));
   return ByteData.view(bytes.buffer);
+}
+
+Map<String, dynamic> _indexEntry(Map<String, dynamic> json) {
+  final enemy = Enemy.fromJson(json);
+  return {
+    'id': enemy.id,
+    'speciesKey': enemy.speciesKey,
+    'name': enemy.name.resolve('en'),
+    'game': enemy.game,
+    'tier': enemy.tier,
+    'danger': enemy.danger,
+    'isBoss': enemy.isBoss,
+    'order': enemy.order,
+    'defaultGold': enemy.defaultGold,
+    'cardNormal': enemy.cardNormal,
+    'cardGold': enemy.cardGold,
+    'weaknesses': enemy.weaknesses,
+    'resistances': enemy.resistances,
+    if (enemy.health != null)
+      'health': {
+        'rating': enemy.health!.rating,
+        if (enemy.health!.value != null) 'value': enemy.health!.value,
+      },
+  };
 }
 
 final ByteData _transparentImage = ByteData.view(

@@ -42,9 +42,7 @@ class _InlineBannerAdCardState extends State<InlineBannerAdCard> {
     _bannerAd = null;
     _adSize = null;
 
-    final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(
-      width,
-    );
+    final size = await AdSize.getLargeAnchoredAdaptiveBannerAdSize(width);
     if (!mounted || size == null) {
       return;
     }

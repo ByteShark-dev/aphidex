@@ -277,36 +277,39 @@ void main() {
     );
   });
 
-  test('roach elites and major roaches keep their real two-phase transitions', () {
-    final cockroach = entry('g2_cockroach');
-    final orcCockroach = entry('g2_orc_cockroach');
-    final cockroachQueen = entry('g2_cockroach_queen');
-    final orcCockroachQueen = entry('g2_orc_cockroach_queen');
+  test(
+    'roach elites and major roaches keep their real two-phase transitions',
+    () {
+      final cockroach = entry('g2_cockroach');
+      final orcCockroach = entry('g2_orc_cockroach');
+      final cockroachQueen = entry('g2_cockroach_queen');
+      final orcCockroachQueen = entry('g2_orc_cockroach_queen');
 
-    expect(cockroach['isBoss'], isFalse);
-    expect((cockroach['bossPhases'] as List), hasLength(2));
-    expect(
-      (cockroach['bossPhases'] as List)[1]['trigger']['en'],
-      contains('loses its head'),
-    );
-    expect(
-      (cockroach['combatStats']['attackDamageSummary']['en'] as String),
-      contains('Headless Ram: 25'),
-    );
+      expect(cockroach['isBoss'], isFalse);
+      expect((cockroach['bossPhases'] as List), hasLength(2));
+      expect(
+        (cockroach['bossPhases'] as List)[1]['trigger']['en'],
+        contains('loses its head'),
+      );
+      expect(
+        (cockroach['combatStats']['attackDamageSummary']['en'] as String),
+        contains('Headless Ram: 25'),
+      );
 
-    expect(orcCockroach['isBoss'], isFalse);
-    expect((orcCockroach['bossPhases'] as List), hasLength(2));
+      expect(orcCockroach['isBoss'], isFalse);
+      expect((orcCockroach['bossPhases'] as List), hasLength(2));
 
-    expect(cockroachQueen['isBoss'], isFalse);
-    expect((cockroachQueen['bossPhases'] as List), hasLength(2));
+      expect(cockroachQueen['isBoss'], isFalse);
+      expect((cockroachQueen['bossPhases'] as List), hasLength(2));
 
-    expect(orcCockroachQueen['isBoss'], isFalse);
-    expect((orcCockroachQueen['bossPhases'] as List), hasLength(2));
-    expect(
-      orcCockroachQueen['description']['en'],
-      contains('required elite encounter'),
-    );
-  });
+      expect(orcCockroachQueen['isBoss'], isFalse);
+      expect((orcCockroachQueen['bossPhases'] as List), hasLength(2));
+      expect(
+        orcCockroachQueen['description']['en'],
+        contains('required elite encounter'),
+      );
+    },
+  );
 
   test('g2 boss danger tiers match the current community read', () {
     expect(entry('g2_axl')['danger'], 'imposible');
@@ -327,33 +330,36 @@ void main() {
     expect(entry('g2_rust_beetle')['danger'], 'muy_alta');
   });
 
-  test('g2 system entries document MIX.R and Ice Sickles without faction raids', () {
-    final mixr = entry('g2_mixr_defenses');
-    final iceSickles = entry('g2_ice_sickles_event');
+  test(
+    'g2 system entries document MIX.R and Ice Sickles without faction raids',
+    () {
+      final mixr = entry('g2_mixr_defenses');
+      final iceSickles = entry('g2_ice_sickles_event');
 
-    expect(mixr['isBoss'], isFalse);
-    expect(mixr['description']['en'], contains('Grounded 2 MIX.R events'));
-    expect(
-      mixr['specialTraits'][0]['en'],
-      contains('rather than classic factional raids'),
-    );
-
-    expect(iceSickles['description']['en'], contains('Ice Sickles'));
-    expect(
-      (iceSickles['abilities'] as List).whereType<Map>().any(
-        (ability) => ability['name']['en'] == 'Scorpion Waves',
-      ),
-      isTrue,
-    );
-    for (final event in [mixr, iceSickles]) {
+      expect(mixr['isBoss'], isFalse);
+      expect(mixr['description']['en'], contains('Grounded 2 MIX.R events'));
       expect(
-        (event['abilities'] as List).whereType<Map>().any(
-          (ability) => ability['name']['en'] == 'Guard Dog Progress',
+        mixr['specialTraits'][0]['en'],
+        contains('rather than classic factional raids'),
+      );
+
+      expect(iceSickles['description']['en'], contains('Ice Sickles'));
+      expect(
+        (iceSickles['abilities'] as List).whereType<Map>().any(
+          (ability) => ability['name']['en'] == 'Scorpion Waves',
         ),
         isTrue,
       );
-    }
-  });
+      for (final event in [mixr, iceSickles]) {
+        expect(
+          (event['abilities'] as List).whereType<Map>().any(
+            (ability) => ability['name']['en'] == 'Guard Dog Progress',
+          ),
+          isTrue,
+        );
+      }
+    },
+  );
 
   test('ogrr and late g2 location notes stay aligned to the curated map', () {
     final ogrrCricket = entry('g2_ogrr_cricket');
@@ -432,10 +438,7 @@ void main() {
       contains('no depende de la noche'),
     );
 
-    expect(
-      (ogrrScorpion['environments'] as List).last['en'],
-      'Lime Tree Seed',
-    );
+    expect((ogrrScorpion['environments'] as List).last['en'], 'Lime Tree Seed');
     expect(ogrrScorpion['behavior']['es'], contains('no depende de la noche'));
 
     expect(

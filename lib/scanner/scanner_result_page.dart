@@ -20,8 +20,6 @@ class ScannerResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final languageCode = l10n.languageCode;
-
     return Scaffold(
       appBar: AppBar(title: Text(l10n.scannerPossibleCreaturesTitle)),
       body: ListView.separated(
@@ -47,7 +45,7 @@ class ScannerResultPage extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.asset(
-                      previewEnemy.photo,
+                      previewEnemy.cardNormal,
                       width: 88,
                       height: 88,
                       fit: BoxFit.cover,
@@ -59,7 +57,7 @@ class ScannerResultPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          previewEnemy.name.resolve(languageCode),
+                          previewEnemy.name,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w800,
@@ -116,7 +114,9 @@ class _RawDetectionCard extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(
-              rawLabels.isEmpty ? l10n.scannerNoDetectedLabels : rawLabels.join(', '),
+              rawLabels.isEmpty
+                  ? l10n.scannerNoDetectedLabels
+                  : rawLabels.join(', '),
             ),
             if (rawWebEntities.isNotEmpty) ...[
               const SizedBox(height: 10),

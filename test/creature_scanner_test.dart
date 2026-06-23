@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
+import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/scanner/creature_alias_matcher.dart';
 import 'package:aphidex/scanner/creature_scanner_page.dart';
 import 'package:aphidex/scanner/creature_scanner_service.dart';
@@ -55,34 +56,46 @@ void main() {
     expect(ladybug.matches.first.creatureId, 'ladybug');
   });
 
-  test('alias matcher keeps ambiguous spider results out of clear single match', () {
-    const matcher = CreatureAliasMatcher();
+  test(
+    'alias matcher keeps ambiguous spider results out of clear single match',
+    () {
+      const matcher = CreatureAliasMatcher();
 
-    final result = matcher.match(
-      rawLabels: const ['spider'],
-      rawWebEntities: const [],
-    );
+      final result = matcher.match(
+        rawLabels: const ['spider'],
+        rawWebEntities: const [],
+      );
 
-    expect(result.matches, isNotEmpty);
-    expect(
-      result.matches.first.creatureId,
-      anyOf('orb_weaver', 'wolf_spider'),
-    );
-    expect(matcher.isClearSingleMatch(result.matches), isFalse);
-  });
+      expect(result.matches, isNotEmpty);
+      expect(
+        result.matches.first.creatureId,
+        anyOf('orb_weaver', 'wolf_spider'),
+      );
+      expect(matcher.isClearSingleMatch(result.matches), isFalse);
+    },
+  );
 
-  test('alias matcher returns earwig variants as suggestions for generic earwig labels', () {
-    const matcher = CreatureAliasMatcher();
+  test(
+    'alias matcher returns earwig variants as suggestions for generic earwig labels',
+    () {
+      const matcher = CreatureAliasMatcher();
 
-    final result = matcher.match(
-      rawLabels: const ['earwig'],
-      rawWebEntities: const [],
-    );
+      final result = matcher.match(
+        rawLabels: const ['earwig'],
+        rawWebEntities: const [],
+      );
 
-    expect(result.matches.map((match) => match.creatureId), contains('pincher_earwig'));
-    expect(result.matches.map((match) => match.creatureId), contains('whipper_earwig'));
-    expect(matcher.isClearSingleMatch(result.matches), isFalse);
-  });
+      expect(
+        result.matches.map((match) => match.creatureId),
+        contains('pincher_earwig'),
+      );
+      expect(
+        result.matches.map((match) => match.creatureId),
+        contains('whipper_earwig'),
+      );
+      expect(matcher.isClearSingleMatch(result.matches), isFalse);
+    },
+  );
 
   test('alias matcher resolves scorpion labels to northern scorpion', () {
     const matcher = CreatureAliasMatcher();
@@ -96,96 +109,104 @@ void main() {
     expect(result.matches.first.creatureId, 'northern_scorpion');
   });
 
-  test('preferredScannerVariant respects selected game and stored preference', () {
-    final g1 = _enemy(
-      id: 'g1_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g1',
-      name: 'Black Worker Ant G1',
-      tier: 2,
-    );
-    final g2 = _enemy(
-      id: 'g2_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g2',
-      name: 'Black Worker Ant G2',
-      tier: 1,
-    );
+  test(
+    'preferredScannerVariant respects selected game and stored preference',
+    () {
+      final g1 = _enemy(
+        id: 'g1_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g1',
+        name: 'Black Worker Ant G1',
+        tier: 2,
+      );
+      final g2 = _enemy(
+        id: 'g2_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g2',
+        name: 'Black Worker Ant G2',
+        tier: 1,
+      );
 
-    expect(
-      preferredScannerVariant(
-        [g1, g2],
+      expect(
+        preferredScannerVariant([
+          g1,
+          g2,
+        ], selectedGameScope: scannerGameScopeG1)?.id,
+        g1.id,
+      );
+      expect(
+        preferredScannerVariant([
+          g1,
+          g2,
+        ], selectedGameScope: scannerGameScopeG2)?.id,
+        g2.id,
+      );
+      expect(
+        preferredScannerVariant(
+          [g1, g2],
+          selectedGameScope: scannerGameScopeAll,
+          storedPreferredGame: 'g1',
+        )?.id,
+        g1.id,
+      );
+      expect(
+        preferredScannerVariant([
+          g1,
+          g2,
+        ], selectedGameScope: scannerGameScopeAll)?.id,
+        g2.id,
+      );
+    },
+  );
+
+  test(
+    'resolveScannerMatches filters by selected scope and keeps preview enemy',
+    () {
+      final g1 = _enemy(
+        id: 'g1_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g1',
+        name: 'Black Worker Ant G1',
+      );
+      final g2 = _enemy(
+        id: 'g2_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g2',
+        name: 'Black Worker Ant G2',
+      );
+
+      const rawMatches = [
+        CreatureAliasMatch(
+          creatureId: 'black_worker_ant',
+          displayName: 'Black Worker Ant',
+          confidence: 0.92,
+          sourceLabels: ['black ant'],
+        ),
+      ];
+
+      final g1Only = resolveScannerMatches(
+        rawMatches: rawMatches,
+        allEnemies: [g1, g2],
         selectedGameScope: scannerGameScopeG1,
-      )?.id,
-      g1.id,
-    );
-    expect(
-      preferredScannerVariant(
-        [g1, g2],
-        selectedGameScope: scannerGameScopeG2,
-      )?.id,
-      g2.id,
-    );
-    expect(
-      preferredScannerVariant(
-        [g1, g2],
+      );
+      expect(g1Only, hasLength(1));
+      expect(g1Only.first.previewEnemy.id, g1.id);
+      expect(g1Only.first.variants, hasLength(1));
+
+      final both = resolveScannerMatches(
+        rawMatches: rawMatches,
+        allEnemies: [g1, g2],
         selectedGameScope: scannerGameScopeAll,
-        storedPreferredGame: 'g1',
-      )?.id,
-      g1.id,
-    );
-    expect(
-      preferredScannerVariant(
-        [g1, g2],
-        selectedGameScope: scannerGameScopeAll,
-      )?.id,
-      g2.id,
-    );
-  });
+      );
+      expect(both, hasLength(1));
+      expect(both.first.previewEnemy.id, g2.id);
+      expect(both.first.variants, hasLength(2));
+    },
+  );
 
-  test('resolveScannerMatches filters by selected scope and keeps preview enemy', () {
-    final g1 = _enemy(
-      id: 'g1_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g1',
-      name: 'Black Worker Ant G1',
-    );
-    final g2 = _enemy(
-      id: 'g2_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g2',
-      name: 'Black Worker Ant G2',
-    );
-
-    const rawMatches = [
-      CreatureAliasMatch(
-        creatureId: 'black_worker_ant',
-        displayName: 'Black Worker Ant',
-        confidence: 0.92,
-        sourceLabels: ['black ant'],
-      ),
-    ];
-
-    final g1Only = resolveScannerMatches(
-      rawMatches: rawMatches,
-      allEnemies: [g1, g2],
-      selectedGameScope: scannerGameScopeG1,
-    );
-    expect(g1Only, hasLength(1));
-    expect(g1Only.first.previewEnemy.id, g1.id);
-    expect(g1Only.first.variants, hasLength(1));
-
-    final both = resolveScannerMatches(
-      rawMatches: rawMatches,
-      allEnemies: [g1, g2],
-      selectedGameScope: scannerGameScopeAll,
-    );
-    expect(both, hasLength(1));
-    expect(both.first.previewEnemy.id, g2.id);
-    expect(both.first.variants, hasLength(2));
-  });
-
-  testWidgets('scanner page shows loading and no-match message', (tester) async {
+  testWidgets('scanner page shows loading and no-match message', (
+    tester,
+  ) async {
     final enemy = _enemy(
       id: 'g2_ladybug',
       speciesKey: 'ladybug',
@@ -246,7 +267,7 @@ void main() {
     );
     final match = CreatureScannerMatch(
       creatureId: enemy.speciesKey,
-      displayName: enemy.name.resolve('en'),
+      displayName: enemy.name,
       confidence: 0.96,
       sourceLabels: const ['wolf spider'],
       variants: [enemy],
@@ -284,125 +305,127 @@ void main() {
     await tester.pump();
   });
 
-  testWidgets('scanner page shows possible creatures when the result is ambiguous', (
-    tester,
-  ) async {
-    final ladybug = _enemy(
-      id: 'g2_ladybug',
-      speciesKey: 'ladybug',
-      game: 'g2',
-      name: 'Ladybug G2',
-    );
-    final bee = _enemy(
-      id: 'g2_bee',
-      speciesKey: 'bee',
-      game: 'g2',
-      name: 'Bee G2',
-    );
+  testWidgets(
+    'scanner page shows possible creatures when the result is ambiguous',
+    (tester) async {
+      final ladybug = _enemy(
+        id: 'g2_ladybug',
+        speciesKey: 'ladybug',
+        game: 'g2',
+        name: 'Ladybug G2',
+      );
+      final bee = _enemy(
+        id: 'g2_bee',
+        speciesKey: 'bee',
+        game: 'g2',
+        name: 'Bee G2',
+      );
 
-    await tester.pumpWidget(
-      _buildApp(
-        CreatureScannerPage(
-          enemies: [ladybug, bee],
-          selectedGameScope: scannerGameScopeG2,
-          serviceOverride: _FakeScannerService(
-            allEnemies: [ladybug, bee],
+      await tester.pumpWidget(
+        _buildApp(
+          CreatureScannerPage(
+            enemies: [ladybug, bee],
             selectedGameScope: scannerGameScopeG2,
-            handler: (_) async => CreatureScannerResult(
-              matches: [
-                CreatureScannerMatch(
-                  creatureId: ladybug.speciesKey,
-                  displayName: ladybug.name.resolve('en'),
-                  confidence: 0.71,
-                  sourceLabels: const ['ladybug'],
-                  variants: [ladybug],
-                  previewEnemy: ladybug,
-                ),
-                CreatureScannerMatch(
-                  creatureId: bee.speciesKey,
-                  displayName: bee.name.resolve('en'),
-                  confidence: 0.66,
-                  sourceLabels: const ['bee'],
-                  variants: [bee],
-                  previewEnemy: bee,
-                ),
-              ],
-              rawLabels: const ['ladybug', 'bee'],
-              rawWebEntities: const [],
-              hasClearMatch: false,
+            serviceOverride: _FakeScannerService(
+              allEnemies: [ladybug, bee],
+              selectedGameScope: scannerGameScopeG2,
+              handler: (_) async => CreatureScannerResult(
+                matches: [
+                  CreatureScannerMatch(
+                    creatureId: ladybug.speciesKey,
+                    displayName: ladybug.name,
+                    confidence: 0.71,
+                    sourceLabels: const ['ladybug'],
+                    variants: [ladybug],
+                    previewEnemy: ladybug,
+                  ),
+                  CreatureScannerMatch(
+                    creatureId: bee.speciesKey,
+                    displayName: bee.name,
+                    confidence: 0.66,
+                    sourceLabels: const ['bee'],
+                    variants: [bee],
+                    previewEnemy: bee,
+                  ),
+                ],
+                rawLabels: const ['ladybug', 'bee'],
+                rawWebEntities: const [],
+                hasClearMatch: false,
+              ),
             ),
+            imagePickerOverride: _fakePicker,
           ),
-          imagePickerOverride: _fakePicker,
         ),
-      ),
-    );
-    await tester.pumpAndSettle();
+      );
+      await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Choose image'));
-    await tester.pumpAndSettle();
+      await tester.tap(find.text('Choose image'));
+      await tester.pumpAndSettle();
 
-    expect(find.text('Possible creatures'), findsOneWidget);
-    expect(find.text('Ladybug G2'), findsOneWidget);
-    expect(find.text('Bee G2'), findsOneWidget);
-    expect(find.text('Open'), findsNWidgets(2));
-  });
+      expect(find.text('Possible creatures'), findsOneWidget);
+      expect(find.text('Ladybug G2'), findsOneWidget);
+      expect(find.text('Bee G2'), findsOneWidget);
+      expect(find.text('Open'), findsNWidgets(2));
+    },
+  );
 
-  testWidgets('scanner asks which game to open when both variants exist and no preference is saved', (
-    tester,
-  ) async {
-    final g1 = _enemy(
-      id: 'g1_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g1',
-      name: 'Black Worker Ant G1',
-      tier: 2,
-    );
-    final g2 = _enemy(
-      id: 'g2_black_worker_ant',
-      speciesKey: 'black_worker_ant',
-      game: 'g2',
-      name: 'Black Worker Ant G2',
-      tier: 1,
-    );
-    final match = CreatureScannerMatch(
-      creatureId: 'black_worker_ant',
-      displayName: 'Black Worker Ant',
-      confidence: 0.91,
-      sourceLabels: const ['black ant'],
-      variants: [g1, g2],
-      previewEnemy: g2,
-    );
+  testWidgets(
+    'scanner asks which game to open when both variants exist and no preference is saved',
+    (tester) async {
+      final g1 = _enemy(
+        id: 'g1_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g1',
+        name: 'Black Worker Ant G1',
+        tier: 2,
+      );
+      final g2 = _enemy(
+        id: 'g2_black_worker_ant',
+        speciesKey: 'black_worker_ant',
+        game: 'g2',
+        name: 'Black Worker Ant G2',
+        tier: 1,
+      );
+      final match = CreatureScannerMatch(
+        creatureId: 'black_worker_ant',
+        displayName: 'Black Worker Ant',
+        confidence: 0.91,
+        sourceLabels: const ['black ant'],
+        variants: [g1, g2],
+        previewEnemy: g2,
+      );
 
-    await tester.pumpWidget(
-      _buildApp(
-        CreatureScannerPage(
-          enemies: [g1, g2],
-          selectedGameScope: scannerGameScopeAll,
-          serviceOverride: _FakeScannerService(
-            allEnemies: [g1, g2],
+      await tester.pumpWidget(
+        _buildApp(
+          CreatureScannerPage(
+            enemies: [g1, g2],
             selectedGameScope: scannerGameScopeAll,
-            handler: (_) async => CreatureScannerResult(
-              matches: [match],
-              rawLabels: const ['black ant'],
-              rawWebEntities: const [],
-              hasClearMatch: true,
+            serviceOverride: _FakeScannerService(
+              allEnemies: [g1, g2],
+              selectedGameScope: scannerGameScopeAll,
+              handler: (_) async => CreatureScannerResult(
+                matches: [match],
+                rawLabels: const ['black ant'],
+                rawWebEntities: const [],
+                hasClearMatch: true,
+              ),
             ),
+            imagePickerOverride: _fakePicker,
           ),
-          imagePickerOverride: _fakePicker,
         ),
-      ),
-    );
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 150));
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 150));
 
-    await tester.tap(find.text('Take photo'));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 250));
+      await tester.tap(find.text('Take photo'));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
 
-    expect(find.text('Which version should I open?'), findsOneWidget);
-    await tester.binding.handlePopRoute();
-    await tester.pump();
-  });
+      expect(find.text('Which version should I open?'), findsOneWidget);
+      await tester.binding.handlePopRoute();
+      await tester.pump();
+    },
+  );
 }
 
 Widget _buildApp(Widget home) {
@@ -425,19 +448,19 @@ Future<XFile?> _fakePicker(ImageSource source) async {
   );
 }
 
-Enemy _enemy({
+EnemyIndexEntry _enemy({
   required String id,
   required String speciesKey,
   required String game,
   required String name,
   int tier = 1,
 }) {
-  return Enemy(
+  return EnemyIndexEntry(
     order: 1,
     defaultGold: false,
     id: id,
     speciesKey: speciesKey,
-    name: LocalizedText(es: name, en: name, ru: name),
+    name: name,
     game: game,
     tier: tier,
     danger: 'baja',
@@ -447,9 +470,7 @@ Enemy _enemy({
     resistances: const [],
     cardNormal: 'assets/global/Creaturecard_Proximamente.webp',
     cardGold: 'assets/global/Creaturecard_Proximamente.webp',
-    photo: 'assets/global/Aphidex_Proximamente.webp',
     health: const HealthInfo(rating: 1, value: 10),
-    elementalWeaknesses: const [BonusInfo(type: 'spicy', bonusPct: 25)],
   );
 }
 

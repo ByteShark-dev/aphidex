@@ -25,7 +25,11 @@ void main() {
           {
             'id': 'raw_science',
             'category': 'currency',
-            'name': {'es': 'Ciencia pura', 'en': 'Raw Science', 'ru': 'Raw Science'},
+            'name': {
+              'es': 'Ciencia pura',
+              'en': 'Raw Science',
+              'ru': 'Raw Science',
+            },
             'amount': 1000,
           },
         ],

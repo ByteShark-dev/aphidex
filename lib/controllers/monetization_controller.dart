@@ -268,9 +268,7 @@ class MonetizationController {
       return;
     }
 
-    final response = await inAppPurchase.queryProductDetails({
-      productId,
-    });
+    final response = await inAppPurchase.queryProductDetails({productId});
     if (response.error != null || response.productDetails.isEmpty) {
       removeAdsProduct.value = null;
       return;
@@ -406,9 +404,7 @@ class MonetizationController {
     await ad.show();
   }
 
-  Future<_InterstitialPitchAction?> _showRemoveAdsPitch(
-    BuildContext context,
-  ) {
+  Future<_InterstitialPitchAction?> _showRemoveAdsPitch(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final product = removeAdsProduct.value;
     final price = product == null ? null : displayStorePrice(product);
@@ -474,15 +470,13 @@ class _RemoveAdsPitchDialog extends StatelessWidget {
       content: Text(message),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(
-            _InterstitialPitchAction.keepAds,
-          ),
+          onPressed: () =>
+              Navigator.of(context).pop(_InterstitialPitchAction.keepAds),
           child: Text(dismissLabel),
         ),
         FilledButton(
-          onPressed: () => Navigator.of(context).pop(
-            _InterstitialPitchAction.removeAds,
-          ),
+          onPressed: () =>
+              Navigator.of(context).pop(_InterstitialPitchAction.removeAds),
           child: Text(buyLabel),
         ),
       ],

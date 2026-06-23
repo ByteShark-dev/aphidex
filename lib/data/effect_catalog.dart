@@ -1,4 +1,4 @@
-﻿import '../models/enemy.dart';
+import '../models/enemy.dart';
 
 enum EffectCategory { damage, element, status }
 
@@ -269,7 +269,11 @@ const effectCatalogEntries = <EffectCatalogEntry>[
   EffectCatalogEntry(
     id: 'tang_buildup',
     category: EffectCategory.status,
-    name: LocalizedText(es: 'Corrosión', en: 'Tang buildup', ru: 'Накопление Tang'),
+    name: LocalizedText(
+      es: 'Corrosión',
+      en: 'Tang buildup',
+      ru: 'Накопление Tang',
+    ),
     description: LocalizedText(
       es: 'Acumulación especial que algunas criaturas pueden resistir o ignorar por completo.',
       en: 'A special buildup effect that some creatures can resist or ignore completely.',

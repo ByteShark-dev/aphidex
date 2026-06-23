@@ -220,22 +220,30 @@ class SettingsScreen extends StatelessWidget {
                     switch (result) {
                       case MonetizationActionResult.alreadyOwned:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsAlreadyRemovedMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsAlreadyRemovedMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.storeUnavailable:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsStoreUnavailableMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsStoreUnavailableMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.productUnavailable:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsProductUnavailableMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsProductUnavailableMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.failed:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsPurchaseFailedMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsPurchaseFailedMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.launchedPurchaseFlow:
@@ -254,12 +262,16 @@ class SettingsScreen extends StatelessWidget {
                     switch (result) {
                       case MonetizationActionResult.startedRestore:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsRestoreStartedMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsRestoreStartedMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.storeUnavailable:
                         messenger.showSnackBar(
-                          SnackBar(content: Text(l10n.adsStoreUnavailableMessage)),
+                          SnackBar(
+                            content: Text(l10n.adsStoreUnavailableMessage),
+                          ),
                         );
                         break;
                       case MonetizationActionResult.unsupportedPlatform:

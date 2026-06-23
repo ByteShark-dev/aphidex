@@ -21,12 +21,7 @@ class FallbackAssetImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget buildImage(String asset) {
-      final image = Image.asset(
-        asset,
-        width: width,
-        height: height,
-        fit: fit,
-      );
+      final image = Image.asset(asset, width: width, height: height, fit: fit);
       if (borderRadius == null) {
         return image;
       }
@@ -38,7 +33,8 @@ class FallbackAssetImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
-      errorBuilder: (context, error, stackTrace) => buildImage(fallbackAssetName),
+      errorBuilder: (context, error, stackTrace) =>
+          buildImage(fallbackAssetName),
     );
   }
 }

@@ -110,7 +110,9 @@ class _BootstrapShell extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF35586E)),
       ),
-      home: Scaffold(body: SafeArea(child: Center(child: child))),
+      home: Scaffold(
+        body: SafeArea(child: Center(child: child)),
+      ),
     );
   }
 }
@@ -143,10 +145,7 @@ class _BootstrapLoadingScreen extends StatelessWidget {
 }
 
 class _BootstrapErrorScreen extends StatelessWidget {
-  const _BootstrapErrorScreen({
-    required this.error,
-    required this.onRetry,
-  });
+  const _BootstrapErrorScreen({required this.error, required this.onRetry});
 
   final Object? error;
   final VoidCallback onRetry;
@@ -176,10 +175,7 @@ class _BootstrapErrorScreen extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 20),
-          FilledButton(
-            onPressed: onRetry,
-            child: const Text('Retry startup'),
-          ),
+          FilledButton(onPressed: onRetry, child: const Text('Retry startup')),
         ],
       ),
     );

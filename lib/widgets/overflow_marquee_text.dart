@@ -64,14 +64,20 @@ class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
 
     final defaultStyle = DefaultTextStyle.of(context).style;
     final painter = TextPainter(
-      text: TextSpan(text: widget.text, style: defaultStyle.merge(widget.style)),
+      text: TextSpan(
+        text: widget.text,
+        style: defaultStyle.merge(widget.style),
+      ),
       maxLines: widget.maxLines,
       textDirection: Directionality.of(context),
       textScaler: MediaQuery.textScalerOf(context),
     )..layout(maxWidth: maxWidth);
 
     final naturalPainter = TextPainter(
-      text: TextSpan(text: widget.text, style: defaultStyle.merge(widget.style)),
+      text: TextSpan(
+        text: widget.text,
+        style: defaultStyle.merge(widget.style),
+      ),
       maxLines: widget.maxLines,
       textDirection: Directionality.of(context),
       textScaler: MediaQuery.textScalerOf(context),

@@ -54,19 +54,35 @@ class CreatureAliasMatcher {
       creatureId: 'red_worker_ant',
       speciesKey: 'red_worker_ant',
       displayName: 'Red Worker Ant',
-      aliases: ['red ant', 'red worker ant', 'hormiga roja', 'hormiga obrera roja', 'ant'],
+      aliases: [
+        'red ant',
+        'red worker ant',
+        'hormiga roja',
+        'hormiga obrera roja',
+        'ant',
+      ],
     ),
     _AliasEntry(
       creatureId: 'black_worker_ant',
       speciesKey: 'black_worker_ant',
       displayName: 'Black Worker Ant',
-      aliases: ['black ant', 'black worker ant', 'hormiga negra', 'hormiga obrera negra'],
+      aliases: [
+        'black ant',
+        'black worker ant',
+        'hormiga negra',
+        'hormiga obrera negra',
+      ],
     ),
     _AliasEntry(
       creatureId: 'fire_worker_ant',
       speciesKey: 'g1_fire_worker_ant',
       displayName: 'Fire Worker Ant',
-      aliases: ['fire ant', 'fire worker ant', 'hormiga de fuego', 'hormiga obrera de fuego'],
+      aliases: [
+        'fire ant',
+        'fire worker ant',
+        'hormiga de fuego',
+        'hormiga obrera de fuego',
+      ],
     ),
     _AliasEntry(
       creatureId: 'red_soldier_ant',
@@ -108,7 +124,13 @@ class CreatureAliasMatcher {
       creatureId: 'gnat',
       speciesKey: 'gnat',
       displayName: 'Gnat',
-      aliases: ['gnat', 'mosquito pequeño', 'mosquito pequeno', 'jejen', 'jején'],
+      aliases: [
+        'gnat',
+        'mosquito pequeño',
+        'mosquito pequeno',
+        'jejen',
+        'jején',
+      ],
     ),
     _AliasEntry(
       creatureId: 'aphid',
@@ -132,7 +154,13 @@ class CreatureAliasMatcher {
       creatureId: 'grub',
       speciesKey: 'grub',
       displayName: 'Grub',
-      aliases: ['grub', 'larva subterránea', 'larva subterranea', 'gusano blanco', 'larva'],
+      aliases: [
+        'grub',
+        'larva subterránea',
+        'larva subterranea',
+        'gusano blanco',
+        'larva',
+      ],
     ),
     _AliasEntry(
       creatureId: 'larva',
@@ -144,7 +172,14 @@ class CreatureAliasMatcher {
       creatureId: 'mite',
       speciesKey: 'lawn_mite',
       displayName: 'Lawn Mite',
-      aliases: ['mite', 'lawn mite', 'ácaro', 'acaro', 'ácaro de césped', 'acaro de cesped'],
+      aliases: [
+        'mite',
+        'lawn mite',
+        'ácaro',
+        'acaro',
+        'ácaro de césped',
+        'acaro de cesped',
+      ],
     ),
     _AliasEntry(
       creatureId: 'stinkbug',
@@ -192,7 +227,12 @@ class CreatureAliasMatcher {
       creatureId: 'potato_beetle',
       speciesKey: 'potato_beetle',
       displayName: 'Potato Beetle',
-      aliases: ['potato beetle', 'potato bug', 'escarabajo de la patata', 'escarabajo de la papa'],
+      aliases: [
+        'potato beetle',
+        'potato bug',
+        'escarabajo de la patata',
+        'escarabajo de la papa',
+      ],
     ),
     _AliasEntry(
       creatureId: 'rust_beetle',
@@ -228,13 +268,25 @@ class CreatureAliasMatcher {
       creatureId: 'cockroach_queen',
       speciesKey: 'cockroach_queen',
       displayName: 'Cockroach Queen',
-      aliases: ['cockroach queen', 'queen cockroach', 'reina cucaracha', 'reina de las cucarachas'],
+      aliases: [
+        'cockroach queen',
+        'queen cockroach',
+        'reina cucaracha',
+        'reina de las cucarachas',
+      ],
     ),
     _AliasEntry(
       creatureId: 'orb_weaver',
       speciesKey: 'orb_weaver',
       displayName: 'Orb Weaver',
-      aliases: ['orb weaver', 'orb-weaver', 'spider', 'araña', 'arana', 'tejedora de orbe'],
+      aliases: [
+        'orb weaver',
+        'orb-weaver',
+        'spider',
+        'araña',
+        'arana',
+        'tejedora de orbe',
+      ],
     ),
     _AliasEntry(
       creatureId: 'orb_weaver_jr',
@@ -264,25 +316,52 @@ class CreatureAliasMatcher {
       creatureId: 'black_widowling',
       speciesKey: 'g1_black_widowling',
       displayName: 'Black Widowling',
-      aliases: ['black widowling', 'cría de viuda negra', 'cria de viuda negra'],
+      aliases: [
+        'black widowling',
+        'cría de viuda negra',
+        'cria de viuda negra',
+      ],
     ),
     _AliasEntry(
       creatureId: 'pincher_earwig',
       speciesKey: 'pincher_earwig',
       displayName: 'Pincher Earwig',
-      aliases: ['earwig', 'pincher earwig', 'tijerilla', 'tijereta', 'tijerilla pinza', 'tijereta pinza'],
+      aliases: [
+        'earwig',
+        'pincher earwig',
+        'tijerilla',
+        'tijereta',
+        'tijerilla pinza',
+        'tijereta pinza',
+      ],
     ),
     _AliasEntry(
       creatureId: 'whipper_earwig',
       speciesKey: 'whipper_earwig',
       displayName: 'Whipper Earwig',
-      aliases: ['earwig', 'whipper earwig', 'tijerilla', 'tijereta', 'tijerilla látigo', 'tijerilla latigo', 'tijereta látigo', 'tijereta latigo'],
+      aliases: [
+        'earwig',
+        'whipper earwig',
+        'tijerilla',
+        'tijereta',
+        'tijerilla látigo',
+        'tijerilla latigo',
+        'tijereta látigo',
+        'tijereta latigo',
+      ],
     ),
     _AliasEntry(
       creatureId: 'northern_scorpion',
       speciesKey: 'northern_scorpion',
       displayName: 'Northern Scorpion',
-      aliases: ['scorpion', 'northern scorpion', 'escorpión', 'escorpion', 'escorpión del norte', 'escorpion del norte'],
+      aliases: [
+        'scorpion',
+        'northern scorpion',
+        'escorpión',
+        'escorpion',
+        'escorpión del norte',
+        'escorpion del norte',
+      ],
     ),
     _AliasEntry(
       creatureId: 'northern_scorpling',
@@ -294,7 +373,12 @@ class CreatureAliasMatcher {
       creatureId: 'northern_scorpion_jr',
       speciesKey: 'northern_scorpion_jr',
       displayName: 'Northern Scorpion Jr.',
-      aliases: ['northern scorpion jr', 'northern scorpion young', 'escorpión del norte joven', 'escorpion del norte joven'],
+      aliases: [
+        'northern scorpion jr',
+        'northern scorpion young',
+        'escorpión del norte joven',
+        'escorpion del norte joven',
+      ],
     ),
     _AliasEntry(
       creatureId: 'praying_mantis_nymph',
@@ -324,13 +408,26 @@ class CreatureAliasMatcher {
       creatureId: 'garden_snail',
       speciesKey: 'garden_snail',
       displayName: 'Garden Snail',
-      aliases: ['garden snail', 'snail', 'caracol de jardín', 'caracol de jardin', 'caracol'],
+      aliases: [
+        'garden snail',
+        'snail',
+        'caracol de jardín',
+        'caracol de jardin',
+        'caracol',
+      ],
     ),
     _AliasEntry(
       creatureId: 'baby_garden_snail',
       speciesKey: 'baby_garden_snail',
       displayName: 'Baby Garden Snail',
-      aliases: ['baby garden snail', 'baby snail', 'caracol bebé', 'caracol bebe', 'caracol de jardín bebé', 'caracol de jardin bebe'],
+      aliases: [
+        'baby garden snail',
+        'baby snail',
+        'caracol bebé',
+        'caracol bebe',
+        'caracol de jardín bebé',
+        'caracol de jardin bebe',
+      ],
     ),
     _AliasEntry(
       creatureId: 'roly_poly',
@@ -450,12 +547,9 @@ class CreatureAliasMatcher {
   }
 
   static List<String> _normalizeAll(List<String> values) {
-    final normalized = values
-        .map(_normalize)
-        .where((item) => item.isNotEmpty)
-        .toSet()
-        .toList()
-      ..sort();
+    final normalized =
+        values.map(_normalize).where((item) => item.isNotEmpty).toSet().toList()
+          ..sort();
     return normalized;
   }
 

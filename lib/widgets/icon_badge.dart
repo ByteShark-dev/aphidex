@@ -22,14 +22,14 @@ class IconBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final bg = backgroundColor ??
+    final bg =
+        backgroundColor ??
         (isDark
             ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.92)
             : const Color(0xFFE5E7EB));
-    final border = borderColor ??
-        (isDark
-            ? Colors.white24
-            : Colors.black.withValues(alpha: 0.12));
+    final border =
+        borderColor ??
+        (isDark ? Colors.white24 : Colors.black.withValues(alpha: 0.12));
 
     return Container(
       padding: padding,

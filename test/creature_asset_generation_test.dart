@@ -1,0 +1,124 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter_test/flutter_test.dart';
+
+const _languages = ['es', 'en', 'ru'];
+const _games = ['g1', 'g2'];
+const _allowedIndexKeys = {
+  'id',
+  'speciesKey',
+  'game',
+  'name',
+  'tier',
+  'danger',
+  'isBoss',
+  'order',
+  'defaultGold',
+  'goldLinkId',
+  'cardNormal',
+  'cardGold',
+  'weaknesses',
+  'resistances',
+  'temperament',
+  'health',
+  'collectionGroup',
+};
+const _heavyIndexKeys = {
+  'photo',
+  'description',
+  'behavior',
+  'interactionWithPlayer',
+  'interactionWithCreatures',
+  'strategy',
+  'attacks',
+  'loot',
+  'advancedLootTable',
+  'abilities',
+  'bossPhases',
+  'combatStats',
+};
+
+void main() {
+  test('generated indexes stay lightweight and complete', () {
+    for (final language in _languages) {
+      var combinedIndexBytes = 0;
+
+      for (final game in _games) {
+        final source = _readList('assets/data/enemies_$game.json');
+        final indexFile = File(
+          'assets/data/creatures/$language/index_$game.json',
+        );
+
+        expect(indexFile.existsSync(), isTrue, reason: indexFile.path);
+        combinedIndexBytes += indexFile.lengthSync();
+
+        final index = (jsonDecode(indexFile.readAsStringSync()) as List)
+            .cast<Map<String, dynamic>>();
+        expect(index, hasLength(source.length), reason: '$language/$game');
+
+        for (final entry in index) {
+          expect(entry.keys.toSet().difference(_allowedIndexKeys), isEmpty);
+          expect(entry.keys.toSet().intersection(_heavyIndexKeys), isEmpty);
+          expect(entry['name'], isA<String>());
+          expect((entry['name'] as String).trim(), isNotEmpty);
+        }
+      }
+
+      expect(
+        combinedIndexBytes,
+        lessThan(100 * 1024),
+        reason: '$language index payload should stay near the startup target',
+      );
+    }
+  });
+
+  test('generated details are localized and present for every creature', () {
+    final sourceIds = <String>{
+      for (final game in _games)
+        for (final item in _readList('assets/data/enemies_$game.json'))
+          item['id'] as String,
+    };
+
+    for (final language in _languages) {
+      final detailsDir = Directory('assets/data/creatures/$language/details');
+      expect(detailsDir.existsSync(), isTrue, reason: detailsDir.path);
+
+      final detailFiles = detailsDir
+          .listSync()
+          .whereType<File>()
+          .where((file) => file.path.endsWith('.json'))
+          .toList();
+      expect(detailFiles, hasLength(sourceIds.length), reason: language);
+
+      for (final id in sourceIds) {
+        final file = File('${detailsDir.path}/$id.json');
+        expect(file.existsSync(), isTrue, reason: file.path);
+
+        final detail = jsonDecode(file.readAsStringSync());
+        expect(_containsLocalizedMap(detail), isFalse, reason: file.path);
+      }
+    }
+  });
+}
+
+List<Map<String, dynamic>> _readList(String path) {
+  return (jsonDecode(File(path).readAsStringSync()) as List)
+      .cast<Map<String, dynamic>>();
+}
+
+bool _containsLocalizedMap(Object? value) {
+  if (value is List) {
+    return value.any(_containsLocalizedMap);
+  }
+  if (value is Map) {
+    final keys = value.keys.map((key) => key.toString()).toSet();
+    if (keys.isNotEmpty &&
+        keys.every(_languages.contains) &&
+        keys.any(_languages.contains)) {
+      return true;
+    }
+    return value.values.any(_containsLocalizedMap);
+  }
+  return false;
+}
