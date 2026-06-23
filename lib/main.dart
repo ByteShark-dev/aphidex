@@ -13,23 +13,22 @@ import 'i18n/app_localizations.dart';
 import 'screens/enemy_list_screen.dart';
 import 'widgets/tutorial_overlay.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() {
+  runZonedGuarded(() {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    _reportBootstrapError(details.exception, details.stack);
-  };
+    FlutterError.onError = (details) {
+      FlutterError.presentError(details);
+      _reportBootstrapError(details.exception, details.stack);
+    };
 
-  PlatformDispatcher.instance.onError = (error, stack) {
-    _reportBootstrapError(error, stack);
-    return true;
-  };
+    PlatformDispatcher.instance.onError = (error, stack) {
+      _reportBootstrapError(error, stack);
+      return true;
+    };
 
-  runZonedGuarded(
-    () => runApp(const AphidexBootstrapApp()),
-    _reportBootstrapError,
-  );
+    runApp(const AphidexBootstrapApp());
+  }, _reportBootstrapError);
 }
 
 void _reportBootstrapError(Object error, StackTrace? stack) {
