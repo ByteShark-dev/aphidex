@@ -49,32 +49,149 @@ const int _minTilesForSectionInlineAd = 11;
 Color gameColorForPick(GamePick value) {
   switch (value) {
     case GamePick.all:
-      return const Color(0xFF35586E);
+      return const Color(0xFF3E5558);
     case GamePick.g1:
-      return const Color(0xFF5B2B2B);
+      return const Color(0xFF3E5A37);
     case GamePick.g2:
-      return const Color(0xFF305941);
+      return const Color(0xFF6A3638);
   }
 }
 
 Color gameAccentForPick(GamePick value) {
   switch (value) {
     case GamePick.all:
-      return const Color(0xFF3D8CFF);
+      return const Color(0xFF91A99B);
     case GamePick.g1:
-      return const Color(0xFFD35454);
+      return const Color(0xFFCDA35A);
     case GamePick.g2:
-      return const Color(0xFF44A36A);
+      return const Color(0xFFD96B64);
   }
 }
 
-List<Color> gameHeaderGradientForPick(GamePick value, Color background) {
-  final base = gameColorForPick(value);
-  final accent = gameAccentForPick(value);
-  final outer = Color.lerp(background, base, 0.06)!;
-  final inner = Color.lerp(background, base, 0.18)!;
-  final center = Color.lerp(base, accent, 0.58)!;
-  return [outer, inner, center, inner, outer];
+_GameHeaderGlowPalette _gameHeaderGlowPaletteForPick(GamePick value) {
+  switch (value) {
+    case GamePick.all:
+      return const _GameHeaderGlowPalette(
+        backdrop: Color(0xFF26383A),
+        core: Color(0xFF9FB3A1),
+        halo: Color(0xFF5B7D84),
+        outer: Color(0xFF253234),
+      );
+    case GamePick.g1:
+      return const _GameHeaderGlowPalette(
+        backdrop: Color(0xFF243F2F),
+        core: Color(0xFFD7A755),
+        halo: Color(0xFF6B9D58),
+        outer: Color(0xFF203526),
+      );
+    case GamePick.g2:
+      return const _GameHeaderGlowPalette(
+        backdrop: Color(0xFF3B2024),
+        core: Color(0xFFE06A65),
+        halo: Color(0xFF8F3C3F),
+        outer: Color(0xFF2E1B20),
+      );
+  }
+}
+
+class _GameHeaderGlowPalette {
+  final Color backdrop;
+  final Color core;
+  final Color halo;
+  final Color outer;
+
+  const _GameHeaderGlowPalette({
+    required this.backdrop,
+    required this.core,
+    required this.halo,
+    required this.outer,
+  });
+}
+
+class _GameHeaderGlow extends StatelessWidget {
+  final GamePick gamePick;
+
+  const _GameHeaderGlow({required this.gamePick});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final palette = _gameHeaderGlowPaletteForPick(gamePick);
+    final contrastAlpha = isDark ? 0.54 : 0.68;
+    final haloAlpha = isDark ? 0.30 : 0.36;
+    final coreAlpha = isDark ? 0.34 : 0.42;
+
+    return IgnorePointer(
+      child: Stack(
+        clipBehavior: Clip.none,
+        fit: StackFit.expand,
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  palette.backdrop.withValues(alpha: contrastAlpha),
+                  palette.outer.withValues(alpha: isDark ? 0.28 : 0.34),
+                  palette.outer.withValues(alpha: 0),
+                ],
+                stops: const [0, 0.58, 1],
+              ),
+            ),
+          ),
+          Positioned(
+            top: -150,
+            left: -120,
+            right: -120,
+            height: 280,
+            child: Transform.scale(
+              scaleX: 1.35,
+              scaleY: 0.82,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: const Alignment(0, -0.12),
+                    radius: 0.86,
+                    colors: [
+                      palette.core.withValues(alpha: coreAlpha),
+                      palette.halo.withValues(alpha: haloAlpha),
+                      palette.outer.withValues(alpha: 0.10),
+                      palette.outer.withValues(alpha: 0),
+                    ],
+                    stops: const [0, 0.34, 0.68, 1],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            top: -64,
+            left: -56,
+            right: -56,
+            height: 170,
+            child: Transform.scale(
+              scaleX: 1.12,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: Alignment.topCenter,
+                    radius: 0.92,
+                    colors: [
+                      palette.halo.withValues(alpha: isDark ? 0.16 : 0.22),
+                      palette.core.withValues(alpha: isDark ? 0.12 : 0.16),
+                      palette.core.withValues(alpha: 0),
+                    ],
+                    stops: const [0, 0.5, 1],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class EnemyListScreen extends StatefulWidget {
@@ -926,12 +1043,6 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     final l10n = context.l10n;
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
-    final baseColor = gameColorForPick(gamePick);
-    final accentColor = gameAccentForPick(gamePick);
-    final headerGradient = gameHeaderGradientForPick(
-      gamePick,
-      Theme.of(context).scaffoldBackgroundColor,
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -941,109 +1052,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         actionsIconTheme: const IconThemeData(color: Colors.white),
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        flexibleSpace: Stack(
-          fit: StackFit.expand,
-          children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: headerGradient,
-                  stops: const [0, 0.26, 0.5, 0.74, 1],
-                ),
-              ),
-            ),
-            IgnorePointer(
-              child: Align(
-                alignment: const Alignment(0, -0.18),
-                child: Container(
-                  width: 240,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(999),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.transparent,
-                        accentColor.withValues(alpha: 0.55),
-                        accentColor.withValues(alpha: 0.95),
-                        accentColor.withValues(alpha: 0.55),
-                        Colors.transparent,
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: accentColor.withValues(alpha: 0.42),
-                        blurRadius: 26,
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            IgnorePointer(
-              child: Align(
-                alignment: const Alignment(0, 0.9),
-                child: Container(
-                  width: 320,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(999),
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.transparent,
-                        baseColor.withValues(alpha: 0.18),
-                        accentColor.withValues(alpha: 0.82),
-                        baseColor.withValues(alpha: 0.18),
-                        Colors.transparent,
-                      ],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: accentColor.withValues(alpha: 0.32),
-                        blurRadius: 24,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        flexibleSpace: _GameHeaderGlow(gamePick: gamePick),
         title: Text(l10n.appTitle),
         centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(22),
-          child: IgnorePointer(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
-              child: Container(
-                height: 16,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(999),
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      accentColor.withValues(alpha: 0.2),
-                      accentColor.withValues(alpha: 0.92),
-                      accentColor.withValues(alpha: 0.2),
-                      Colors.transparent,
-                    ],
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: accentColor.withValues(alpha: 0.3),
-                      blurRadius: 18,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
         actions: [
           IconButton(
             key: const ValueKey('open-creature-scanner'),
