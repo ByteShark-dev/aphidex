@@ -7,6 +7,7 @@ import 'package:aphidex/data/enemy_variants.dart';
 import 'package:aphidex/data/local_storage.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
+import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/screens/enemy_detail_screen.dart';
 import 'package:aphidex/screens/enemy_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -182,6 +183,49 @@ void main() {
 
     expect(entry.preferredVariant(preferG2Default: true).game, 'g2');
     expect(entry.preferredVariant(preferredGame: 'g1').game, 'g1');
+  });
+
+  test('shared index entries keep G1 as the default sort variant', () {
+    final g1Mantis = EnemyIndexEntry.fromJson({
+      'id': 'g1_mantis',
+      'speciesKey': 'orchid_mantis',
+      'name': 'Mantis',
+      'game': 'g1',
+      'tier': 3,
+      'danger': 'imposible_alta',
+      'isBoss': true,
+      'order': 152,
+      'defaultGold': false,
+      'cardNormal': 'assets/g1/creatures/cards/normal/Creaturecard_Mantis.webp',
+      'cardGold': 'assets/g1/creatures/cards/gold/Creaturecardgold_Mantis.webp',
+      'weaknesses': ['salty'],
+      'resistances': ['spicy'],
+    });
+    final g2OrchidMantis = EnemyIndexEntry.fromJson({
+      'id': 'g2_orchid_mantis',
+      'speciesKey': 'orchid_mantis',
+      'collectionGroup': 'other',
+      'name': 'Orchid Mantis',
+      'game': 'g2',
+      'tier': 3,
+      'danger': 'imposible_alta',
+      'isBoss': true,
+      'order': 287,
+      'defaultGold': false,
+      'cardNormal': 'assets/g1/creatures/cards/normal/Creaturecard_Mantis.webp',
+      'cardGold': 'assets/g1/creatures/cards/gold/Creaturecardgold_Mantis.webp',
+      'weaknesses': ['salty'],
+      'resistances': ['spicy'],
+    });
+
+    final entry = groupEnemyIndexEntries([
+      g1Mantis,
+      g2OrchidMantis,
+    ], mergeSharedSpecies: true).single;
+
+    expect(entry.preferredVariant(preferG2Default: true).game, 'g2');
+    expect(entry.sortVariant().game, 'g1');
+    expect(entry.sortVariant().order, 152);
   });
 
   test('variant preference key can be persisted per species', () async {

@@ -803,6 +803,13 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     return variants.first;
   }
 
+  EnemyIndexEntry _sortSourceEnemy(ResolvedEnemyEntry entry) {
+    if (gamePick == GamePick.all) {
+      return entry.entry.sortVariant();
+    }
+    return entry.activeEnemy;
+  }
+
   List<ResolvedEnemyEntry> _applyFilterAndSearch(
     List<EnemyIndexEntry> enemies,
     Set<String> favoriteIds,
@@ -870,8 +877,8 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       switch (sortMode) {
         case SortMode.defaultOrder:
           final order = _groupOrder(sortDescending);
-          final aSortEnemy = a.activeEnemy;
-          final bSortEnemy = b.activeEnemy;
+          final aSortEnemy = _sortSourceEnemy(a);
+          final bSortEnemy = _sortSourceEnemy(b);
           final aGroup = _groupForEnemy(aSortEnemy);
           final bGroup = _groupForEnemy(bSortEnemy);
           final groupCompare = _groupIndex(
@@ -1330,11 +1337,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                                       groupOrder: _groupOrder(sortDescending),
                                       showInlineAd: showInlineAd,
                                       groupFromEntry: (entry) {
-                                        final sourceEnemy =
-                                            gamePick == GamePick.all
-                                            ? entry.entry.variantForGame('g2')
-                                            : entry.activeEnemy;
-                                        return _groupForEnemy(sourceEnemy);
+                                        return _groupForEnemy(
+                                          _sortSourceEnemy(entry),
+                                        );
                                       },
                                       groupLabel: (temperament) =>
                                           _groupLabel(temperament, l10n),

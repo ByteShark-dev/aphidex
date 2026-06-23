@@ -330,6 +330,51 @@ void main() {
     expect(entry('g2_rust_beetle')['danger'], 'muy_alta');
   });
 
+  test('g2 content corrections stay in the master data', () {
+    expect(entry('g2_red_soldier_ant')['collectionGroup'], 'angry');
+    expect(entry('g2_orc_rust_beetle')['tier'], 3);
+    expect(entry('g2_ogrr_whipper_earwig')['tier'], 3);
+
+    for (final id in [
+      'g2_caterpillar',
+      'g2_baby_garden_snail',
+      'g2_garden_snail',
+    ]) {
+      expect(entry(id)['danger'], 'baja', reason: id);
+    }
+
+    final expectedOgrrDanger = {
+      'g2_ogrr_northern_scorpion': 'extrema',
+      'g2_ogrr_blue_butterfly': 'imposible_superior',
+      'g2_ogrr_ladybug': 'imposible_superior',
+      'g2_ogrr_cricket': 'imposible_superior',
+      'g2_ogrr_rust_beetle': 'imposible_superior',
+      'g2_ogrr_pincher_earwig': 'imposible_superior',
+      'g2_ogrr_whipper_earwig': 'extrema',
+      'g2_ogrr_wasp': 'imposible_superior',
+      'g2_ogrr_wasp_drone': 'imposible_superior',
+      'g2_ogrr_praying_mantis_nymph': 'imposible_superior',
+      'g2_ogrr_wolf_spider': 'extrema',
+    };
+    for (final item in expectedOgrrDanger.entries) {
+      expect(entry(item.key)['danger'], item.value, reason: item.key);
+    }
+
+    for (final id in ['g2_cockroach_queen', 'g2_orc_cockroach_queen']) {
+      final serialized = jsonEncode(entry(id));
+      expect(serialized, contains('Spray ácido sin cabeza'), reason: id);
+      expect(serialized, isNot(contains('Spray ?cido sin cabeza')), reason: id);
+    }
+  });
+
+  test('g2 text content does not keep question-mark mojibake', () {
+    final serialized = jsonEncode(data);
+    expect(
+      RegExp(r'[A-Za-z]\?[A-Za-z]|\?[A-Za-z]').hasMatch(serialized),
+      isFalse,
+    );
+  });
+
   test(
     'g2 system entries document MIX.R and Ice Sickles without faction raids',
     () {

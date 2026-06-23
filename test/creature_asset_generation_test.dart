@@ -100,6 +100,27 @@ void main() {
       }
     }
   });
+
+  test('master and generated creature text does not keep mojibake markers', () {
+    final files = <File>[
+      for (final game in _games) File('assets/data/enemies_$game.json'),
+      for (final language in _languages)
+        for (final game in _games)
+          File('assets/data/creatures/$language/index_$game.json'),
+      for (final language in _languages)
+        ...Directory(
+          'assets/data/creatures/$language/details',
+        ).listSync().whereType<File>(),
+    ];
+
+    for (final file in files) {
+      expect(
+        _hasQuestionMarkMojibake(file.readAsStringSync()),
+        isFalse,
+        reason: file.path,
+      );
+    }
+  });
 }
 
 List<Map<String, dynamic>> _readList(String path) {
@@ -121,4 +142,8 @@ bool _containsLocalizedMap(Object? value) {
     return value.values.any(_containsLocalizedMap);
   }
   return false;
+}
+
+bool _hasQuestionMarkMojibake(String text) {
+  return RegExp(r'[A-Za-z]\?[A-Za-z]|\?[A-Za-z]').hasMatch(text);
 }

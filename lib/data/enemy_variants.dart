@@ -132,6 +132,22 @@ class EnemyIndexListEntry {
 
     return variants.first;
   }
+
+  EnemyIndexEntry sortVariant() {
+    final g1 = variants.where((enemy) => enemy.game == 'g1');
+    if (g1.isNotEmpty) {
+      return g1.first;
+    }
+
+    return variants.reduce((best, current) {
+      final bestOrder = best.order ?? 999999;
+      final currentOrder = current.order ?? 999999;
+      if (currentOrder < bestOrder) {
+        return current;
+      }
+      return best;
+    });
+  }
 }
 
 List<EnemyIndexListEntry> groupEnemyIndexEntries(
