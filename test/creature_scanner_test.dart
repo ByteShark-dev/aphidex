@@ -256,6 +256,48 @@ void main() {
     );
   });
 
+  testWidgets('scanner page explains camera permission denial', (tester) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          serviceOverride: _FakeScannerService(
+            allEnemies: [enemy],
+            selectedGameScope: scannerGameScopeG2,
+            handler: (_) async => const CreatureScannerResult(
+              matches: [],
+              rawLabels: [],
+              rawWebEntities: [],
+              hasClearMatch: false,
+            ),
+          ),
+          imagePickerOverride: (_) async {
+            throw PlatformException(code: 'camera_access_denied');
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Take photo'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'Camera or photo access was denied. Enable it in system settings to use Scanner Beta.',
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('scanner page opens detail directly on clear single match', (
     tester,
   ) async {

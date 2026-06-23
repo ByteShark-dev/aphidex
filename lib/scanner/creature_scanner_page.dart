@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../data/local_storage.dart';
@@ -154,6 +155,15 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       setState(() {
         _message = _errorMessageFor(error.type, context.l10n);
       });
+    } on PlatformException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _message = _isPermissionException(error)
+            ? context.l10n.scannerPermissionDeniedMessage
+            : context.l10n.scannerGenericErrorMessage;
+      });
     } catch (_) {
       if (!mounted) {
         return;
@@ -260,6 +270,13 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       selectedGameScope: scannerGameScopeAll,
       storedPreferredGame: game,
     );
+  }
+
+  bool _isPermissionException(PlatformException error) {
+    final code = error.code.toLowerCase();
+    return code.contains('denied') ||
+        code.contains('permission') ||
+        code.contains('restricted');
   }
 
   String _errorMessageFor(

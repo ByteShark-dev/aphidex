@@ -28,6 +28,10 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Aphidex Scanner Beta uses the camera only to analyze a creature image on this device.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Aphidex Scanner Beta uses selected images only to analyze a creature image on this device.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

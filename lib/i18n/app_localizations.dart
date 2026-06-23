@@ -427,6 +427,17 @@ class AppLocalizations {
     }
   }
 
+  String get scannerPermissionDeniedMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'Camera or photo access was denied. Enable it in system settings to use Scanner Beta.';
+      case 'ru':
+        return 'Доступ к камере или фото запрещен. Разрешите его в настройках системы, чтобы использовать Scanner Beta.';
+      default:
+        return 'No hay acceso a la c\u00E1mara o galer\u00EDa. Act\u00EDvalo en la configuraci\u00F3n del sistema para usar Scanner Beta.';
+    }
+  }
+
   String get scannerAnalyzing {
     switch (languageCode) {
       case 'en':

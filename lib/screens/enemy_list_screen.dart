@@ -7,6 +7,7 @@ import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/tutorial_controller.dart';
+import '../config/feature_flags.dart';
 import '../data/enemy_repository.dart';
 import '../data/enemy_variants.dart';
 import '../data/local_storage.dart';
@@ -18,6 +19,7 @@ import '../widgets/fallback_asset_image.dart';
 import '../widgets/inline_banner_ad_card.dart';
 import '../widgets/overflow_marquee_text.dart';
 import '../scanner/creature_scanner_page.dart';
+import '../scanner/creature_scanner_service.dart';
 import 'enemy_detail_screen.dart';
 import 'effect_codex_screen.dart';
 import 'settings_screen.dart';
@@ -1056,12 +1058,13 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         title: Text(l10n.appTitle),
         centerTitle: true,
         actions: [
-          IconButton(
-            key: const ValueKey('open-creature-scanner'),
-            icon: const Icon(Icons.center_focus_strong),
-            tooltip: l10n.scannerTitle,
-            onPressed: () => _openScanner(context),
-          ),
+          if (scannerEnabled)
+            IconButton(
+              key: const ValueKey('open-creature-scanner'),
+              icon: const Icon(Icons.center_focus_strong),
+              tooltip: l10n.scannerTitle,
+              onPressed: () => _openScanner(context),
+            ),
           Container(
             key: TutorialController.instance.keyFor(tutorialAnchorListCodex),
             child: IconButton(
@@ -1402,11 +1405,51 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   }
 
   Future<void> _openScanner(BuildContext context) async {
+    if (!scannerEnabled) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const CreatureScannerComingSoonPage(),
+        ),
+      );
+      return;
+    }
+
+    List<EnemyIndexEntry> enemies;
+    try {
+      enemies = await enemiesFuture;
+    } catch (error) {
+      if (!context.mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${context.l10n.errorLoadingJson}\n$error')),
+      );
+      return;
+    }
+
+    if (!context.mounted) {
+      return;
+    }
+
     await Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => const CreatureScannerComingSoonPage()),
+      MaterialPageRoute(
+        builder: (_) => CreatureScannerPage(
+          enemies: enemies,
+          selectedGameScope: _scannerScopeForGamePick(gamePick),
+        ),
+      ),
     );
   }
+}
+
+String _scannerScopeForGamePick(GamePick pick) {
+  return switch (pick) {
+    GamePick.g1 => scannerGameScopeG1,
+    GamePick.g2 => scannerGameScopeG2,
+    GamePick.all => scannerGameScopeAll,
+  };
 }
 
 class _FlatEnemyList extends StatelessWidget {
