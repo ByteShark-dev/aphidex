@@ -102,7 +102,7 @@ async function scan(request: Request, env: Env): Promise<Response> {
       model,
       success: true,
       candidateIds: result.candidates.map((candidate) => candidate.id),
-      weak: result.weak,
+      weak: result.weak || result.multiCreature,
       error: null,
     });
   } catch (error) {
@@ -128,6 +128,7 @@ async function scan(request: Request, env: Env): Promise<Response> {
   return jsonResponse({
     candidates: result.candidates,
     weak: result.weak,
+    multiCreature: result.multiCreature,
     tokens,
   });
 }

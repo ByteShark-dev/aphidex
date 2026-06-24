@@ -691,6 +691,287 @@ void main() {
       'g2_ladybug',
     ]);
   });
+
+  test('remote scanner does not show g1 duplicates in g2 scope', () {
+    final g1 = _enemy(
+      id: 'g1_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g1',
+      name: 'Ladybug G1',
+    );
+    final g2 = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g1_ladybug',
+          confidence: 0.95,
+          reason: 'round shell and spots',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ladybug',
+          confidence: 0.90,
+          reason: 'round shell and spots',
+        ),
+      ],
+      allEnemies: [g1, g2],
+      selectedGameScope: scannerGameScopeG2,
+    );
+
+    expect(matches, hasLength(1));
+    expect(matches.first.previewEnemy.id, 'g2_ladybug');
+    expect(matches.first.variants, hasLength(1));
+  });
+
+  test('remote scanner groups equivalent variants in both scope', () {
+    final g1 = _enemy(
+      id: 'g1_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g1',
+      name: 'Ladybug',
+    );
+    final g2 = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g1_ladybug',
+          confidence: 0.90,
+          reason: 'round shell and spots',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ladybug',
+          confidence: 0.88,
+          reason: 'round shell and spots',
+        ),
+      ],
+      allEnemies: [g1, g2],
+      selectedGameScope: scannerGameScopeAll,
+    );
+
+    expect(matches, hasLength(1));
+    expect(matches.first.variants.map((enemy) => enemy.id), [
+      'g1_ladybug',
+      'g2_ladybug',
+    ]);
+    expect(matches.first.isExactIdMatch, isFalse);
+  });
+
+  test('remote auto-open requires high confidence and clear margin', () {
+    final ladybug = _remoteMatch('ladybug', 0.90);
+    final bee = _remoteMatch('bee', 0.70);
+    final spider = _remoteMatch('wolf_spider', 0.60);
+
+    expect(
+      isClearRemoteScannerResult(
+        matches: [ladybug, _remoteMatch('bee', 0.90), spider],
+        weak: false,
+        multiCreature: false,
+        selectedGameScope: scannerGameScopeG2,
+      ),
+      isFalse,
+    );
+    expect(
+      isClearRemoteScannerResult(
+        matches: [ladybug, bee, spider],
+        weak: false,
+        multiCreature: false,
+        selectedGameScope: scannerGameScopeG2,
+      ),
+      isTrue,
+    );
+  });
+
+  test('remote multi-creature result never auto-opens', () {
+    expect(
+      isClearRemoteScannerResult(
+        matches: [_remoteMatch('ladybug', 0.98)],
+        weak: true,
+        multiCreature: true,
+        selectedGameScope: scannerGameScopeG2,
+      ),
+      isFalse,
+    );
+  });
+
+  test('remote ranking penalizes ants when strong wing evidence exists', () {
+    final fireAnt = _enemy(
+      id: 'g2_fire_worker_ant',
+      speciesKey: 'fire_worker_ant',
+      game: 'g2',
+      name: 'Fire Worker Ant',
+    );
+    final wasp = _enemy(
+      id: 'g2_ogrr_wasp',
+      speciesKey: 'ogrr_wasp',
+      game: 'g2',
+      name: 'OGRR Wasp',
+      collectionGroup: 'ogrr',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g2_fire_worker_ant',
+          confidence: 0.96,
+          reason: 'wings, flying, yellow black wasp body',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ogrr_wasp',
+          confidence: 0.70,
+          reason: 'wings and stinger, OGRR wasp',
+        ),
+      ],
+      allEnemies: [fireAnt, wasp],
+      selectedGameScope: scannerGameScopeG2,
+    );
+
+    expect(matches.first.previewEnemy.id, 'g2_ogrr_wasp');
+    expect(matches.first.confidence, greaterThan(matches.last.confidence));
+  });
+
+  test('remote scanner keeps ORC and OGRR as distinct candidates', () {
+    final orc = _enemy(
+      id: 'g2_orc_wasp',
+      speciesKey: 'orc_wasp',
+      game: 'g2',
+      name: 'O.R.C. Wasp',
+      collectionGroup: 'orc',
+    );
+    final ogrr = _enemy(
+      id: 'g2_ogrr_wasp',
+      speciesKey: 'ogrr_wasp',
+      game: 'g2',
+      name: 'OGRR Wasp',
+      collectionGroup: 'ogrr',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g2_orc_wasp',
+          confidence: 0.82,
+          reason: 'controlled ORC wasp',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ogrr_wasp',
+          confidence: 0.81,
+          reason: 'OGRR wasp',
+        ),
+      ],
+      allEnemies: [orc, ogrr],
+      selectedGameScope: scannerGameScopeAll,
+    );
+
+    expect(matches, hasLength(2));
+    expect(
+      matches.map((match) => match.previewEnemy.id),
+      containsAll(['g2_orc_wasp', 'g2_ogrr_wasp']),
+    );
+  });
+
+  test('remote allowedCreatures include compact visual tags', () async {
+    final wasp = _enemy(
+      id: 'g2_ogrr_wasp',
+      speciesKey: 'ogrr_wasp',
+      game: 'g2',
+      name: 'OGRR Wasp',
+      collectionGroup: 'ogrr',
+    );
+
+    final allowed = await _capturedAllowedCreatures(scannerGameScopeG2, [wasp]);
+    expect(
+      allowed.single['visualTags'],
+      containsAll(['wasp', 'wings', 'ogrr']),
+    );
+    expect(
+      allowed.single['visualTags'] as List<dynamic>,
+      hasLength(lessThanOrEqualTo(10)),
+    );
+  });
+
+  testWidgets('remote scanner shows weak and multi-creature guidance', (
+    tester,
+  ) async {
+    final ladybug = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+    final bee = _enemy(
+      id: 'g2_bee',
+      speciesKey: 'bee',
+      game: 'g2',
+      name: 'Bee G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [ladybug, bee],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            scanHandler: (_) async => CreatureScannerResult(
+              matches: [
+                CreatureScannerMatch(
+                  creatureId: ladybug.speciesKey,
+                  displayName: ladybug.name,
+                  confidence: 0.86,
+                  sourceLabels: const ['multiple creatures visible'],
+                  variants: [ladybug],
+                  previewEnemy: ladybug,
+                  isExactIdMatch: true,
+                ),
+                CreatureScannerMatch(
+                  creatureId: bee.speciesKey,
+                  displayName: bee.name,
+                  confidence: 0.84,
+                  sourceLabels: const ['wings visible'],
+                  variants: [bee],
+                  previewEnemy: bee,
+                  isExactIdMatch: true,
+                ),
+              ],
+              rawLabels: const [],
+              rawWebEntities: const [],
+              hasClearMatch: false,
+              weak: true,
+              multiCreature: true,
+              tokens: _tokens(tokens: 9, usedToday: 1),
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Approximate result'), findsOneWidget);
+    expect(
+      find.text(
+        'The image may contain multiple creatures. Choose the correct match.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Try another image'), findsOneWidget);
+    expect(find.text('Search manually'), findsOneWidget);
+  });
 }
 
 Widget _buildApp(Widget home) {
@@ -728,12 +1009,15 @@ EnemyIndexEntry _enemy({
   required String game,
   required String name,
   int tier = 1,
+  String? collectionGroup,
+  String? goldLinkId,
 }) {
   return EnemyIndexEntry(
     order: 1,
     defaultGold: false,
     id: id,
     speciesKey: speciesKey,
+    collectionGroup: collectionGroup,
     name: name,
     game: game,
     tier: tier,
@@ -742,9 +1026,28 @@ EnemyIndexEntry _enemy({
     temperament: 'neutral',
     weaknesses: const ['spicy'],
     resistances: const [],
+    goldLinkId: goldLinkId,
     cardNormal: 'assets/global/Creaturecard_Proximamente.webp',
     cardGold: 'assets/global/Creaturecard_Proximamente.webp',
     health: const HealthInfo(rating: 1, value: 10),
+  );
+}
+
+CreatureScannerMatch _remoteMatch(String speciesKey, double confidence) {
+  final enemy = _enemy(
+    id: 'g2_$speciesKey',
+    speciesKey: speciesKey,
+    game: 'g2',
+    name: speciesKey,
+  );
+  return CreatureScannerMatch(
+    creatureId: speciesKey,
+    displayName: speciesKey,
+    confidence: confidence,
+    sourceLabels: const [],
+    variants: [enemy],
+    previewEnemy: enemy,
+    isExactIdMatch: true,
   );
 }
 
@@ -823,7 +1126,15 @@ Future<List<String>> _capturedAllowedIds(
   String scope,
   List<EnemyIndexEntry> enemies,
 ) async {
-  var captured = const <String>[];
+  final captured = await _capturedAllowedCreatures(scope, enemies);
+  return captured.map((item) => item['id'].toString()).toList(growable: false);
+}
+
+Future<List<Map<String, dynamic>>> _capturedAllowedCreatures(
+  String scope,
+  List<EnemyIndexEntry> enemies,
+) async {
+  var captured = const <Map<String, dynamic>>[];
   final service = RemoteCreatureScannerService(
     apiBaseUrl: 'https://scanner.test',
     clientToken: 'client-token',
@@ -836,12 +1147,13 @@ Future<List<String>> _capturedAllowedIds(
       final body = jsonDecode(request.body) as Map<String, dynamic>;
       captured = (body['allowedCreatures'] as List<dynamic>)
           .cast<Map<dynamic, dynamic>>()
-          .map((item) => item['id'].toString())
+          .map((item) => item.cast<String, dynamic>())
           .toList(growable: false);
       return http.Response(
         jsonEncode({
           'candidates': <Map<String, dynamic>>[],
           'weak': true,
+          'multiCreature': false,
           'tokens': {
             'plan': 'free',
             'tokens': 9,

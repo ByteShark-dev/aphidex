@@ -96,8 +96,9 @@ function buildGeminiRequest(payload: ScanRequestPayload): unknown {
             },
           },
           weak: { type: 'BOOLEAN' },
+          multiCreature: { type: 'BOOLEAN' },
         },
-        required: ['candidates', 'weak'],
+        required: ['candidates', 'weak', 'multiCreature'],
       },
     },
   };
@@ -109,15 +110,20 @@ function buildPrompt(payload: ScanRequestPayload): string {
     name: creature.name,
     game: creature.game,
     speciesKey: creature.speciesKey,
+    visualTags: creature.visualTags,
   }));
 
   return [
     'You identify Grounded game creatures from a screenshot or photo.',
-    'Return only strict JSON matching the requested schema.',
-    'Choose only ids from allowedCreatures. Never invent ids.',
+    'Return only strict JSON matching the requested schema. Do not include markdown or extra text.',
+    'Choose only ids from allowedCreatures. Never invent ids and never return a creature outside allowedCreatures.',
     'Return at most 3 candidates sorted by confidence.',
     'If the image is unclear or no allowed creature is visible, return weak=true.',
-    'Use short reasons. Do not include markdown.',
+    'If the image appears to contain more than one creature, return multiCreature=true, weak=true, and list possible candidates without overconfident scores.',
+    'Use visualTags to compare body shape. If the creature has wings or looks like a wasp/bee, do not choose ants unless the allowed ant is clearly visible.',
+    'If visual evidence says ant, walking, six legs, or no wings, avoid wasps and bees unless wings are visible.',
+    'O.R.C. or ORC means a controlled/infected variant. OGRR is a distinct special variant; do not normalize ORC and OGRR as the same creature.',
+    'Use short reasons that mention visible cues such as wings, shell, tail, claws, spots, ORC, OGRR, or multiple creatures when relevant.',
     `languageCode: ${payload.languageCode}`,
     `gameScope: ${payload.gameScope}`,
     `allowedCreatures: ${JSON.stringify(allowed)}`,
@@ -229,6 +235,7 @@ function sanitizeGeminiResult(
   return {
     candidates: candidates.slice(0, 3),
     weak: data.weak || candidates.length === 0,
+    multiCreature: data.multiCreature === true,
   };
 }
 

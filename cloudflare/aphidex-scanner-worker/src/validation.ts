@@ -3,6 +3,8 @@ import type { AllowedCreature, ScanRequestPayload } from './types';
 
 export const maxImageBytes = 1_500_000;
 export const maxAllowedCreatures = 220;
+const maxVisualTagsPerCreature = 10;
+const maxVisualTagLength = 32;
 
 export function requireDeviceId(value: string | null): string {
   const deviceId = value?.trim() ?? '';
@@ -133,12 +135,52 @@ function validateAllowedCreatures(raw: unknown): AllowedCreature[] {
         'allowedCreatures game must be g1 or g2.',
       );
     }
+    const visualTags = validateVisualTags(value.visualTags);
     if (!seen.has(id)) {
       seen.add(id);
-      creatures.push({ id, name, speciesKey, game });
+      creatures.push({ id, name, speciesKey, game, visualTags });
     }
   }
   return creatures;
+}
+
+function validateVisualTags(raw: unknown): string[] {
+  if (raw == null) {
+    return [];
+  }
+  if (!Array.isArray(raw)) {
+    throw new HttpError(
+      400,
+      'invalid_allowed_creature',
+      'allowedCreatures visualTags must be an array.',
+    );
+  }
+  if (raw.length > maxVisualTagsPerCreature) {
+    throw new HttpError(
+      400,
+      'invalid_allowed_creature',
+      `allowedCreatures visualTags cannot contain more than ${maxVisualTagsPerCreature} items.`,
+    );
+  }
+
+  const tags: string[] = [];
+  const seen = new Set<string>();
+  for (const value of raw) {
+    if (typeof value !== 'string') {
+      throw new HttpError(
+        400,
+        'invalid_allowed_creature',
+        'allowedCreatures visualTags items must be strings.',
+      );
+    }
+    const tag = value.trim().toLowerCase();
+    if (!tag || tag.length > maxVisualTagLength || seen.has(tag)) {
+      continue;
+    }
+    seen.add(tag);
+    tags.push(tag);
+  }
+  return tags;
 }
 
 function requiredString(

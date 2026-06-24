@@ -63,9 +63,26 @@ Authorization: Bearer <SCANNER_CLIENT_TOKEN>
       "id": "g2_ladybug",
       "name": "Ladybug",
       "game": "g2",
-      "speciesKey": "ladybug"
+      "speciesKey": "ladybug",
+      "visualTags": ["ladybug", "round shell", "red shell", "spots"]
     }
   ]
+}
+```
+
+The Worker prompts Gemini to return strict JSON with at most three candidates:
+
+```json
+{
+  "candidates": [
+    {
+      "id": "g2_ladybug",
+      "confidence": 0.9,
+      "reason": "round shell and spots"
+    }
+  ],
+  "weak": false,
+  "multiCreature": false
 }
 ```
 

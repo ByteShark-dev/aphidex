@@ -603,6 +603,39 @@ class AppLocalizations {
     }
   }
 
+  String get scannerApproximateResult {
+    switch (languageCode) {
+      case 'en':
+        return 'Approximate result';
+      case 'ru':
+        return '\u041F\u0440\u0438\u0431\u043B\u0438\u0437\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442';
+      default:
+        return 'Resultado aproximado';
+    }
+  }
+
+  String get scannerMultipleCreaturesMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'The image may contain multiple creatures. Choose the correct match.';
+      case 'ru':
+        return '\u041D\u0430 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0438 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0441\u0443\u0449\u0435\u0441\u0442\u0432. \u0412\u044B\u0431\u0435\u0440\u0438 \u043F\u0440\u0430\u0432\u0438\u043B\u044C\u043D\u043E\u0435 \u0441\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0435.';
+      default:
+        return 'La imagen puede contener varias criaturas. Elige la coincidencia correcta.';
+    }
+  }
+
+  String get scannerAvailableInBothGames {
+    switch (languageCode) {
+      case 'en':
+        return 'Available in G1/G2';
+      case 'ru':
+        return '\u0414\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0432 G1/G2';
+      default:
+        return 'Disponible en G1/G2';
+    }
+  }
+
   String scannerTokensRemaining(int tokens, int dailyLimit, int usedToday) {
     switch (languageCode) {
       case 'en':

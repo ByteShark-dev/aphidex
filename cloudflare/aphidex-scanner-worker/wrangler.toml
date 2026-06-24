@@ -11,5 +11,5 @@ GEMINI_MODEL = "gemini-2.5-flash-lite"
 [[d1_databases]]
 binding = "DB"
 database_name = "aphidex-scanner-beta"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "2a19a556-5a36-402c-a417-7317f970a737"
 migrations_dir = "migrations"

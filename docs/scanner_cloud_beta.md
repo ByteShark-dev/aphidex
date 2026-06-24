@@ -11,6 +11,13 @@ The Flutter app sends compressed images only to the ByteShark Cloudflare Worker.
 The Worker forwards the image only to Gemini for analysis and does not persist
 the image in D1 or logs.
 
+Remote results are postprocessed before opening creature details:
+
+- `allowedCreatures` includes compact `visualTags` derived from local index data.
+- G1/G2 variants are grouped in the `all` scope and filtered in single-game scopes.
+- Smart results only auto-open on high confidence with a clear margin.
+- Weak or multi-creature results stay on the result list so the user can choose.
+
 TODO before public release:
 
 - Update the public privacy policy.

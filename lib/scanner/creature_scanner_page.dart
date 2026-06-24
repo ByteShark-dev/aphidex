@@ -174,6 +174,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
     final CreatureScannerClient scannerService = remote
         ? remoteService!
         : _service;
+    ScannerResultAction? resultAction;
 
     setState(() {
       _isAnalyzing = true;
@@ -213,13 +214,16 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
 
-      await Navigator.push(
+      resultAction = await Navigator.push<ScannerResultAction>(
         context,
         MaterialPageRoute(
           builder: (_) => ScannerResultPage(
             matches: result.matches,
             rawLabels: result.rawLabels,
             rawWebEntities: result.rawWebEntities,
+            weak: result.weak,
+            multiCreature: result.multiCreature,
+            showRecoveryActions: remote,
             onOpenMatch: _openMatch,
           ),
         ),
@@ -249,6 +253,20 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       if (mounted) {
         setState(() => _isAnalyzing = false);
       }
+    }
+
+    if (!mounted) {
+      return;
+    }
+    switch (resultAction) {
+      case ScannerResultAction.manualSearch:
+        Navigator.pop(context);
+        break;
+      case ScannerResultAction.tryAnother:
+        await _scan(ImageSource.gallery, remote: remote);
+        break;
+      case null:
+        break;
     }
   }
 

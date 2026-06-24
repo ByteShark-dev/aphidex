@@ -35,6 +35,7 @@ export type AllowedCreature = {
   name: string;
   game: 'g1' | 'g2';
   speciesKey: string;
+  visualTags: string[];
 };
 
 export type ScanRequestPayload = {
@@ -54,4 +55,5 @@ export type ScannerCandidate = {
 export type ScannerResult = {
   candidates: ScannerCandidate[];
   weak: boolean;
+  multiCreature: boolean;
 };

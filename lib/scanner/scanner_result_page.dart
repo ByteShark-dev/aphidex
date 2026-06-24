@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import '../i18n/app_localizations.dart';
 import 'creature_scanner_service.dart';
 
+enum ScannerResultAction { manualSearch, tryAnother }
+
 class ScannerResultPage extends StatelessWidget {
   final List<CreatureScannerMatch> matches;
   final List<String> rawLabels;
   final List<String> rawWebEntities;
+  final bool weak;
+  final bool multiCreature;
+  final bool showRecoveryActions;
   final Future<void> Function(CreatureScannerMatch match) onOpenMatch;
 
   const ScannerResultPage({
@@ -14,6 +19,9 @@ class ScannerResultPage extends StatelessWidget {
     required this.matches,
     required this.rawLabels,
     required this.rawWebEntities,
+    this.weak = false,
+    this.multiCreature = false,
+    this.showRecoveryActions = false,
     required this.onOpenMatch,
   });
 
@@ -31,6 +39,9 @@ class ScannerResultPage extends StatelessWidget {
             return _RawDetectionCard(
               rawLabels: rawLabels,
               rawWebEntities: rawWebEntities,
+              weak: weak,
+              multiCreature: multiCreature,
+              showRecoveryActions: showRecoveryActions,
             );
           }
 
@@ -65,6 +76,10 @@ class ScannerResultPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 6),
                         Text(_confidenceLabel(match.confidence)),
+                        if (_availableGamesLabel(l10n, match) != null) ...[
+                          const SizedBox(height: 6),
+                          Text(_availableGamesLabel(l10n, match)!),
+                        ],
                         const SizedBox(height: 6),
                         Text(match.sourceLabels.join(', ')),
                         const SizedBox(height: 10),
@@ -88,15 +103,32 @@ class ScannerResultPage extends StatelessWidget {
     final percent = (value * 100).round().clamp(0, 100);
     return '$percent%';
   }
+
+  String? _availableGamesLabel(
+    AppLocalizations l10n,
+    CreatureScannerMatch match,
+  ) {
+    final games = match.variants.map((enemy) => enemy.game).toSet();
+    if (!games.contains('g1') || !games.contains('g2')) {
+      return null;
+    }
+    return l10n.scannerAvailableInBothGames;
+  }
 }
 
 class _RawDetectionCard extends StatelessWidget {
   final List<String> rawLabels;
   final List<String> rawWebEntities;
+  final bool weak;
+  final bool multiCreature;
+  final bool showRecoveryActions;
 
   const _RawDetectionCard({
     required this.rawLabels,
     required this.rawWebEntities,
+    required this.weak,
+    required this.multiCreature,
+    required this.showRecoveryActions,
   });
 
   @override
@@ -108,6 +140,17 @@ class _RawDetectionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            if (weak) ...[
+              Text(
+                l10n.scannerApproximateResult,
+                style: const TextStyle(fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(height: 6),
+            ],
+            if (multiCreature) ...[
+              Text(l10n.scannerMultipleCreaturesMessage),
+              const SizedBox(height: 10),
+            ],
             Text(
               l10n.scannerDetectedLabelsTitle,
               style: const TextStyle(fontWeight: FontWeight.w800),
@@ -126,6 +169,29 @@ class _RawDetectionCard extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(rawWebEntities.join(', ')),
+            ],
+            if (showRecoveryActions) ...[
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  OutlinedButton.icon(
+                    onPressed: () => Navigator.pop(
+                      context,
+                      ScannerResultAction.manualSearch,
+                    ),
+                    icon: const Icon(Icons.search),
+                    label: Text(l10n.scannerManualSearchAction),
+                  ),
+                  FilledButton.icon(
+                    onPressed: () =>
+                        Navigator.pop(context, ScannerResultAction.tryAnother),
+                    icon: const Icon(Icons.refresh),
+                    label: Text(l10n.scannerTryAnotherImageAction),
+                  ),
+                ],
+              ),
             ],
           ],
         ),

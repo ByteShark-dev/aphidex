@@ -41,6 +41,7 @@ class CreatureScannerResult {
   final List<String> rawWebEntities;
   final bool hasClearMatch;
   final bool weak;
+  final bool multiCreature;
   final RemoteScannerTokenState? tokens;
 
   const CreatureScannerResult({
@@ -49,6 +50,7 @@ class CreatureScannerResult {
     required this.rawWebEntities,
     required this.hasClearMatch,
     this.weak = false,
+    this.multiCreature = false,
     this.tokens,
   });
 }
