@@ -17,6 +17,8 @@ Remote results are postprocessed before opening creature details:
 - G1/G2 variants are grouped in the `all` scope and filtered in single-game scopes.
 - Smart results only auto-open on high confidence with a clear margin.
 - Weak or multi-creature results stay on the result list so the user can choose.
+- Worker errors return stable codes plus a diagnostic `requestId` for beta logs.
+- Gemini timeouts and 5xx errors get one automatic retry and do not charge a token.
 
 TODO before public release:
 

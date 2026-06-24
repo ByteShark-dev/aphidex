@@ -3,7 +3,7 @@ import type { AllowedCreature, ScanRequestPayload } from './types';
 
 export const maxImageBytes = 1_500_000;
 export const maxAllowedCreatures = 220;
-const maxVisualTagsPerCreature = 10;
+const maxVisualTagsPerCreature = 12;
 const maxVisualTagLength = 32;
 
 export function requireDeviceId(value: string | null): string {

@@ -149,27 +149,59 @@ class RemoteCreatureScannerService implements RemoteCreatureScannerClient {
     }
 
     if (response.statusCode == 402) {
+      final error = _serverError(response);
       throw CreatureScannerException(
         CreatureScannerErrorType.outOfTokens,
-        debugMessage: _errorMessage(response),
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
       );
     }
     if (response.statusCode == 429) {
+      final error = _serverError(response);
       throw CreatureScannerException(
-        CreatureScannerErrorType.dailyLimit,
-        debugMessage: _errorMessage(response),
+        error.code == 'GEMINI_RATE_LIMIT'
+            ? CreatureScannerErrorType.serverBusy
+            : CreatureScannerErrorType.dailyLimit,
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
       );
     }
     if (response.statusCode == 401 || response.statusCode == 403) {
+      final error = _serverError(response);
       throw CreatureScannerException(
         CreatureScannerErrorType.setupRequired,
-        debugMessage: _errorMessage(response),
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
+      );
+    }
+    if (response.statusCode == 413) {
+      final error = _serverError(response);
+      throw CreatureScannerException(
+        CreatureScannerErrorType.payloadTooLarge,
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
+      );
+    }
+    if (response.statusCode == 502 || response.statusCode == 504) {
+      final error = _serverError(response);
+      throw CreatureScannerException(
+        CreatureScannerErrorType.analysisTemporary,
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
       );
     }
     if (response.statusCode < 200 || response.statusCode >= 300) {
+      final error = _serverError(response);
       throw CreatureScannerException(
         CreatureScannerErrorType.network,
-        debugMessage: _errorMessage(response),
+        debugMessage: error.message,
+        requestId: error.requestId,
+        serverCode: error.code,
       );
     }
     return response;
@@ -239,19 +271,23 @@ class RemoteCreatureScannerService implements RemoteCreatureScannerClient {
     );
   }
 
-  String? _errorMessage(http.Response response) {
+  _RemoteScannerServerError _serverError(http.Response response) {
     try {
       final decoded = jsonDecode(response.body);
       if (decoded is Map) {
         final error = decoded['error'];
         if (error is Map) {
-          return error['message']?.toString();
+          return _RemoteScannerServerError(
+            code: error['code']?.toString(),
+            message: error['message']?.toString(),
+            requestId: error['requestId']?.toString(),
+          );
         }
       }
     } catch (_) {
-      return response.body;
+      return _RemoteScannerServerError(message: response.body);
     }
-    return response.body;
+    return _RemoteScannerServerError(message: response.body);
   }
 
   List<RemoteScannerCandidate> _remoteCandidates(Object? raw) {
@@ -278,6 +314,14 @@ class RemoteCreatureScannerService implements RemoteCreatureScannerClient {
     }
     return candidates;
   }
+}
+
+class _RemoteScannerServerError {
+  final String? code;
+  final String? message;
+  final String? requestId;
+
+  const _RemoteScannerServerError({this.code, this.message, this.requestId});
 }
 
 class RemoteScannerCandidate {
@@ -310,6 +354,7 @@ List<String> remoteScannerVisualTags(EnemyIndexEntry enemy) {
       break;
     case 'wasp':
       tags.addAll(const ['wasp', 'flying', 'wings', 'yellow black', 'stinger']);
+      tags.add('thin waist');
       break;
     case 'bee':
       tags.addAll(const ['bee', 'flying', 'wings', 'fuzzy', 'yellow black']);
@@ -336,14 +381,21 @@ List<String> remoteScannerVisualTags(EnemyIndexEntry enemy) {
 
   switch (_specialVariantGroupFor(enemy)) {
     case 'orc':
-      tags.addAll(const ['orc', 'controlled', 'glowing', 'infected']);
+      tags.addAll(const [
+        'orc',
+        'o.r.c.',
+        'controlled',
+        'robotic',
+        'glowing',
+        'infected',
+      ]);
       break;
     case 'ogrr':
-      tags.add('ogrr');
+      tags.addAll(const ['ogrr', 'special variant', 'mutated', 'enhanced']);
       break;
   }
 
-  return tags.take(10).toList(growable: false);
+  return tags.take(12).toList(growable: false);
 }
 
 List<CreatureScannerMatch> resolveRemoteScannerMatches({
@@ -442,7 +494,7 @@ bool isClearRemoteScannerResult({
   }
 
   final top = matches.first;
-  if (top.confidence < 0.90) {
+  if (top.confidence < 0.92) {
     return false;
   }
 
@@ -455,8 +507,31 @@ bool isClearRemoteScannerResult({
     return true;
   }
 
+  if (_areSimilarRemoteMatches(top, matches[1])) {
+    return false;
+  }
+
   final margin = top.confidence - matches[1].confidence;
-  return margin + 0.000001 >= 0.20;
+  return margin > 0.20;
+}
+
+bool _areSimilarRemoteMatches(
+  CreatureScannerMatch first,
+  CreatureScannerMatch second,
+) {
+  if (first.creatureId == second.creatureId) {
+    return true;
+  }
+  if (first.previewEnemy.goldLinkId != null &&
+      first.previewEnemy.goldLinkId == second.previewEnemy.goldLinkId) {
+    return true;
+  }
+  final firstBase = _baseVisualGroupFor(first.previewEnemy);
+  final secondBase = _baseVisualGroupFor(second.previewEnemy);
+  if (firstBase.isNotEmpty && firstBase == secondBase) {
+    return true;
+  }
+  return false;
 }
 
 bool remoteScannerReasonsSuggestMultiple(
@@ -552,6 +627,9 @@ double _adjustRemoteConfidence(
   if (wingedEvidence && baseGroup == 'ant') {
     confidence -= 0.35;
   }
+  if (wingedEvidence && _groundInsectGroups.contains(baseGroup)) {
+    confidence -= 0.30;
+  }
   if (antEvidence && (baseGroup == 'wasp' || baseGroup == 'bee')) {
     confidence -= 0.25;
   }
@@ -596,6 +674,9 @@ String _baseVisualGroupFor(EnemyIndexEntry enemy) {
   }
   if (_containsAny(text, const ['cockroach', 'roach', 'cucaracha'])) {
     return 'cockroach';
+  }
+  if (_containsAny(text, const ['bombardier beetle', 'beetle', 'escarabajo'])) {
+    return 'beetle';
   }
   if (_containsAny(text, const ['ladybug', 'ladybird', 'mariquita'])) {
     return 'ladybug';
@@ -678,3 +759,5 @@ class _ScoredRemoteCandidate {
     required this.confidence,
   });
 }
+
+const Set<String> _groundInsectGroups = {'ant', 'beetle', 'cockroach'};

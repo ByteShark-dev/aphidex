@@ -7,40 +7,104 @@ import type {
 
 export class GeminiCallError extends Error {
   readonly code: string;
+  readonly status?: number;
+  readonly retryable: boolean;
 
-  constructor(code: string, message: string) {
+  constructor(
+    code: string,
+    message: string,
+    options: { status?: number; retryable?: boolean } = {},
+  ) {
     super(message);
     this.code = code;
+    this.status = options.status;
+    this.retryable = options.retryable ?? false;
   }
 }
+
+type GeminiScanOptions = {
+  requestId: string;
+  timeoutMs?: number;
+};
+
+const defaultGeminiTimeoutMs = 20_000;
+const maxAttempts = 2;
 
 export async function scanWithGemini(
   payload: ScanRequestPayload,
   apiKey: string,
   model: string,
+  options: GeminiScanOptions,
 ): Promise<ScannerResult> {
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-    {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(buildGeminiRequest(payload)),
-    },
-  ).catch((error: unknown) => {
-    throw new GeminiCallError(
-      'gemini_fetch_failed',
-      error instanceof Error ? error.message : 'Gemini request failed.',
-    );
-  });
-
-  if (!response.ok) {
-    throw new GeminiCallError(
-      'gemini_http_error',
-      `Gemini returned HTTP ${response.status}.`,
-    );
+  let lastError: GeminiCallError | null = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await scanWithGeminiAttempt(payload, apiKey, model, {
+        ...options,
+        attempt,
+      });
+    } catch (error) {
+      if (!(error instanceof GeminiCallError)) {
+        throw error;
+      }
+      lastError = error;
+      console.error('[scanner.gemini.error]', {
+        requestId: options.requestId,
+        attempt,
+        code: error.code,
+        status: error.status,
+        retryable: error.retryable,
+        message: error.message,
+      });
+      if (!error.retryable || attempt >= maxAttempts) {
+        throw error;
+      }
+      await sleep(250 * attempt);
+    }
   }
 
+  throw lastError ?? new GeminiCallError('gemini_unknown_error', 'Gemini failed.');
+}
+
+async function scanWithGeminiAttempt(
+  payload: ScanRequestPayload,
+  apiKey: string,
+  model: string,
+  options: GeminiScanOptions & { attempt: number },
+): Promise<ScannerResult> {
+  const response = await fetchGemini(payload, apiKey, model, options);
+
+  if (!response.ok) {
+    console.log('[scanner.gemini.response]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      status: response.status,
+    });
+    if (response.status === 429) {
+      throw new GeminiCallError(
+        'gemini_rate_limit',
+        'Gemini rate limit reached.',
+        { status: response.status },
+      );
+    }
+    throw new GeminiCallError(
+      response.status >= 500 ? 'gemini_server_error' : 'gemini_http_error',
+      `Gemini returned HTTP ${response.status}.`,
+      { status: response.status, retryable: response.status >= 500 },
+    );
+  }
+  console.log('[scanner.gemini.response]', {
+    requestId: options.requestId,
+    attempt: options.attempt,
+    status: response.status,
+  });
+
   const raw = await response.json().catch(() => {
+    console.error('[scanner.gemini.parse_error]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      stage: 'response_json',
+    });
     throw new GeminiCallError(
       'gemini_invalid_response',
       'Gemini response was not valid JSON.',
@@ -49,14 +113,70 @@ export async function scanWithGemini(
 
   const text = extractText(raw);
   if (!text) {
+    console.error('[scanner.gemini.parse_error]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      stage: 'empty_text',
+    });
     throw new GeminiCallError(
       'gemini_empty_response',
       'Gemini response did not contain text.',
     );
   }
 
-  const parsed = parseGeminiJson(text);
-  return sanitizeGeminiResult(parsed, payload.allowedCreatures);
+  const parsed = parseGeminiJson(text, options);
+  const result = sanitizeGeminiResult(parsed, payload.allowedCreatures, options);
+  console.log('[scanner.gemini.candidates]', {
+    requestId: options.requestId,
+    attempt: options.attempt,
+    candidateCount: result.candidates.length,
+    weak: result.weak,
+    multiCreature: result.multiCreature,
+  });
+  return result;
+}
+
+async function fetchGemini(
+  payload: ScanRequestPayload,
+  apiKey: string,
+  model: string,
+  options: GeminiScanOptions & { attempt: number },
+): Promise<Response> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? defaultGeminiTimeoutMs);
+  try {
+    return await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(buildGeminiRequest(payload)),
+        signal: controller.signal,
+      },
+    );
+  } catch (error: unknown) {
+    const isAbort =
+      error instanceof DOMException
+        ? error.name === 'AbortError'
+        : error instanceof Error && error.name === 'AbortError';
+    if (isAbort) {
+      console.error('[scanner.gemini.timeout]', {
+        requestId: options.requestId,
+        attempt: options.attempt,
+      });
+      throw new GeminiCallError(
+        'gemini_timeout',
+        'Gemini request timed out.',
+        { status: 504, retryable: true },
+      );
+    }
+    throw new GeminiCallError(
+      'gemini_fetch_failed',
+      error instanceof Error ? error.message : 'Gemini request failed.',
+    );
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function buildGeminiRequest(payload: ScanRequestPayload): unknown {
@@ -119,10 +239,11 @@ function buildPrompt(payload: ScanRequestPayload): string {
     'Choose only ids from allowedCreatures. Never invent ids and never return a creature outside allowedCreatures.',
     'Return at most 3 candidates sorted by confidence.',
     'If the image is unclear or no allowed creature is visible, return weak=true.',
-    'If the image appears to contain more than one creature, return multiCreature=true, weak=true, and list possible candidates without overconfident scores.',
+    'If two or more creatures are visible, set multiCreature=true even if one is dominant. Also set weak=true and list possible candidates without overconfident scores.',
     'Use visualTags to compare body shape. If the creature has wings or looks like a wasp/bee, do not choose ants unless the allowed ant is clearly visible.',
+    'If the creature has clear wings and a wasp/bee body, do not choose ants, beetles, or ground insects unless no flying insects are allowed.',
     'If visual evidence says ant, walking, six legs, or no wings, avoid wasps and bees unless wings are visible.',
-    'O.R.C. or ORC means a controlled/infected variant. OGRR is a distinct special variant; do not normalize ORC and OGRR as the same creature.',
+    'O.R.C. or ORC means a controlled/infected/robotic variant. OGRR is a distinct special mutated/enhanced variant; do not normalize ORC and OGRR as the same creature.',
     'Use short reasons that mention visible cues such as wings, shell, tail, claws, spots, ORC, OGRR, or multiple creatures when relevant.',
     `languageCode: ${payload.languageCode}`,
     `gameScope: ${payload.gameScope}`,
@@ -165,11 +286,19 @@ function extractText(raw: unknown): string {
   return parts.join('\n').trim();
 }
 
-function parseGeminiJson(text: string): unknown {
+function parseGeminiJson(
+  text: string,
+  options: GeminiScanOptions & { attempt: number },
+): unknown {
   const normalized = stripMarkdownFence(text);
   try {
     return JSON.parse(normalized);
   } catch {
+    console.error('[scanner.gemini.parse_error]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      stage: 'scanner_json',
+    });
     throw new GeminiCallError(
       'gemini_invalid_json',
       'Gemini did not return valid scanner JSON.',
@@ -191,8 +320,14 @@ function stripMarkdownFence(text: string): string {
 function sanitizeGeminiResult(
   raw: unknown,
   allowedCreatures: AllowedCreature[],
+  options: GeminiScanOptions & { attempt: number },
 ): ScannerResult {
   if (raw == null || typeof raw !== 'object' || Array.isArray(raw)) {
+    console.error('[scanner.gemini.parse_error]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      stage: 'invalid_shape_root',
+    });
     throw new GeminiCallError(
       'gemini_invalid_shape',
       'Gemini scanner JSON had an invalid shape.',
@@ -202,6 +337,11 @@ function sanitizeGeminiResult(
   const data = raw as Record<string, unknown>;
   const rawCandidates = data.candidates;
   if (!Array.isArray(rawCandidates) || typeof data.weak !== 'boolean') {
+    console.error('[scanner.gemini.parse_error]', {
+      requestId: options.requestId,
+      attempt: options.attempt,
+      stage: 'invalid_shape_fields',
+    });
     throw new GeminiCallError(
       'gemini_invalid_shape',
       'Gemini scanner JSON had an invalid shape.',
@@ -244,4 +384,8 @@ function normalizeConfidence(value: unknown): number {
     return 0;
   }
   return Math.max(0, Math.min(1, value));
+}
+
+function sleep(milliseconds: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }

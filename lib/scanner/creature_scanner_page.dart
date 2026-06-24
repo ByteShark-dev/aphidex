@@ -146,7 +146,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
       setState(() {
-        _remoteTokenMessage = _errorMessageFor(error.type, context.l10n);
+        _remoteTokenMessage = _errorMessageFor(error, context.l10n);
       });
     } catch (_) {
       if (!mounted) {
@@ -233,7 +233,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
       setState(() {
-        _message = _errorMessageFor(error.type, context.l10n);
+        _message = _errorMessageFor(error, context.l10n);
       });
     } on PlatformException catch (error) {
       if (!mounted) {
@@ -378,28 +378,31 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
   }
 
   String _errorMessageFor(
-    CreatureScannerErrorType type,
+    CreatureScannerException error,
     AppLocalizations l10n,
   ) {
-    switch (type) {
-      case CreatureScannerErrorType.timeout:
-        return l10n.scannerTimeoutMessage;
-      case CreatureScannerErrorType.invalidImage:
-      case CreatureScannerErrorType.emptyResponse:
-        return l10n.scannerNoMatchMessage;
-      case CreatureScannerErrorType.payloadTooLarge:
-        return l10n.scannerImageTooLargeMessage;
-      case CreatureScannerErrorType.setupRequired:
-        return l10n.scannerSetupRequiredMessage;
-      case CreatureScannerErrorType.network:
-        return l10n.scannerNetworkErrorMessage;
-      case CreatureScannerErrorType.outOfTokens:
-        return l10n.scannerNoTokensMessage;
-      case CreatureScannerErrorType.dailyLimit:
-        return l10n.scannerDailyLimitReachedMessage;
-      case CreatureScannerErrorType.unknown:
-        return l10n.scannerGenericErrorMessage;
+    final message = switch (error.type) {
+      CreatureScannerErrorType.timeout => l10n.scannerTimeoutMessage,
+      CreatureScannerErrorType.invalidImage ||
+      CreatureScannerErrorType.emptyResponse => l10n.scannerNoMatchMessage,
+      CreatureScannerErrorType.payloadTooLarge =>
+        l10n.scannerImageTooLargeMessage,
+      CreatureScannerErrorType.setupRequired =>
+        l10n.scannerSetupRequiredMessage,
+      CreatureScannerErrorType.network => l10n.scannerNetworkErrorMessage,
+      CreatureScannerErrorType.serverBusy => l10n.scannerServerBusyMessage,
+      CreatureScannerErrorType.analysisTemporary =>
+        l10n.scannerAnalysisTemporaryMessage,
+      CreatureScannerErrorType.outOfTokens => l10n.scannerNoTokensMessage,
+      CreatureScannerErrorType.dailyLimit =>
+        l10n.scannerDailyLimitReachedMessage,
+      CreatureScannerErrorType.unknown => l10n.scannerGenericErrorMessage,
+    };
+    final requestId = error.requestId;
+    if (requestId == null || requestId.isEmpty) {
+      return message;
     }
+    return '$message\n${l10n.scannerRequestIdMessage(requestId)}';
   }
 
   @override
@@ -556,6 +559,17 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
                                 onPressed: () => Navigator.pop(context),
                                 icon: const Icon(Icons.search),
                                 label: Text(l10n.scannerManualSearchAction),
+                              ),
+                              OutlinedButton.icon(
+                                key: const ValueKey('scanner-retry-scan'),
+                                onPressed: _isAnalyzing
+                                    ? null
+                                    : () => _scan(
+                                        ImageSource.gallery,
+                                        remote: true,
+                                      ),
+                                icon: const Icon(Icons.refresh),
+                                label: Text(l10n.scannerRetryAction),
                               ),
                               FilledButton.icon(
                                 key: const ValueKey(

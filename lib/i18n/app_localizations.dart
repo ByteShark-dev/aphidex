@@ -559,6 +559,39 @@ class AppLocalizations {
     }
   }
 
+  String get scannerServerBusyMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'The scanner service is busy. Try again in a moment.';
+      case 'ru':
+        return '\u0421\u0435\u0440\u0432\u0438\u0441 \u0441\u043A\u0430\u043D\u0435\u0440\u0430 \u043F\u0435\u0440\u0435\u0433\u0440\u0443\u0436\u0435\u043D. \u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439 \u0441\u043A\u043E\u0440\u043E \u0441\u043D\u043E\u0432\u0430.';
+      default:
+        return 'El servidor del scanner est\u00E1 ocupado. Int\u00E9ntalo de nuevo en un momento.';
+    }
+  }
+
+  String get scannerAnalysisTemporaryMessage {
+    switch (languageCode) {
+      case 'en':
+        return 'The smart analysis failed temporarily. No token was charged.';
+      case 'ru':
+        return '\u0423\u043C\u043D\u044B\u0439 \u0430\u043D\u0430\u043B\u0438\u0437 \u0432\u0440\u0435\u043C\u0435\u043D\u043D\u043E \u043D\u0435 \u0441\u0440\u0430\u0431\u043E\u0442\u0430\u043B. \u0422\u043E\u043A\u0435\u043D \u043D\u0435 \u0441\u043F\u0438\u0441\u0430\u043D.';
+      default:
+        return 'El an\u00E1lisis inteligente fall\u00F3 temporalmente. No se descont\u00F3 ning\u00FAn token.';
+    }
+  }
+
+  String scannerRequestIdMessage(String requestId) {
+    switch (languageCode) {
+      case 'en':
+        return 'Diagnostic ID: $requestId';
+      case 'ru':
+        return '\u0414\u0438\u0430\u0433\u043D\u043E\u0441\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439 ID: $requestId';
+      default:
+        return 'ID de diagn\u00F3stico: $requestId';
+    }
+  }
+
   String get scannerRemoteTitle {
     switch (languageCode) {
       case 'en':
@@ -688,6 +721,17 @@ class AppLocalizations {
         return '\u0414\u0440\u0443\u0433\u043E\u0435 \u0438\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435';
       default:
         return 'Intentar otra imagen';
+    }
+  }
+
+  String get scannerRetryAction {
+    switch (languageCode) {
+      case 'en':
+        return 'Try again';
+      case 'ru':
+        return '\u041F\u043E\u043F\u0440\u043E\u0431\u043E\u0432\u0430\u0442\u044C \u0441\u043D\u043E\u0432\u0430';
+      default:
+        return 'Intentar otra vez';
     }
   }
 

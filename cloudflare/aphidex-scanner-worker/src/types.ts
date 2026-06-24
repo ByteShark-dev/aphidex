@@ -2,6 +2,7 @@ export interface Env {
   DB: D1Database;
   GEMINI_API_KEY?: string;
   GEMINI_MODEL?: string;
+  GEMINI_TIMEOUT_MS?: string;
   SCANNER_CLIENT_TOKEN?: string;
   CORS_ALLOWED_ORIGIN?: string;
 }

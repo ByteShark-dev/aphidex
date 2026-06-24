@@ -21,6 +21,7 @@ export default defineConfig({
           bindings: {
             GEMINI_API_KEY: 'test-gemini-key',
             GEMINI_MODEL: 'gemini-2.5-flash-lite',
+            GEMINI_TIMEOUT_MS: '20',
             SCANNER_CLIENT_TOKEN: 'test-client-token',
             TEST_MIGRATIONS: migrations,
           },

@@ -5,6 +5,8 @@ enum CreatureScannerErrorType {
   emptyResponse,
   setupRequired,
   network,
+  serverBusy,
+  analysisTemporary,
   outOfTokens,
   dailyLimit,
   unknown,
@@ -13,6 +15,13 @@ enum CreatureScannerErrorType {
 class CreatureScannerException implements Exception {
   final CreatureScannerErrorType type;
   final String? debugMessage;
+  final String? requestId;
+  final String? serverCode;
 
-  const CreatureScannerException(this.type, {this.debugMessage});
+  const CreatureScannerException(
+    this.type, {
+    this.debugMessage,
+    this.requestId,
+    this.serverCode,
+  });
 }

@@ -23,6 +23,7 @@ npx wrangler secret put SCANNER_CLIENT_TOKEN
 ```
 
 `GEMINI_MODEL` defaults to `gemini-2.5-flash-lite` in `wrangler.toml`.
+`GEMINI_TIMEOUT_MS` is optional; when omitted, Gemini calls time out after 20s.
 
 ## Run Locally
 
@@ -88,6 +89,23 @@ The Worker prompts Gemini to return strict JSON with at most three candidates:
 
 Images are not stored. D1 stores only the hashed device id, token counters,
 candidate ids, status flags, and short error codes.
+
+Error responses include a diagnostic `requestId`:
+
+```json
+{
+  "error": {
+    "code": "GEMINI_TIMEOUT",
+    "message": "Scanner analysis timed out. No token was charged.",
+    "requestId": "..."
+  }
+}
+```
+
+Worker logs include the `requestId`, a short user hash, approximate image size,
+allowed creature count, Gemini status, parse failures, timeouts, and candidate
+count. They never log `imageBase64`, `SCANNER_CLIENT_TOKEN`, or
+`GEMINI_API_KEY`.
 
 ## Deploy
 

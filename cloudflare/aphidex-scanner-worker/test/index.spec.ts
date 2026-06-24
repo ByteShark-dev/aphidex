@@ -75,27 +75,97 @@ describe('Aphidex scanner worker', () => {
     const response = await scan();
 
     expect(response.status).toBe(402);
-    const body = await response.json<{ error: { code: string } }>();
-    expect(body.error.code).toBe('out_of_tokens');
+    const body = await response.json<{
+      error: { code: string; requestId: string };
+    }>();
+    expect(body.error.code).toBe('NO_TOKENS');
+    expect(body.error.requestId).toEqual(expect.any(String));
+  });
+
+  it('returns structured unauthorized errors with requestId', async () => {
+    const response = await worker.fetch(
+      new Request(
+        'https://scanner.test/v1/tokens?deviceId=test-device-12345',
+      ) as Parameters<typeof worker.fetch>[0],
+      env,
+    );
+
+    expect(response.status).toBe(401);
+    const body = await response.json<{
+      error: { code: string; message: string; requestId: string };
+    }>();
+    expect(body.error.code).toBe('UNAUTHORIZED');
+    expect(body.error.message).toContain('access token');
+    expect(body.error.requestId).toEqual(expect.any(String));
   });
 
   it('refunds the token when Gemini fails', async () => {
     const userId = await userIdFromDeviceId(deviceId);
     await seedUser(userId, { tokens: 10, usedToday: 0 });
-    vi.stubGlobal(
-      'fetch',
-      vi.fn(async () => new Response('Gemini down', { status: 500 })),
+    const geminiFetch = vi.fn(
+      async () => new Response('Gemini down', { status: 500 }),
     );
+    vi.stubGlobal('fetch', geminiFetch);
 
     const response = await scan();
 
     expect(response.status).toBe(502);
+    expect(geminiFetch).toHaveBeenCalledTimes(2);
     const user = await getUser(userId);
     expect(user.tokens).toBe(10);
     expect(user.used_today).toBe(0);
     const log = await latestLog(userId);
     expect(log.success).toBe(0);
-    expect(log.error).toBe('gemini_http_error');
+    expect(log.error).toBe('gemini_server_error');
+  });
+
+  it('does not retry Gemini rate limits and refunds the token', async () => {
+    const userId = await userIdFromDeviceId(deviceId);
+    await seedUser(userId, { tokens: 10, usedToday: 0 });
+    const geminiFetch = vi.fn(
+      async () => new Response('rate limit', { status: 429 }),
+    );
+    vi.stubGlobal('fetch', geminiFetch);
+
+    const response = await scan();
+
+    expect(response.status).toBe(429);
+    expect(geminiFetch).toHaveBeenCalledTimes(1);
+    const body = await response.json<{
+      error: { code: string; requestId: string };
+    }>();
+    expect(body.error.code).toBe('GEMINI_RATE_LIMIT');
+    expect(body.error.requestId).toEqual(expect.any(String));
+    const user = await getUser(userId);
+    expect(user.tokens).toBe(10);
+    expect(user.used_today).toBe(0);
+  });
+
+  it('refunds the token when Gemini times out', async () => {
+    const userId = await userIdFromDeviceId(deviceId);
+    await seedUser(userId, { tokens: 10, usedToday: 0 });
+    const geminiFetch = vi.fn(
+      (_input: RequestInfo | URL, init?: RequestInit) =>
+        new Promise<Response>((_resolve, reject) => {
+          init?.signal?.addEventListener('abort', () => {
+            reject(new DOMException('Aborted', 'AbortError'));
+          });
+        }),
+    );
+    vi.stubGlobal('fetch', geminiFetch);
+
+    const response = await scan();
+
+    expect(response.status).toBe(504);
+    expect(geminiFetch).toHaveBeenCalledTimes(2);
+    const body = await response.json<{
+      error: { code: string; requestId: string };
+    }>();
+    expect(body.error.code).toBe('GEMINI_TIMEOUT');
+    expect(body.error.requestId).toEqual(expect.any(String));
+    const user = await getUser(userId);
+    expect(user.tokens).toBe(10);
+    expect(user.used_today).toBe(0);
   });
 
   it('refunds the token when Gemini returns invalid scanner JSON', async () => {

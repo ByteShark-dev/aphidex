@@ -768,13 +768,22 @@ void main() {
   });
 
   test('remote auto-open requires high confidence and clear margin', () {
-    final ladybug = _remoteMatch('ladybug', 0.90);
-    final bee = _remoteMatch('bee', 0.70);
+    final ladybug = _remoteMatch('ladybug', 0.93);
+    final bee = _remoteMatch('bee', 0.72);
     final spider = _remoteMatch('wolf_spider', 0.60);
 
     expect(
       isClearRemoteScannerResult(
-        matches: [ladybug, _remoteMatch('bee', 0.90), spider],
+        matches: [_remoteMatch('ladybug', 0.90), _remoteMatch('bee', 0.60)],
+        weak: false,
+        multiCreature: false,
+        selectedGameScope: scannerGameScopeG2,
+      ),
+      isFalse,
+    );
+    expect(
+      isClearRemoteScannerResult(
+        matches: [ladybug, _remoteMatch('bee', 0.731), spider],
         weak: false,
         multiCreature: false,
         selectedGameScope: scannerGameScopeG2,
@@ -789,6 +798,21 @@ void main() {
         selectedGameScope: scannerGameScopeG2,
       ),
       isTrue,
+    );
+  });
+
+  test('remote auto-open rejects similar second candidate', () {
+    expect(
+      isClearRemoteScannerResult(
+        matches: [
+          _remoteMatch('orc_wasp', 0.98),
+          _remoteMatch('ogrr_wasp', 0.70),
+        ],
+        weak: false,
+        multiCreature: false,
+        selectedGameScope: scannerGameScopeG2,
+      ),
+      isFalse,
     );
   });
 
@@ -838,6 +862,77 @@ void main() {
 
     expect(matches.first.previewEnemy.id, 'g2_ogrr_wasp');
     expect(matches.first.confidence, greaterThan(matches.last.confidence));
+  });
+
+  test('remote ranking penalizes beetles when strong wasp evidence exists', () {
+    final beetle = _enemy(
+      id: 'g2_bombardier_beetle',
+      speciesKey: 'bombardier_beetle',
+      game: 'g2',
+      name: 'Bombardier Beetle',
+    );
+    final wasp = _enemy(
+      id: 'g2_ogrr_wasp',
+      speciesKey: 'ogrr_wasp',
+      game: 'g2',
+      name: 'OGRR Wasp',
+      collectionGroup: 'ogrr',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g2_bombardier_beetle',
+          confidence: 0.80,
+          reason: 'clear wings, flying, wasp body and thin waist',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ogrr_wasp',
+          confidence: 0.70,
+          reason: 'clear wings, flying, OGRR wasp body',
+        ),
+      ],
+      allEnemies: [beetle, wasp],
+      selectedGameScope: scannerGameScopeG2,
+    );
+
+    expect(matches.first.previewEnemy.id, 'g2_ogrr_wasp');
+  });
+
+  test('remote ranking penalizes crossed ORC and OGRR evidence', () {
+    final orc = _enemy(
+      id: 'g2_orc_wolf_spider',
+      speciesKey: 'orc_wolf_spider',
+      game: 'g2',
+      name: 'O.R.C. Wolf Spider',
+      collectionGroup: 'orc',
+    );
+    final ogrr = _enemy(
+      id: 'g2_ogrr_wolf_spider',
+      speciesKey: 'ogrr_wolf_spider',
+      game: 'g2',
+      name: 'OGRR Wolf Spider',
+      collectionGroup: 'ogrr',
+    );
+
+    final matches = resolveRemoteScannerMatches(
+      candidates: const [
+        RemoteScannerCandidate(
+          id: 'g2_orc_wolf_spider',
+          confidence: 0.95,
+          reason: 'OGRR enhanced wolf spider',
+        ),
+        RemoteScannerCandidate(
+          id: 'g2_ogrr_wolf_spider',
+          confidence: 0.78,
+          reason: 'OGRR enhanced wolf spider',
+        ),
+      ],
+      allEnemies: [orc, ogrr],
+      selectedGameScope: scannerGameScopeAll,
+    );
+
+    expect(matches.first.previewEnemy.id, 'g2_ogrr_wolf_spider');
   });
 
   test('remote scanner keeps ORC and OGRR as distinct candidates', () {
@@ -896,7 +991,62 @@ void main() {
     );
     expect(
       allowed.single['visualTags'] as List<dynamic>,
-      hasLength(lessThanOrEqualTo(10)),
+      hasLength(lessThanOrEqualTo(12)),
+    );
+  });
+
+  test('remote service maps structured server errors by code', () async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+    final service = RemoteCreatureScannerService(
+      apiBaseUrl: 'https://scanner.test',
+      clientToken: 'client-token',
+      allEnemies: [enemy],
+      selectedGameScope: scannerGameScopeG2,
+      languageCode: 'en',
+      deviceIdOverride: 'test-device-12345',
+      imageCompressor: const _PassthroughCompressor(),
+      httpClient: MockClient(
+        (_) async => http.Response(
+          jsonEncode({
+            'error': {
+              'code': 'GEMINI_RATE_LIMIT',
+              'message': 'Scanner analysis is temporarily busy.',
+              'requestId': 'req-123',
+            },
+          }),
+          429,
+          headers: {'content-type': 'application/json'},
+        ),
+      ),
+    );
+
+    await expectLater(
+      service.scanFile(
+        XFile.fromData(
+          Uint8List.fromList(const [1, 2, 3, 4]),
+          mimeType: 'image/jpeg',
+          name: 'test.jpg',
+        ),
+      ),
+      throwsA(
+        isA<CreatureScannerException>()
+            .having(
+              (error) => error.type,
+              'type',
+              CreatureScannerErrorType.serverBusy,
+            )
+            .having((error) => error.requestId, 'requestId', 'req-123')
+            .having(
+              (error) => error.serverCode,
+              'serverCode',
+              'GEMINI_RATE_LIMIT',
+            ),
+      ),
     );
   });
 
@@ -971,6 +1121,117 @@ void main() {
     );
     expect(find.text('Try another image'), findsOneWidget);
     expect(find.text('Search manually'), findsOneWidget);
+  });
+
+  testWidgets('remote scanner shows specific temporary analysis errors', (
+    tester,
+  ) async {
+    final enemy = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [enemy],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            scanHandler: (_) async => throw const CreatureScannerException(
+              CreatureScannerErrorType.analysisTemporary,
+              requestId: 'req-analysis-1',
+              serverCode: 'GEMINI_TIMEOUT',
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(
+        'The smart analysis failed temporarily. No token was charged.\nDiagnostic ID: req-analysis-1',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+  });
+
+  testWidgets('remote token refresh failure does not erase scan candidates', (
+    tester,
+  ) async {
+    final ladybug = _enemy(
+      id: 'g2_ladybug',
+      speciesKey: 'ladybug',
+      game: 'g2',
+      name: 'Ladybug G2',
+    );
+    final bee = _enemy(
+      id: 'g2_bee',
+      speciesKey: 'bee',
+      game: 'g2',
+      name: 'Bee G2',
+    );
+
+    await tester.pumpWidget(
+      _buildApp(
+        CreatureScannerPage(
+          enemies: [ladybug, bee],
+          selectedGameScope: scannerGameScopeG2,
+          remoteEnabledOverride: true,
+          remoteServiceOverride: _FakeRemoteScannerService(
+            tokenHandler: () async => throw const CreatureScannerException(
+              CreatureScannerErrorType.serverBusy,
+            ),
+            scanHandler: (_) async => CreatureScannerResult(
+              matches: [
+                CreatureScannerMatch(
+                  creatureId: ladybug.speciesKey,
+                  displayName: ladybug.name,
+                  confidence: 0.88,
+                  sourceLabels: const ['round shell'],
+                  variants: [ladybug],
+                  previewEnemy: ladybug,
+                  isExactIdMatch: true,
+                ),
+                CreatureScannerMatch(
+                  creatureId: bee.speciesKey,
+                  displayName: bee.name,
+                  confidence: 0.76,
+                  sourceLabels: const ['yellow black'],
+                  variants: [bee],
+                  previewEnemy: bee,
+                  isExactIdMatch: true,
+                ),
+              ],
+              rawLabels: const [],
+              rawWebEntities: const [],
+              hasClearMatch: false,
+              weak: true,
+              tokens: _tokens(tokens: 9, usedToday: 1),
+            ),
+          ),
+          imagePickerOverride: _fakePicker,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await _scrollToRemoteAnalyze(tester);
+
+    await tester.tap(find.byKey(const ValueKey('scanner-remote-analyze')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Possible creatures'), findsOneWidget);
+    expect(find.text('Ladybug G2'), findsOneWidget);
+    expect(find.text('Bee G2'), findsOneWidget);
   });
 }
 
@@ -1069,12 +1330,13 @@ class _FakeScannerService extends CreatureScannerService {
 
 class _FakeRemoteScannerService implements RemoteCreatureScannerClient {
   final Future<CreatureScannerResult> Function(XFile file)? scanHandler;
+  final Future<RemoteScannerTokenState> Function()? tokenHandler;
 
-  _FakeRemoteScannerService({this.scanHandler});
+  _FakeRemoteScannerService({this.scanHandler, this.tokenHandler});
 
   @override
   Future<RemoteScannerTokenState> loadTokens() {
-    return Future.value(_tokens());
+    return tokenHandler?.call() ?? Future.value(_tokens());
   }
 
   @override

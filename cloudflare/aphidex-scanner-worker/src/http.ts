@@ -21,10 +21,48 @@ export function jsonResponse(
 }
 
 export function errorResponse(error: HttpError): Response {
+  return errorResponseWithRequestId(error);
+}
+
+export function errorResponseWithRequestId(
+  error: HttpError,
+  requestId?: string,
+): Response {
   return jsonResponse(
-    { error: { code: error.code, message: error.message } },
+    {
+      error: {
+        code: publicErrorCode(error),
+        message: error.message,
+        ...(requestId ? { requestId } : {}),
+      },
+    },
     { status: error.status },
   );
+}
+
+function publicErrorCode(error: HttpError): string {
+  switch (error.code) {
+    case 'unauthorized':
+      return 'UNAUTHORIZED';
+    case 'out_of_tokens':
+      return 'NO_TOKENS';
+    case 'daily_limit_reached':
+    case 'scanner_limit_reached':
+      return 'DAILY_LIMIT';
+    case 'image_too_large':
+      return 'IMAGE_TOO_LARGE';
+    case 'gemini_timeout':
+      return 'GEMINI_TIMEOUT';
+    case 'gemini_invalid_json':
+    case 'gemini_invalid_response':
+    case 'gemini_empty_response':
+    case 'gemini_invalid_shape':
+      return 'GEMINI_INVALID_JSON';
+    case 'gemini_rate_limit':
+      return 'GEMINI_RATE_LIMIT';
+    default:
+      return 'UNKNOWN';
+  }
 }
 
 export function withCors(
