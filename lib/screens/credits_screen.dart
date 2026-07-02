@@ -6,7 +6,6 @@ import '../i18n/app_localizations.dart';
 class CreditsScreen extends StatelessWidget {
   const CreditsScreen({super.key});
 
-  static const _wikiUrl = 'https://grounded.fandom.com';
   static const _wikiGgCardsUrl =
       'https://grounded.wiki.gg/wiki/Creature_Cards_(Grounded_2)';
   static const _licenseUrl = 'https://creativecommons.org/licenses/by-sa/4.0/';
@@ -50,11 +49,6 @@ class CreditsScreen extends StatelessWidget {
             Wrap(
               spacing: 12,
               children: [
-                TextButton.icon(
-                  icon: const Icon(Icons.open_in_new),
-                  label: Text(l10n.groundedWikiButton),
-                  onPressed: () => _open(_wikiUrl),
-                ),
                 TextButton.icon(
                   icon: const Icon(Icons.open_in_new),
                   label: Text(l10n.groundedTwoWikiButton),

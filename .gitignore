@@ -69,3 +69,6 @@ app.*.map.json
 
 .wrangler/
 cloudflare/aphidex-scanner-worker/.wrangler/
+
+# Local image-source backups
+/assets/images_backup_community/

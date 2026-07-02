@@ -183,7 +183,6 @@ class AppLocalizations {
   String get creditsAppTagline => _t('creditsAppTagline');
   String get creditsContentTitle => _t('creditsContentTitle');
   String get creditsContentBody => _t('creditsContentBody');
-  String get groundedWikiButton => _t('groundedWikiButton');
   String get groundedTwoWikiButton => _t('groundedTwoWikiButton');
   String get ccLicenseButton => _t('ccLicenseButton');
   String get donorsTitle => _t('donorsTitle');
@@ -1431,8 +1430,7 @@ class AppLocalizations {
       'creditsAppTagline': 'Fan-made app · Grounded 1 y Grounded 2',
       'creditsContentTitle': 'Contenido y licencias',
       'creditsContentBody':
-          'Para Grounded 1, gran parte del contenido informativo y las fotos de portada de ese juego se basan en Grounded Wiki (Fandom).\n\nPara Grounded 2, la referencia principal de datos de criaturas y cartas es la página Creature Cards de grounded.wiki.gg.\n\n© Sus respectivos autores y colaboradores.\nEl contenido original mantiene las licencias y términos de sus sitios de origen, incluido Creative Commons Attribution-ShareAlike (CC BY-SA) cuando corresponda.\n\nLa información ha sido adaptada y reorganizada con fines informativos.\n\nEsta aplicación no está afiliada ni respaldada por Obsidian Entertainment ni Xbox Game Studios.',
-      'groundedWikiButton': 'Grounded Wiki (Fandom)',
+          'Las fotografías de criaturas utilizadas en Aphidex son capturas propias tomadas directamente dentro de Grounded y Grounded 2. Aphidex no utiliza actualmente fotografías de criaturas obtenidas de wikis o de la comunidad.\n\nLa información sobre criaturas, estadísticas, debilidades, resistencias, ubicaciones y comportamiento fue recopilada y contrastada utilizando como referencia la comunidad wiki de Grounded y Grounded 2 indicada a continuación.\n\n© Sus respectivos autores y colaboradores.\nEl contenido de Grounded y Grounded 2, incluidos personajes, criaturas, nombres y elementos visibles en las capturas propias, pertenece a sus respectivos propietarios.\n\nLa información ha sido adaptada y reorganizada con fines informativos.\n\nEsta aplicación no está afiliada, patrocinada ni respaldada por Obsidian Entertainment, Xbox Game Studios ni Microsoft.',
       'groundedTwoWikiButton': 'Creature Cards (wiki.gg)',
       'ccLicenseButton': 'Licencia CC BY-SA',
       'donorsTitle': 'Donadores',
@@ -1596,8 +1594,7 @@ class AppLocalizations {
       'creditsAppTagline': 'Fan-made app · Grounded 1 and Grounded 2',
       'creditsContentTitle': 'Content and licenses',
       'creditsContentBody':
-          'For Grounded 1, much of the reference information and that game’s cover photos are based on Grounded Wiki (Fandom).\n\nFor Grounded 2, the main reference for creature and card data is the Creature Cards page on grounded.wiki.gg.\n\n© Their respective authors and contributors.\nOriginal content remains under the licenses and terms of its source sites, including Creative Commons Attribution-ShareAlike (CC BY-SA) where applicable.\n\nThe information has been adapted and reorganized for informational purposes.\n\nThis application is not affiliated with or endorsed by Obsidian Entertainment or Xbox Game Studios.',
-      'groundedWikiButton': 'Grounded Wiki (Fandom)',
+          'The creature images used in Aphidex are original in-game screenshots captured directly in Grounded and Grounded 2. Aphidex does not currently use creature images obtained from community members or wikis.\n\nInformation about creatures, statistics, weaknesses, resistances, locations, and behavior was compiled and cross-checked using the Grounded and Grounded 2 community wiki listed below as a reference.\n\n© Their respective authors and contributors.\nGrounded and Grounded 2 content, including characters, creatures, names, and elements visible in the original screenshots, belongs to its respective owners.\n\nThe information has been adapted and reorganized for informational purposes.\n\nThis application is not affiliated with, sponsored by, or endorsed by Obsidian Entertainment, Xbox Game Studios, or Microsoft.',
       'groundedTwoWikiButton': 'Creature Cards (wiki.gg)',
       'ccLicenseButton': 'CC BY-SA license',
       'donorsTitle': 'Donors',
@@ -1751,8 +1748,7 @@ class AppLocalizations {
       'creditsAppTagline': 'Фанатское приложение · Grounded 1 и Grounded 2',
       'creditsContentTitle': 'Контент и лицензии',
       'creditsContentBody':
-          'Для Grounded 1 значительная часть справочной информации и обложек существ этой игры основана на Grounded Wiki (Fandom).\n\nДля Grounded 2 основным источником данных по существам и карточкам служит страница Creature Cards на grounded.wiki.gg.\n\n© Их соответствующие авторы и участники.\nИсходный контент сохраняет лицензии и условия своих сайтов-источников, включая Creative Commons Attribution-ShareAlike (CC BY-SA), когда это применимо.\n\nИнформация была адаптирована и переработана в справочных целях.\n\nЭто приложение не связано с Obsidian Entertainment или Xbox Game Studios и не поддерживается ими.',
-      'groundedWikiButton': 'Grounded Wiki (Fandom)',
+          'Изображения существ, используемые в Aphidex, являются оригинальными внутриигровыми снимками, сделанными непосредственно в Grounded и Grounded 2. В настоящее время Aphidex не использует изображения существ из вики или от сообщества.\n\nИнформация о существах, характеристиках, слабостях, сопротивлениях, местах обитания и поведении была собрана и проверена с использованием указанной ниже вики сообщества Grounded и Grounded 2 в качестве справочного источника.\n\n© Соответствующие авторы и участники.\nКонтент Grounded и Grounded 2, включая персонажей, существ, названия и элементы, видимые на собственных снимках, принадлежит соответствующим владельцам.\n\nИнформация была адаптирована и переработана в справочных целях.\n\nЭто приложение не связано, не спонсируется и не поддерживается Obsidian Entertainment, Xbox Game Studios или Microsoft.',
       'groundedTwoWikiButton': 'Creature Cards (wiki.gg)',
       'ccLicenseButton': 'Лицензия CC BY-SA',
       'donorsTitle': 'Донаторы',

@@ -20057,7 +20057,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g2/creatures/cards/Creaturecard_Crow.png",
     "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_Crow.png",
-    "photo": "assets/g1/creatures/photos/Crow.jpg",
+    "photo": "assets/g2/creatures/photos/Crow.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "peaceful",
