@@ -22531,7 +22531,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Red_Ant_Queen.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Red_Ant_Queen.webp",
-    "photo": "assets/g1/creatures/photos/Red_Ant_Queen.png",
+    "photo": "assets/g1/creatures/photos/Red_Ant_Queen.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "peaceful",
@@ -22640,7 +22640,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Red_Ant.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Red_Ant.webp",
-    "photo": "assets/g1/creatures/photos/Baby_Red_Ant.png",
+    "photo": "assets/g1/creatures/photos/Baby_Red_Ant.webp",
     "weaknesses": [
       "fresh"
     ],
@@ -22761,7 +22761,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Black_Ant.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Black_Ant.webp",
-    "photo": "assets/g1/creatures/photos/Baby_Black_Ant.png",
+    "photo": "assets/g1/creatures/photos/Baby_Black_Ant.webp",
     "weaknesses": [
       "fresh"
     ],
@@ -22897,7 +22897,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Fire_Ant.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Baby_Fire_Ant.webp",
-    "photo": "assets/g1/creatures/photos/Baby_Fire_Ant.png",
+    "photo": "assets/g1/creatures/photos/Baby_Fire_Ant.webp",
     "weaknesses": [
       "fresh"
     ],
@@ -23033,7 +23033,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Black_Ant_Queen.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Black_Ant_Queen.webp",
-    "photo": "assets/g1/creatures/photos/Black_Ant_Queen.png",
+    "photo": "assets/g1/creatures/photos/Black_Ant_Queen.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "peaceful",
@@ -23142,7 +23142,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Fire_Ant_Queen.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Fire_Ant_Queen.webp",
-    "photo": "assets/g1/creatures/photos/Fire_Ant_Queen.png",
+    "photo": "assets/g1/creatures/photos/Fire_Ant_Queen.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "peaceful",
@@ -23251,7 +23251,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Crow.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Crow.webp",
-    "photo": "assets/g1/creatures/photos/Crow.jpg",
+    "photo": "assets/g1/creatures/photos/Crow.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "peaceful",
@@ -24168,7 +24168,7 @@
     "defaultGold": true,
     "cardNormal": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
     "cardGold": "assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp",
-    "photo": "assets/g1/creatures/photos/Infused_Insects.jpg",
+    "photo": "assets/g1/creatures/photos/Infused_Insects.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "anomaly",

@@ -64,3 +64,6 @@ app.*.map.json
 /tmp_*.json
 /.lh/
 /functions/node_modules/
+
+# Local image-source backups
+/assets/images_backup_community/
