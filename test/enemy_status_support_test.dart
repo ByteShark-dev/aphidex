@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:aphidex/data/effect_catalog.dart';
 import 'package:aphidex/data/ui_mapper.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
@@ -106,6 +108,60 @@ void main() {
         UiMapper.dangerIcon('imposible_alt'),
         'assets/global/Imposible_alt.png',
       );
+      expect(
+        UiMapper.dangerIcon('imposible_superior'),
+        'assets/global/Imposible_alt.png',
+      );
+    });
+
+    test('every supported danger level resolves to a real icon asset', () {
+      const validDangers = [
+        'baja',
+        'media',
+        'intermedia',
+        'alta',
+        'muy_alta',
+        'imposible',
+        'imposible_alt',
+        'imposible_alta',
+        'imposible_superior',
+        'extrema',
+      ];
+
+      for (final danger in validDangers) {
+        final asset = UiMapper.dangerIcon(danger);
+        expect(asset, isNot('assets/global/Proximamente.png'), reason: danger);
+        expect(File(asset).existsSync(), isTrue, reason: asset);
+      }
+    });
+
+    test('ogrr superior danger uses the same mapper as normal creatures', () {
+      expect(
+        UiMapper.canonicalDangerLevel('imposible_superior'),
+        UiMapper.canonicalDangerLevel('imposible_alt'),
+      );
+      expect(
+        UiMapper.dangerIcon('imposible_superior'),
+        UiMapper.dangerIcon('imposible_alt'),
+      );
+    });
+
+    test('filter normalization and icon normalization stay aligned', () {
+      for (final raw in [
+        'imposible_alt',
+        'imposible_alta',
+        'imposible_superior',
+      ]) {
+        expect(UiMapper.canonicalDangerLevel(raw), 'imposible_superior');
+        expect(
+          UiMapper.dangerIcon(raw),
+          'assets/global/Imposible_alt.png',
+          reason: raw,
+        );
+      }
+
+      expect(UiMapper.canonicalDangerLevel('alta'), 'alta');
+      expect(UiMapper.dangerIcon('alta'), 'assets/global/Alta.png');
     });
   });
 

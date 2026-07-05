@@ -1,6 +1,17 @@
 import 'effect_catalog.dart';
 
 class UiMapper {
+  static String canonicalDangerLevel(String level) {
+    switch (level.trim().toLowerCase()) {
+      case 'imposible_alt':
+      case 'imposible_alta':
+      case 'imposible_superior':
+        return 'imposible_superior';
+      default:
+        return level.trim().toLowerCase();
+    }
+  }
+
   // ================= EFFECT / DAMAGE ICONS =================
   static String effectIcon(String id) {
     const base = 'assets/global/effects_damage';
@@ -158,8 +169,9 @@ class UiMapper {
   // ================= DANGER ICONS =================
   static String dangerIcon(String level) {
     const base = 'assets/global';
+    final normalized = canonicalDangerLevel(level);
 
-    switch (level) {
+    switch (normalized) {
       case 'baja':
         return '$base/Baja.png';
       case 'media':
@@ -172,8 +184,7 @@ class UiMapper {
         return '$base/Muy_alta.png';
       case 'imposible':
         return '$base/Imposible.png';
-      case 'imposible_alt':
-      case 'imposible_alta':
+      case 'imposible_superior':
         return '$base/Imposible_alt.png';
       case 'extrema':
         return '$base/Extrema.png';

@@ -322,7 +322,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     Set<String> effectiveClassFilters,
     Set<String> effectiveDangerFilters,
   ) {
-    if (filterFavorites && !favoriteIds.contains(enemy.id)) {
+    if (filterFavorites && !favoriteIds.contains(enemy.resolvedFavoriteKey)) {
       return false;
     }
     if (filterGold && !_isGold(enemy, goldIds)) {
@@ -845,15 +845,8 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   String _dangerLabel(String danger, AppLocalizations l10n) =>
       l10n.dangerLevelLabel(_canonicalDanger(danger));
 
-  String _canonicalDanger(String danger) {
-    switch (danger) {
-      case 'imposible_alt':
-      case 'imposible_alta':
-        return 'imposible_superior';
-      default:
-        return danger;
-    }
-  }
+  String _canonicalDanger(String danger) =>
+      UiMapper.canonicalDangerLevel(danger);
 
   String _dangerFilterButtonLabel(
     AppLocalizations l10n,
@@ -1506,7 +1499,7 @@ class EnemyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final enemy = entry.activeEnemy;
-    final isFavorite = favIds.contains(enemy.id);
+    final isFavorite = favIds.contains(enemy.resolvedFavoriteKey);
     final isGold =
         enemy.defaultGold ||
         goldIds.contains(enemy.id) ||

@@ -15530,17 +15530,17 @@
     "description": {
       "es": "Una tijerilla agresiva de Grounded 2 que mezcla pinzas, postura defensiva y cadenas cortas muy castigadoras. Aunque no tenga el alcance de la variante whipper, ya pega lo bastante duro como para sentirse por encima de muchos tier 3 normales.",
       "en": "An aggressive Grounded 2 earwig that mixes pincers, defensive stance, and short but punishing strings. Even without the reach of the whipper variant, it already hits hard enough to feel above many normal tier 3 enemies.",
-      "ru": "??????????? ????????? ?? Grounded 2, ?????????? ??????, ???????? ?????? ? ????????, ?? ????? ?????????? ?????. ???? ??? ????????? ???????? whipper ??? ??? ???? ?????????? ??????, ????? ????????? ???? ?????? ??????? ?????? ???????? ????."
+      "ru": "An aggressive Grounded 2 earwig that mixes pincers, defensive stance, and short but punishing strings. Even without the reach of the whipper variant, it already hits hard enough to feel above many normal tier 3 enemies."
     },
     "behavior": {
       "es": "Se queda cerca de su zona y alterna entre presión frontal y postura defensiva. Cuando lee que sigues dentro de su cara, acelera a combos que castigan muy bien a quien bloquea tarde o se queda quieto de más.",
       "en": "It stays close to its area and alternates between frontal pressure and a defensive stance. When it reads that you are still in its face, it speeds into combos that punish late blocks and overcommitted positioning very well.",
-      "ru": "?? ???????? ????? ?? ????? ????? ? ???????? ??????????? ???????? ? ???????? ???????. ???? ????????, ??? ?? ??? ??? ?????? ????? ???, ?????? ????????? ? ?????, ??????? ??????? ?????????? ??????? ????? ? ?????????? ????????."
+      "ru": "It stays close to its area and alternates between frontal pressure and a defensive stance. When it reads that you are still in its face, it speeds into combos that punish late blocks and overcommitted positioning very well."
     },
     "interactionWithPlayer": {
       "es": "Ataca con combos cortos y castiga muy bien los errores de lectura a quemarropa. No parece tan exagerada como la whipper, pero sí se gana de sobra el salto a rango imposible.",
       "en": "It attacks with short combos and punishes close-range misreads very well. It does not look as extreme as the whipper, but it still earns its jump into impossible territory.",
-      "ru": "?? ??????? ????????? ????? ? ????? ?????? ?????????? ?? ?????? ?????? ? ?????. ???????? ?? ??? ????????????, ??? whipper, ?? ??? ????? ?????? ??????????? ???????? ? ????? ??????????? ?????????."
+      "ru": "It attacks with short combos and punishes close-range misreads very well. It does not look as extreme as the whipper, but it still earns its jump into impossible territory."
     },
     "interactionWithCreatures": {
       "es": "Puede reaccionar con agresión si otra criatura invade su espacio.",
@@ -15550,7 +15550,7 @@
     "strategy": {
       "es": "No te quedes plantado en su frontal. Retroceder o desviar el ritmo de su combo suele ser más seguro que intentar absorberlo entero, y la mejor ventana llega justo después de su postura defensiva o de una cadena mal colocada.",
       "en": "Do not stay planted in front of it. Backing off or breaking the rhythm of its combo is usually safer than trying to absorb the whole string, and the best punish window comes right after the defensive stance or a misplaced chain.",
-      "ru": "?? ?????? ?????????? ????? ????? ???. ????????? ??? ??????? ???? ??? ????? ?????? ??????????, ??? ???????? ???????? ??? ?????, ? ?????? ???? ??? ????????? ?????????? ????? ????? ???????? ?????? ??? ???????? ??????????? ???????."
+      "ru": "Do not stay planted in front of it. Backing off or breaking the rhythm of its combo is usually safer than trying to absorb the whole string, and the best punish window comes right after the defensive stance or a misplaced chain."
     },
     "environments": [
       {
@@ -15967,17 +15967,17 @@
     "description": {
       "es": "Un depredador aéreo muy agresivo que en Grounded 2 ya se siente como una amenaza de tramo alto incluso fuera de combates de jefe. Una sola exige respeto; varias juntas convierten el cielo en espacio prohibido.",
       "en": "A highly aggressive aerial predator that in Grounded 2 already feels like a late-run threat even outside boss encounters. One demands respect; several together turn the sky into forbidden space.",
-      "ru": "????? ??????????? ????????? ??????, ??????? ? Grounded 2 ??? ????????? ??? ?????? ??????? ?????? ???? ??? ???? ? ???????. ???? ??????? ????????; ????????? ????? ?????????? ???? ? ????????? ????."
+      "ru": "A highly aggressive aerial predator that in Grounded 2 already feels like a late-run threat even outside boss encounters. One demands respect; several together turn the sky into forbidden space."
     },
     "behavior": {
       "es": "Patrulla alto y cae con mucha violencia en cuanto detecta una amenaza. Alterna picotazos, aguijonazos y disparos del aguijón para obligarte a leer altura, cobertura y timing entre entradas.",
       "en": "It patrols high overhead and dives violently the moment it spots a threat. It alternates pecks, stings, and stinger shots to force you to read height, cover, and the timing between rushes.",
-      "ru": "?? ??????????? ?????? ? ???? ? ????? ????????, ??? ?????? ???????? ??????. ???????? ??????, ????? ????? ? ???????? ?????, ????????? ????????? ??????, ??????? ? ??????? ????? ????????."
+      "ru": "It patrols high overhead and dives violently the moment it spots a threat. It alternates pecks, stings, and stinger shots to force you to read height, cover, and the timing between rushes."
     },
     "interactionWithPlayer": {
       "es": "Ataca al verte y castiga durísimo cualquier error de posición. Si pierdes cobertura o te quedas sin respuesta a distancia, el combate se alarga y casi siempre empieza a inclinarse a favor de la avispa.",
       "en": "It attacks on sight and punishes positioning mistakes brutally. If you lose cover or run out of ranged answers, the fight drags out and almost always starts tilting in the wasp's favor.",
-      "ru": "?? ??????? ??? ???? ?????? ? ??????? ?????????? ?? ?????? ????????????????. ???? ?? ??????? ??????? ??? ????????? ??? ???????? ??????, ??? ???????????? ? ????? ?????? ???????? ?????????? ? ?????? ???."
+      "ru": "It attacks on sight and punishes positioning mistakes brutally. If you lose cover or run out of ranged answers, the fight drags out and almost always starts tilting in the wasp's favor."
     },
     "interactionWithCreatures": {
       "es": "Es neutral con muchas criaturas, pero muy hostil con abejas y mosquitos. Su sola presencia suele vaciar el espacio aéreo porque varias criaturas pequeñas prefieren huir antes que aguantarla.",
@@ -15987,7 +15987,7 @@
     "strategy": {
       "es": "Lo mejor es separarla del grupo y castigarla con daño a distancia o ventanas cuerpo a cuerpo muy limpias. Sus ataques cercanos se pueden bloquear, pero el disparo del aguijón y la pelea en grupo son lo que realmente la empujan a rango imposible.",
       "en": "The best answer is to isolate it and punish it with ranged damage or very clean melee windows. Its close attacks are blockable, but the stinger shot and the group fight are what really push it into impossible territory.",
-      "ru": "?????? ????? ? ??????????? ??? ? ?????????? ????????????? ?????? ??? ????? ??????? ?????? ??? ???????? ???. ??????? ????? ????? ???????????, ?? ?????? ??????? ????? ? ??? ? ?????? ??????? ??? ? ????? ??????????? ?????????."
+      "ru": "The best answer is to isolate it and punish it with ranged damage or very clean melee windows. Its close attacks are blockable, but the stinger shot and the group fight are what really push it into impossible territory."
     },
     "environments": [
       {
@@ -16283,17 +16283,17 @@
     "description": {
       "es": "Una variante de apoyo que suele sentirse peor que la avispa normal cuando aparece en grupo. Prefiere mantenerse lejos, curar aliados y obligarte a perseguir un objetivo que casi nunca te regala distancia cómoda.",
       "en": "A support variant that often feels worse than a normal wasp once it appears in a group. It prefers to stay back, heal allies, and force you to chase a target that almost never gives you a comfortable angle.",
-      "ru": "?????????????? ???????, ??????? ? ?????? ????? ????????? ???? ??????? ???. ?? ???????????? ????????? ????????, ?????? ????????? ? ?????????? ??? ???????? ?? ?????, ??????? ????? ??????? ?? ???? ???????? ????."
+      "ru": "A support variant that often feels worse than a normal wasp once it appears in a group. It prefers to stay back, heal allies, and force you to chase a target that almost never gives you a comfortable angle."
     },
     "behavior": {
       "es": "Comparte parte del patrón aéreo de la avispa base, pero intenta mantenerse más atrás. Dispara, pincha cuando te acercas y emite un grito de apoyo que regenera a las avispas cercanas y puede alargar muchísimo peleas ya malas.",
       "en": "It shares part of the normal wasp's aerial pattern, but tries to stay farther back. It shoots, stabs when you close in, and emits a support scream that regenerates nearby wasps and can massively prolong already bad fights.",
-      "ru": "?? ????????? ????? ?????????? ???????? ??????? ???, ?? ????????? ????????? ??????. ????????, ????? ??? ????????? ? ?????? ?????????????? ????, ??????? ????? ????????? ?? ? ????? ?????? ???????? ? ??? ???? ?????????? ???."
+      "ru": "It shares part of the normal wasp's aerial pattern, but tries to stay farther back. It shoots, stabs when you close in, and emits a support scream that regenerates nearby wasps and can massively prolong already bad fights."
     },
     "interactionWithPlayer": {
       "es": "Te ve, toma distancia y empieza a sostener al resto del enjambre. Sola es manejable; acompañada por otras avispas se convierte en una de las criaturas más frustrantes del juego.",
       "en": "It spots you, creates distance, and starts sustaining the rest of the swarm. Alone it is manageable; alongside other wasps it becomes one of the most frustrating creatures in the game.",
-      "ru": "??????? ???, ?? ????????? ????????? ? ???????? ???????????? ????????? ???. ? ???????? ?? ??????; ????? ? ??????? ????? ???????????? ? ???? ?? ????? ???????????? ??????? ? ????."
+      "ru": "It spots you, creates distance, and starts sustaining the rest of the swarm. Alone it is manageable; alongside other wasps it becomes one of the most frustrating creatures in the game."
     },
     "interactionWithCreatures": {
       "es": "Como la avispa normal, es neutral frente a la mayoría de criaturas pero hostil con abejas y mosquitos. Varias criaturas terrestres huyen en cuanto aparece.",
@@ -16303,7 +16303,7 @@
     "strategy": {
       "es": "Aislarla y matarla primero sigue siendo la prioridad. Aunque ya tenga opción cuerpo a cuerpo, su valor real está en curar, reposicionarse y dejarte peleando contra un enjambre que nunca termina; por eso se siente por encima de la mayoría de no-jefes.",
       "en": "Isolating it and killing it first is still the priority. Even with a melee option, its real value comes from healing, repositioning, and leaving you stuck fighting a swarm that never really ends; that is why it feels above most non-bosses.",
-      "ru": "??????????? ?? ? ??????? ?????? ??-???????? ???????????. ???? ???? ??????? ???????? ???, ?? ???????? ???????? ? ???????, ???????????????????? ? ??????????? ??? ? ???, ??????? ????? ?? ?????????????; ?????? ??????? ??? ????????? ???? ??????????? ????????."
+      "ru": "Isolating it and killing it first is still the priority. Even with a melee option, its real value comes from healing, repositioning, and leaving you stuck fighting a swarm that never really ends; that is why it feels above most non-bosses."
     },
     "environments": [
       {
@@ -17756,17 +17756,17 @@
     "description": {
       "es": "Una tijerilla mucho más opresiva y versátil que combina latigazos, proyectiles y postura defensiva incómoda. Entre alcance, daño y lectura rara, es de las criaturas no-jefe que más fácil rompen el ritmo del combate.",
       "en": "A much more oppressive and versatile earwig that combines whip strikes, projectiles, and an awkward defensive stance. Between its reach, damage, and strange rhythm, it is one of the non-boss creatures most likely to break the flow of a fight.",
-      "ru": "??????? ????? ??????? ? ????????????? ?????????, ?????????? ????? ??????, ??????? ? ????????? ???????? ??????. ?? ???? ?????????, ????? ? ????????? ????? ??? ???? ?? ?????????? ???????, ??????? ????? ????? ?????? ??? ???."
+      "ru": "A much more oppressive and versatile earwig that combines whip strikes, projectiles, and an awkward defensive stance. Between its reach, damage, and strange rhythm, it is one of the non-boss creatures most likely to break the flow of a fight."
     },
     "behavior": {
       "es": "Se mueve con intención y presiona con cambios de distancia muy incómodos. Puede obligarte a respetar el cuerpo a cuerpo, luego sacarte de ritmo con la roca, y volver a cerrar antes de que recuperes control.",
       "en": "It moves with intent and pressures through very awkward distance changes. It can force respect in melee, throw you off rhythm with the rock, and close the gap again before you recover control.",
-      "ru": "?? ????????? ?????????? ? ????? ????? ????????? ?????? ?????????. ????? ????????? ??????? ??????? ???, ????? ???? ??????? ????? ? ????? ????????? ????????? ??????, ??? ?? ??????? ????????."
+      "ru": "It moves with intent and pressures through very awkward distance changes. It can force respect in melee, throw you off rhythm with the rock, and close the gap again before you recover control."
     },
     "interactionWithPlayer": {
       "es": "Ataca de frente, cambia distancia y obliga a reacciones muy rápidas. La comunidad la trata como una de las criaturas no-boss más desagradables del juego, y con razón.",
       "en": "It attacks head-on, changes distance, and forces very fast reactions. The community treats it as one of the nastiest non-boss creatures in the game, and for good reason.",
-      "ru": "??? ??????? ? ???, ?????? ????????? ? ??????? ????? ??????? ???????. ?????????? ??????? ?? ????? ?? ????? ?????????? ?????????? ??????? ? ????, ? ?? ??? ???????."
+      "ru": "It attacks head-on, changes distance, and forces very fast reactions. The community treats it as one of the nastiest non-boss creatures in the game, and for good reason."
     },
     "interactionWithCreatures": {
       "es": "Puede entrar en pelea si otra criatura invade su espacio.",
@@ -17776,7 +17776,7 @@
     "strategy": {
       "es": "No conviene obsesionarse con bloquear toda la secuencia. Suele ser mejor esperar la roca, el cierre torpe o la salida de la postura defensiva, porque intentar intercambiar de frente contra ella es exactamente como termina ganando.",
       "en": "It is a bad idea to obsess over blocking every part of the sequence. Waiting for the rock, the clumsy close-in, or the exit from the defensive stance is usually better, because trying to trade head-on is exactly how it wins.",
-      "ru": "???????? ????????????? ?????? ????? ?? ????? ? ?????? ????. ?????? ????? ????? ??????, ????????? ???? ??? ????? ?? ???????? ??????, ?????? ??? ?????? ????? ? ???? ? ?????? ??? ???, ??????? ??? ????? ????????."
+      "ru": "It is a bad idea to obsess over blocking every part of the sequence. Waiting for the rock, the clumsy close-in, or the exit from the defensive stance is usually better, because trying to trade head-on is exactly how it wins."
     },
     "environments": [
       {
@@ -18745,6 +18745,31 @@
         "en": "Exclusive stealing can grant a Speed Droplet.",
         "ru": "Exclusive stealing can grant a Speed Droplet."
       }
+    ],
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
     ]
   },
   {
@@ -18909,6 +18934,31 @@
         "es": "Puede domesticarse con Mushroom Slurry.",
         "en": "Can be tamed with Mushroom Slurry.",
         "ru": "Can be tamed with Mushroom Slurry."
+      }
+    ],
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
       }
     ]
   },
@@ -19153,7 +19203,32 @@
     ],
     "combatStats": {
       "health": 48
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g2_gnat",
@@ -19432,6 +19507,31 @@
         "breaksGuard": false,
         "staggers": false
       }
+    ],
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
     ]
   },
   {
@@ -19585,7 +19685,32 @@
     ],
     "combatStats": {
       "health": 300
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g2_baby_garden_snail",
@@ -19750,7 +19875,32 @@
       "susceptibleDamageTypes": [
         "stabbingArrowsOnly"
       ]
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g2_garden_snail",
@@ -19915,7 +20065,32 @@
       "susceptibleDamageTypes": [
         "stabbingArrowsOnly"
       ]
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g2_woolly_aphid",
@@ -20038,7 +20213,32 @@
     ],
     "combatStats": {
       "health": 12
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g2_crow",
@@ -20379,12 +20579,7 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "damageWeaknesses": [
       {
         "type": "busting",
@@ -20392,10 +20587,6 @@
       }
     ],
     "resistancesV2": [
-      {
-        "type": "spicy",
-        "bonusPct": 50
-      },
       {
         "type": "poison",
         "bonusPct": 50
@@ -20419,6 +20610,226 @@
         "susceptibleDamageTypes": [
           "any"
         ]
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "stabbing",
+      "venom"
+    ],
+    "inflicts": [
+      {
+        "es": "Las garras y el aguijón hacen daño perforante, y sus mejores castigos también acumulan Venom.",
+        "en": "Its claws and stinger deal stabbing damage, and its heavier punishers also stack Venom.",
+        "ru": "Its claws and stinger deal stabbing damage, and its heavier punishers also stack Venom."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Claw Slam y Burrow Strike siguen añadiendo 50 de Venom si conectan. La infusión activa suma su propia acumulación sobre ese impacto.",
+        "en": "Claw Slam and Burrow Strike still add 50 Venom on hit. The active infusion adds its own buildup on top of that impact.",
+        "ru": "Claw Slam and Burrow Strike still add 50 Venom on hit. The active infusion adds its own buildup on top of that impact."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -20606,17 +21017,8 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "resistancesV2": [
-      {
-        "type": "spicy",
-        "bonusPct": 50
-      },
       {
         "type": "busting",
         "bonusPct": 25
@@ -20624,6 +21026,228 @@
       {
         "type": "shock",
         "bonusPct": 50
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "damageWeaknesses": [
+      {
+        "type": "explosive",
+        "bonusPct": 50
+      }
+    ],
+    "inflicts": [
+      {
+        "es": "Sus embestidas y mordidas hacen daño demoledor.",
+        "en": "Its divebombs and bites deal busting damage.",
+        "ru": "Its divebombs and bites deal busting damage."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Chilling Gust no se bloquea, siempre tambalea y añade 80 de acumulación del elemento activo. Si conecta, también entra la acumulación base de 20 de la infusión.",
+        "en": "Chilling Gust is unblockable, always staggers, and adds 80 buildup of the active element. If it connects, the base 20 buildup from the infusion is added on top.",
+        "ru": "Chilling Gust is unblockable, always staggers, and adds 80 buildup of the active element. If it connects, the base 20 buildup from the infusion is added on top."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -20800,12 +21424,7 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "damageWeaknesses": [
       {
         "type": "busting",
@@ -20813,10 +21432,6 @@
       }
     ],
     "resistancesV2": [
-      {
-        "type": "spicy",
-        "bonusPct": 50
-      },
       {
         "type": "shock",
         "bonusPct": 50
@@ -20828,7 +21443,227 @@
       "susceptibleDamageTypes": [
         "slashing"
       ]
-    }
+    },
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "chopping",
+      "busting"
+    ],
+    "inflicts": [
+      {
+        "es": "El mordisco y la embestida hacen daño cortante; el golpe lateral y la coz trasera hacen daño demoledor.",
+        "en": "Its bite and charge deal chopping damage, while the side hit and back buck deal busting damage.",
+        "ru": "Укус и разгон наносят рубящий урон, а боковой удар и задний сброс наносят дробящий."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Roar aumenta su daño alrededor de un 25%, le da cerca de un 10% más de velocidad durante 30 segundos y le devuelve 150 de vida.",
+        "en": "Roar raises its damage by about 25%, grants roughly 10% more movement speed for 30 seconds, and restores 150 health.",
+        "ru": "Roar raises its damage by about 25%, grants roughly 10% more movement speed for 30 seconds, and restores 150 health."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
+      }
+    ]
   },
   {
     "id": "g2_ogrr_cricket",
@@ -21013,12 +21848,7 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "damageWeaknesses": [
       {
         "type": "busting",
@@ -21027,12 +21857,222 @@
     ],
     "resistancesV2": [
       {
-        "type": "spicy",
-        "bonusPct": 50
-      },
-      {
         "type": "shock",
         "bonusPct": 50
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "stabbing"
+    ],
+    "inflicts": [
+      {
+        "es": "Daño perforante",
+        "en": "Stabbing damage",
+        "ru": "Колющий урон"
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -21220,7 +22260,226 @@
       "susceptibleDamageTypes": [
         "any"
       ]
-    }
+    },
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "sour"
+    ],
+    "inflicts": [
+      {
+        "es": "Mordida ácida y proyectiles corrosivos. Sus disparos directos pueden sumar la acumulación de la infusión activa.",
+        "en": "Acid bite and corrosive projectiles. Direct shots can also add the active infusion buildup.",
+        "ru": "Acid bite and corrosive projectiles. Direct shots can also add the active infusion buildup."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Close-Range Spray, Ranged Shot y 3 Upwards Shot añaden 20 de acumulación del elemento activo si el impacto directo entra sin bloqueo.",
+        "en": "Close-Range Spray, Ranged Shot, and 3 Upwards Shot add 20 buildup of the active element when the direct hit lands unblocked.",
+        "ru": "Close-Range Spray, Ranged Shot, and 3 Upwards Shot add 20 buildup of the active element when the direct hit lands unblocked."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
+      }
+    ]
   },
   {
     "id": "g2_ogrr_pincher_earwig",
@@ -21411,6 +22670,220 @@
       {
         "type": "spicy",
         "bonusPct": 25
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "chopping"
+    ],
+    "inflicts": [
+      {
+        "es": "Daño cortante.",
+        "en": "Chopping damage.",
+        "ru": "Chopping damage."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -21612,6 +23085,220 @@
           "ru": "Дальний бросок, который вынуждает двигаться и ломает ритм."
         }
       }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "chopping"
+    ],
+    "inflicts": [
+      {
+        "es": "Daño cortante.",
+        "en": "Chopping damage.",
+        "ru": "Chopping damage."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
+      }
     ]
   },
   {
@@ -21786,6 +23473,249 @@
         "type": "salty",
         "bonusPct": 50
       }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "resistancesV2": [
+      {
+        "type": "slashing",
+        "bonusPct": 25
+      },
+      {
+        "type": "stabbing",
+        "bonusPct": 50
+      },
+      {
+        "type": "explosive",
+        "bonusPct": 50
+      },
+      {
+        "type": "gas",
+        "bonusPct": 50
+      },
+      {
+        "type": "shock",
+        "bonusPct": 50
+      }
+    ],
+    "inflictsEffects": [
+      "stabbing",
+      "busting",
+      "venom"
+    ],
+    "inflicts": [
+      {
+        "es": "Sus aguijonazos hacen daño perforante con acumulación de veneno; el disparo de aguijón hace daño demoledor y también puede acumular veneno.",
+        "en": "Its sting attacks deal stabbing damage with venom buildup; the stinger shot deals busting damage and can also build venom.",
+        "ru": "Её удары жалом наносят колющий урон с накоплением яда, а выстрел жалом наносит дробящий урон и тоже может накапливать яд."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Reduce a la mitad todo el daño recibido, ignora por completo el daño por caída y sus Sting y Charged Sting siguen añadiendo 10 de Venom antes de contar la infusión activa.",
+        "en": "It halves all incoming damage, ignores fall damage entirely, and its Sting and Charged Sting still add 10 Venom before the active infusion is counted.",
+        "ru": "It halves all incoming damage, ignores fall damage entirely, and its Sting and Charged Sting still add 10 Venom before the active infusion is counted."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
+      }
     ]
   },
   {
@@ -21947,6 +23877,254 @@
       {
         "type": "salty",
         "bonusPct": 50
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "resistancesV2": [
+      {
+        "type": "slashing",
+        "bonusPct": 25
+      },
+      {
+        "type": "stabbing",
+        "bonusPct": 50
+      },
+      {
+        "type": "explosive",
+        "bonusPct": 50
+      },
+      {
+        "type": "gas",
+        "bonusPct": 50
+      },
+      {
+        "type": "shock",
+        "bonusPct": 50
+      }
+    ],
+    "inflictsEffects": [
+      "stabbing",
+      "busting",
+      "venom"
+    ],
+    "inflicts": [
+      {
+        "es": "El aguijonazo hace daño perforante con acumulación de veneno y el disparo de aguijón hace daño demoledor.",
+        "en": "Its sting deals stabbing damage with venom buildup, while the stinger shot deals busting damage.",
+        "ru": "Его удар жалом наносит колющий урон с накоплением яда, а выстрел жалом наносит дробящий урон."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Reduce a la mitad todo el daño recibido, ignora por completo el daño por caída y su Sting sigue añadiendo 10 de Venom antes de contar la infusión activa.",
+        "en": "It halves all incoming damage, ignores fall damage entirely, and its Sting still adds 10 Venom before the active infusion is counted.",
+        "ru": "It halves all incoming damage, ignores fall damage entirely, and its Sting still adds 10 Venom before the active infusion is counted."
+      },
+      {
+        "es": "Scream otorga a las avispas y drones cercanos una curación de 15 HP por segundo durante 10 segundos.",
+        "en": "Scream grants nearby wasps and drones 15 HP per second for 10 seconds.",
+        "ru": "Scream grants nearby wasps and drones 15 HP per second for 10 seconds."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -22150,17 +24328,8 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "resistancesV2": [
-      {
-        "type": "spicy",
-        "bonusPct": 50
-      },
       {
         "type": "busting",
         "bonusPct": 25
@@ -22176,7 +24345,221 @@
       "susceptibleDamageTypes": [
         "stabbing"
       ]
-    }
+    },
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflictsEffects": [
+      "chopping"
+    ],
+    "inflicts": [
+      {
+        "es": "Daño cortante.",
+        "en": "Chopping damage.",
+        "ru": "Chopping damage."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
+      }
+    ]
   },
   {
     "id": "g2_ogrr_wolf_spider",
@@ -22303,7 +24686,8 @@
       }
     },
     "inflictsEffects": [
-      "busting"
+      "busting",
+      "venom"
     ],
     "abilities": [
       {
@@ -22367,17 +24751,8 @@
         }
       }
     ],
-    "elementalWeaknesses": [
-      {
-        "type": "sour",
-        "bonusPct": 50
-      }
-    ],
+    "elementalWeaknesses": [],
     "resistancesV2": [
-      {
-        "type": "spicy",
-        "bonusPct": 50
-      },
       {
         "type": "busting",
         "bonusPct": 25
@@ -22389,6 +24764,222 @@
       {
         "type": "shock",
         "bonusPct": 50
+      }
+    ],
+    "infusions": [
+      {
+        "id": "fresh",
+        "name": {
+          "es": "Fresco",
+          "en": "Fresh",
+          "ru": "Fresh"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Fresh.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "fresh",
+            "bonusPct": 100
+          },
+          {
+            "type": "chill",
+            "bonusPct": 100
+          },
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "chill"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Chill.",
+            "en": "All direct hits also apply 20 Chill buildup.",
+            "ru": "All direct hits also apply 20 Chill buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No te quedes en daño Fresh como respuesta principal.",
+          "en": "Do not stay on fresh damage as your main answer.",
+          "ru": "Do not stay on fresh damage as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Cambia a daño picante o a un arma física consistente si tu build depende de Fresh.",
+            "en": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh.",
+            "ru": "Swap to spicy damage or a reliable physical weapon if your build depends on fresh."
+          }
+        ]
+      },
+      {
+        "id": "sour",
+        "name": {
+          "es": "Ácido",
+          "en": "Sour",
+          "ru": "Sour"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Sour.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "spicy",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "sour",
+            "bonusPct": 100
+          },
+          {
+            "type": "tang_buildup",
+            "bonusPct": 100
+          },
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "tang_buildup"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Tang.",
+            "en": "All direct hits also apply 20 Tang buildup.",
+            "ru": "All direct hits also apply 20 Tang buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "Evita quedarte en armas ácidas como respuesta principal.",
+          "en": "Avoid staying on sour weapons as your main answer.",
+          "ru": "Avoid staying on sour weapons as your main answer."
+        },
+        "combatTips": [
+          {
+            "es": "Picante es la respuesta elemental más limpia; si no, usa un arma física que no dependa de Tang.",
+            "en": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang.",
+            "ru": "Spicy is the cleanest elemental answer; otherwise use a physical weapon that does not depend on Tang."
+          }
+        ]
+      },
+      {
+        "id": "spicy",
+        "name": {
+          "es": "Picante",
+          "en": "Spicy",
+          "ru": "Spicy"
+        },
+        "iconAsset": "assets/global/effects_damage/Damagetype_Spicy.webp",
+        "elementalWeaknesses": [
+          {
+            "type": "fresh",
+            "bonusPct": 50
+          }
+        ],
+        "resistances": [
+          {
+            "type": "spicy",
+            "bonusPct": 100
+          },
+          {
+            "type": "sizzle",
+            "bonusPct": 100
+          },
+          {
+            "type": "sour",
+            "bonusPct": 50
+          }
+        ],
+        "effects": [
+          "sizzle"
+        ],
+        "specialTraits": [
+          {
+            "es": "Todos sus golpes directos añaden 20 de acumulación de Sizzle.",
+            "en": "All direct hits also apply 20 Sizzle buildup.",
+            "ru": "All direct hits also apply 20 Sizzle buildup."
+          }
+        ],
+        "recommendations": {
+          "es": "No dependas de daño picante cuando esta infusión está activa.",
+          "en": "Do not depend on spicy damage while this infusion is active.",
+          "ru": "Do not depend on spicy damage while this infusion is active."
+        },
+        "combatTips": [
+          {
+            "es": "Fresh es la respuesta elemental más limpia si la criatura te deja sostener el ritmo.",
+            "en": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo.",
+            "ru": "Fresh is the cleanest elemental answer if the creature lets you hold the tempo."
+          }
+        ]
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Además de la infusión principal, puede aparecer con una mutación menor aleatoria. Esa tirada es independiente del sabor activo y se mantiene aparte del selector.",
+      "en": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector.",
+      "ru": "Besides the main infusion, it can also spawn with a random lesser mutation. That roll is independent from the active flavor and stays separate from the selector."
+    },
+    "lesserMutations": [
+      {
+        "es": "Attack Up: aumenta su daño de ataque en un 33%.",
+        "en": "Attack Up: increases attack damage by 33%.",
+        "ru": "Attack Up: increases attack damage by 33%."
+      },
+      {
+        "es": "The Quickness: aumenta su velocidad de movimiento en un 200%.",
+        "en": "The Quickness: increases movement speed by 200%.",
+        "ru": "The Quickness: increases movement speed by 200%."
+      },
+      {
+        "es": "Damage Resist: reduce en un 25% todo el daño recibido.",
+        "en": "Damage Resist: reduces all incoming damage by 25%.",
+        "ru": "Damage Resist: reduces all incoming damage by 25%."
+      },
+      {
+        "es": "Life Steal: se cura por el 150% del daño que inflige.",
+        "en": "Life Steal: heals for 150% of the damage it deals.",
+        "ru": "Life Steal: heals for 150% of the damage it deals."
+      },
+      {
+        "es": "Blastwave: tiene un 33% de probabilidad al golpear de disparar una explosión adicional imbloqueable de 50 de daño explosivo y un aturdimiento largo.",
+        "en": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun.",
+        "ru": "Blastwave: on hit, it has a 33% chance to trigger an unblockable extra blast for 50 explosive damage and a long stun."
+      },
+      {
+        "es": "Shockwave: tiene un 75% de probabilidad al golpear de lanzar una onda extra de 50 de daño eléctrico. Las armas no la bloquean, pero el escudo s?.",
+        "en": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do.",
+        "ru": "Shockwave: on hit, it has a 75% chance to fire an extra wave for 50 shock damage. Weapons do not block it, but shields do."
+      },
+      {
+        "es": "Summon Ally: tiene un 75% de probabilidad al golpear de invocar un aliado de su facción: Spiderling (25 HP) si es araña, Northern Scorpling (200 HP) si es escorpión o Mini Larva (75 HP) en el resto de casos.",
+        "en": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise.",
+        "ru": "Summon Ally: on hit, it has a 75% chance to summon a faction ally: Spiderling (25 HP) if it is a spider, Northern Scorpling (200 HP) if it is a scorpion, or Mini Larva (75 HP) otherwise."
+      }
+    ],
+    "inflicts": [
+      {
+        "es": "Todos sus ataques aplican veneno; sus movimientos más fuertes dejan una acumulación muy peligrosa si fallas el bloqueo.",
+        "en": "All of its attacks apply venom, and the heavier moves punish missed blocks with extremely dangerous buildup.",
+        "ru": "Все её атаки накладывают яд, а самые тяжёлые движения очень быстро накапливают его, если пропустить блок."
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Bite, 5-Combo Bite, Charged Lunge y Jump Attack siguen añadiendo 20 de Venom si conectan. La infusión activa suma su propia acumulación sobre ese impacto.",
+        "en": "Bite, 5-Combo Bite, Charged Lunge, and Jump Attack still add 20 Venom on hit. The active infusion adds its own buildup on top of that impact.",
+        "ru": "Bite, 5-Combo Bite, Charged Lunge, and Jump Attack still add 20 Venom on hit. The active infusion adds its own buildup on top of that impact."
+      },
+      {
+        "es": "Sus afinidades de combate dependen de la infusión activa. Selecciona el sabor para revisar inmunidades, debilidades y efectos del perfil actual.",
+        "en": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects.",
+        "ru": "Its combat affinities depend on the active infusion. Select the flavor to review the current immunities, weaknesses, and applied effects."
       }
     ]
   },
@@ -23053,7 +25644,7 @@
   },
   {
     "id": "g2_mixr_defenses",
-    "speciesKey": "g2_mixr_defenses",
+    "speciesKey": "mixr_defenses",
     "collectionGroup": "other",
     "name": {
       "es": "Defensas MIX.R",
@@ -23068,14 +25659,14 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
     "cardGold": "assets/global/effects_damage/Summon_HP.webp",
-    "photo": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/g2/creatures/photos/MIXR_Defenses_G2.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para los eventos MIX.R de Grounded 2. En el estado actual del juego son defensas de objetivo ligadas al progreso y a cortar las O.R.C. Waves de zonas concretas del parque.",
-      "en": "System entry for Grounded 2 MIX.R events. In the game’s current state they are objective-defense encounters tied to progression and to shutting down zone-specific O.R.C. Waves across the park.",
-      "ru": "Системная запись о событиях MIX.R в Grounded 2. На текущем этапе игры это обороны точки, связанные с прогрессией и отключением локальных O.R.C. Waves в отдельных зонах парка."
+      "es": "Los eventos MIX.R de Grounded 2 son defensas de objetivo ligadas a progresion y a reducir oleadas O.R.C. en zonas concretas del parque.",
+      "en": "Grounded 2 MIX.R events are objective-protection encounters tied to progression and to reducing O.R.C. waves in specific park zones.",
+      "ru": "Grounded 2 MIX.R events are objective-protection encounters tied to progression and to reducing O.R.C. waves in specific park zones."
     },
     "behavior": {
       "es": "Funcionan como defensas por oleadas donde el MIX.R importa más que los kills individuales. Las criaturas intentan romper el objetivo, y la mezcla de O.R.C. variantes cambia mucho de una arena a otra.",
@@ -23113,19 +25704,9 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: revisa las oleadas del MIX.R concreto",
-          "en": "System entry: check the waves of the specific MIX.R",
-          "ru": "Системная запись: смотрите волны конкретного MIX.R"
-        },
-        "minCount": 0,
-        "maxCount": 0
-      },
-      {
-        "section": "passive",
-        "item": {
-          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
-          "en": "Can contribute to unlocking or upgrading Guard Dog",
-          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardian.",
+          "en": "Can contribute to unlocking or upgrading Guard Dog.",
+          "ru": "Can contribute to unlocking or upgrading Guard Dog."
         },
         "minCount": 0,
         "maxCount": 0
@@ -23188,12 +25769,12 @@
         "name": {
           "es": "Progreso de Perro Guardián",
           "en": "Guard Dog Progress",
-          "ru": "???????? Guard Dog"
+          "ru": "Guard Dog Progress"
         },
         "description": {
           "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
           "en": "Completing these defenses can unlock or advance the Guard Dog mutation in Grounded 2 as well.",
-          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+          "ru": "Completing these defenses can unlock or advance the Guard Dog mutation in Grounded 2 as well."
         },
         "blockable": false,
         "breaksGuard": false,
@@ -23202,21 +25783,18 @@
     ],
     "specialTraits": [
       {
-        "es": "En el estado actual de Aphidex, G2 se documenta con MIX.R y defensas de objetivo, no con factional raids clásicas.",
-        "en": "In Aphidex’s current curation, G2 is documented through MIX.R and objective defenses rather than classic factional raids.",
-        "ru": "В текущей курированной версии Aphidex для G2 документируются MIX.R и защиты целей, а не классические набеги фракций."
+        "es": "Grounded 2 mantiene la defensa de objetivo, pero suma presión O.R.C. por zona.",
+        "en": "Grounded 2 keeps the objective-defense idea, but adds zone-based O.R.C. pressure.",
+        "ru": "Grounded 2 keeps the objective-defense idea, but adds zone-based O.R.C. pressure."
       },
       {
-        "es": "No es una criatura única: resume una mecánica de progreso y defensa.",
-        "en": "This is not a single creature: it summarizes a progression and defense mechanic.",
-        "ru": "Это не одно существо: запись суммирует механику прогрессии и обороны."
-      },
-      {
-        "es": "Aphidex la trata también como entrada útil para seguir el progreso de Perro Guardián.",
-        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
-        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+        "es": "No es una criatura: resume defensas MIX.R y control de oleadas.",
+        "en": "This is not a creature: it summarizes MIX.R defenses and wave control.",
+        "ru": "This is not a creature: it summarizes MIX.R defenses and wave control."
       }
-    ]
+    ],
+    "favoriteKey": "mixr_defenses",
+    "isKillable": false
   },
   {
     "id": "g2_ice_sickles_event",
@@ -23235,13 +25813,13 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Damagetype_Fresh.webp",
     "cardGold": "assets/global/effects_damage/Damagetype_Fresh.webp",
-    "photo": "assets/global/effects_damage/Damagetype_Fresh.webp",
+    "photo": "assets/g2/creatures/photos/Ice_Sickles_Defense.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para la defensa de las Ice Sickles dentro del camión de helados. Funciona como una defensa especial de arma: proteges las hoces congeladas hasta completar el evento y quedarte tanto con el arma como con la receta.",
-      "en": "System entry for the Ice Sickles defense inside the Ice Cream Cart. It works as a special weapon-defense event: you protect the frozen sickles until the event finishes and earn both the weapon and the recipe.",
+      "es": "Ficha de referencia para la defensa de las Ice Sickles dentro del camión de helados. Funciona como una defensa especial de arma: proteges las hoces congeladas hasta completar el evento y quedarte tanto con el arma como con la receta.",
+      "en": "Reference entry for the Ice Sickles defense inside the Ice Cream Cart. It works as a special weapon-defense event: you protect the frozen sickles until the event finishes and earn both the weapon and the recipe.",
       "ru": "Системная запись о защите Ice Sickles внутри тележки с мороженым. Это особое событие защиты оружия: вы защищаете замёрзшие серпы до завершения этапа и получаете и оружие, и рецепт."
     },
     "behavior": {
@@ -23287,7 +25865,7 @@
         "item": {
           "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
           "en": "Can contribute to unlocking or upgrading Guard Dog",
-          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+          "ru": "Can contribute to unlocking or upgrading Guard Dog"
         },
         "minCount": 0,
         "maxCount": 0
@@ -23350,12 +25928,12 @@
         "name": {
           "es": "Progreso de Perro Guardián",
           "en": "Guard Dog Progress",
-          "ru": "???????? Guard Dog"
+          "ru": "Guard Dog Progress"
         },
         "description": {
           "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
           "en": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation.",
-          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+          "ru": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation."
         },
         "blockable": false,
         "breaksGuard": false,
@@ -23376,8 +25954,120 @@
       {
         "es": "Aphidex la trata también como entrada útil para seguir el progreso de Perro Guardián.",
         "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
-        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+        "ru": "Aphidex also treats it as a useful entry for tracking Guard Dog progress."
       }
     ]
+  },
+  {
+    "id": "g2_masked_stranger_orc_waves",
+    "speciesKey": "g2_masked_stranger_orc_waves",
+    "collectionGroup": "other",
+    "name": {
+      "es": "Oleadas O.R.C. de la Enmascarada Misteriosa",
+      "en": "Masked Stranger O.R.C. Waves",
+      "ru": "Masked Stranger O.R.C. Waves"
+    },
+    "game": "g2",
+    "tier": 3,
+    "danger": "imposible",
+    "isBoss": false,
+    "order": 290,
+    "defaultGold": true,
+    "isKillable": false,
+    "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
+    "cardGold": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/g2/creatures/photos/Masked_Stranger_ORC_Waves.webp",
+    "weaknesses": [],
+    "resistances": [],
+    "temperament": "other",
+    "description": {
+      "es": "Oleadas O.R.C. enviadas por la Enmascarada Misteriosa para presionar al jugador fuera de un duelo normal. La amenaza depende de qué criaturas O.R.C. participen en la zona.",
+      "en": "O.R.C. waves sent by the Masked Stranger to pressure the player outside a normal duel. The threat depends on which O.R.C. creatures participate in the area.",
+      "ru": "O.R.C. waves sent by the Masked Stranger to pressure the player outside a normal duel. The threat depends on which O.R.C. creatures participate in the area."
+    },
+    "behavior": {
+      "es": "Funcionan como ataques de oleada: varias criaturas modificadas intentan forzar errores, cortar rutas y mantener presión constante.",
+      "en": "They behave as wave attacks: several modified creatures try to force mistakes, cut routes, and keep pressure constant.",
+      "ru": "They behave as wave attacks: several modified creatures try to force mistakes, cut routes, and keep pressure constant."
+    },
+    "interactionWithPlayer": {
+      "es": "La Enmascarada Misteriosa usa estas oleadas como presión indirecta. No conviene tratarlas como una sola criatura con debilidades globales.",
+      "en": "The Masked Stranger uses these waves as indirect pressure. They should not be treated as one creature with global weaknesses.",
+      "ru": "The Masked Stranger uses these waves as indirect pressure. They should not be treated as one creature with global weaknesses."
+    },
+    "interactionWithCreatures": {
+      "es": "Pueden participar variantes O.R.C. de insectos comunes y amenazas mayores cuando la zona o el progreso lo permiten.",
+      "en": "O.R.C. variants of common insects and larger threats can participate when the zone or progression allows it.",
+      "ru": "O.R.C. variants of common insects and larger threats can participate when the zone or progression allows it."
+    },
+    "strategy": {
+      "es": "Prioriza control de oleada, rutas limpias y eliminación rápida de unidades pequeñas antes de quedar encerrado por criaturas más resistentes. Revisa la ficha de cada criatura O.R.C. para debilidades y resistencias específicas.",
+      "en": "Prioritize wave control, clean routes, and fast removal of small units before tougher creatures pin you down. Check each O.R.C. creature sheet for specific weaknesses and resistances.",
+      "ru": "Prioritize wave control, clean routes, and fast removal of small units before tougher creatures pin you down. Check each O.R.C. creature sheet for specific weaknesses and resistances."
+    },
+    "environments": [
+      {
+        "es": "Zonas con presión O.R.C. ligada a la Enmascarada Misteriosa",
+        "en": "Areas with Masked Stranger-linked O.R.C. pressure",
+        "ru": "Areas with Masked Stranger-linked O.R.C. pressure"
+      }
+    ],
+    "loot": [
+      {
+        "section": "passive",
+        "item": {
+          "es": "Consulta las criaturas O.R.C. participantes para su botín específico.",
+          "en": "Check participating O.R.C. creatures for their specific loot.",
+          "ru": "Check participating O.R.C. creatures for their specific loot."
+        },
+        "minCount": 0,
+        "maxCount": 0
+      }
+    ],
+    "abilities": [
+      {
+        "name": {
+          "es": "Oleada enviada",
+          "en": "Sent Wave",
+          "ru": "Sent Wave"
+        },
+        "description": {
+          "es": "La amenaza llega como grupo, no como criatura única.",
+          "en": "The threat arrives as a group, not as one creature.",
+          "ru": "The threat arrives as a group, not as one creature."
+        },
+        "blockable": null,
+        "breaksGuard": null,
+        "staggers": null
+      },
+      {
+        "name": {
+          "es": "Composición variable",
+          "en": "Variable Composition",
+          "ru": "Variable Composition"
+        },
+        "description": {
+          "es": "Puede mezclar unidades O.R.C. menores, apoyos rápidos y amenazas pesadas según la zona.",
+          "en": "It can mix smaller O.R.C. units, fast support, and heavier threats depending on the area.",
+          "ru": "It can mix smaller O.R.C. units, fast support, and heavier threats depending on the area."
+        },
+        "blockable": null,
+        "breaksGuard": null,
+        "staggers": null
+      }
+    ],
+    "specialTraits": [
+      {
+        "es": "Sin debilidades ni resistencias globales: dependen de cada criatura O.R.C. participante.",
+        "en": "No global weaknesses or resistances: they depend on each participating O.R.C. creature.",
+        "ru": "No global weaknesses or resistances: they depend on each participating O.R.C. creature."
+      },
+      {
+        "es": "Trátala como una entrada de evento y consulta cada ficha O.R.C. para el detalle real del combate.",
+        "en": "Treat it as an event entry and check each O.R.C. sheet for the real combat details.",
+        "ru": "Treat it as an event entry and check each O.R.C. sheet for the real combat details."
+      }
+    ],
+    "healthDisplay": "hidden"
   }
 ]

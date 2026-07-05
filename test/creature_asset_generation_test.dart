@@ -15,6 +15,7 @@ const _allowedIndexKeys = {
   'isBoss',
   'order',
   'defaultGold',
+  'favoriteKey',
   'goldLinkId',
   'cardNormal',
   'cardGold',
@@ -120,6 +121,29 @@ void main() {
         reason: file.path,
       );
     }
+  });
+
+  test('spanish localization keeps key accented creature text', () {
+    final master = [
+      File('assets/data/enemies_g1.json').readAsStringSync(),
+      File('assets/data/enemies_g2.json').readAsStringSync(),
+    ].join('\n');
+    final generated = File(
+      'assets/data/creatures/es/details/g2_masked_stranger_orc_waves.json',
+    ).readAsStringSync();
+
+    expect(master, contains('daño'));
+    expect(master, contains('infusión'));
+    expect(master, contains('mutación'));
+    expect(master, contains('eliminación'));
+    expect(master, isNot(contains('da?o')));
+    expect(master, isNot(contains('infusi?n')));
+    expect(master, isNot(contains('mutaci?n')));
+    expect(master, isNot(contains('eliminaci?n')));
+
+    expect(generated, contains('botín específico'));
+    expect(generated, contains('presión'));
+    expect(generated, contains('qué criaturas'));
   });
 }
 

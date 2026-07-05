@@ -14,6 +14,7 @@ class EnemyIndexEntry {
   final List<String> weaknesses;
   final List<String> resistances;
   final bool defaultGold;
+  final String favoriteKey;
   final String? goldLinkId;
   final String cardNormal;
   final String cardGold;
@@ -33,6 +34,7 @@ class EnemyIndexEntry {
     required this.weaknesses,
     required this.resistances,
     required this.defaultGold,
+    this.favoriteKey = '',
     this.goldLinkId,
     required this.cardNormal,
     required this.cardGold,
@@ -54,6 +56,7 @@ class EnemyIndexEntry {
         weaknesses: List<String>.from(json['weaknesses'] ?? const []),
         resistances: List<String>.from(json['resistances'] ?? const []),
         defaultGold: json['defaultGold'] as bool? ?? false,
+        favoriteKey: (json['favoriteKey'] as String?) ?? (json['id'] as String),
         goldLinkId: json['goldLinkId'] as String?,
         cardNormal: json['cardNormal'] as String,
         cardGold: json['cardGold'] as String,
@@ -79,9 +82,12 @@ class EnemyIndexEntry {
         weaknesses: enemy.weaknesses,
         resistances: enemy.resistances,
         defaultGold: enemy.defaultGold,
+        favoriteKey: enemy.favoriteKey,
         goldLinkId: enemy.goldLinkId,
         cardNormal: enemy.cardNormal,
         cardGold: enemy.cardGold,
         health: enemy.health,
       );
+
+  String get resolvedFavoriteKey => favoriteKey.isEmpty ? id : favoriteKey;
 }
