@@ -132,10 +132,30 @@ void main() {
       expect((infused['abilities'] as List), isNotEmpty);
       expect((infused['attacks'] as List), isEmpty);
       expect(infused.containsKey('health'), isFalse);
+      expect((infused['infusions'] as List?) ?? const [], isEmpty);
+      expect(infused['lesserMutationsDescription'], isA<Map>());
+      expect((infused['lesserMutations'] as List), hasLength(7));
       expect(
         infused['description']['en'],
         contains('New Game+ infused creatures'),
       );
+
+      final lesserDescription = jsonEncode(
+        infused['lesserMutationsDescription'],
+      );
+      final lesserMutations = jsonEncode(infused['lesserMutations']);
+      expect(lesserDescription.toLowerCase(), contains('random'));
+      expect(lesserDescription.toLowerCase(), isNot(contains('all at once')));
+      for (final disallowed in [
+        'fresh',
+        'sour',
+        'spicy',
+        'chill',
+        'tang',
+        'sizzle',
+      ]) {
+        expect(lesserMutations.toLowerCase(), isNot(contains(disallowed)));
+      }
     },
   );
 

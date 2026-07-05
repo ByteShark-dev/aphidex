@@ -17,6 +17,7 @@ const _indexFields = [
   'isBoss',
   'order',
   'defaultGold',
+  'favoriteKey',
   'goldLinkId',
   'cardNormal',
   'cardGold',

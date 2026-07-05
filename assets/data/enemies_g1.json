@@ -6608,6 +6608,31 @@
         "type": "gas",
         "bonusPct": 100
       }
+    ],
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
     ]
   },
   {
@@ -8951,7 +8976,7 @@
     "id": "g1_ladybird_larva",
     "speciesKey": "g1_ladybird_larva",
     "name": {
-      "es": "Larva de mariquita roja",
+      "es": "Larva de catarina negra",
       "en": "Ladybird Larva",
       "ru": "Личинка божьей коровки"
     },
@@ -11424,7 +11449,7 @@
     "id": "g1_ladybird",
     "speciesKey": "g1_ladybird",
     "name": {
-      "es": "Mariquita roja",
+      "es": "Catarina negra",
       "en": "Ladybird",
       "ru": "Божья коровка"
     },
@@ -20711,10 +20736,6 @@
     "photo": "assets/g1/creatures/photos/Koi_Fish.webp",
     "weaknesses": [],
     "resistances": [],
-    "health": {
-      "rating": 5,
-      "value": 500
-    },
     "attacks": [
       {
         "name": {
@@ -20768,9 +20789,9 @@
       }
     ],
     "description": {
-      "es": "Reina del estanque koi y principal depredadora de ese bioma. No es un enemigo pensado para matar, sino una amenaza ambiental que obliga al jugador a aprender rutas seguras bajo el agua.",
-      "en": "The queen of the Koi Pond and the biome's main predator. It is not meant to be killed, but to act as an environmental threat that forces the player to learn safe underwater routes.",
-      "ru": "Королева пруда кои и главный хищник этого биома. Ее не предполагается убивать: это опасность окружения, заставляющая игрока учить безопасные подводные маршруты."
+      "es": "El pez koi es la gran amenaza ambiental del estanque. No esta pensado como criatura eliminable: se evita, se distrae o se rodea.",
+      "en": "The Koi Fish is the pond's major environmental threat. It is not a killable creature: you avoid it, distract it, or route around it.",
+      "ru": "The Koi Fish is the pond's major environmental threat. It is not a killable creature: you avoid it, distract it, or route around it."
     },
     "behavior": {
       "es": "Nada por una ruta bastante fija entre la pagoda y el sector opuesto del estanque, apartando vegetación grande a su paso y buscando presas pequeñas que cruzan su territorio.",
@@ -20810,10 +20831,25 @@
         "item": {
           "es": "Escama de pez koi",
           "en": "Koi Fish Scale",
-          "ru": "Чешуя кои"
+          "ru": "Koi Fish Scale"
         },
         "minCount": 0,
-        "maxCount": 1
+        "maxCount": 1,
+        "notes": {
+          "es": "Puede obtenerse al golpear directamente el cuerpo del koi; no requiere matarlo.",
+          "en": "Can be obtained by striking the koi's body directly; killing it is not required.",
+          "ru": "Can be obtained by striking the koi's body directly; killing it is not required."
+        }
+      },
+      {
+        "section": "passive",
+        "item": {
+          "es": "Las escamas enterradas del estanque son una fuente separada.",
+          "en": "Buried pond scales are a separate source.",
+          "ru": "Buried pond scales are a separate source."
+        },
+        "minCount": 0,
+        "maxCount": 0
       }
     ],
     "advancedLootTable": [
@@ -20821,22 +20857,22 @@
         "item": {
           "es": "Escama de pez koi",
           "en": "Koi Fish Scale",
-          "ru": "Чешуя кои"
+          "ru": "Koi Fish Scale"
         },
         "countLabel": "x1",
         "chancePct": 10,
         "notes": {
-          "es": "La posibilidad se comprueba por golpe conectado sobre el cuerpo del koi, no al matarlo.",
-          "en": "The chance is rolled per successful hit on the koi's body, not on kill.",
-          "ru": "Шанс проверяется при каждом успешном попадании по телу кои, а не при убийстве."
+          "es": "La probabilidad se calcula por golpe exitoso al cuerpo, no por eliminación.",
+          "en": "The chance is rolled per successful body hit, not on kill.",
+          "ru": "The chance is rolled per successful body hit, not on kill."
         }
       }
     ],
     "combatStats": {
       "attackDamageSummary": {
-        "es": "Mordida: 500\nTragado: 500",
-        "en": "Bite: 500\nGulp: 500",
-        "ru": "Укус: 500\nЗаглатывание: 500"
+        "es": "Sus mordidas funcionan como muerte instantanea para el jugador.",
+        "en": "Its bites function as instant death for the player.",
+        "ru": "Its bites function as instant death for the player."
       }
     },
     "inflictsEffects": [
@@ -20844,21 +20880,22 @@
     ],
     "specialTraits": [
       {
-        "es": "No se puede matar de forma normal; solo puede evitarse o distraerse.",
-        "en": "It cannot be killed normally; it can only be avoided or distracted.",
-        "ru": "Ее нельзя убить обычным образом; ее можно только избегать или отвлекать."
+        "es": "No puede matarse de forma normal.",
+        "en": "It cannot be killed normally.",
+        "ru": "It cannot be killed normally."
       },
       {
-        "es": "Tiene un ojo ciego, visible porque le falta por completo el ojo izquierdo.",
-        "en": "It is blind in one eye, which is visible because its left eye is completely missing.",
-        "ru": "Она слепа на один глаз, что видно по полностью отсутствующему левому глазу."
+        "es": "Su ojo ciego permite cruzar algunas rutas con mejor posicionamiento.",
+        "en": "Its blind eye lets you cross some routes with better positioning.",
+        "ru": "Its blind eye lets you cross some routes with better positioning."
       },
       {
-        "es": "Solo tiene tarjeta dorada, que se obtiene automáticamente.",
-        "en": "It only has a gold card, which is obtained automatically.",
-        "ru": "У нее есть только золотая карточка, которая выдается автоматически."
+        "es": "Solo tiene tarjeta dorada, obtenida automaticamente.",
+        "en": "It only has a gold card, obtained automatically.",
+        "ru": "It only has a gold card, obtained automatically."
       }
-    ]
+    ],
+    "isKillable": false
   },
   {
     "id": "g1_aphid",
@@ -21069,7 +21106,32 @@
       "es": "La forma más simple es golpearlo antes de que te vea. Si sube a un tallo, derriba la planta para tirarlo y aturdirlo antes de rematarlo.",
       "en": "The easiest way to kill it is to hit it before it sees you. If it climbs a stalk, knock the plant down to drop and stun it before finishing the job.",
       "ru": "Проще всего ударить его до того, как оно вас заметит. Если тля залезла на стебель, сбейте растение, чтобы уронить и оглушить ее перед добиванием."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_weevil",
@@ -21265,7 +21327,32 @@
       "es": "Es tan indefenso que puedes atraer grupos enteros con setas tiradas y farmear carne con muy poco riesgo. Solo vigila que no haya hormigas cerca si quieres domesticar uno.",
       "en": "It is so defenseless that you can lure entire groups with dropped mushrooms and farm meat with almost no risk. Just make sure no ants are nearby if you want to tame one.",
       "ru": "Он настолько беззащитен, что можно приманивать целые группы брошенными грибами и спокойно фармить мясо. Просто следите, чтобы рядом не было муравьев, если хотите приручить одного."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_grub",
@@ -21467,7 +21554,32 @@
       "es": "Lleva pala y golpea de inmediato cuando salga. Si estás en una zona rara o cerca de nidos de larva, escucha el sonido: los falsos grubs suelen sonar más graves y delatan una emboscada.",
       "en": "Bring a shovel and hit it immediately once it pops out. If you are in an odd area or near larva territory, listen carefully: fake grubs usually sound deeper and warn you about an ambush.",
       "ru": "Берите лопату и бейте сразу, как только он появится. Если вы в подозрительной зоне или рядом с территорией личинок, слушайте звук: ложные grub обычно звучат ниже и предупреждают о засаде."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_gnat",
@@ -21767,7 +21879,32 @@
       "es": "Lo más cómodo es matarlo a distancia. Incluso un arco débil basta; si quieres domesticarlo, deja Spoiled Meat Slurry en el suelo lejos de las lámparas nocturnas.",
       "en": "The easiest answer is a ranged weapon. Even a weak bow works; if you want to tame one, place Spoiled Meat Slurry on the ground away from night lamps.",
       "ru": "Самый удобный ответ — оружие дальнего боя. Даже слабый лук подойдет; если хотите приручить одного, кладите Spoiled Meat Slurry на землю подальше от ночных ламп."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_meaty_gnat",
@@ -21779,7 +21916,7 @@
     },
     "game": "g1",
     "tier": 1,
-    "danger": "baja",
+    "danger": "media",
     "isBoss": false,
     "order": 161,
     "defaultGold": false,
@@ -21988,7 +22125,32 @@
       "es": "Gas Mask, Gastro Goo o Toxicology Badge ayudan muchísimo. Si puedes, dispárale antes de que se acerque, y recuerda saquear el cuerpo enseguida para apagar la nube.",
       "en": "A Gas Mask, Gastro Goo, or the Toxicology Badge helps enormously. If possible, shoot it before it gets close, and remember to loot the body quickly to clear the cloud.",
       "ru": "Gas Mask, Gastro Goo или Toxicology Badge очень помогают. По возможности подстрелите его до сближения и не забудьте быстро обыскать тело, чтобы убрать облако."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_tadpole",
@@ -22133,7 +22295,32 @@
       "es": "Unas cuantas puñaladas con un dagger bastan. Son objetivos blandos, así que lo único importante es alcanzarlos antes de que naden demasiado lejos.",
       "en": "A few dagger strikes are enough. They are soft targets, so the only real concern is reaching them before they swim too far away.",
       "ru": "Пары ударов кинжалом достаточно. Это мягкие цели, так что единственная реальная проблема — догнать их до того, как они уплывут слишком далеко."
-    }
+    },
+    "lootTransformations": [
+      {
+        "id": "spicy_cooked_meat",
+        "effects": [
+          "spicy",
+          "burning"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño picante o un efecto de calor verificado, la carne compatible puede convertirse en carne cocinada.",
+          "en": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat.",
+          "ru": "If the creature is killed with spicy damage or a verified heat effect, compatible meat can become cooked meat."
+        }
+      },
+      {
+        "id": "salty_jerky",
+        "effects": [
+          "salty"
+        ],
+        "description": {
+          "es": "Si la criatura se elimina con daño salado, la carne compatible puede convertirse en carne seca.",
+          "en": "If the creature is killed with salty damage, compatible meat can become jerky.",
+          "ru": "If the creature is killed with salty damage, compatible meat can become jerky."
+        }
+      }
+    ]
   },
   {
     "id": "g1_water_boatman",
@@ -24213,9 +24400,9 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: revisa la especie base y la infusión activa",
-          "en": "System entry: check the base species and active infusion",
-          "ru": "Системная запись: смотрите базовый вид и активную инфузию"
+          "es": "Consulta la especie base y la infusión activa.",
+          "en": "Check the base species and the active infusion.",
+          "ru": "Check the base species and the active infusion."
         },
         "minCount": 0,
         "maxCount": 0
@@ -24287,6 +24474,48 @@
         "es": "Una criatura base manejable puede volverse extrema si la infusión adecuada la acompaña.",
         "en": "A manageable base creature can become extreme if the right infusion is layered onto it.",
         "ru": "Управляемое базовое существо может стать экстремальным, если на него накладывается подходящая инфузия."
+      }
+    ],
+    "lesserMutationsDescription": {
+      "es": "Las criaturas infusionadas pueden presentar mutaciones menores aleatorias adicionales. Entre sus posibles efectos se encuentran explosiones, magia de sabor, invocaciones, duplicación de la criatura, robo de vida y aumentos de ataque o daño, entre otras alteraciones.",
+      "en": "Infused creatures can gain extra random lesser mutations. Possible outcomes include explosions, candy magic, summons, creature duplication, life steal, and temporary attack or damage boosts, among other alterations.",
+      "ru": "???????? ???????? ????? ???????? ?????????????? ????????? ????? ???????. ????? ????????? ???????? ??????????? ??????, ?????????? ?????, ???????, ???????????? ????????, ????????? ????? ? ???????? ????? ??? ?????, ? ????? ?????? ?????????."
+    },
+    "lesserMutations": [
+      {
+        "es": "Explosiones adicionales al atacar o al recibir contacto.",
+        "en": "Extra explosions tied to attacks or close contact.",
+        "ru": "?????????????? ?????? ??? ?????? ??? ???????? ????????."
+      },
+      {
+        "es": "Magia de sabor que añade presión elemental inesperada.",
+        "en": "Candy magic that adds unexpected elemental pressure.",
+        "ru": "?????????? ?????, ??????????? ??????????? ????????????? ????????."
+      },
+      {
+        "es": "Invocaciones de criaturas auxiliares durante el combate.",
+        "en": "Summoned helper creatures joining the fight.",
+        "ru": "?????? ??????????????? ??????? ?? ????? ???."
+      },
+      {
+        "es": "Duplicación o división en dos criaturas.",
+        "en": "Creature duplication or a split into two enemies.",
+        "ru": "???????????? ???????? ??? ?????????? ?? ?????."
+      },
+      {
+        "es": "Robo de vida que prolonga intercambios desfavorables.",
+        "en": "Life steal that extends bad trades.",
+        "ru": "????????? ?????, ??????? ???????? ?????????? ???????."
+      },
+      {
+        "es": "Aumentos de ataque que castigan mucho más los errores.",
+        "en": "Attack boosts that punish mistakes much harder.",
+        "ru": "???????? ?????, ??????? ??????? ??????? ?????????? ?? ??????."
+      },
+      {
+        "es": "Aumentos de daño u otras alteraciones aleatorias compatibles con el sistema.",
+        "en": "Damage boosts or other random alterations compatible with the system.",
+        "ru": "???????? ????? ??? ?????? ????????? ?????????, ??????????? ? ????????."
       }
     ]
   },
@@ -24365,8 +24594,8 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: consulta la variante O.R.C. concreta",
-          "en": "System entry: check the specific O.R.C. variant",
+          "es": "Referencia: consulta la variante O.R.C. concreta",
+          "en": "Reference: check the specific O.R.C. variant",
           "ru": "Системная запись: смотрите конкретный вариант O.R.C."
         },
         "minCount": 0,
@@ -24458,13 +24687,13 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Generic_Damage.webp",
     "cardGold": "assets/global/effects_damage/Generic_Damage.webp",
-    "photo": "assets/global/effects_damage/Generic_Damage.webp",
+    "photo": "assets/g1/creatures/photos/Factional_Raids.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para las incursiones de facción de Grounded 1. Resume los ataques a tu base que ocurren cuando irritas demasiado a una facción y esta decide cobrar venganza.",
-      "en": "System entry for Grounded 1 factional raids. It summarizes the attacks on your base that occur when you irritate a faction enough for it to come collect payback.",
+      "es": "Ficha de referencia para las incursiones de facción de Grounded 1. Resume los ataques a tu base que ocurren cuando irritas demasiado a una facción y esta decide cobrar venganza.",
+      "en": "Reference entry for Grounded 1 factional raids. It summarizes the attacks on your base that occur when you irritate a faction enough for it to come collect payback.",
       "ru": "Системная запись о набегах фракций в Grounded 1. Она описывает атаки на вашу базу, которые начинаются, когда вы достаточно разозлили фракцию и она приходит за расплатой."
     },
     "behavior": {
@@ -24503,8 +24732,8 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: varía según la facción atacante",
-          "en": "System entry: varies by attacking faction",
+          "es": "Referencia: varía según la facción atacante",
+          "en": "Reference: varies by attacking faction",
           "ru": "Системная запись: зависит от атакующей фракции"
         },
         "minCount": 0,
@@ -24515,7 +24744,7 @@
         "item": {
           "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
           "en": "Can contribute to unlocking or upgrading Guard Dog",
-          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+          "ru": "Can contribute to unlocking or upgrading Guard Dog"
         },
         "minCount": 0,
         "maxCount": 0
@@ -24578,12 +24807,12 @@
         "name": {
           "es": "Progreso de Perro Guardián",
           "en": "Guard Dog Progress",
-          "ru": "???????? Guard Dog"
+          "ru": "Guard Dog Progress"
         },
         "description": {
           "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
           "en": "Defensive event participation can unlock or advance the Guard Dog mutation.",
-          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+          "ru": "Defensive event participation can unlock or advance the Guard Dog mutation."
         },
         "blockable": false,
         "breaksGuard": false,
@@ -24604,13 +24833,13 @@
       {
         "es": "Aphidex la trata también como entrada útil para seguir el progreso de Perro Guardián.",
         "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
-        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+        "ru": "Aphidex also treats it as a useful entry for tracking Guard Dog progress."
       }
     ]
   },
   {
     "id": "g1_mixr_defenses",
-    "speciesKey": "g1_mixr_defenses",
+    "speciesKey": "mixr_defenses",
     "collectionGroup": "other",
     "name": {
       "es": "Defensas MIX.R",
@@ -24625,14 +24854,14 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
     "cardGold": "assets/global/effects_damage/Summon_HP.webp",
-    "photo": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/g1/creatures/photos/MIXR_Defenses_G1.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para los eventos de defensa MIX.R, SUPER MIX.R y el tramo final de defensa de JavaMatic en Grounded 1. No resume a un enemigo, sino la familia de defensas de objetivo más importante del juego.",
-      "en": "System entry for Grounded 1 MIX.R, SUPER MIX.R, and late-game JavaMatic defense events. It does not describe one enemy, but the game’s main family of point-defense scenarios.",
-      "ru": "Системная запись о событиях защиты MIX.R, SUPER MIX.R и поздней обороне JavaMatic в Grounded 1. Она описывает не одного врага, а главное семейство сценариев защиты точки в игре."
+      "es": "Las defensas MIX.R de Grounded reunen MIX.R, SUPER MIX.R, defensas relacionadas con JavaMatic y encuentros de control de oleadas donde debes proteger una maquina desde varias rutas.",
+      "en": "Grounded MIX.R defenses cover MIX.R, SUPER MIX.R, JavaMatic-related objective defenses, and wave-control encounters where you protect a machine while enemies push in from several routes.",
+      "ru": "Grounded MIX.R defenses cover MIX.R, SUPER MIX.R, JavaMatic-related objective defenses, and wave-control encounters where you protect a machine while enemies push in from several routes."
     },
     "behavior": {
       "es": "Una defensa MIX.R se gana por control de oleadas, rutas y tiempo, no por matar lo primero que se te cruce. Muchas criaturas ignoran el duelo y se van directo al objetivo si les abres línea.",
@@ -24670,19 +24899,9 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: revisa la composición del evento concreto",
-          "en": "System entry: check the composition of the specific defense",
-          "ru": "Системная запись: смотрите состав конкретной обороны"
-        },
-        "minCount": 0,
-        "maxCount": 0
-      },
-      {
-        "section": "passive",
-        "item": {
-          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
-          "en": "Can contribute to unlocking or upgrading Guard Dog",
-          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+          "es": "Puede contribuir al desbloqueo o mejora de Perro Guardian.",
+          "en": "Can contribute to unlocking or upgrading Guard Dog.",
+          "ru": "Can contribute to unlocking or upgrading Guard Dog."
         },
         "minCount": 0,
         "maxCount": 0
@@ -24745,12 +24964,12 @@
         "name": {
           "es": "Progreso de Perro Guardián",
           "en": "Guard Dog Progress",
-          "ru": "???????? Guard Dog"
+          "ru": "Guard Dog Progress"
         },
         "description": {
           "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
           "en": "Defensive event participation can unlock or advance the Guard Dog mutation.",
-          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+          "ru": "Defensive event participation can unlock or advance the Guard Dog mutation."
         },
         "blockable": false,
         "breaksGuard": false,
@@ -24759,21 +24978,18 @@
     ],
     "specialTraits": [
       {
-        "es": "Incluye MIX.R, SUPER MIX.R y la defensa de JavaMatic.",
-        "en": "Includes MIX.R, SUPER MIX.R, and the JavaMatic defense.",
-        "ru": "Включает MIX.R, SUPER MIX.R и оборону JavaMatic."
+        "es": "Incluye MIX.R, SUPER MIX.R y defensas relacionadas con JavaMatic.",
+        "en": "Includes MIX.R, SUPER MIX.R, and JavaMatic-related defenses.",
+        "ru": "Includes MIX.R, SUPER MIX.R, and JavaMatic-related defenses."
       },
       {
-        "es": "No es una criatura única: resume la lógica de las defensas de objetivo en G1.",
-        "en": "This is not a single creature: it summarizes objective-defense logic in G1.",
-        "ru": "Это не одно существо: запись суммирует логику защиты точки в G1."
-      },
-      {
-        "es": "Aphidex la trata también como entrada útil para seguir el progreso de Perro Guardián.",
-        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
-        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+        "es": "No es una criatura: resume defensas de objetivo y control de oleadas.",
+        "en": "This is not a creature: it summarizes objective defense and wave control.",
+        "ru": "This is not a creature: it summarizes objective defense and wave control."
       }
-    ]
+    ],
+    "favoriteKey": "mixr_defenses",
+    "isKillable": false
   },
   {
     "id": "g1_spicy_coaltana_event",
@@ -24792,14 +25008,14 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Damagetype_Spicy.webp",
     "cardGold": "assets/global/effects_damage/Damagetype_Spicy.webp",
-    "photo": "assets/global/effects_damage/Damagetype_Spicy.webp",
+    "photo": "assets/g1/creatures/photos/Spicy_Coaltana_Defense.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para el evento de defensa de la Spicy Coaltana en la bolsa de carbón del BBQ Spill. Es una defensa tipo MIX.R centrada en soportar el calor mientras proteges la espada.",
-      "en": "System entry for the Spicy Coaltana defense event inside the EverChar Coal Bag at the BBQ Spill. It is a MIX.R-style defense focused on surviving the heat while protecting the sword.",
-      "ru": "Системная запись о событии защиты Spicy Coaltana внутри мешка с углём в BBQ Spill. Это оборона в стиле MIX.R, где нужно переживать жар и одновременно защищать меч."
+      "es": "Defensa especial de la Spicy Coaltana dentro de la bolsa de carbon del BBQ Spill. Debes resistir el calor y proteger la espada mientras llegan larvas de catarina negra.",
+      "en": "A special Spicy Coaltana defense inside the EverChar Coal Bag at the BBQ Spill. You survive the heat and protect the sword while Ladybird Larvae attack.",
+      "ru": "A special Spicy Coaltana defense inside the EverChar Coal Bag at the BBQ Spill. You survive the heat and protect the sword while Ladybird Larvae attack."
     },
     "behavior": {
       "es": "Toda la presión gira alrededor del calor ambiental y de oleadas compuestas enteramente por Ladybird Larvae que salen del suelo para ir por la espada o por ti.",
@@ -24844,7 +25060,7 @@
         "item": {
           "es": "Puede contribuir al desbloqueo o mejora de Perro Guardián",
           "en": "Can contribute to unlocking or upgrading Guard Dog",
-          "ru": "????? ?????????????? ???????? ??? ????????? Guard Dog"
+          "ru": "Can contribute to unlocking or upgrading Guard Dog"
         },
         "minCount": 0,
         "maxCount": 0
@@ -24907,12 +25123,12 @@
         "name": {
           "es": "Progreso de Perro Guardián",
           "en": "Guard Dog Progress",
-          "ru": "???????? Guard Dog"
+          "ru": "Guard Dog Progress"
         },
         "description": {
           "es": "Participar y completar este tipo de defensa ayuda a desbloquear o mejorar la mutación Perro Guardián.",
           "en": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation.",
-          "ru": "??????? ? ???????? ?????????? ????? ?????? ???????? ??????? ??? ???????? ??????? Guard Dog."
+          "ru": "Winning this defense also contributes toward unlocking or advancing the Guard Dog mutation."
         },
         "blockable": false,
         "breaksGuard": false,
@@ -24921,19 +25137,14 @@
     ],
     "specialTraits": [
       {
-        "es": "El evento se parece más a una defensa especial que a una pelea de jefe.",
-        "en": "The event feels more like a special defense than a boss fight.",
-        "ru": "Событие ощущается скорее как особая оборона, чем как бой с боссом."
+        "es": "El evento se juega como defensa especial, no como jefe tradicional.",
+        "en": "The event plays like a special defense, not a traditional boss.",
+        "ru": "The event plays like a special defense, not a traditional boss."
       },
       {
-        "es": "Toda la defensa gira alrededor de Ladybird Larvae y manejo del calor.",
-        "en": "The entire defense revolves around Ladybird Larvae and heat management.",
-        "ru": "Вся оборона крутится вокруг Ladybird Larva и контроля жара."
-      },
-      {
-        "es": "Aphidex la trata también como entrada útil para seguir el progreso de Perro Guardián.",
-        "en": "Aphidex also treats it as a useful entry for tracking Guard Dog progress.",
-        "ru": "Aphidex ????? ????????????? ??? ?????? ??? ???????? ??? ???????????? ????????? Guard Dog."
+        "es": "Toda la defensa gira alrededor de larvas de catarina negra y manejo del calor.",
+        "en": "The whole defense revolves around Ladybird Larvae and heat management.",
+        "ru": "The whole defense revolves around Ladybird Larvae and heat management."
       }
     ]
   },
@@ -24954,13 +25165,13 @@
     "defaultGold": true,
     "cardNormal": "assets/global/effects_damage/Summon_HP.webp",
     "cardGold": "assets/global/effects_damage/Summon_HP.webp",
-    "photo": "assets/global/effects_damage/Summon_HP.webp",
+    "photo": "assets/g1/creatures/photos/JavaMatic_Cable_Defense.webp",
     "weaknesses": [],
     "resistances": [],
     "temperament": "other",
     "description": {
-      "es": "Entrada de sistema para la defensa final de JavaMatic en Grounded 1. A diferencia de un MIX.R normal, aquí no proteges un solo nodo: proteges varios cables a la vez mientras el patio entero intenta colapsar la máquina.",
-      "en": "System entry for Grounded 1's final JavaMatic defense. Unlike a normal MIX.R, you are not protecting one node here: you are protecting several cables at once while the whole yard tries to collapse the machine.",
+      "es": "Ficha de referencia para la defensa final de JavaMatic en Grounded 1. A diferencia de un MIX.R normal, aquí no proteges un solo nodo: proteges varios cables a la vez mientras el patio entero intenta colapsar la máquina.",
+      "en": "Reference entry for Grounded 1's final JavaMatic defense. Unlike a normal MIX.R, you are not protecting one node here: you are protecting several cables at once while the whole yard tries to collapse the machine.",
       "ru": "Системная запись о финальной обороне JavaMatic в Grounded 1. В отличие от обычного MIX.R, здесь вы защищаете не один узел, а сразу несколько кабелей, пока весь двор пытается обрушить машину."
     },
     "behavior": {
@@ -24994,8 +25205,8 @@
       {
         "section": "passive",
         "item": {
-          "es": "Entrada de sistema: defensa final de progreso",
-          "en": "System entry: final progression defense",
+          "es": "Referencia: defensa final de progreso",
+          "en": "Reference: final progression defense",
           "ru": "Системная запись: финальная оборона прогрессии"
         },
         "minCount": 0,

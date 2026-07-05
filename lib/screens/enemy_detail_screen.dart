@@ -16,6 +16,81 @@ import '../widgets/inline_banner_ad_card.dart';
 import '../widgets/overflow_marquee_text.dart';
 import 'effect_codex_screen.dart';
 
+String? _visibleText(LocalizedText? text, String languageCode) {
+  final value = text?.resolve(languageCode).trim();
+  return value == null || value.isEmpty ? null : value;
+}
+
+bool _hasLocalizedText(LocalizedText? text, String languageCode) =>
+    _visibleText(text, languageCode) != null;
+
+List<String> _visibleLocalizedValues(
+  Iterable<LocalizedText> values,
+  String languageCode,
+) => values
+    .map((item) => item.resolve(languageCode).trim())
+    .where((item) => item.isNotEmpty)
+    .toList(growable: false);
+
+bool _hasVisibleLocalizedList(
+  Iterable<LocalizedText> values,
+  String languageCode,
+) => _visibleLocalizedValues(values, languageCode).isNotEmpty;
+
+List<BonusInfo> _mergeBonuses(
+  Iterable<BonusInfo> base,
+  Iterable<BonusInfo> overrides,
+) {
+  final merged = [...base];
+  for (final bonus in overrides) {
+    final index = merged.indexWhere((item) => item.type == bonus.type);
+    if (index == -1) {
+      merged.add(bonus);
+    } else {
+      merged[index] = bonus;
+    }
+  }
+  return merged;
+}
+
+List<String> _mergeStringIds(
+  Iterable<String> base,
+  Iterable<String> additions,
+) {
+  final merged = <String>[];
+  for (final item in [...base, ...additions]) {
+    final normalized = item.trim();
+    if (normalized.isEmpty || merged.contains(normalized)) {
+      continue;
+    }
+    merged.add(normalized);
+  }
+  return merged;
+}
+
+List<LocalizedText> _mergeLocalizedTexts(
+  Iterable<LocalizedText> base,
+  Iterable<LocalizedText> additions,
+) {
+  final merged = <LocalizedText>[];
+  final seen = <String>{};
+
+  void addAll(Iterable<LocalizedText> values) {
+    for (final value in values) {
+      final key = '${value.es ?? ''}|${value.en ?? ''}|${value.ru ?? ''}';
+      if (value.isEmpty || seen.contains(key)) {
+        continue;
+      }
+      seen.add(key);
+      merged.add(value);
+    }
+  }
+
+  addAll(base);
+  addAll(additions);
+  return merged;
+}
+
 class EnemyDetailScreen extends StatefulWidget {
   final Enemy? enemy;
   final List<Enemy>? variants;
@@ -41,6 +116,7 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
   late final List<EnemyIndexEntry>? _summaryVariants;
   late int _selectedIndex;
   int _selectedPhaseIndex = 0;
+  int _selectedInfusionIndex = 0;
   Future<Enemy>? _enemyFuture;
   String? _loadedLanguageCode;
 
@@ -173,24 +249,31 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       enemy.elementalWeaknesses.isNotEmpty ||
       enemy.damageWeaknesses.isNotEmpty ||
       enemy.resistancesV2.isNotEmpty ||
+      enemy.infusions.isNotEmpty ||
       enemy.resolvedWeakPoints.isNotEmpty ||
       enemy.attacks.isNotEmpty;
 
-  bool _hasWikiContent(Enemy enemy) =>
-      enemy.description != null ||
-      enemy.environments.isNotEmpty ||
-      enemy.respawnInfo != null ||
-      enemy.combatStats != null ||
-      enemy.loot.isNotEmpty ||
-      enemy.advancedLootTable.isNotEmpty ||
-      enemy.inflictsEffects.isNotEmpty ||
-      enemy.inflicts.isNotEmpty ||
-      enemy.specialTraits.isNotEmpty ||
-      enemy.abilities.isNotEmpty ||
-      enemy.behavior != null ||
-      enemy.interactionWithPlayer != null ||
-      enemy.interactionWithCreatures != null ||
-      enemy.strategy != null;
+  bool _hasWikiContent(Enemy enemy) {
+    final languageCode = context.l10n.languageCode;
+    return _hasLocalizedText(enemy.description, languageCode) ||
+        _hasVisibleLocalizedList(enemy.environments, languageCode) ||
+        _hasLocalizedText(enemy.respawnInfo, languageCode) ||
+        enemy.combatStats != null ||
+        enemy.loot.isNotEmpty ||
+        enemy.advancedLootTable.isNotEmpty ||
+        enemy.lootTransformations.isNotEmpty ||
+        enemy.inflictsEffects.isNotEmpty ||
+        _hasVisibleLocalizedList(enemy.inflicts, languageCode) ||
+        _hasVisibleLocalizedList(enemy.specialTraits, languageCode) ||
+        _hasLocalizedText(enemy.lesserMutationsDescription, languageCode) ||
+        _hasVisibleLocalizedList(enemy.lesserMutations, languageCode) ||
+        enemy.infusions.isNotEmpty ||
+        enemy.abilities.isNotEmpty ||
+        _hasLocalizedText(enemy.behavior, languageCode) ||
+        _hasLocalizedText(enemy.interactionWithPlayer, languageCode) ||
+        _hasLocalizedText(enemy.interactionWithCreatures, languageCode) ||
+        _hasLocalizedText(enemy.strategy, languageCode);
+  }
 
   bool _hasCombatMoves(Enemy enemy) =>
       enemy.abilities.isNotEmpty ||
@@ -217,6 +300,7 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     setState(() {
       _selectedIndex = nextIndex;
       _selectedPhaseIndex = 0;
+      _selectedInfusionIndex = 0;
       if (_usesLazyDetails) {
         _enemyFuture = EnemyRepository.loadDetail(
           _currentId,
@@ -286,19 +370,64 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     final languageCode = l10n.languageCode;
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
+    final selectedInfusion = enemy.infusions.isEmpty
+        ? null
+        : enemy.infusions[_selectedInfusionIndex.clamp(
+            0,
+            enemy.infusions.length - 1,
+          )];
     final weaknessesV1 = enemy.weaknesses
         .where((item) => item.trim().isNotEmpty)
         .toList();
     final resistancesV1 = enemy.resistances
         .where((item) => item.trim().isNotEmpty)
         .toList();
-    final normalizedElementalWeaknesses = enemy.elementalWeaknesses
+    final effectiveElementalWeaknesses = _mergeBonuses(
+      enemy.elementalWeaknesses,
+      selectedInfusion?.elementalWeaknesses ?? const [],
+    );
+    final effectiveDamageWeaknesses = _mergeBonuses(
+      enemy.damageWeaknesses,
+      selectedInfusion?.damageWeaknesses ?? const [],
+    );
+    final effectiveResistances = _mergeBonuses(
+      enemy.resistancesV2,
+      selectedInfusion?.resistances ?? const [],
+    );
+    final effectiveInflictsEffects = _mergeStringIds(
+      enemy.inflictsEffects,
+      selectedInfusion?.effects ?? const [],
+    );
+    final effectiveTraits = _mergeLocalizedTexts(
+      enemy.specialTraits,
+      selectedInfusion?.specialTraits ?? const [],
+    );
+    final normalizedElementalWeaknesses = effectiveElementalWeaknesses
         .where((bonus) => bonus.type != 'water')
         .toList();
     final normalizedDamageWeaknesses = [
-      ...enemy.damageWeaknesses,
-      ...enemy.elementalWeaknesses.where((bonus) => bonus.type == 'water'),
+      ...effectiveDamageWeaknesses,
+      ...effectiveElementalWeaknesses.where((bonus) => bonus.type == 'water'),
     ];
+    final description = _visibleText(enemy.description, languageCode);
+    final behavior = _visibleText(enemy.behavior, languageCode);
+    final interactionWithPlayer = _visibleText(
+      enemy.interactionWithPlayer,
+      languageCode,
+    );
+    final interactionWithCreatures = _visibleText(
+      enemy.interactionWithCreatures,
+      languageCode,
+    );
+    final strategy = _visibleText(enemy.strategy, languageCode);
+    final infusionRecommendations = _visibleText(
+      selectedInfusion?.recommendations,
+      languageCode,
+    );
+    final infusionCombatTips = _visibleLocalizedValues(
+      selectedInfusion?.combatTips ?? const [],
+      languageCode,
+    );
     final tutorial = TutorialController.instance;
     final tutorialEffectId = tutorial.tutorialEffectIdForEnemy(enemy.id);
     final tutorialEffectKey = tutorialEffectId == null
@@ -326,10 +455,11 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
           ValueListenableBuilder<Set<String>>(
             valueListenable: favorites.favorites,
             builder: (context, favIds, _) {
-              final isFavorite = favIds.contains(enemy.id);
+              final favoriteKey = enemy.resolvedFavoriteKey;
+              final isFavorite = favIds.contains(favoriteKey);
               return IconButton(
                 icon: Icon(isFavorite ? Icons.star : Icons.star_border),
-                onPressed: () => favorites.toggle(enemy.id),
+                onPressed: () => favorites.toggle(favoriteKey),
               );
             },
           ),
@@ -447,15 +577,28 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               ),
             ),
             const SizedBox(height: 18),
-            if (enemy.description != null) ...[
-              _TextSection(
-                title: l10n.descriptionTitle,
-                value: enemy.description!.resolve(languageCode),
+            if (description != null) ...[
+              _TextSection(title: l10n.descriptionTitle, value: description),
+              const SizedBox(height: 18),
+            ],
+            if (enemy.healthDisplay.shouldRender) ...[
+              _HealthBar(
+                health: enemy.health,
+                displayMode: enemy.healthDisplay,
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.health != null) ...[
-              _HealthBar(health: enemy.health!),
+            if (enemy.infusions.length > 1) ...[
+              _InfusionSwitcher(
+                infusions: enemy.infusions,
+                selectedIndex: _selectedInfusionIndex.clamp(
+                  0,
+                  enemy.infusions.length - 1,
+                ),
+                languageCode: languageCode,
+                onChanged: (index) =>
+                    setState(() => _selectedInfusionIndex = index),
+              ),
               const SizedBox(height: 18),
             ],
             if (_hasV2(enemy)) ...[
@@ -490,14 +633,14 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                       ),
                       const SizedBox(height: 16),
                     ],
-                    if (enemy.resistancesV2.isNotEmpty) ...[
+                    if (effectiveResistances.isNotEmpty) ...[
                       Text(
                         l10n.resistancesTitle,
                         style: const TextStyle(fontWeight: FontWeight.w800),
                       ),
                       const SizedBox(height: 8),
                       _BonusWrap(
-                        bonuses: enemy.resistancesV2,
+                        bonuses: effectiveResistances,
                         dim: true,
                         tutorialEffectId: tutorialEffectId,
                         tutorialEffectKeyBuilder: consumeTutorialEffectKey,
@@ -509,86 +652,123 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               ),
               const SizedBox(height: 18),
             ],
-            if (!_hasV2(enemy)) ...[
+            if (!_hasV2(enemy) &&
+                (weaknessesV1.isNotEmpty || resistancesV1.isNotEmpty)) ...[
               Container(
                 key: tutorial.keyFor(tutorialAnchorDetailEffects),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      l10n.weaknessesTitle,
-                      style: const TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: weaknessesV1
-                          .map(
-                            (weakness) => Container(
-                              key: consumeTutorialEffectKey(weakness),
-                              child: InkWell(
-                                key: ValueKey(
-                                  'effect-legacy-weakness-$weakness',
-                                ),
-                                borderRadius: BorderRadius.circular(999),
-                                onTap: () =>
-                                    _openEffectDetails(context, weakness),
-                                child: IconBadge.asset(
-                                  assetName: UiMapper.effectIcon(weakness),
-                                  size: 26,
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      l10n.resistancesTitle,
-                      style: const TextStyle(fontWeight: FontWeight.w800),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: resistancesV1
-                          .map(
-                            (resistance) => Opacity(
-                              opacity: 0.75,
-                              child: Container(
-                                key: consumeTutorialEffectKey(resistance),
+                    if (weaknessesV1.isNotEmpty) ...[
+                      Text(
+                        l10n.weaknessesTitle,
+                        style: const TextStyle(fontWeight: FontWeight.w800),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: weaknessesV1
+                            .map(
+                              (weakness) => Container(
+                                key: consumeTutorialEffectKey(weakness),
                                 child: InkWell(
                                   key: ValueKey(
-                                    'effect-legacy-resistance-$resistance',
+                                    'effect-legacy-weakness-$weakness',
                                   ),
                                   borderRadius: BorderRadius.circular(999),
                                   onTap: () =>
-                                      _openEffectDetails(context, resistance),
+                                      _openEffectDetails(context, weakness),
                                   child: IconBadge.asset(
-                                    assetName: UiMapper.effectIcon(resistance),
-                                    size: 24,
+                                    assetName: UiMapper.effectIcon(weakness),
+                                    size: 26,
                                   ),
                                 ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                      if (resistancesV1.isNotEmpty) const SizedBox(height: 16),
+                    ],
+                    if (resistancesV1.isNotEmpty) ...[
+                      Text(
+                        l10n.resistancesTitle,
+                        style: const TextStyle(fontWeight: FontWeight.w800),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: resistancesV1
+                            .map(
+                              (resistance) => Opacity(
+                                opacity: 0.75,
+                                child: Container(
+                                  key: consumeTutorialEffectKey(resistance),
+                                  child: InkWell(
+                                    key: ValueKey(
+                                      'effect-legacy-resistance-$resistance',
+                                    ),
+                                    borderRadius: BorderRadius.circular(999),
+                                    onTap: () =>
+                                        _openEffectDetails(context, resistance),
+                                    child: IconBadge.asset(
+                                      assetName: UiMapper.effectIcon(
+                                        resistance,
+                                      ),
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
                   ],
                 ),
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.inflictsEffects.isNotEmpty ||
+            if (effectiveInflictsEffects.isNotEmpty ||
                 enemy.inflicts.isNotEmpty ||
-                enemy.specialTraits.isNotEmpty) ...[
+                effectiveTraits.isNotEmpty) ...[
               _InflictsTraitsSection(
-                inflictsEffects: enemy.inflictsEffects,
+                inflictsEffects: effectiveInflictsEffects,
                 inflicts: enemy.inflicts,
-                traits: enemy.specialTraits,
+                traits: effectiveTraits,
                 l10n: l10n,
                 languageCode: languageCode,
+              ),
+              const SizedBox(height: 18),
+            ],
+            if (infusionRecommendations != null ||
+                infusionCombatTips.isNotEmpty) ...[
+              _BulletTextSection(
+                title: l10n.infusionRecommendationsTitle,
+                value: infusionRecommendations,
+                items: infusionCombatTips,
+              ),
+              const SizedBox(height: 18),
+            ],
+            if (_hasLocalizedText(
+                  enemy.lesserMutationsDescription,
+                  languageCode,
+                ) ||
+                _hasVisibleLocalizedList(
+                  enemy.lesserMutations,
+                  languageCode,
+                )) ...[
+              _BulletTextSection(
+                title: l10n.lesserMutationsTitle,
+                value: _visibleText(
+                  enemy.lesserMutationsDescription,
+                  languageCode,
+                ),
+                items: _visibleLocalizedValues(
+                  enemy.lesserMutations,
+                  languageCode,
+                ),
               ),
               const SizedBox(height: 18),
             ],
@@ -632,7 +812,8 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.environments.isNotEmpty || enemy.respawnInfo != null) ...[
+            if (_hasVisibleLocalizedList(enemy.environments, languageCode) ||
+                _hasLocalizedText(enemy.respawnInfo, languageCode)) ...[
               _CollapsibleCardSection(
                 title: l10n.environmentRespawnTitle,
                 child: _EnvironmentRespawnSection(
@@ -645,12 +826,14 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               const SizedBox(height: 18),
             ],
             if (enemy.loot.isNotEmpty ||
-                enemy.advancedLootTable.isNotEmpty) ...[
+                enemy.advancedLootTable.isNotEmpty ||
+                enemy.lootTransformations.isNotEmpty) ...[
               _CollapsibleCardSection(
                 title: l10n.lootTitle,
                 child: _LootSection(
                   loot: enemy.loot,
                   advancedLoot: enemy.advancedLootTable,
+                  transformations: enemy.lootTransformations,
                   l10n: l10n,
                   languageCode: languageCode,
                   embedded: true,
@@ -685,32 +868,26 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.behavior != null) ...[
-              _TextSection(
-                title: l10n.behaviorTitle,
-                value: enemy.behavior!.resolve(languageCode),
-              ),
+            if (behavior != null) ...[
+              _TextSection(title: l10n.behaviorTitle, value: behavior),
               const SizedBox(height: 18),
             ],
-            if (enemy.interactionWithPlayer != null) ...[
+            if (interactionWithPlayer != null) ...[
               _TextSection(
                 title: l10n.interactionWithPlayerTitle,
-                value: enemy.interactionWithPlayer!.resolve(languageCode),
+                value: interactionWithPlayer,
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.interactionWithCreatures != null) ...[
+            if (interactionWithCreatures != null) ...[
               _TextSection(
                 title: l10n.interactionWithCreaturesTitle,
-                value: enemy.interactionWithCreatures!.resolve(languageCode),
+                value: interactionWithCreatures,
               ),
               const SizedBox(height: 18),
             ],
-            if (enemy.strategy != null) ...[
-              _TextSection(
-                title: l10n.strategyTitle,
-                value: enemy.strategy!.resolve(languageCode),
-              ),
+            if (strategy != null) ...[
+              _TextSection(title: l10n.strategyTitle, value: strategy),
               const SizedBox(height: 18),
             ],
             if (!_hasWikiContent(enemy)) ...[
@@ -759,6 +936,55 @@ class _VariantSwitcher extends StatelessWidget {
   }
 }
 
+class _InfusionSwitcher extends StatelessWidget {
+  final List<CreatureInfusion> infusions;
+  final int selectedIndex;
+  final String languageCode;
+  final ValueChanged<int> onChanged;
+
+  const _InfusionSwitcher({
+    required this.infusions,
+    required this.selectedIndex,
+    required this.languageCode,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.l10n.infusionSelectorTitle,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 8),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(infusions.length, (index) {
+              final infusion = infusions[index];
+              return Padding(
+                padding: EdgeInsets.only(
+                  right: index == infusions.length - 1 ? 0 : 8,
+                ),
+                child: ChoiceChip(
+                  avatar: infusion.iconAsset.isEmpty
+                      ? null
+                      : Image.asset(infusion.iconAsset, width: 18, height: 18),
+                  label: Text(infusion.name.resolve(languageCode)),
+                  selected: index == selectedIndex,
+                  onSelected: (_) => onChanged(index),
+                ),
+              );
+            }),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _TextSection extends StatelessWidget {
   final String title;
   final String value;
@@ -767,6 +993,11 @@ class _TextSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final visibleValue = value.trim();
+    if (visibleValue.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -779,8 +1010,56 @@ class _TextSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(14),
             border: Border.all(color: Colors.black12),
           ),
-          child: Text(value),
+          child: Text(visibleValue),
         ),
+      ],
+    );
+  }
+}
+
+class _BulletTextSection extends StatelessWidget {
+  final String title;
+  final String? value;
+  final List<String> items;
+
+  const _BulletTextSection({
+    required this.title,
+    this.value,
+    this.items = const [],
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final visibleValue = value?.trim();
+    final hasValue = visibleValue != null && visibleValue.isNotEmpty;
+    final visibleItems = items
+        .map((item) => item.trim())
+        .where((item) => item.isNotEmpty)
+        .toList(growable: false);
+
+    if (!hasValue && visibleItems.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+        const SizedBox(height: 8),
+        if (hasValue) Text(visibleValue, style: const TextStyle(height: 1.45)),
+        if (hasValue && visibleItems.isNotEmpty) const SizedBox(height: 10),
+        if (visibleItems.isNotEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: visibleItems
+                .map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.only(bottom: 6),
+                    child: Text('• $item', style: const TextStyle(height: 1.4)),
+                  ),
+                )
+                .toList(),
+          ),
       ],
     );
   }
@@ -960,6 +1239,10 @@ class _RewardUnlocksSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (rewards.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1039,6 +1322,15 @@ class _EnvironmentRespawnSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final environments = _visibleLocalizedValues(
+      enemy.environments,
+      languageCode,
+    );
+    final respawn = _visibleText(enemy.respawnInfo, languageCode);
+    if (environments.isEmpty && respawn == null) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1059,7 +1351,7 @@ class _EnvironmentRespawnSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (enemy.environments.isNotEmpty) ...[
+              if (environments.isNotEmpty) ...[
                 Text(
                   l10n.environmentsTitle,
                   style: const TextStyle(fontWeight: FontWeight.w700),
@@ -1068,23 +1360,19 @@ class _EnvironmentRespawnSection extends StatelessWidget {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: enemy.environments
-                      .map(
-                        (environment) => Chip(
-                          label: Text(environment.resolve(languageCode)),
-                        ),
-                      )
+                  children: environments
+                      .map((environment) => Chip(label: Text(environment)))
                       .toList(),
                 ),
               ],
-              if (enemy.respawnInfo != null) ...[
-                if (enemy.environments.isNotEmpty) const SizedBox(height: 12),
+              if (respawn != null) ...[
+                if (environments.isNotEmpty) const SizedBox(height: 12),
                 Text(
                   l10n.respawnTitle,
                   style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 4),
-                Text(enemy.respawnInfo!.resolve(languageCode)),
+                Text(respawn),
               ],
             ],
           ),
@@ -1126,12 +1414,16 @@ class _CombatStatsSection extends StatelessWidget {
       );
     }
     if (stats.attackDamageSummary != null) {
-      rows.add(
-        MapEntry(
-          l10n.attackDamageLabel,
-          stats.attackDamageSummary!.resolve(languageCode),
-        ),
+      final attackDamage = _visibleText(
+        stats.attackDamageSummary,
+        languageCode,
       );
+      if (attackDamage != null) {
+        rows.add(MapEntry(l10n.attackDamageLabel, attackDamage));
+      }
+    }
+    if (rows.isEmpty) {
+      return const SizedBox.shrink();
     }
 
     return Column(
@@ -1181,6 +1473,7 @@ class _CombatStatsSection extends StatelessWidget {
 class _LootSection extends StatelessWidget {
   final List<LootEntry> loot;
   final List<AdvancedLootEntry> advancedLoot;
+  final List<LootTransformationInfo> transformations;
   final AppLocalizations l10n;
   final String languageCode;
   final bool embedded;
@@ -1188,6 +1481,7 @@ class _LootSection extends StatelessWidget {
   const _LootSection({
     required this.loot,
     this.advancedLoot = const [],
+    this.transformations = const [],
     required this.l10n,
     required this.languageCode,
     this.embedded = false,
@@ -1251,6 +1545,7 @@ class _LootSection extends StatelessWidget {
                 ),
               ),
               if (advancedLoot.isNotEmpty) ...[
+                if (grouped.isNotEmpty) const SizedBox(height: 4),
                 Text(
                   l10n.advancedLootTitle,
                   style: const TextStyle(fontWeight: FontWeight.w700),
@@ -1293,6 +1588,42 @@ class _LootSection extends StatelessWidget {
                   ),
                 ),
               ],
+              if (transformations.isNotEmpty) ...[
+                if (grouped.isNotEmpty || advancedLoot.isNotEmpty)
+                  const SizedBox(height: 8),
+                Text(
+                  l10n.lootTransformationsTitle,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 8),
+                ...transformations.map(
+                  (entry) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (entry.effects.isNotEmpty) ...[
+                          Wrap(
+                            spacing: 4,
+                            children: entry.effects
+                                .map(
+                                  (effectId) => IconBadge.asset(
+                                    assetName: UiMapper.effectIcon(effectId),
+                                    size: 22,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
+                        Expanded(
+                          child: Text(entry.description.resolve(languageCode)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
@@ -1321,7 +1652,10 @@ class _InflictsTraitsSection extends StatelessWidget {
     final values = [
       ...inflicts.map((item) => item.resolve(languageCode)),
       ...traits.map((item) => item.resolve(languageCode)),
-    ];
+    ].map((item) => item.trim()).where((item) => item.isNotEmpty).toList();
+    if (inflictsEffects.isEmpty && values.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1545,9 +1879,10 @@ class _AbilityFlagChip extends StatelessWidget {
 }
 
 class _HealthBar extends StatelessWidget {
-  final HealthInfo health;
+  final HealthInfo? health;
+  final HealthDisplayMode displayMode;
 
-  const _HealthBar({required this.health});
+  const _HealthBar({required this.health, required this.displayMode});
 
   Color _ratingColor(int rating) {
     switch (rating) {
@@ -1568,7 +1903,39 @@ class _HealthBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rating = health.rating.clamp(1, 5);
+    final currentHealth = health;
+    if (displayMode == HealthDisplayMode.invulnerable &&
+        currentHealth == null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.healthTitle,
+            style: const TextStyle(fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.black12),
+            ),
+            child: Text(
+              context.l10n.notApplicableHealthLabel,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
+      );
+    }
+
+    if (currentHealth == null) {
+      return const SizedBox.shrink();
+    }
+
+    final healthInfo = currentHealth;
+    final rating = healthInfo.rating.clamp(1, 5);
     final fillColor = _ratingColor(rating);
 
     return Column(
@@ -1594,10 +1961,10 @@ class _HealthBar extends StatelessWidget {
             );
           }),
         ),
-        if (health.value != null) ...[
+        if (healthInfo.value != null) ...[
           const SizedBox(height: 6),
           Text(
-            '${health.value} HP',
+            '${healthInfo.value} HP',
             style: TextStyle(color: Theme.of(context).hintColor),
           ),
         ],

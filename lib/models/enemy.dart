@@ -17,15 +17,19 @@ class Enemy {
   final List<String> resistances;
 
   final bool defaultGold;
+  final String favoriteKey;
   final String? goldLinkId;
   final String cardNormal;
   final String cardGold;
   final String photo;
 
+  final bool isKillable;
   final HealthInfo? health;
+  final HealthDisplayMode healthDisplay;
   final List<BonusInfo> elementalWeaknesses;
   final List<BonusInfo> damageWeaknesses;
   final List<BonusInfo> resistancesV2;
+  final List<CreatureInfusion> infusions;
   final WeakPointInfo? weakPoint;
   final List<WeakPointInfo> weakPoints;
   final List<EnemyAttack> attacks;
@@ -38,17 +42,21 @@ class Enemy {
   final LocalizedText? respawnInfo;
   final List<LootEntry> loot;
   final List<AdvancedLootEntry> advancedLootTable;
+  final List<LootTransformationInfo> lootTransformations;
   final List<RewardUnlockInfo> rewardUnlocks;
   final CombatStats? combatStats;
   final List<String> inflictsEffects;
   final List<LocalizedText> inflicts;
   final List<LocalizedText> specialTraits;
+  final LocalizedText? lesserMutationsDescription;
+  final List<LocalizedText> lesserMutations;
   final List<AbilityInfo> abilities;
   final List<BossPhaseInfo> bossPhases;
 
   const Enemy({
     required this.order,
     required this.defaultGold,
+    this.favoriteKey = '',
     this.goldLinkId,
     required this.id,
     required this.speciesKey,
@@ -64,10 +72,13 @@ class Enemy {
     required this.cardNormal,
     required this.cardGold,
     required this.photo,
+    this.isKillable = true,
     this.health,
+    this.healthDisplay = HealthDisplayMode.hidden,
     this.elementalWeaknesses = const [],
     this.damageWeaknesses = const [],
     this.resistancesV2 = const [],
+    this.infusions = const [],
     this.weakPoint,
     this.weakPoints = const [],
     this.attacks = const [],
@@ -80,16 +91,24 @@ class Enemy {
     this.respawnInfo,
     this.loot = const [],
     this.advancedLootTable = const [],
+    this.lootTransformations = const [],
     this.rewardUnlocks = const [],
     this.combatStats,
     this.inflictsEffects = const [],
     this.inflicts = const [],
     this.specialTraits = const [],
+    this.lesserMutationsDescription,
+    this.lesserMutations = const [],
     this.abilities = const [],
     this.bossPhases = const [],
   });
 
   factory Enemy.fromJson(Map<String, dynamic> json) {
+    final isKillable = json['isKillable'] as bool? ?? true;
+    final healthInfo = (json['health'] is Map)
+        ? HealthInfo.fromJson((json['health'] as Map).cast<String, dynamic>())
+        : null;
+
     List<BonusInfo> bonusList(String key) {
       final raw = json[key];
       if (raw is List) {
@@ -161,12 +180,41 @@ class Enemy {
       return const [];
     }
 
+    List<LootTransformationInfo> lootTransformationList(String key) {
+      final raw = json[key];
+      if (raw is List) {
+        return raw
+            .whereType<Map>()
+            .map(
+              (item) =>
+                  LootTransformationInfo.fromJson(item.cast<String, dynamic>()),
+            )
+            .where((item) => !item.description.isEmpty)
+            .toList();
+      }
+      return const [];
+    }
+
     List<AbilityInfo> abilityList(String key) {
       final raw = json[key];
       if (raw is List) {
         return raw
             .whereType<Map>()
             .map((item) => AbilityInfo.fromJson(item.cast<String, dynamic>()))
+            .toList();
+      }
+      return const [];
+    }
+
+    List<CreatureInfusion> infusionList(String key) {
+      final raw = json[key];
+      if (raw is List) {
+        return raw
+            .whereType<Map>()
+            .map(
+              (item) => CreatureInfusion.fromJson(item.cast<String, dynamic>()),
+            )
+            .where((item) => item.id.isNotEmpty && !item.name.isEmpty)
             .toList();
       }
       return const [];
@@ -207,18 +255,24 @@ class Enemy {
       isBoss: json['isBoss'] as bool? ?? false,
       order: json['order'] as int?,
       defaultGold: json['defaultGold'] as bool? ?? false,
+      favoriteKey: (json['favoriteKey'] as String?) ?? (json['id'] as String),
       goldLinkId: json['goldLinkId'] as String?,
       cardNormal: json['cardNormal'] as String,
       cardGold: json['cardGold'] as String,
       photo: json['photo'] as String,
+      isKillable: isKillable,
       weaknesses: List<String>.from(json['weaknesses'] ?? const []),
       resistances: List<String>.from(json['resistances'] ?? const []),
-      health: (json['health'] is Map)
-          ? HealthInfo.fromJson((json['health'] as Map).cast<String, dynamic>())
-          : null,
+      health: healthInfo,
+      healthDisplay: HealthDisplayMode.fromJson(
+        json['healthDisplay'],
+        health: healthInfo,
+        isKillable: isKillable,
+      ),
       elementalWeaknesses: bonusList('elementalWeaknesses'),
       damageWeaknesses: bonusList('damageWeaknesses'),
       resistancesV2: bonusList('resistancesV2'),
+      infusions: infusionList('infusions'),
       weakPoint: (json['weakPoint'] is Map)
           ? WeakPointInfo.fromJson(
               (json['weakPoint'] as Map).cast<String, dynamic>(),
@@ -239,6 +293,7 @@ class Enemy {
       respawnInfo: LocalizedText.maybeFromJson(json['respawnInfo']),
       loot: lootList('loot'),
       advancedLootTable: advancedLootList('advancedLootTable'),
+      lootTransformations: lootTransformationList('lootTransformations'),
       rewardUnlocks: rewardUnlockList('rewardUnlocks'),
       combatStats: (json['combatStats'] is Map)
           ? CombatStats.fromJson(
@@ -248,6 +303,10 @@ class Enemy {
       inflictsEffects: List<String>.from(json['inflictsEffects'] ?? const []),
       inflicts: localizedTextList('inflicts'),
       specialTraits: localizedTextList('specialTraits'),
+      lesserMutationsDescription: LocalizedText.maybeFromJson(
+        json['lesserMutationsDescription'],
+      ),
+      lesserMutations: localizedTextList('lesserMutations'),
       abilities: abilityList('abilities'),
       bossPhases: phaseList('bossPhases'),
     );
@@ -262,6 +321,39 @@ class Enemy {
     }
     return const [];
   }
+
+  String get resolvedFavoriteKey => favoriteKey.isEmpty ? id : favoriteKey;
+}
+
+enum HealthDisplayMode {
+  normal,
+  invulnerable,
+  hidden;
+
+  static HealthDisplayMode fromJson(
+    dynamic raw, {
+    required HealthInfo? health,
+    required bool isKillable,
+  }) {
+    switch (raw) {
+      case 'normal':
+        return HealthDisplayMode.normal;
+      case 'invulnerable':
+        return HealthDisplayMode.invulnerable;
+      case 'hidden':
+        return HealthDisplayMode.hidden;
+    }
+
+    if (!isKillable) {
+      return HealthDisplayMode.invulnerable;
+    }
+    if (health != null) {
+      return HealthDisplayMode.normal;
+    }
+    return HealthDisplayMode.hidden;
+  }
+
+  bool get shouldRender => this != HealthDisplayMode.hidden;
 }
 
 class LocalizedText {
@@ -389,6 +481,69 @@ class BonusInfo {
   );
 }
 
+class CreatureInfusion {
+  final String id;
+  final LocalizedText name;
+  final String iconAsset;
+  final List<BonusInfo> elementalWeaknesses;
+  final List<BonusInfo> damageWeaknesses;
+  final List<BonusInfo> resistances;
+  final List<String> effects;
+  final List<LocalizedText> specialTraits;
+  final List<LocalizedText> combatTips;
+  final LocalizedText? recommendations;
+
+  const CreatureInfusion({
+    required this.id,
+    required this.name,
+    required this.iconAsset,
+    this.elementalWeaknesses = const [],
+    this.damageWeaknesses = const [],
+    this.resistances = const [],
+    this.effects = const [],
+    this.specialTraits = const [],
+    this.combatTips = const [],
+    this.recommendations,
+  });
+
+  factory CreatureInfusion.fromJson(Map<String, dynamic> json) {
+    List<BonusInfo> bonusList(String key) {
+      final raw = json[key];
+      if (raw is List) {
+        return raw
+            .whereType<Map>()
+            .map((item) => BonusInfo.fromJson(item.cast<String, dynamic>()))
+            .toList();
+      }
+      return const [];
+    }
+
+    List<LocalizedText> localizedTextList(String key) {
+      final raw = json[key];
+      if (raw is List) {
+        return raw
+            .map((item) => LocalizedText.fromJson(item))
+            .where((item) => !item.isEmpty)
+            .toList();
+      }
+      return const [];
+    }
+
+    return CreatureInfusion(
+      id: (json['id'] ?? '') as String,
+      name: LocalizedText.fromJson(json['name']),
+      iconAsset: (json['iconAsset'] ?? '') as String,
+      elementalWeaknesses: bonusList('elementalWeaknesses'),
+      damageWeaknesses: bonusList('damageWeaknesses'),
+      resistances: bonusList('resistances'),
+      effects: List<String>.from(json['effects'] ?? const []),
+      specialTraits: localizedTextList('specialTraits'),
+      combatTips: localizedTextList('combatTips'),
+      recommendations: LocalizedText.maybeFromJson(json['recommendations']),
+    );
+  }
+}
+
 class WeakPointInfo {
   final String part;
   final String susceptibleDamage;
@@ -468,6 +623,25 @@ class AdvancedLootEntry {
         countLabel: (json['countLabel'] ?? '1') as String,
         chancePct: (json['chancePct'] ?? 0) as int,
         notes: LocalizedText.maybeFromJson(json['notes']),
+      );
+}
+
+class LootTransformationInfo {
+  final String id;
+  final List<String> effects;
+  final LocalizedText description;
+
+  const LootTransformationInfo({
+    required this.id,
+    this.effects = const [],
+    required this.description,
+  });
+
+  factory LootTransformationInfo.fromJson(Map<String, dynamic> json) =>
+      LootTransformationInfo(
+        id: (json['id'] ?? '') as String,
+        effects: List<String>.from(json['effects'] ?? const []),
+        description: LocalizedText.fromJson(json['description']),
       );
 }
 

@@ -171,6 +171,11 @@ class AppLocalizations {
   String get upcomingTitle => _t('upcomingTitle');
   String get upcomingItems => _t('upcomingItems');
   String get healthTitle => _t('healthTitle');
+  String get notApplicableHealthLabel => _t('notApplicableHealthLabel');
+  String get infusionSelectorTitle => _t('infusionSelectorTitle');
+  String get infusionRecommendationsTitle => _t('infusionRecommendationsTitle');
+  String get lesserMutationsTitle => _t('lesserMutationsTitle');
+  String get lootTransformationsTitle => _t('lootTransformationsTitle');
   String get attackTell => _t('attackTell');
   String get attackAvoid => _t('attackAvoid');
   String get attackNotes => _t('attackNotes');
@@ -1415,6 +1420,11 @@ class AppLocalizations {
       'upcomingItems':
           '• Loot con probabilidades\n• Spawns\n• Builds por etapa (early/mid/end/NG+)',
       'healthTitle': 'Vida',
+      'notApplicableHealthLabel': 'No aplica · invulnerable',
+      'infusionSelectorTitle': 'Sabor o infusión',
+      'infusionRecommendationsTitle': 'Recomendaciones de la infusión',
+      'lesserMutationsTitle': 'Mutaciones menores',
+      'lootTransformationsTitle': 'Efectos sobre el botín',
       'attackTell': 'Señal',
       'attackAvoid': 'Cómo evitar',
       'attackNotes': 'Notas',
@@ -1579,6 +1589,11 @@ class AppLocalizations {
       'upcomingItems':
           '• Loot with drop rates\n• Spawn locations\n• Builds by progression stage (early / mid / end / NG+)',
       'healthTitle': 'Health',
+      'notApplicableHealthLabel': 'Not applicable · invulnerable',
+      'infusionSelectorTitle': 'Flavor or infusion',
+      'infusionRecommendationsTitle': 'Infusion recommendations',
+      'lesserMutationsTitle': 'Lesser mutations',
+      'lootTransformationsTitle': 'Loot effects',
       'attackTell': 'Tell',
       'attackAvoid': 'How to avoid',
       'attackNotes': 'Notes',
@@ -1742,6 +1757,11 @@ class AppLocalizations {
       'upcomingItems':
           '• Добыча с шансами выпадения\n• Места появления\n• Сборки по этапам прогресса (early / mid / end / NG+)',
       'healthTitle': 'Здоровье',
+      'notApplicableHealthLabel': 'Не применимо · неуязвимо',
+      'infusionSelectorTitle': 'Вкус или инфузия',
+      'infusionRecommendationsTitle': 'Рекомендации по инфузии',
+      'lesserMutationsTitle': 'Малые мутации',
+      'lootTransformationsTitle': 'Эффекты для добычи',
       'attackTell': 'Подсказка',
       'attackAvoid': 'Как избежать',
       'attackNotes': 'Заметки',

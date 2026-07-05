@@ -376,6 +376,45 @@ void main() {
   });
 
   test(
+    'ogrr entries expose three infusions and independent lesser mutations',
+    () {
+      final ogrrEntries = data
+          .where((enemy) => enemy['collectionGroup'] == 'ogrr')
+          .toList(growable: false);
+      const expectedIds = {
+        'g2_ogrr_northern_scorpion',
+        'g2_ogrr_blue_butterfly',
+        'g2_ogrr_ladybug',
+        'g2_ogrr_cricket',
+        'g2_ogrr_rust_beetle',
+        'g2_ogrr_pincher_earwig',
+        'g2_ogrr_whipper_earwig',
+        'g2_ogrr_wasp',
+        'g2_ogrr_wasp_drone',
+        'g2_ogrr_praying_mantis_nymph',
+        'g2_ogrr_wolf_spider',
+      };
+
+      expect(ogrrEntries, hasLength(11));
+      expect(ogrrEntries.map((enemy) => enemy['id']).toSet(), expectedIds);
+
+      for (final enemy in ogrrEntries) {
+        final infusions = (enemy['infusions'] as List)
+            .cast<Map<String, dynamic>>();
+        expect(
+          infusions.map((item) => item['id']).toList(),
+          ['fresh', 'sour', 'spicy'],
+          reason: enemy['id'] as String,
+        );
+        expect(enemy['lesserMutationsDescription'], isA<Map>());
+        expect((enemy['lesserMutations'] as List), hasLength(7));
+      }
+
+      expect(entry('g2_masked_stranger_orc_waves')['healthDisplay'], 'hidden');
+    },
+  );
+
+  test(
     'g2 system entries document MIX.R and Ice Sickles without faction raids',
     () {
       final mixr = entry('g2_mixr_defenses');
@@ -383,10 +422,7 @@ void main() {
 
       expect(mixr['isBoss'], isFalse);
       expect(mixr['description']['en'], contains('Grounded 2 MIX.R events'));
-      expect(
-        mixr['specialTraits'][0]['en'],
-        contains('rather than classic factional raids'),
-      );
+      expect(mixr['specialTraits'][0]['en'], contains('objective-defense'));
 
       expect(iceSickles['description']['en'], contains('Ice Sickles'));
       expect(
