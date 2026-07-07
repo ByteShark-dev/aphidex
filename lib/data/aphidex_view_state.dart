@@ -59,6 +59,42 @@ class AphidexViewState {
 
   String toStorageString() => jsonEncode(toJson());
 
+  AphidexViewState copyWith({
+    int? version,
+    int? gamePickIndex,
+    int? sortModeIndex,
+    bool? sortDescending,
+    String? query,
+    bool? filterFavorites,
+    bool? filterGold,
+    Set<String>? tierFilters,
+    Set<String>? classFilters,
+    Set<String>? dangerFilters,
+    String? selectedSpeciesKey,
+    String? detailEnemyId,
+    String? detailGame,
+    bool? detailOpen,
+    double? listScrollOffset,
+  }) {
+    return AphidexViewState(
+      version: version ?? this.version,
+      gamePickIndex: gamePickIndex ?? this.gamePickIndex,
+      sortModeIndex: sortModeIndex ?? this.sortModeIndex,
+      sortDescending: sortDescending ?? this.sortDescending,
+      query: query ?? this.query,
+      filterFavorites: filterFavorites ?? this.filterFavorites,
+      filterGold: filterGold ?? this.filterGold,
+      tierFilters: tierFilters ?? this.tierFilters,
+      classFilters: classFilters ?? this.classFilters,
+      dangerFilters: dangerFilters ?? this.dangerFilters,
+      selectedSpeciesKey: selectedSpeciesKey ?? this.selectedSpeciesKey,
+      detailEnemyId: detailEnemyId ?? this.detailEnemyId,
+      detailGame: detailGame ?? this.detailGame,
+      detailOpen: detailOpen ?? this.detailOpen,
+      listScrollOffset: listScrollOffset ?? this.listScrollOffset,
+    );
+  }
+
   static AphidexViewState? fromStorageString(String? raw) {
     if (raw == null || raw.trim().isEmpty) {
       return null;

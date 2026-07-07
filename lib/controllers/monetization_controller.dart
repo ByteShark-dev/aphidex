@@ -67,7 +67,9 @@ class MonetizationController {
       ValueNotifier<ProductDetails?>(null);
   final ValueNotifier<bool> isBusy = ValueNotifier<bool>(false);
 
-  bool _initialized = false;
+  Future<void>? _initializationFuture;
+  bool _purchaseStreamBound = false;
+  bool _localStatePrimed = false;
   bool _interstitialLoadInFlight = false;
   bool _promoFlowInProgress = false;
   InterstitialAd? _interstitialAd;
@@ -142,13 +144,20 @@ class MonetizationController {
     return price;
   }
 
-  Future<void> initialize() async {
-    if (_initialized) {
+  void primeLocalState() {
+    if (_localStatePrimed) {
       return;
     }
-    _initialized = true;
+    _localStatePrimed = true;
     adsRemoved.value = LocalStorage.getBool(_kAdsRemoved, fallback: false);
+  }
 
+  Future<void> initialize() {
+    primeLocalState();
+    return _initializationFuture ??= _initializeAsync();
+  }
+
+  Future<void> _initializeAsync() async {
     if (!isAdsSupportedPlatform) {
       return;
     }
@@ -159,10 +168,13 @@ class MonetizationController {
       return;
     }
 
-    InAppPurchase.instance.purchaseStream.listen(
-      _handlePurchaseUpdates,
-      onError: (_) => isBusy.value = false,
-    );
+    if (!_purchaseStreamBound) {
+      _purchaseStreamBound = true;
+      InAppPurchase.instance.purchaseStream.listen(
+        _handlePurchaseUpdates,
+        onError: (_) => isBusy.value = false,
+      );
+    }
     await refreshStore();
   }
 

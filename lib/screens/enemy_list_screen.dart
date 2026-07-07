@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/favorites_controller.dart';
@@ -18,6 +19,7 @@ import '../i18n/app_localizations.dart';
 import '../layout/app_breakpoints.dart';
 import '../models/enemy_index_entry.dart';
 import '../models/game_pick.dart';
+import '../startup/startup_profiler.dart';
 import '../widgets/icon_badge.dart';
 import '../widgets/fallback_asset_image.dart';
 import '../widgets/game_brand_mark.dart';
@@ -203,8 +205,21 @@ class _GameHeaderGlow extends StatelessWidget {
 class EnemyListScreen extends StatefulWidget {
   final Future<List<EnemyIndexEntry>> Function(String languageCode)?
   enemiesLoaderOverride;
+  final List<EnemyIndexEntry>? preloadedEntries;
+  final String? preloadedLanguageCode;
+  final GamePick? preloadedGamePick;
+  final bool restorePhoneDetailOnStartup;
+  final VoidCallback? onInitialListInteractive;
 
-  const EnemyListScreen({super.key, this.enemiesLoaderOverride});
+  const EnemyListScreen({
+    super.key,
+    this.enemiesLoaderOverride,
+    this.preloadedEntries,
+    this.preloadedLanguageCode,
+    this.preloadedGamePick,
+    this.restorePhoneDetailOnStartup = true,
+    this.onInitialListInteractive,
+  });
 
   @override
   State<EnemyListScreen> createState() => _EnemyListScreenState();
@@ -244,11 +259,21 @@ class _EnemyListScreenState extends State<EnemyListScreen>
   bool _pendingPhoneDetailRestore = false;
   bool _phoneDetailRestoreConsumed = false;
   Future<void>? _progressHydrationFuture;
+  bool _secondLoaderVisible = false;
+  bool _listInteractiveLogged = false;
+  bool _bootstrapEntriesConsumed = false;
+  String? _deferredStartupSpeciesKey;
+  String? _deferredStartupEnemyId;
+  String? _deferredStartupDetailGame;
+  bool _masterDetailRestoreQueued = false;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      StartupProfiler.instance.markOnce('first frame');
+    });
 
     final hasNewFilterState =
         LocalStorage.hasKey(_kFilterFavorites) ||
@@ -325,10 +350,22 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       dangerFilters
         ..clear()
         ..addAll(restored.dangerFilters.map(_canonicalDanger));
-      _selectedSpeciesKey = restored.selectedSpeciesKey;
+      if (!widget.restorePhoneDetailOnStartup &&
+          restored.selectedSpeciesKey != null) {
+        _deferredStartupSpeciesKey = restored.selectedSpeciesKey;
+        _deferredStartupEnemyId = restored.detailEnemyId;
+        _deferredStartupDetailGame = restored.detailGame;
+      } else {
+        _selectedSpeciesKey = restored.selectedSpeciesKey;
+      }
       _pendingPhoneDetailRestore =
-          restored.detailOpen && (restored.detailEnemyId?.isNotEmpty ?? false);
+          widget.restorePhoneDetailOnStartup &&
+          restored.detailOpen &&
+          (restored.detailEnemyId?.isNotEmpty ?? false);
     }
+    StartupProfiler.instance.mark(
+      'restoring game/filters/search/selected creature ready',
+    );
 
     _searchController = TextEditingController(text: query);
     _listScrollController = ScrollController(
@@ -344,6 +381,14 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       return;
     }
     _loadedLanguageCode = languageCode;
+    if (!_bootstrapEntriesConsumed &&
+        widget.preloadedEntries != null &&
+        widget.preloadedLanguageCode == languageCode &&
+        widget.preloadedGamePick == gamePick) {
+      _bootstrapEntriesConsumed = true;
+      enemiesFuture = SynchronousFuture(widget.preloadedEntries!);
+      return;
+    }
     enemiesFuture =
         widget.enemiesLoaderOverride?.call(languageCode) ??
         _loadEnemiesForCurrentGame(languageCode);
@@ -440,6 +485,79 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       _progressHydrationFuture = null;
     });
     return true;
+  }
+
+  void _markLoaderHiddenIfNeeded() {
+    if (_secondLoaderVisible) {
+      _secondLoaderVisible = false;
+      StartupProfiler.instance.markOnce('second loader disappears');
+    }
+  }
+
+  void _markSecondLoaderVisibleIfNeeded() {
+    if (_secondLoaderVisible) {
+      return;
+    }
+    _secondLoaderVisible = true;
+    StartupProfiler.instance.markOnce('second loader appears');
+  }
+
+  void _markListInteractiveIfNeeded() {
+    if (_listInteractiveLogged) {
+      return;
+    }
+    _listInteractiveLogged = true;
+    StartupProfiler.instance.markOnce('list interactive');
+    final callback = widget.onInitialListInteractive;
+    if (callback != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        callback();
+      });
+    }
+  }
+
+  void _restoreMasterDetailSelectionIfNeeded(
+    List<ResolvedEnemyEntry> filteredEntries,
+    bool isMasterDetail,
+  ) {
+    if (!isMasterDetail ||
+        !_listInteractiveLogged ||
+        _masterDetailRestoreQueued ||
+        _selectedSpeciesKey != null ||
+        _deferredStartupSpeciesKey == null) {
+      return;
+    }
+
+    final restoredKey = _deferredStartupSpeciesKey!;
+    final restoredEntry = filteredEntries
+        .cast<ResolvedEnemyEntry?>()
+        .firstWhere(
+          (entry) => entry?.entry.speciesKey == restoredKey,
+          orElse: () => null,
+        );
+    if (restoredEntry == null) {
+      return;
+    }
+
+    _masterDetailRestoreQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _selectedSpeciesKey != null) {
+        return;
+      }
+      setState(() {
+        _selectedSpeciesKey = restoredEntry.entry.speciesKey;
+      });
+      _deferredStartupSpeciesKey = null;
+      _scheduleViewStatePersist(
+        detailOpen: false,
+        detailEnemyId: _deferredStartupEnemyId ?? restoredEntry.activeEnemy.id,
+        detailGame:
+            _deferredStartupDetailGame ?? restoredEntry.activeEnemy.game,
+        selectedSpeciesKey: restoredEntry.entry.speciesKey,
+      );
+      _deferredStartupEnemyId = null;
+      _deferredStartupDetailGame = null;
+    });
   }
 
   bool _isGold(EnemyIndexEntry enemy, CreatureCardProgressMap progressByKey) {
@@ -1545,16 +1663,21 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                   future: enemiesFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
+                      _markSecondLoaderVisibleIfNeeded();
                       return _buildLoadingState(l10n);
                     }
                     if (snapshot.hasError) {
+                      _markLoaderHiddenIfNeeded();
                       return _buildErrorState(l10n, snapshot.error);
                     }
 
                     final enemies = snapshot.data ?? <EnemyIndexEntry>[];
                     if (_ensureProgressHydration(enemies)) {
+                      _markSecondLoaderVisibleIfNeeded();
                       return _buildLoadingState(l10n);
                     }
+                    _markLoaderHiddenIfNeeded();
+                    _markListInteractiveIfNeeded();
                     if (!_tutorialQueued) {
                       _tutorialQueued = true;
                       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1626,6 +1749,10 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                             : null;
                         _restorePhoneDetailIfNeeded(
                           context,
+                          filtered,
+                          isMasterDetail,
+                        );
+                        _restoreMasterDetailSelectionIfNeeded(
                           filtered,
                           isMasterDetail,
                         );
