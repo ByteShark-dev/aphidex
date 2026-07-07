@@ -34,6 +34,7 @@ void main() {
   void expectGlobalEntryWithoutCreatureCard(
     String id,
     String expectedListIconAsset,
+    String expectedDetailPhoto,
   ) {
     final entry = masterEntry(id);
     final listEntry = indexEntry(id);
@@ -60,13 +61,14 @@ void main() {
         expectedListIconAsset,
         reason: '$language/$id',
       );
-      expect(detail['photo'], expectedListIconAsset, reason: '$language/$id');
+      expect(detail['photo'], expectedDetailPhoto, reason: '$language/$id');
     }
   }
 
   test('g1 global O.R.C. entry stays out of the creature-card system', () {
     expectGlobalEntryWithoutCreatureCard(
       'g1_enemy_orc',
+      'assets/g1/creatures/cards/gold/Creaturecardgold_ORC.webp',
       'assets/g1/creatures/photos/ORC.webp',
     );
   });
@@ -74,6 +76,7 @@ void main() {
   test('g1 global infused entry stays out of the creature-card system', () {
     expectGlobalEntryWithoutCreatureCard(
       'g1_enemy_infused',
+      'assets/g1/creatures/cards/gold/Creaturecardgold_Infused_Insects.webp',
       'assets/g1/creatures/photos/Infused_Insects.webp',
     );
   });

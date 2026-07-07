@@ -8,6 +8,7 @@ class EnemyIndexEntry implements CreatureCardCarrier {
   final String? collectionGroup;
   final String name;
   final int? order;
+  @override
   final String game;
   final String? temperament;
   final int tier;
