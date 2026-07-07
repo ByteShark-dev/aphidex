@@ -260,6 +260,7 @@ class TutorialController extends ChangeNotifier {
   TutorialStep? _missingAnchorStep;
   int _missingAnchorChecks = 0;
   bool _closing = false;
+  bool _transitionLocked = false;
 
   TutorialStep? get step => _step;
   bool get isActive => _step != null;
@@ -283,12 +284,18 @@ class TutorialController extends ChangeNotifier {
     }
 
     final targetContext = _anchorKeys[anchorId]?.currentContext;
-    if (targetContext == null) {
+    if (targetContext == null || !targetContext.mounted) {
       return null;
     }
 
-    final targetBox = targetContext.findRenderObject();
-    final overlayBox = overlayContext.findRenderObject();
+    RenderObject? targetBox;
+    RenderObject? overlayBox;
+    try {
+      targetBox = targetContext.findRenderObject();
+      overlayBox = overlayContext.findRenderObject();
+    } catch (_) {
+      return null;
+    }
     if (targetBox is! RenderBox ||
         overlayBox is! RenderBox ||
         !targetBox.attached ||
@@ -312,7 +319,7 @@ class TutorialController extends ChangeNotifier {
     }
 
     final targetContext = _anchorKeys[anchorId]?.currentContext;
-    if (targetContext == null) {
+    if (targetContext == null || !targetContext.mounted) {
       if (_missingAnchorStep != step) {
         _missingAnchorStep = step;
         _missingAnchorChecks = 1;
@@ -334,6 +341,9 @@ class TutorialController extends ChangeNotifier {
     _missingAnchorChecks = 0;
     _syncingAnchor = true;
     try {
+      if (!targetContext.mounted) {
+        return;
+      }
       if (Scrollable.maybeOf(targetContext) != null) {
         await Scrollable.ensureVisible(
           targetContext,
@@ -385,105 +395,103 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> next() async {
-    if (_closing) {
-      return;
-    }
-    switch (_step) {
-      case TutorialStep.search:
-        _setStep(TutorialStep.gamePicker);
-        return;
-      case TutorialStep.gamePicker:
-        _setStep(TutorialStep.filters);
-        return;
-      case TutorialStep.filters:
-        _setStep(TutorialStep.sort);
-        return;
-      case TutorialStep.sort:
-        _setStep(TutorialStep.settings);
-        return;
-      case TutorialStep.settings:
-        _setStep(TutorialStep.codex);
-        return;
-      case TutorialStep.codex:
-        await _openDemoEnemy();
-        _setStep(TutorialStep.detailSummary);
-        return;
-      case TutorialStep.detailSummary:
-        if (_demoVariants.length > 1) {
-          _setStep(TutorialStep.detailVariant);
+    await _runLocked(() async {
+      switch (_step) {
+        case TutorialStep.search:
+          await _goToStep(TutorialStep.gamePicker);
           return;
-        }
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.detailVariant:
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.detailEffects:
-        _setStep(TutorialStep.detailEffect);
-        return;
-      case TutorialStep.detailEffect:
-        await _openDemoCodex();
-        _setStep(TutorialStep.codexCard);
-        return;
-      case TutorialStep.codexCard:
-        _setStep(TutorialStep.codexEquipment);
-        return;
-      case TutorialStep.codexEquipment:
-        await finish();
-        return;
-      case null:
-        return;
-    }
+        case TutorialStep.gamePicker:
+          await _goToStep(TutorialStep.filters);
+          return;
+        case TutorialStep.filters:
+          await _goToStep(TutorialStep.sort);
+          return;
+        case TutorialStep.sort:
+          await _goToStep(TutorialStep.settings);
+          return;
+        case TutorialStep.settings:
+          await _goToStep(TutorialStep.codex);
+          return;
+        case TutorialStep.codex:
+          await _openDemoEnemy();
+          await _goToStep(TutorialStep.detailSummary);
+          return;
+        case TutorialStep.detailSummary:
+          if (_demoVariants.length > 1) {
+            await _goToStep(TutorialStep.detailVariant);
+            return;
+          }
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.detailVariant:
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.detailEffects:
+          await _goToStep(TutorialStep.detailEffect);
+          return;
+        case TutorialStep.detailEffect:
+          await _openDemoCodex();
+          await _goToStep(TutorialStep.codexCard);
+          return;
+        case TutorialStep.codexCard:
+          await _goToStep(TutorialStep.codexEquipment);
+          return;
+        case TutorialStep.codexEquipment:
+          await finish();
+          return;
+        case null:
+          return;
+      }
+    });
   }
 
   Future<void> back() async {
-    if (_closing) {
-      return;
-    }
-    switch (_step) {
-      case TutorialStep.search:
-      case null:
-        return;
-      case TutorialStep.gamePicker:
-        _setStep(TutorialStep.search);
-        return;
-      case TutorialStep.filters:
-        _setStep(TutorialStep.gamePicker);
-        return;
-      case TutorialStep.sort:
-        _setStep(TutorialStep.filters);
-        return;
-      case TutorialStep.settings:
-        _setStep(TutorialStep.sort);
-        return;
-      case TutorialStep.codex:
-        _setStep(TutorialStep.settings);
-        return;
-      case TutorialStep.detailSummary:
-        await _popRouteIfPossible();
-        _setStep(TutorialStep.codex);
-        return;
-      case TutorialStep.detailVariant:
-        _setStep(TutorialStep.detailSummary);
-        return;
-      case TutorialStep.detailEffects:
-        if (_demoVariants.length > 1) {
-          _setStep(TutorialStep.detailVariant);
-        } else {
-          _setStep(TutorialStep.detailSummary);
-        }
-        return;
-      case TutorialStep.detailEffect:
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.codexCard:
-        await _popRouteIfPossible();
-        _setStep(TutorialStep.detailEffect);
-        return;
-      case TutorialStep.codexEquipment:
-        _setStep(TutorialStep.codexCard);
-        return;
-    }
+    await _runLocked(() async {
+      switch (_step) {
+        case TutorialStep.search:
+        case null:
+          return;
+        case TutorialStep.gamePicker:
+          await _goToStep(TutorialStep.search);
+          return;
+        case TutorialStep.filters:
+          await _goToStep(TutorialStep.gamePicker);
+          return;
+        case TutorialStep.sort:
+          await _goToStep(TutorialStep.filters);
+          return;
+        case TutorialStep.settings:
+          await _goToStep(TutorialStep.sort);
+          return;
+        case TutorialStep.codex:
+          await _goToStep(TutorialStep.settings);
+          return;
+        case TutorialStep.detailSummary:
+          await _popRouteIfPossible();
+          await _goToStep(TutorialStep.codex);
+          return;
+        case TutorialStep.detailVariant:
+          await _goToStep(TutorialStep.detailSummary);
+          return;
+        case TutorialStep.detailEffects:
+          if (_demoVariants.length > 1) {
+            await _goToStep(TutorialStep.detailVariant);
+          } else {
+            await _goToStep(TutorialStep.detailSummary);
+          }
+          return;
+        case TutorialStep.detailEffect:
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.codexCard:
+          await _popRouteIfPossible();
+          await _goToStep(TutorialStep.detailEffect);
+          return;
+        case TutorialStep.codexEquipment:
+          await _goToStep(TutorialStep.codexCard);
+          return;
+      }
+    });
   }
 
   Future<void> skip() => _close(markCompleted: true);
@@ -500,6 +508,7 @@ class TutorialController extends ChangeNotifier {
     _missingAnchorStep = null;
     _missingAnchorChecks = 0;
     _closing = false;
+    _transitionLocked = false;
     _anchorKeys.clear();
     _promptVisible = false;
     notifyListeners();
@@ -513,6 +522,7 @@ class TutorialController extends ChangeNotifier {
   void debugStartStepForTests(TutorialStep step) {
     _closing = false;
     _autoStartChecked = true;
+    _transitionLocked = false;
     _step = step;
     notifyListeners();
   }
@@ -548,7 +558,7 @@ class TutorialController extends ChangeNotifier {
     _demoEnemy = enemy;
     _demoVariants = variants;
     _demoEffectId = effectIds.first;
-    _setStep(TutorialStep.search);
+    await _goToStep(TutorialStep.search);
   }
 
   Future<bool> _showIntroPrompt(BuildContext context) async {
@@ -586,6 +596,40 @@ class TutorialController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _runLocked(Future<void> Function() action) async {
+    if (_closing || _transitionLocked) {
+      return;
+    }
+    _transitionLocked = true;
+    try {
+      await action();
+    } finally {
+      _transitionLocked = false;
+    }
+  }
+
+  Future<void> _goToStep(TutorialStep value) async {
+    if (_closing) {
+      return;
+    }
+    _setStep(value);
+    await _waitForFrame();
+  }
+
+  Future<void> _waitForFrame() async {
+    final completer = Completer<void>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      completer.complete();
+    });
+    await completer.future;
+  }
+
+  Future<void> _waitForSettledUi() async {
+    await _waitForFrame();
+    await Future<void>.delayed(const Duration(milliseconds: 16));
+    await _waitForFrame();
+  }
+
   Future<void> _openDemoEnemy() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
     final enemy = _demoEnemy;
@@ -604,7 +648,7 @@ class TutorialController extends ChangeNotifier {
         ),
       ),
     );
-    await Future<void>.delayed(const Duration(milliseconds: 350));
+    await _waitForSettledUi();
   }
 
   Future<void> _openDemoCodex() async {
@@ -615,7 +659,7 @@ class TutorialController extends ChangeNotifier {
     }
 
     unawaited(openEffectCodex(context, initialEffectId: effectId));
-    await Future<void>.delayed(const Duration(milliseconds: 350));
+    await _waitForSettledUi();
   }
 
   Future<void> _popRouteIfPossible() async {
@@ -624,7 +668,7 @@ class TutorialController extends ChangeNotifier {
       return;
     }
     navigator.pop();
-    await Future<void>.delayed(const Duration(milliseconds: 250));
+    await _waitForSettledUi();
   }
 
   Future<void> _close({required bool markCompleted}) async {
@@ -708,17 +752,17 @@ class TutorialController extends ChangeNotifier {
 
     switch (step) {
       case TutorialStep.detailVariant:
-        _setStep(TutorialStep.detailEffects);
+        await _goToStep(TutorialStep.detailEffects);
         return;
       case TutorialStep.detailEffects:
-        _setStep(TutorialStep.detailEffect);
+        await _goToStep(TutorialStep.detailEffect);
         return;
       case TutorialStep.detailEffect:
         await _openDemoCodex();
-        _setStep(TutorialStep.codexCard);
+        await _goToStep(TutorialStep.codexCard);
         return;
       case TutorialStep.codexCard:
-        _setStep(TutorialStep.codexEquipment);
+        await _goToStep(TutorialStep.codexEquipment);
         return;
       case TutorialStep.codexEquipment:
         await finish();

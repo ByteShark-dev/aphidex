@@ -23,6 +23,30 @@ class GoldController {
 
   bool hasGold(String id) => gold.value.contains(id);
 
+  bool needsMigration(Iterable<CreatureCardCarrier> enemies) {
+    for (final enemy in enemies) {
+      final key = creatureCardProgressKey(enemy);
+      final stored = _progress.value[key];
+      if (stored != null) {
+        final normalized = normalizeCreatureCardProgress(enemy, stored);
+        if (normalized != stored) {
+          return true;
+        }
+        continue;
+      }
+
+      final legacy = resolveLegacyCreatureCardProgress(
+        enemy,
+        _progress.value,
+        legacyGoldIds: gold.value,
+      );
+      if (legacy != null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   CreatureCardProgress progressFor(CreatureCardCarrier enemy) {
     return resolveCreatureCardProgress(
       enemy,
@@ -69,34 +93,72 @@ class GoldController {
   }
 
   Future<void> ensureMigrated(Iterable<CreatureCardCarrier> enemies) async {
-    if (gold.value.isEmpty) {
-      return;
-    }
-
     final next = Map<String, CreatureCardProgress>.from(_progress.value);
     var changed = false;
+    final normalizedLegacy = <String>{};
+
     for (final enemy in enemies) {
       final key = creatureCardProgressKey(enemy);
-      if (next.containsKey(key)) {
-        continue;
+      final stored = next[key];
+      if (stored != null) {
+        final normalized = normalizeCreatureCardProgress(enemy, stored);
+        if (normalized == CreatureCardProgress.unowned) {
+          next.remove(key);
+        } else if (normalized != stored) {
+          next[key] = normalized;
+        }
+        if (normalized != stored) {
+          changed = true;
+        }
+      } else {
+        final migrated = resolveLegacyCreatureCardProgress(
+          enemy,
+          next,
+          legacyGoldIds: gold.value,
+        );
+        if (migrated != null && migrated != CreatureCardProgress.unowned) {
+          next[key] = normalizeCreatureCardProgress(enemy, migrated);
+          changed = true;
+        }
       }
-      final migrated = migrateLegacyCreatureCardProgress(enemy, gold.value);
-      if (migrated == CreatureCardProgress.unowned) {
-        continue;
+
+      final normalized = next[key];
+      final aliases = creatureCardLegacyAliases(enemy);
+      if (normalized == CreatureCardProgress.gold) {
+        normalizedLegacy.add(enemy.id.trim());
+        if (enemy.goldLinkId != null) {
+          final linkId = enemy.goldLinkId!.trim();
+          if (linkId.isNotEmpty) {
+            normalizedLegacy.add(linkId);
+          }
+        }
       }
-      next[key] = migrated;
-      changed = true;
+      for (final alias in aliases) {
+        if (alias == key) {
+          continue;
+        }
+        if (next.remove(alias) != null) {
+          changed = true;
+        }
+      }
     }
 
-    if (!changed) {
+    final legacyChanged =
+        normalizedLegacy.length != gold.value.length ||
+        !normalizedLegacy.containsAll(gold.value) ||
+        !gold.value.containsAll(normalizedLegacy);
+
+    if (!changed && !legacyChanged) {
       return;
     }
 
     _progress.value = next;
+    gold.value = normalizedLegacy;
     await LocalStorage.setString(
       creatureCardProgressStorageKey,
       encodeCreatureCardProgressMap(next),
     );
+    await LocalStorage.setStringSet(_key, normalizedLegacy);
   }
 
   Future<CreatureCardProgress> cycle(CreatureCardCarrier enemy) async {

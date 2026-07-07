@@ -1167,8 +1167,7 @@ class _CreatureCardSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final canToggle =
-        !enemy.defaultGold && shouldTrackCreatureCardProgress(enemy);
+    final canToggle = shouldTrackCreatureCardProgress(enemy);
     final current = normalizeCreatureCardProgress(enemy, progress);
     final next = nextCreatureCardProgress(enemy, current);
     final cardAsset =
@@ -1180,6 +1179,7 @@ class _CreatureCardSection extends StatelessWidget {
     };
 
     return Column(
+      key: showViewer ? const ValueKey('creature-card-section') : null,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -1229,7 +1229,7 @@ class _CreatureCardProgressButton extends StatelessWidget {
     final actionLabel =
         '${l10n.creatureCardProgressTitle}: '
         '${l10n.creatureCardProgressLabel(current)}. '
-        '${canToggle ? l10n.creatureCardProgressLabel(next) : l10n.goldDefault}.';
+        '${l10n.creatureCardProgressLabel(next)}.';
 
     return Semantics(
       button: canToggle,
@@ -1253,26 +1253,9 @@ class _CreatureCardProgressButton extends StatelessWidget {
               _CreatureCardProgressIcon(progress: current, color: accentColor),
               const SizedBox(width: 12),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.creatureCardProgressLabel(current),
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      enemy.defaultGold
-                          ? l10n.goldDefault
-                          : (canToggle
-                                ? l10n.creatureCardProgressLabel(next)
-                                : l10n.creatureCardProgressLabel(current)),
-                      style: TextStyle(
-                        color: colorScheme.onSurfaceVariant,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  l10n.creatureCardProgressLabel(current),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
                 ),
               ),
               if (canToggle)
@@ -2414,7 +2397,10 @@ class _HealthBar extends StatelessWidget {
     }
 
     final healthInfo = currentHealth;
-    final rating = healthInfo.rating.clamp(1, 5);
+    final rating = HealthInfo.visualRating(
+      fallbackRating: healthInfo.rating,
+      value: healthInfo.value,
+    );
     final fillColor = _ratingColor(rating);
 
     return Column(

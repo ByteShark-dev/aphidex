@@ -215,6 +215,28 @@ void main() {
       await tester.pump(const Duration(milliseconds: 50));
     },
   );
+
+  testWidgets(
+    'tutorial ignores rapid double advance during route transitions',
+    (tester) async {
+      await tester.pumpWidget(_buildTutorialApp(const EnemyListScreen()));
+      await _pumpAppReady(tester);
+      await _showTutorial(tester);
+
+      for (var i = 0; i < 5; i++) {
+        await _tapTutorialNext(tester);
+        await _pumpAppReady(tester, milliseconds: 500);
+      }
+
+      final nextButton = find.byKey(const ValueKey('tutorial-next'));
+      await tester.tap(nextButton, warnIfMissed: false);
+      await tester.tap(nextButton, warnIfMissed: false);
+      await _pumpAppReady(tester, milliseconds: 900);
+
+      expect(tester.takeException(), isNull);
+      expect(find.byType(EnemyDetailScreen), findsOneWidget);
+    },
+  );
 }
 
 Widget _buildTutorialApp(Widget home) {

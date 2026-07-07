@@ -41,7 +41,11 @@ void main() {
   });
 
   test('gold-only cards toggle between unowned and gold', () {
-    const enemy = _FakeCardCarrier(id: 'gold_only', cardGold: 'gold.webp');
+    const enemy = _FakeCardCarrier(
+      id: 'gold_only',
+      cardGold: 'gold.webp',
+      defaultGold: true,
+    );
 
     expect(
       nextCreatureCardProgress(enemy, CreatureCardProgress.unowned),
@@ -66,6 +70,59 @@ void main() {
     );
     expect(resolveCreatureCardAsset(enemy, CreatureCardProgress.gold), isNull);
   });
+
+  test('legacy marked gold-only cards do not auto-own without a mark', () {
+    const enemy = _FakeCardCarrier(
+      id: 'gold_only',
+      cardGold: 'gold.webp',
+      defaultGold: true,
+    );
+
+    expect(
+      resolveCreatureCardProgress(
+        enemy,
+        const <String, CreatureCardProgress>{},
+      ),
+      CreatureCardProgress.unowned,
+    );
+    expect(
+      migrateLegacyCreatureCardProgress(
+        enemy,
+        const <String, CreatureCardProgress>{},
+        legacyGoldIds: {'gold_only'},
+      ),
+      CreatureCardProgress.gold,
+    );
+  });
+
+  test(
+    'legacy invalid gold states on normal-only cards migrate to obtained',
+    () {
+      const enemy = _FakeCardCarrier(
+        id: 'normal_only',
+        cardNormal: 'normal.webp',
+        goldLinkId: 'linked_normal_only',
+      );
+
+      expect(
+        migrateLegacyCreatureCardProgress(
+          enemy,
+          const <String, CreatureCardProgress>{},
+          legacyGoldIds: {'linked_normal_only'},
+        ),
+        CreatureCardProgress.obtained,
+      );
+      expect(
+        migrateLegacyCreatureCardProgress(
+          enemy,
+          const <String, CreatureCardProgress>{
+            'linked_normal_only': CreatureCardProgress.gold,
+          },
+        ),
+        CreatureCardProgress.obtained,
+      );
+    },
+  );
 }
 
 class _FakeCardCarrier implements CreatureCardCarrier {
@@ -73,21 +130,21 @@ class _FakeCardCarrier implements CreatureCardCarrier {
     required this.id,
     this.cardNormal = '',
     this.cardGold = '',
+    this.goldLinkId,
+    this.defaultGold = false,
   });
 
   @override
   final String id;
   final String cardNormal;
   final String cardGold;
-
   @override
-  bool get defaultGold => false;
+  final String? goldLinkId;
+  @override
+  final bool defaultGold;
 
   @override
   String get game => 'g2';
-
-  @override
-  String? get goldLinkId => null;
 
   @override
   bool get hasCreatureCard => cardNormal.isNotEmpty || cardGold.isNotEmpty;

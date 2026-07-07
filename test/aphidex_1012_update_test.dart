@@ -58,6 +58,13 @@ void main() {
     expect(enemy.healthDisplay, HealthDisplayMode.invulnerable);
   });
 
+  test('health visual mapper normalizes representative HP thresholds', () {
+    expect(HealthInfo.visualRating(fallbackRating: 5, value: 320), 1);
+    expect(HealthInfo.visualRating(fallbackRating: 1, value: 495), 2);
+    expect(HealthInfo.visualRating(fallbackRating: 1, value: 938), 3);
+    expect(HealthInfo.visualRating(fallbackRating: 1, value: 1500), 4);
+  });
+
   testWidgets('empty weakness and resistance sections do not render headings', (
     tester,
   ) async {

@@ -3,10 +3,37 @@ import 'package:flutter/material.dart';
 import '../controllers/tutorial_controller.dart';
 import '../i18n/app_localizations.dart';
 
-class TutorialHost extends StatelessWidget {
+class TutorialHost extends StatefulWidget {
   final Widget child;
 
   const TutorialHost({super.key, required this.child});
+
+  @override
+  State<TutorialHost> createState() => _TutorialHostState();
+}
+
+class _TutorialHostState extends State<TutorialHost>
+    with WidgetsBindingObserver {
+  TutorialStep? _lastStep;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      TutorialController.instance.syncCurrentTargetVisibility();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +42,22 @@ class TutorialHost extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        child,
+        widget.child,
         ListenableBuilder(
           listenable: controller,
           builder: (context, _) {
             final step = controller.step;
             if (step == null) {
+              _lastStep = null;
               return const SizedBox.shrink();
             }
 
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              controller.syncCurrentTargetVisibility();
-            });
+            if (_lastStep != step) {
+              _lastStep = step;
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                controller.syncCurrentTargetVisibility();
+              });
+            }
 
             final targetRect = controller.currentTargetRect(context);
             final l10n = context.l10n;

@@ -9,6 +9,7 @@ class Enemy implements CreatureCardCarrier {
   final String? collectionGroup;
   final LocalizedText name;
   final int? order;
+  @override
   final String game;
   final String? temperament;
 
@@ -528,6 +529,25 @@ class HealthInfo {
   final int? value;
 
   const HealthInfo({required this.rating, this.value});
+
+  static int visualRating({required int fallbackRating, int? value}) {
+    if (value == null) {
+      return fallbackRating.clamp(1, 5);
+    }
+    if (value < 400) {
+      return 1;
+    }
+    if (value < 700) {
+      return 2;
+    }
+    if (value < 1100) {
+      return 3;
+    }
+    if (value < 2000) {
+      return 4;
+    }
+    return 5;
+  }
 
   factory HealthInfo.fromJson(Map<String, dynamic> json) => HealthInfo(
     rating: (json['rating'] ?? 1) as int,

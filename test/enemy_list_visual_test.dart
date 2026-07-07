@@ -14,7 +14,9 @@ import 'package:aphidex/models/enemy.dart';
 import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/models/game_pick.dart';
 import 'package:aphidex/controllers/review_prompt_controller.dart';
+import 'package:aphidex/screens/enemy_detail_screen.dart';
 import 'package:aphidex/screens/enemy_list_screen.dart';
+import 'package:aphidex/widgets/state_panels.dart';
 import 'package:aphidex/widgets/tutorial_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -228,6 +230,99 @@ void main() {
     expect(find.text('No gold cards yet'), findsOneWidget);
     await _disposeTestApp(tester);
   });
+
+  testWidgets(
+    'legacy gold hydration shows a loader first and rebuilds filtered progress without taps',
+    (tester) async {
+      await LocalStorage.setBool('ui_filter_gold', true);
+      await LocalStorage.setStringSet('gold_cards', {'g2_regular_test'});
+      GoldController.instance.reloadFromStorage();
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          EnemyListScreen(enemiesLoaderOverride: (_) async => _testEntries),
+        ),
+      );
+
+      await tester.pump();
+      expect(find.byType(AphidexLoadingPanel), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('enemy-tile-regular_test')),
+        findsNothing,
+      );
+
+      await _pumpListReady(tester);
+
+      expect(
+        find.byKey(const ValueKey('enemy-tile-regular_test')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(const ValueKey('enemy-tile-g2_event_test')),
+        findsNothing,
+      );
+      await _disposeTestApp(tester);
+    },
+  );
+
+  testWidgets('favorite and progress actions do not open the detail route', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _buildTestApp(
+        EnemyListScreen(enemiesLoaderOverride: (_) async => _testEntries),
+      ),
+    );
+    await _pumpListReady(tester);
+
+    await tester.tap(
+      find.byKey(const ValueKey('favorite-toggle-g2_regular_test')),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(EnemyDetailScreen), findsNothing);
+
+    await tester.tap(
+      find.byKey(const ValueKey('card-progress-g2_regular_test')),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(EnemyDetailScreen), findsNothing);
+
+    await _disposeTestApp(tester);
+  });
+
+  testWidgets(
+    'master-detail keeps the right pane while favorites is empty and buttons stay uniform',
+    (tester) async {
+      listTesterView.physicalSize = const Size(1024, 768);
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          EnemyListScreen(enemiesLoaderOverride: (_) async => _testEntries),
+        ),
+      );
+      await _pumpListReady(tester);
+
+      final favoritesSize = tester.getSize(
+        find.byKey(const ValueKey('favorites-filter-chip')),
+      );
+      final goldSize = tester.getSize(
+        find.byKey(const ValueKey('gold-filter-chip')),
+      );
+      final filtersSize = tester.getSize(
+        find.byKey(const ValueKey('open-secondary-filters')),
+      );
+
+      expect(favoritesSize, goldSize);
+      expect(favoritesSize, filtersSize);
+
+      await tester.tap(find.byKey(const ValueKey('favorites-filter-chip')));
+      await tester.pump(const Duration(milliseconds: 300));
+
+      expect(find.text('No favorites yet'), findsOneWidget);
+      expect(find.text('Select an entry'), findsOneWidget);
+      await _disposeTestApp(tester);
+    },
+  );
 
   testWidgets('empty search state stays stable on a short phone layout', (
     tester,

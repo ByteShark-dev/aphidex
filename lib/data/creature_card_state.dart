@@ -81,6 +81,33 @@ bool shouldTrackCreatureCardProgress(CreatureCardCarrier enemy) {
           creatureCardHasGoldVariant(enemy));
 }
 
+Set<String> creatureCardLegacyAliases(CreatureCardCarrier enemy) {
+  final aliases = <String>{
+    enemy.id.trim(),
+    creatureCardProgressKey(enemy),
+    if (enemy.goldLinkId != null) enemy.goldLinkId!.trim(),
+    if (enemy.goldLinkId != null) '${enemy.game}:${enemy.goldLinkId!.trim()}',
+  }..removeWhere((value) => value.isEmpty);
+
+  final expanded = <String>{...aliases};
+  for (final alias in aliases) {
+    for (final separator in const [':', '|', '/']) {
+      final segments = alias.split(separator);
+      if (segments.length != 2) {
+        continue;
+      }
+      final left = segments.first.trim();
+      final right = segments.last.trim();
+      if (left.isNotEmpty && right.isNotEmpty) {
+        expanded
+          ..add(left)
+          ..add(right);
+      }
+    }
+  }
+  return expanded;
+}
+
 CreatureCardProgress normalizeCreatureCardProgress(
   CreatureCardCarrier enemy,
   CreatureCardProgress progress,
@@ -91,15 +118,6 @@ CreatureCardProgress normalizeCreatureCardProgress(
 
   final hasNormal = creatureCardHasNormalVariant(enemy);
   final hasGold = creatureCardHasGoldVariant(enemy);
-  if (enemy.defaultGold) {
-    if (hasGold) {
-      return CreatureCardProgress.gold;
-    }
-    if (hasNormal) {
-      return CreatureCardProgress.obtained;
-    }
-    return CreatureCardProgress.unowned;
-  }
 
   switch (progress) {
     case CreatureCardProgress.unowned:
@@ -128,9 +146,6 @@ CreatureCardProgress nextCreatureCardProgress(
   final hasNormal = creatureCardHasNormalVariant(enemy);
   final hasGold = creatureCardHasGoldVariant(enemy);
 
-  if (enemy.defaultGold) {
-    return normalized;
-  }
   if (!hasNormal && !hasGold) {
     return CreatureCardProgress.unowned;
   }
@@ -155,35 +170,87 @@ CreatureCardProgress nextCreatureCardProgress(
   };
 }
 
-CreatureCardProgress migrateLegacyCreatureCardProgress(
+CreatureCardProgress? resolveLegacyCreatureCardProgress(
   CreatureCardCarrier enemy,
-  Set<String> legacyGoldIds,
-) {
+  CreatureCardProgressMap progressByKey, {
+  Set<String> legacyGoldIds = const <String>{},
+}) {
   if (!shouldTrackCreatureCardProgress(enemy)) {
-    return CreatureCardProgress.unowned;
-  }
-  if (enemy.defaultGold) {
-    return normalizeCreatureCardProgress(enemy, CreatureCardProgress.gold);
-  }
-
-  final linkedIds = <String>{
-    enemy.id.trim(),
-    if (enemy.goldLinkId != null) enemy.goldLinkId!.trim(),
-  }..removeWhere((value) => value.isEmpty);
-  final hadLegacyGold = linkedIds.any(legacyGoldIds.contains);
-  if (!hadLegacyGold) {
-    return CreatureCardProgress.unowned;
+    return null;
   }
 
   final hasNormal = creatureCardHasNormalVariant(enemy);
   final hasGold = creatureCardHasGoldVariant(enemy);
-  if (hasGold) {
-    return CreatureCardProgress.gold;
+  final aliases = creatureCardLegacyAliases(enemy);
+
+  CreatureCardProgress? legacyProgress;
+  for (final alias in aliases) {
+    final stored = progressByKey[alias];
+    if (stored == null) {
+      continue;
+    }
+    legacyProgress = stored;
+    if (stored == CreatureCardProgress.gold) {
+      break;
+    }
+    if (stored == CreatureCardProgress.obtained && hasNormal) {
+      break;
+    }
   }
-  if (hasNormal) {
-    return CreatureCardProgress.obtained;
+
+  final legacyMarked = aliases.any((alias) => legacyGoldIds.contains(alias));
+  if (legacyMarked) {
+    if (hasGold) {
+      return CreatureCardProgress.gold;
+    }
+    if (hasNormal) {
+      return CreatureCardProgress.obtained;
+    }
+    return null;
+  }
+
+  if (legacyProgress == null) {
+    return null;
+  }
+  if (legacyProgress == CreatureCardProgress.gold) {
+    if (hasGold) {
+      return CreatureCardProgress.gold;
+    }
+    if (hasNormal) {
+      return CreatureCardProgress.obtained;
+    }
+    return null;
+  }
+  if (legacyProgress == CreatureCardProgress.obtained) {
+    if (hasNormal) {
+      return CreatureCardProgress.obtained;
+    }
+    if (hasGold) {
+      return CreatureCardProgress.gold;
+    }
+    return null;
   }
   return CreatureCardProgress.unowned;
+}
+
+CreatureCardProgress migrateLegacyCreatureCardProgress(
+  CreatureCardCarrier enemy,
+  CreatureCardProgressMap progressByKey, {
+  Set<String>? legacyGoldIds,
+}) {
+  if (!shouldTrackCreatureCardProgress(enemy)) {
+    return CreatureCardProgress.unowned;
+  }
+
+  return normalizeCreatureCardProgress(
+    enemy,
+    resolveLegacyCreatureCardProgress(
+          enemy,
+          progressByKey,
+          legacyGoldIds: legacyGoldIds ?? const <String>{},
+        ) ??
+        CreatureCardProgress.unowned,
+  );
 }
 
 CreatureCardProgress resolveCreatureCardProgress(
@@ -199,7 +266,11 @@ CreatureCardProgress resolveCreatureCardProgress(
   if (stored != null) {
     return normalizeCreatureCardProgress(enemy, stored);
   }
-  return migrateLegacyCreatureCardProgress(enemy, legacyGoldIds);
+  return migrateLegacyCreatureCardProgress(
+    enemy,
+    progressByKey,
+    legacyGoldIds: legacyGoldIds,
+  );
 }
 
 CreatureCardVariant? resolveCreatureCardVariant(
