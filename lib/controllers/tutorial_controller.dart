@@ -257,13 +257,13 @@ class TutorialController extends ChangeNotifier {
   List<EnemyIndexEntry> _demoVariants = const [];
   String? _demoEffectId;
   bool _syncingAnchor = false;
-  TutorialStep? _missingAnchorStep;
-  int _missingAnchorChecks = 0;
-  bool _closing = false;
+  bool _targetRefreshQueued = false;
+  bool _isFinishing = false;
   bool _transitionLocked = false;
 
   TutorialStep? get step => _step;
   bool get isActive => _step != null;
+  bool get isBusy => _syncingAnchor || _transitionLocked || _isFinishing;
   String? get demoEnemyId => _demoEnemy?.id;
   String? get demoEffectId => _demoEffectId;
 
@@ -278,84 +278,108 @@ class TutorialController extends ChangeNotifier {
   }
 
   Rect? currentTargetRect(BuildContext overlayContext) {
-    final anchorId = _currentAnchorId;
-    if (anchorId == null) {
+    final resolvedTarget = _resolveCurrentAnchor();
+    if (resolvedTarget == null) {
       return null;
     }
 
-    final targetContext = _anchorKeys[anchorId]?.currentContext;
-    if (targetContext == null || !targetContext.mounted) {
-      return null;
-    }
-
-    RenderObject? targetBox;
     RenderObject? overlayBox;
     try {
-      targetBox = targetContext.findRenderObject();
       overlayBox = overlayContext.findRenderObject();
     } catch (_) {
       return null;
     }
-    if (targetBox is! RenderBox ||
-        overlayBox is! RenderBox ||
-        !targetBox.attached ||
-        !overlayBox.attached) {
+    if (overlayBox is! RenderBox ||
+        !overlayBox.attached ||
+        !overlayBox.hasSize ||
+        !_hasValidSize(overlayBox.size)) {
       return null;
     }
 
-    final topLeft = targetBox.localToGlobal(Offset.zero, ancestor: overlayBox);
-    return topLeft & targetBox.size;
+    try {
+      final topLeft = resolvedTarget.renderBox.localToGlobal(
+        Offset.zero,
+        ancestor: overlayBox,
+      );
+      if (!topLeft.dx.isFinite || !topLeft.dy.isFinite) {
+        return null;
+      }
+      return topLeft & resolvedTarget.renderBox.size;
+    } catch (_) {
+      return null;
+    }
   }
 
-  Future<void> syncCurrentTargetVisibility() async {
+  void requestTargetRefresh() {
+    if (_step == null ||
+        _targetRefreshQueued ||
+        _syncingAnchor ||
+        _isFinishing) {
+      return;
+    }
+
+    _targetRefreshQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _targetRefreshQueued = false;
+      unawaited(syncCurrentTargetVisibility(waitForNextFrame: false));
+    });
+  }
+
+  Future<void> syncCurrentTargetVisibility({
+    bool waitForNextFrame = true,
+  }) async {
     final step = _step;
-    if (step == null || _syncingAnchor) {
+    if (step == null || _syncingAnchor || _isFinishing) {
       return;
     }
 
-    final anchorId = _currentAnchorId;
-    if (anchorId == null) {
-      return;
-    }
-
-    final targetContext = _anchorKeys[anchorId]?.currentContext;
-    if (targetContext == null || !targetContext.mounted) {
-      if (_missingAnchorStep != step) {
-        _missingAnchorStep = step;
-        _missingAnchorChecks = 1;
-        return;
-      }
-
-      _missingAnchorChecks++;
-      if (_missingAnchorChecks < 3) {
-        return;
-      }
-
-      _missingAnchorChecks = 0;
-      _missingAnchorStep = null;
-      await _skipMissingStep(step);
-      return;
-    }
-
-    _missingAnchorStep = null;
-    _missingAnchorChecks = 0;
     _syncingAnchor = true;
+    notifyListeners();
     try {
-      if (!targetContext.mounted) {
+      if (waitForNextFrame) {
+        await _waitForFrame();
+      }
+      if (_step != step || _isFinishing) {
         return;
       }
-      if (Scrollable.maybeOf(targetContext) != null) {
+
+      var resolvedTarget = await _resolveCurrentAnchorAfterFrames();
+      if (_step != step || _isFinishing) {
+        return;
+      }
+      if (resolvedTarget == null) {
+        await _skipMissingStep(step);
+        return;
+      }
+
+      final targetContext = resolvedTarget.context;
+      if (!targetContext.mounted) {
+        await _skipMissingStep(step);
+        return;
+      }
+
+      final scrollable = Scrollable.maybeOf(targetContext);
+      if (scrollable != null) {
         await Scrollable.ensureVisible(
           targetContext,
           alignment: 0.12,
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeOutCubic,
         );
+        await _waitForFrame();
+        if (_step != step || _isFinishing) {
+          return;
+        }
+        resolvedTarget = await _resolveCurrentAnchorAfterFrames(attempts: 1);
+        if (resolvedTarget == null) {
+          await _skipMissingStep(step);
+        }
       }
     } catch (_) {
       // Ignore transient route/layout races while the next frame settles.
     } finally {
       _syncingAnchor = false;
+      notifyListeners();
     }
   }
 
@@ -383,7 +407,7 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> startFromSettings() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || isActive || _closing) {
+    if (navigator == null || isActive || _isFinishing) {
       return;
     }
 
@@ -505,9 +529,8 @@ class TutorialController extends ChangeNotifier {
     _demoVariants = const [];
     _demoEffectId = null;
     _syncingAnchor = false;
-    _missingAnchorStep = null;
-    _missingAnchorChecks = 0;
-    _closing = false;
+    _targetRefreshQueued = false;
+    _isFinishing = false;
     _transitionLocked = false;
     _anchorKeys.clear();
     _promptVisible = false;
@@ -520,7 +543,7 @@ class TutorialController extends ChangeNotifier {
 
   @visibleForTesting
   void debugStartStepForTests(TutorialStep step) {
-    _closing = false;
+    _isFinishing = false;
     _autoStartChecked = true;
     _transitionLocked = false;
     _step = step;
@@ -597,7 +620,7 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> _runLocked(Future<void> Function() action) async {
-    if (_closing || _transitionLocked) {
+    if (_isFinishing || _transitionLocked) {
       return;
     }
     _transitionLocked = true;
@@ -609,10 +632,11 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> _goToStep(TutorialStep value) async {
-    if (_closing) {
+    if (_isFinishing) {
       return;
     }
     _setStep(value);
+    requestTargetRefresh();
     await _waitForFrame();
   }
 
@@ -633,7 +657,7 @@ class TutorialController extends ChangeNotifier {
   Future<void> _openDemoEnemy() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
     final enemy = _demoEnemy;
-    if (navigator == null || enemy == null || _closing) {
+    if (navigator == null || enemy == null || _isFinishing) {
       return;
     }
 
@@ -654,7 +678,7 @@ class TutorialController extends ChangeNotifier {
   Future<void> _openDemoCodex() async {
     final context = ReviewPromptController.navigatorKey.currentContext;
     final effectId = _demoEffectId;
-    if (context == null || effectId == null || _closing) {
+    if (context == null || effectId == null || _isFinishing) {
       return;
     }
 
@@ -664,7 +688,7 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> _popRouteIfPossible() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || !navigator.canPop() || _closing) {
+    if (navigator == null || !navigator.canPop() || _isFinishing) {
       return;
     }
     navigator.pop();
@@ -672,10 +696,10 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> _close({required bool markCompleted}) async {
-    if (_closing) {
+    if (_isFinishing) {
       return;
     }
-    _closing = true;
+    _isFinishing = true;
 
     if (markCompleted) {
       await LocalStorage.setBool(completionKey, true);
@@ -685,28 +709,12 @@ class TutorialController extends ChangeNotifier {
     _demoEnemy = null;
     _demoVariants = const [];
     _demoEffectId = null;
-    _missingAnchorStep = null;
-    _missingAnchorChecks = 0;
+    _targetRefreshQueued = false;
     notifyListeners();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      unawaited(_popToRootAfterFrame());
-    });
-  }
-
-  Future<void> _popToRootAfterFrame() async {
-    final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || !navigator.mounted) {
-      _closing = false;
-      return;
-    }
-
-    await Future<void>.delayed(const Duration(milliseconds: 16));
-    while (navigator.canPop()) {
-      navigator.pop();
-      await Future<void>.delayed(const Duration(milliseconds: 32));
-    }
-    _closing = false;
+    await Future<void>.delayed(Duration.zero);
+    _isFinishing = false;
+    notifyListeners();
   }
 
   String? get _currentAnchorId {
@@ -771,4 +779,68 @@ class TutorialController extends ChangeNotifier {
         return;
     }
   }
+
+  _ResolvedTutorialAnchor? _resolveCurrentAnchor() {
+    final anchorId = _currentAnchorId;
+    if (anchorId == null) {
+      return null;
+    }
+
+    return _resolveAnchorContext(_anchorKeys[anchorId]?.currentContext);
+  }
+
+  Future<_ResolvedTutorialAnchor?> _resolveCurrentAnchorAfterFrames({
+    int attempts = 2,
+  }) async {
+    for (var index = 0; index < attempts; index++) {
+      final resolved = _resolveCurrentAnchor();
+      if (resolved != null) {
+        return resolved;
+      }
+      if (index != attempts - 1) {
+        await _waitForFrame();
+      }
+    }
+    return null;
+  }
+
+  _ResolvedTutorialAnchor? _resolveAnchorContext(BuildContext? targetContext) {
+    if (targetContext == null || !targetContext.mounted) {
+      return null;
+    }
+
+    RenderObject? targetObject;
+    try {
+      targetObject = targetContext.findRenderObject();
+    } catch (_) {
+      return null;
+    }
+    if (targetObject is! RenderBox ||
+        !targetObject.attached ||
+        !targetObject.hasSize ||
+        !_hasValidSize(targetObject.size)) {
+      return null;
+    }
+
+    return _ResolvedTutorialAnchor(
+      context: targetContext,
+      renderBox: targetObject,
+    );
+  }
+
+  bool _hasValidSize(Size size) =>
+      size.width.isFinite &&
+      size.height.isFinite &&
+      size.width > 0 &&
+      size.height > 0;
+}
+
+class _ResolvedTutorialAnchor {
+  const _ResolvedTutorialAnchor({
+    required this.context,
+    required this.renderBox,
+  });
+
+  final BuildContext context;
+  final RenderBox renderBox;
 }

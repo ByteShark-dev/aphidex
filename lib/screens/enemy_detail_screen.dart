@@ -338,6 +338,9 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
         );
       }
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      TutorialController.instance.requestTargetRefresh();
+    });
   }
 
   @override
@@ -486,6 +489,7 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
         ? null
         : tutorial.keyFor(tutorialAnchorDetailEffect(tutorialEffectId));
     var tutorialAnchorAssigned = false;
+    var detailEffectsAnchorAssigned = false;
 
     GlobalKey? consumeTutorialEffectKey(String effectId) {
       if (tutorialEffectKey == null ||
@@ -495,6 +499,17 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       }
       tutorialAnchorAssigned = true;
       return tutorialEffectKey;
+    }
+
+    Widget wrapDetailEffectsAnchor(Widget child) {
+      if (detailEffectsAnchorAssigned) {
+        return child;
+      }
+      detailEffectsAnchorAssigned = true;
+      return KeyedSubtree(
+        key: tutorial.keyFor(tutorialAnchorDetailEffects),
+        child: child,
+      );
     }
 
     return Scaffold(
@@ -529,7 +544,7 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
           ),
           children: [
             if (_variantCount > 1) ...[
-              Container(
+              KeyedSubtree(
                 key: tutorial.keyFor(tutorialAnchorDetailVariant),
                 child: _VariantSwitcher(
                   selectedGame: enemy.game,
@@ -544,6 +559,39 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                     children: [
                       Expanded(
                         flex: 11,
+                        child: KeyedSubtree(
+                          key: tutorial.keyFor(tutorialAnchorDetailSummary),
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 180),
+                            switchInCurve: Curves.easeOutCubic,
+                            switchOutCurve: Curves.easeOutCubic,
+                            child: _DetailPhotoPanel(
+                              key: ValueKey(
+                                'detail-photo-${enemy.id}-${selectedInfusion?.id ?? 'base'}',
+                              ),
+                              photoAsset: visiblePhotoAsset,
+                              title: enemy.name.resolve(languageCode),
+                              gamePick: _gamePickForEnemy(enemy),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 9,
+                        child: _DetailSummarySidebar(
+                          enemy: enemy,
+                          gold: gold,
+                          l10n: l10n,
+                          showCreatureCards: showCreatureCards,
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      KeyedSubtree(
+                        key: tutorial.keyFor(tutorialAnchorDetailSummary),
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 180),
                           switchInCurve: Curves.easeOutCubic,
@@ -558,45 +606,12 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        flex: 9,
-                        child: Container(
-                          key: tutorial.keyFor(tutorialAnchorDetailSummary),
-                          child: _DetailSummarySidebar(
-                            enemy: enemy,
-                            gold: gold,
-                            l10n: l10n,
-                            showCreatureCards: showCreatureCards,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 180),
-                        switchInCurve: Curves.easeOutCubic,
-                        switchOutCurve: Curves.easeOutCubic,
-                        child: _DetailPhotoPanel(
-                          key: ValueKey(
-                            'detail-photo-${enemy.id}-${selectedInfusion?.id ?? 'base'}',
-                          ),
-                          photoAsset: visiblePhotoAsset,
-                          title: enemy.name.resolve(languageCode),
-                          gamePick: _gamePickForEnemy(enemy),
-                        ),
-                      ),
                       const SizedBox(height: 12),
-                      Container(
-                        key: tutorial.keyFor(tutorialAnchorDetailSummary),
-                        child: _DetailSummarySidebar(
-                          enemy: enemy,
-                          gold: gold,
-                          l10n: l10n,
-                          showCreatureCards: showCreatureCards,
-                        ),
+                      _DetailSummarySidebar(
+                        enemy: enemy,
+                        gold: gold,
+                        l10n: l10n,
+                        showCreatureCards: showCreatureCards,
                       ),
                     ],
                   ),
@@ -626,137 +641,170 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               const SizedBox(height: 18),
             ],
             if (_hasV2(enemy)) ...[
-              Container(
-                key: tutorial.keyFor(tutorialAnchorDetailEffects),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (normalizedElementalWeaknesses.isNotEmpty) ...[
-                      Text(
-                        l10n.elementalWeakness,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (normalizedElementalWeaknesses.isNotEmpty) ...[
+                    wrapDetailEffectsAnchor(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.elementalWeakness,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 8),
+                          _BonusWrap(
+                            bonuses: normalizedElementalWeaknesses,
+                            tutorialEffectId: tutorialEffectId,
+                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8),
-                      _BonusWrap(
-                        bonuses: normalizedElementalWeaknesses,
-                        tutorialEffectId: tutorialEffectId,
-                        tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                    if (normalizedDamageWeaknesses.isNotEmpty) ...[
-                      Text(
-                        l10n.damageWeakness,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: 8),
-                      _BonusWrap(
-                        bonuses: normalizedDamageWeaknesses,
-                        tutorialEffectId: tutorialEffectId,
-                        tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                    if (effectiveResistances.isNotEmpty) ...[
-                      Text(
-                        l10n.resistancesTitle,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: 8),
-                      _BonusWrap(
-                        bonuses: effectiveResistances,
-                        dim: true,
-                        tutorialEffectId: tutorialEffectId,
-                        tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                      ),
-                      const SizedBox(height: 16),
-                    ],
+                    ),
+                    const SizedBox(height: 16),
                   ],
-                ),
+                  if (normalizedDamageWeaknesses.isNotEmpty) ...[
+                    wrapDetailEffectsAnchor(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.damageWeakness,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 8),
+                          _BonusWrap(
+                            bonuses: normalizedDamageWeaknesses,
+                            tutorialEffectId: tutorialEffectId,
+                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                  if (effectiveResistances.isNotEmpty) ...[
+                    wrapDetailEffectsAnchor(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.resistancesTitle,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 8),
+                          _BonusWrap(
+                            bonuses: effectiveResistances,
+                            dim: true,
+                            tutorialEffectId: tutorialEffectId,
+                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ],
               ),
               const SizedBox(height: 18),
             ],
             if (!_hasV2(enemy) &&
                 (weaknessesV1.isNotEmpty || resistancesV1.isNotEmpty)) ...[
-              Container(
-                key: tutorial.keyFor(tutorialAnchorDetailEffects),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (weaknessesV1.isNotEmpty) ...[
-                      Text(
-                        l10n.weaknessesTitle,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: weaknessesV1
-                            .map(
-                              (weakness) => Container(
-                                key: consumeTutorialEffectKey(weakness),
-                                child: InkWell(
-                                  key: ValueKey(
-                                    'effect-legacy-weakness-$weakness',
-                                  ),
-                                  borderRadius: BorderRadius.circular(999),
-                                  onTap: () => _openEffectDetails(
-                                    context,
-                                    weakness,
-                                    tutorialEffectId: tutorialEffectId,
-                                  ),
-                                  child: IconBadge.asset(
-                                    assetName: UiMapper.effectIcon(weakness),
-                                    size: 26,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                      if (resistancesV1.isNotEmpty) const SizedBox(height: 16),
-                    ],
-                    if (resistancesV1.isNotEmpty) ...[
-                      Text(
-                        l10n.resistancesTitle,
-                        style: const TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: resistancesV1
-                            .map(
-                              (resistance) => Opacity(
-                                opacity: 0.75,
-                                child: Container(
-                                  key: consumeTutorialEffectKey(resistance),
-                                  child: InkWell(
-                                    key: ValueKey(
-                                      'effect-legacy-resistance-$resistance',
-                                    ),
-                                    borderRadius: BorderRadius.circular(999),
-                                    onTap: () => _openEffectDetails(
-                                      context,
-                                      resistance,
-                                      tutorialEffectId: tutorialEffectId,
-                                    ),
-                                    child: IconBadge.asset(
-                                      assetName: UiMapper.effectIcon(
-                                        resistance,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (weaknessesV1.isNotEmpty) ...[
+                    wrapDetailEffectsAnchor(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.weaknessesTitle,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: weaknessesV1
+                                .map(
+                                  (weakness) => Container(
+                                    key: consumeTutorialEffectKey(weakness),
+                                    child: InkWell(
+                                      key: ValueKey(
+                                        'effect-legacy-weakness-$weakness',
                                       ),
-                                      size: 24,
+                                      borderRadius: BorderRadius.circular(999),
+                                      onTap: () => _openEffectDetails(
+                                        context,
+                                        weakness,
+                                        tutorialEffectId: tutorialEffectId,
+                                      ),
+                                      child: IconBadge.asset(
+                                        assetName: UiMapper.effectIcon(
+                                          weakness,
+                                        ),
+                                        size: 26,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                            .toList(),
+                                )
+                                .toList(),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
+                    if (resistancesV1.isNotEmpty) const SizedBox(height: 16),
                   ],
-                ),
+                  if (resistancesV1.isNotEmpty) ...[
+                    wrapDetailEffectsAnchor(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            l10n.resistancesTitle,
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          const SizedBox(height: 8),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: resistancesV1
+                                .map(
+                                  (resistance) => Opacity(
+                                    opacity: 0.75,
+                                    child: Container(
+                                      key: consumeTutorialEffectKey(resistance),
+                                      child: InkWell(
+                                        key: ValueKey(
+                                          'effect-legacy-resistance-$resistance',
+                                        ),
+                                        borderRadius: BorderRadius.circular(
+                                          999,
+                                        ),
+                                        onTap: () => _openEffectDetails(
+                                          context,
+                                          resistance,
+                                          tutorialEffectId: tutorialEffectId,
+                                        ),
+                                        child: IconBadge.asset(
+                                          assetName: UiMapper.effectIcon(
+                                            resistance,
+                                          ),
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ],
               ),
               const SizedBox(height: 18),
             ],

@@ -15,6 +15,7 @@ class TutorialHost extends StatefulWidget {
 class _TutorialHostState extends State<TutorialHost>
     with WidgetsBindingObserver {
   TutorialStep? _lastStep;
+  bool _refreshScheduled = false;
 
   @override
   void initState() {
@@ -30,9 +31,7 @@ class _TutorialHostState extends State<TutorialHost>
 
   @override
   void didChangeMetrics() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      TutorialController.instance.syncCurrentTargetVisibility();
-    });
+    _scheduleTargetRefresh();
   }
 
   @override
@@ -42,7 +41,15 @@ class _TutorialHostState extends State<TutorialHost>
     return Stack(
       fit: StackFit.expand,
       children: [
-        widget.child,
+        NotificationListener<ScrollNotification>(
+          onNotification: (_) {
+            if (controller.isActive) {
+              _scheduleTargetRefresh();
+            }
+            return false;
+          },
+          child: widget.child,
+        ),
         ListenableBuilder(
           listenable: controller,
           builder: (context, _) {
@@ -54,9 +61,7 @@ class _TutorialHostState extends State<TutorialHost>
 
             if (_lastStep != step) {
               _lastStep = step;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                controller.syncCurrentTargetVisibility();
-              });
+              _scheduleTargetRefresh();
             }
 
             final targetRect = controller.currentTargetRect(context);
@@ -72,6 +77,7 @@ class _TutorialHostState extends State<TutorialHost>
                   ? l10n.tutorialFinishAction
                   : l10n.tutorialNextAction,
               showBack: step != TutorialStep.search,
+              actionsEnabled: !controller.isBusy,
               onSkip: controller.skip,
               onBack: controller.back,
               onNext: controller.next,
@@ -80,6 +86,21 @@ class _TutorialHostState extends State<TutorialHost>
         ),
       ],
     );
+  }
+
+  void _scheduleTargetRefresh() {
+    if (_refreshScheduled || !mounted) {
+      return;
+    }
+
+    _refreshScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshScheduled = false;
+      if (!mounted) {
+        return;
+      }
+      TutorialController.instance.requestTargetRefresh();
+    });
   }
 
   String _tutorialStepId(TutorialStep step) {
@@ -120,6 +141,7 @@ class _TutorialOverlay extends StatelessWidget {
   final String backLabel;
   final String nextLabel;
   final bool showBack;
+  final bool actionsEnabled;
   final Future<void> Function() onSkip;
   final Future<void> Function() onBack;
   final Future<void> Function() onNext;
@@ -132,6 +154,7 @@ class _TutorialOverlay extends StatelessWidget {
     required this.backLabel,
     required this.nextLabel,
     required this.showBack,
+    required this.actionsEnabled,
     required this.onSkip,
     required this.onBack,
     required this.onNext,
@@ -242,18 +265,24 @@ class _TutorialOverlay extends StatelessWidget {
                               children: [
                                 TextButton(
                                   key: const ValueKey('tutorial-skip'),
-                                  onPressed: () => onSkip(),
+                                  onPressed: actionsEnabled
+                                      ? () => onSkip()
+                                      : null,
                                   child: Text(skipLabel),
                                 ),
                                 if (showBack)
                                   OutlinedButton(
                                     key: const ValueKey('tutorial-back'),
-                                    onPressed: () => onBack(),
+                                    onPressed: actionsEnabled
+                                        ? () => onBack()
+                                        : null,
                                     child: Text(backLabel),
                                   ),
                                 FilledButton(
                                   key: const ValueKey('tutorial-next'),
-                                  onPressed: () => onNext(),
+                                  onPressed: actionsEnabled
+                                      ? () => onNext()
+                                      : null,
                                   child: Text(nextLabel),
                                 ),
                               ],
