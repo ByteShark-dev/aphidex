@@ -14,6 +14,23 @@ Future<void> openEffectCodex(BuildContext context, {String? initialEffectId}) {
   );
 }
 
+Future<void> showEffectInfoSheet(
+  BuildContext context, {
+  required String effectId,
+}) async {
+  final entry = effectCatalogEntryById(effectId);
+  if (entry == null) {
+    return;
+  }
+
+  await showModalBottomSheet<void>(
+    context: context,
+    showDragHandle: true,
+    useSafeArea: true,
+    builder: (_) => _EffectInfoSheet(entry: entry),
+  );
+}
+
 class EffectCodexScreen extends StatefulWidget {
   final String? initialEffectId;
 
@@ -250,6 +267,86 @@ class _EffectCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _EffectInfoSheet extends StatelessWidget {
+  final EffectCatalogEntry entry;
+
+  const _EffectInfoSheet({required this.entry});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final languageCode = l10n.languageCode;
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return SafeArea(
+      top: false,
+      minimum: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    UiMapper.effectIcon(entry.id),
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.name.resolve(languageCode),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.effectCategoryLabel(entry.category.name),
+                      style: TextStyle(color: colorScheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(entry.description.resolve(languageCode)),
+          const SizedBox(height: 18),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () async {
+                final navigator = Navigator.of(context);
+                final parentContext = navigator.context;
+                navigator.pop();
+                await openEffectCodex(parentContext, initialEffectId: entry.id);
+              },
+              icon: const Icon(Icons.menu_book_rounded),
+              label: Text(l10n.effectCodexTitle),
+            ),
+          ),
+        ],
       ),
     );
   }

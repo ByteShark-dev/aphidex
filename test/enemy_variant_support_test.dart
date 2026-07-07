@@ -8,8 +8,8 @@ import 'package:aphidex/data/local_storage.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
 import 'package:aphidex/models/enemy_index_entry.dart';
+import 'package:aphidex/models/game_pick.dart';
 import 'package:aphidex/screens/enemy_detail_screen.dart';
-import 'package:aphidex/screens/enemy_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -244,6 +244,46 @@ void main() {
     expect(find.text('Cricket'), findsOneWidget);
   });
 
+  testWidgets('detail rebuilds cleanly when the selected entry key changes', (
+    tester,
+  ) async {
+    final selectedEnemy = ValueNotifier<Enemy>(g2Cricket);
+
+    await tester.pumpWidget(
+      _buildTestApp(
+        ValueListenableBuilder<Enemy>(
+          valueListenable: selectedEnemy,
+          builder: (context, enemy, _) {
+            return Scaffold(
+              body: Column(
+                children: [
+                  Expanded(
+                    child: EnemyDetailScreen(
+                      key: ValueKey('detail:${enemy.id}'),
+                      enemy: enemy,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => selectedEnemy.value = g2Crow,
+                    child: const Text('switch'),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('A powerful Grounded 2 insect.'), findsOneWidget);
+
+    await tester.tap(find.text('switch'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Crow.'), findsOneWidget);
+  });
+
   testWidgets(
     'detail shows inflicts icon row and collapsible sections start closed',
     (tester) async {
@@ -353,6 +393,10 @@ final ByteData _transparentImage = ByteData.view(
 );
 
 class _TestAssetBundle extends CachingAssetBundle {
+  static const _svg =
+      '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+      '<rect width="32" height="32" fill="#ffffff"/></svg>';
+
   @override
   Future<ByteData> load(String key) async {
     if (key == 'AssetManifest.bin') {
@@ -361,7 +405,27 @@ class _TestAssetBundle extends CachingAssetBundle {
     if (key == 'AssetManifest.json') {
       return _stringData('{}');
     }
+    if (key == 'FontManifest.json') {
+      return _stringData('[]');
+    }
+    if (key.endsWith('.svg')) {
+      return _stringData(_svg);
+    }
     return _transparentImage;
+  }
+
+  @override
+  Future<String> loadString(String key, {bool cache = true}) async {
+    if (key.endsWith('.svg')) {
+      return _svg;
+    }
+    if (key == 'AssetManifest.json') {
+      return '{}';
+    }
+    if (key == 'FontManifest.json') {
+      return '[]';
+    }
+    return '';
   }
 }
 

@@ -65,6 +65,11 @@ app.*.map.json
 /tmp/
 /.lh/
 /functions/node_modules/
+/cloudflare/aphidex-scanner-worker/node_modules/
+/cloudflare/aphidex-scanner-worker/.wrangler/
+
+.wrangler/
+cloudflare/aphidex-scanner-worker/.wrangler/
 
 # Local image-source backups
 /assets/images_backup_community/

@@ -1,32 +1,19 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_mlkit_image_labeling/google_mlkit_image_labeling.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../data/enemy_variants.dart';
 import '../models/enemy_index_entry.dart';
 import 'creature_alias_matcher.dart';
+import 'creature_scanner_errors.dart';
+import 'scanner_image_compressor.dart';
+
+export 'creature_scanner_errors.dart';
 
 const String scannerGameScopeAll = 'all';
 const String scannerGameScopeG1 = 'g1';
 const String scannerGameScopeG2 = 'g2';
-
-enum CreatureScannerErrorType {
-  invalidImage,
-  payloadTooLarge,
-  timeout,
-  emptyResponse,
-  unknown,
-}
-
-class CreatureScannerException implements Exception {
-  final CreatureScannerErrorType type;
-  final String? debugMessage;
-
-  const CreatureScannerException(this.type, {this.debugMessage});
-}
 
 class CreatureScannerMatch {
   final String creatureId;
@@ -35,6 +22,7 @@ class CreatureScannerMatch {
   final List<String> sourceLabels;
   final List<EnemyIndexEntry> variants;
   final EnemyIndexEntry previewEnemy;
+  final bool isExactIdMatch;
 
   const CreatureScannerMatch({
     required this.creatureId,
@@ -43,6 +31,7 @@ class CreatureScannerMatch {
     required this.sourceLabels,
     required this.variants,
     required this.previewEnemy,
+    this.isExactIdMatch = false,
   });
 }
 
@@ -51,13 +40,64 @@ class CreatureScannerResult {
   final List<String> rawLabels;
   final List<String> rawWebEntities;
   final bool hasClearMatch;
+  final bool weak;
+  final bool multiCreature;
+  final RemoteScannerTokenState? tokens;
 
   const CreatureScannerResult({
     required this.matches,
     required this.rawLabels,
     required this.rawWebEntities,
     required this.hasClearMatch,
+    this.weak = false,
+    this.multiCreature = false,
+    this.tokens,
   });
+}
+
+class RemoteScannerTokenState {
+  final String plan;
+  final int tokens;
+  final int maxTokens;
+  final int dailyRefill;
+  final int dailyLimit;
+  final int usedToday;
+  final String usageDate;
+  final String lastRefillDate;
+
+  const RemoteScannerTokenState({
+    required this.plan,
+    required this.tokens,
+    required this.maxTokens,
+    required this.dailyRefill,
+    required this.dailyLimit,
+    required this.usedToday,
+    required this.usageDate,
+    required this.lastRefillDate,
+  });
+
+  factory RemoteScannerTokenState.fromJson(Map<String, dynamic> json) {
+    return RemoteScannerTokenState(
+      plan: (json['plan'] ?? 'free').toString(),
+      tokens: _intFromJson(json['tokens']),
+      maxTokens: _intFromJson(json['maxTokens']),
+      dailyRefill: _intFromJson(json['dailyRefill']),
+      dailyLimit: _intFromJson(json['dailyLimit']),
+      usedToday: _intFromJson(json['usedToday']),
+      usageDate: (json['usageDate'] ?? '').toString(),
+      lastRefillDate: (json['lastRefillDate'] ?? '').toString(),
+    );
+  }
+
+  static int _intFromJson(Object? value) {
+    if (value is int) {
+      return value;
+    }
+    if (value is num) {
+      return value.round();
+    }
+    return int.tryParse(value?.toString() ?? '') ?? 0;
+  }
 }
 
 class CreatureRecognitionPayload {
@@ -72,6 +112,10 @@ class CreatureRecognitionPayload {
 
 abstract class CreatureRecognitionProvider {
   Future<CreatureRecognitionPayload> analyzeImageFile(XFile file);
+}
+
+abstract class CreatureScannerClient {
+  Future<CreatureScannerResult> scanFile(XFile file);
 }
 
 class MlKitRecognitionProvider implements CreatureRecognitionProvider {
@@ -120,25 +164,24 @@ class MlKitRecognitionProvider implements CreatureRecognitionProvider {
   }
 }
 
-class CreatureScannerService {
-  static const int maxImageBytes = 1500000;
-  static const int maxDimension = 1600;
-  static const int jpegQuality = 78;
-
+class CreatureScannerService implements CreatureScannerClient {
   final CreatureRecognitionProvider provider;
   final CreatureAliasMatcher matcher;
   final List<EnemyIndexEntry> allEnemies;
   final String selectedGameScope;
+  final ScannerImageCompressor imageCompressor;
 
   const CreatureScannerService({
     required this.provider,
     required this.matcher,
     required this.allEnemies,
     required this.selectedGameScope,
+    this.imageCompressor = const FlutterScannerImageCompressor(),
   });
 
+  @override
   Future<CreatureScannerResult> scanFile(XFile file) async {
-    final compressedFile = await _compressFile(file);
+    final compressedFile = await imageCompressor.compressFile(file);
     try {
       final payload = await provider.analyzeImageFile(compressedFile);
       if (payload.rawLabels.isEmpty && payload.rawWebEntities.isEmpty) {
@@ -166,69 +209,8 @@ class CreatureScannerService {
             resolvedMatches.length == 1,
       );
     } finally {
-      if (compressedFile.path != file.path) {
-        unawaited(
-          File(
-            compressedFile.path,
-          ).delete().then((_) => null).catchError((_) => null),
-        );
-      }
+      deleteTemporaryScannerFile(compressedFile, file);
     }
-  }
-
-  Future<XFile> _compressFile(XFile file) async {
-    final inputBytes = await file.readAsBytes();
-    if (inputBytes.isEmpty) {
-      throw const CreatureScannerException(
-        CreatureScannerErrorType.invalidImage,
-      );
-    }
-
-    final compressed = await FlutterImageCompress.compressWithList(
-      inputBytes,
-      quality: jpegQuality,
-      format: CompressFormat.jpeg,
-      keepExif: false,
-      autoCorrectionAngle: true,
-    );
-
-    Uint8List outputBytes;
-    if (compressed.length <= maxImageBytes) {
-      outputBytes = Uint8List.fromList(compressed);
-    } else {
-      final resized = await FlutterImageCompress.compressWithList(
-        inputBytes,
-        minHeight: maxDimension,
-        minWidth: maxDimension,
-        quality: jpegQuality,
-        format: CompressFormat.jpeg,
-        keepExif: false,
-        autoCorrectionAngle: true,
-      );
-      outputBytes = Uint8List.fromList(resized);
-    }
-
-    if (outputBytes.isEmpty) {
-      throw const CreatureScannerException(
-        CreatureScannerErrorType.invalidImage,
-      );
-    }
-    if (outputBytes.length > maxImageBytes) {
-      throw const CreatureScannerException(
-        CreatureScannerErrorType.payloadTooLarge,
-      );
-    }
-
-    final directory = await Directory.systemTemp.createTemp('aphidex_scanner_');
-    final outputPath =
-        '${directory.path}${Platform.pathSeparator}scan_${DateTime.now().microsecondsSinceEpoch}.jpg';
-    final tempFile = File(outputPath);
-    await tempFile.writeAsBytes(outputBytes, flush: true);
-    return XFile(
-      tempFile.path,
-      mimeType: 'image/jpeg',
-      name: tempFile.uri.pathSegments.last,
-    );
   }
 }
 

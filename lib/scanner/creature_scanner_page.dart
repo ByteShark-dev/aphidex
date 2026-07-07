@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../config/feature_flags.dart';
 import '../data/local_storage.dart';
 import '../i18n/app_localizations.dart';
 import '../models/enemy_index_entry.dart';
 import '../screens/enemy_detail_screen.dart';
 import 'creature_alias_matcher.dart';
 import 'creature_scanner_service.dart';
+import 'remote_creature_scanner_service.dart';
 import 'scanner_result_page.dart';
 
 typedef ScannerImagePicker = Future<XFile?> Function(ImageSource source);
@@ -60,14 +62,18 @@ class CreatureScannerPage extends StatefulWidget {
   final List<EnemyIndexEntry> enemies;
   final String selectedGameScope;
   final CreatureScannerService? serviceOverride;
+  final RemoteCreatureScannerClient? remoteServiceOverride;
   final ScannerImagePicker? imagePickerOverride;
+  final bool? remoteEnabledOverride;
 
   const CreatureScannerPage({
     super.key,
     required this.enemies,
     required this.selectedGameScope,
     this.serviceOverride,
+    this.remoteServiceOverride,
     this.imagePickerOverride,
+    this.remoteEnabledOverride,
   });
 
   @override
@@ -76,10 +82,18 @@ class CreatureScannerPage extends StatefulWidget {
 
 class _CreatureScannerPageState extends State<CreatureScannerPage> {
   late final CreatureScannerService _service;
+  RemoteCreatureScannerClient? _remoteService;
   bool _isAnalyzing = false;
+  bool _remoteInitialized = false;
+  bool _lastScanWasRemote = false;
   String? _message;
+  String? _remoteTokenMessage;
+  RemoteScannerTokenState? _remoteTokens;
   List<String> _lastRawLabels = const [];
   List<String> _lastRawWebEntities = const [];
+
+  bool get _remoteEnabled =>
+      widget.remoteEnabledOverride ?? scannerRemoteEnabled;
 
   @override
   void initState() {
@@ -94,13 +108,77 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         );
   }
 
-  Future<void> _scan(ImageSource source) async {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_remoteInitialized || !_remoteEnabled) {
+      return;
+    }
+    _remoteInitialized = true;
+    _remoteService =
+        widget.remoteServiceOverride ??
+        RemoteCreatureScannerService(
+          apiBaseUrl: scannerApiBaseUrl,
+          clientToken: scannerClientToken,
+          allEnemies: widget.enemies,
+          selectedGameScope: widget.selectedGameScope,
+          languageCode: context.l10n.languageCode,
+        );
+    _refreshRemoteTokens();
+  }
+
+  Future<void> _refreshRemoteTokens() async {
+    final remoteService = _remoteService;
+    if (remoteService == null) {
+      return;
+    }
+    try {
+      final tokens = await remoteService.loadTokens();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _remoteTokens = tokens;
+        _remoteTokenMessage = null;
+      });
+    } on CreatureScannerException catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _remoteTokenMessage = _errorMessageFor(error, context.l10n);
+      });
+    } catch (_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _remoteTokenMessage = context.l10n.scannerNetworkErrorMessage;
+      });
+    }
+  }
+
+  Future<void> _scan(ImageSource source, {bool remote = false}) async {
     if (_isAnalyzing) {
       return;
     }
 
+    final remoteService = _remoteService;
+    if (remote && remoteService == null) {
+      setState(() {
+        _lastScanWasRemote = remote;
+        _message = context.l10n.scannerSetupRequiredMessage;
+      });
+      return;
+    }
+    final CreatureScannerClient scannerService = remote
+        ? remoteService!
+        : _service;
+    ScannerResultAction? resultAction;
+
     setState(() {
       _isAnalyzing = true;
+      _lastScanWasRemote = remote;
       _message = null;
       _lastRawLabels = const [];
       _lastRawWebEntities = const [];
@@ -112,7 +190,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
 
-      final result = await _service.scanFile(file);
+      final result = await scannerService.scanFile(file);
       if (!mounted) {
         return;
       }
@@ -120,6 +198,10 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       setState(() {
         _lastRawLabels = result.rawLabels;
         _lastRawWebEntities = result.rawWebEntities;
+        if (result.tokens != null) {
+          _remoteTokens = result.tokens;
+          _remoteTokenMessage = null;
+        }
       });
 
       if (result.matches.isEmpty) {
@@ -132,18 +214,16 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
 
-      if (result.matches.length == 1) {
-        setState(() => _message = context.l10n.scannerNoMatchMessage);
-        return;
-      }
-
-      await Navigator.push(
+      resultAction = await Navigator.push<ScannerResultAction>(
         context,
         MaterialPageRoute(
           builder: (_) => ScannerResultPage(
             matches: result.matches,
             rawLabels: result.rawLabels,
             rawWebEntities: result.rawWebEntities,
+            weak: result.weak,
+            multiCreature: result.multiCreature,
+            showRecoveryActions: remote,
             onOpenMatch: _openMatch,
           ),
         ),
@@ -153,7 +233,7 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
         return;
       }
       setState(() {
-        _message = _errorMessageFor(error.type, context.l10n);
+        _message = _errorMessageFor(error, context.l10n);
       });
     } on PlatformException catch (error) {
       if (!mounted) {
@@ -173,6 +253,20 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
       if (mounted) {
         setState(() => _isAnalyzing = false);
       }
+    }
+
+    if (!mounted) {
+      return;
+    }
+    switch (resultAction) {
+      case ScannerResultAction.manualSearch:
+        Navigator.pop(context);
+        break;
+      case ScannerResultAction.tryAnother:
+        await _scan(ImageSource.gallery, remote: remote);
+        break;
+      case null:
+        break;
     }
   }
 
@@ -205,6 +299,10 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
   Future<EnemyIndexEntry?> _resolveEnemyForMatch(
     CreatureScannerMatch match,
   ) async {
+    if (match.isExactIdMatch) {
+      return match.previewEnemy;
+    }
+
     if (widget.selectedGameScope == scannerGameScopeG1 ||
         widget.selectedGameScope == scannerGameScopeG2) {
       return preferredScannerVariant(
@@ -280,20 +378,31 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
   }
 
   String _errorMessageFor(
-    CreatureScannerErrorType type,
+    CreatureScannerException error,
     AppLocalizations l10n,
   ) {
-    switch (type) {
-      case CreatureScannerErrorType.timeout:
-        return l10n.scannerTimeoutMessage;
-      case CreatureScannerErrorType.invalidImage:
-      case CreatureScannerErrorType.emptyResponse:
-        return l10n.scannerNoMatchMessage;
-      case CreatureScannerErrorType.payloadTooLarge:
-        return l10n.scannerImageTooLargeMessage;
-      case CreatureScannerErrorType.unknown:
-        return l10n.scannerGenericErrorMessage;
+    final message = switch (error.type) {
+      CreatureScannerErrorType.timeout => l10n.scannerTimeoutMessage,
+      CreatureScannerErrorType.invalidImage ||
+      CreatureScannerErrorType.emptyResponse => l10n.scannerNoMatchMessage,
+      CreatureScannerErrorType.payloadTooLarge =>
+        l10n.scannerImageTooLargeMessage,
+      CreatureScannerErrorType.setupRequired =>
+        l10n.scannerSetupRequiredMessage,
+      CreatureScannerErrorType.network => l10n.scannerNetworkErrorMessage,
+      CreatureScannerErrorType.serverBusy => l10n.scannerServerBusyMessage,
+      CreatureScannerErrorType.analysisTemporary =>
+        l10n.scannerAnalysisTemporaryMessage,
+      CreatureScannerErrorType.outOfTokens => l10n.scannerNoTokensMessage,
+      CreatureScannerErrorType.dailyLimit =>
+        l10n.scannerDailyLimitReachedMessage,
+      CreatureScannerErrorType.unknown => l10n.scannerGenericErrorMessage,
+    };
+    final requestId = error.requestId;
+    if (requestId == null || requestId.isEmpty) {
+      return message;
     }
+    return '$message\n${l10n.scannerRequestIdMessage(requestId)}';
   }
 
   @override
@@ -341,6 +450,69 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
                 icon: const Icon(Icons.photo_library),
                 label: Text(l10n.scannerPickImageAction),
               ),
+              if (_remoteEnabled) ...[
+                const SizedBox(height: 22),
+                const Divider(),
+                const SizedBox(height: 14),
+                Text(
+                  l10n.scannerRemoteTitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.scannerRemotePrivacyNotice,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  l10n.scannerRemoteBetaNotice,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                if (_remoteTokens != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    l10n.scannerTokensRemaining(
+                      _remoteTokens!.tokens,
+                      _remoteTokens!.dailyLimit,
+                      _remoteTokens!.usedToday,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+                if (_remoteTokenMessage != null) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    _remoteTokenMessage!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 14),
+                FilledButton.icon(
+                  key: const ValueKey('scanner-remote-analyze'),
+                  onPressed: _isAnalyzing
+                      ? null
+                      : () => _scan(ImageSource.gallery, remote: true),
+                  icon: const Icon(Icons.auto_awesome),
+                  label: Text(l10n.scannerRemoteAnalyzeAction),
+                ),
+                const SizedBox(height: 12),
+                OutlinedButton.icon(
+                  key: const ValueKey('scanner-remote-camera'),
+                  onPressed: _isAnalyzing
+                      ? null
+                      : () => _scan(ImageSource.camera, remote: true),
+                  icon: const Icon(Icons.photo_camera),
+                  label: Text(l10n.scannerTakePhotoAction),
+                ),
+              ],
               const SizedBox(height: 20),
               if (_isAnalyzing)
                 Column(
@@ -376,6 +548,44 @@ class _CreatureScannerPageState extends State<CreatureScannerPage> {
                           ),
                           const SizedBox(height: 6),
                           Text(_lastRawWebEntities.join(', ')),
+                        ],
+                        if (_lastScanWasRemote) ...[
+                          const SizedBox(height: 12),
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              OutlinedButton.icon(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.search),
+                                label: Text(l10n.scannerManualSearchAction),
+                              ),
+                              OutlinedButton.icon(
+                                key: const ValueKey('scanner-retry-scan'),
+                                onPressed: _isAnalyzing
+                                    ? null
+                                    : () => _scan(
+                                        ImageSource.gallery,
+                                        remote: true,
+                                      ),
+                                icon: const Icon(Icons.refresh),
+                                label: Text(l10n.scannerRetryAction),
+                              ),
+                              FilledButton.icon(
+                                key: const ValueKey(
+                                  'scanner-try-another-image',
+                                ),
+                                onPressed: _isAnalyzing
+                                    ? null
+                                    : () => _scan(
+                                        ImageSource.gallery,
+                                        remote: true,
+                                      ),
+                                icon: const Icon(Icons.refresh),
+                                label: Text(l10n.scannerTryAnotherImageAction),
+                              ),
+                            ],
+                          ),
                         ],
                       ],
                     ),

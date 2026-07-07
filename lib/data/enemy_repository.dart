@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../models/enemy.dart';
 import '../models/enemy_index_entry.dart';
+import '../startup/startup_profiler.dart';
 
 class EnemyRepository {
   static final Map<String, Future<List<EnemyIndexEntry>>> _gameFutures = {};
@@ -83,6 +84,8 @@ class EnemyRepository {
     try {
       final raw = await rootBundle.loadString(path);
       final decoded = await compute(_decodeEnemyJsonMaps, raw);
+      StartupProfiler.instance.mark('G1/G2 index read/parse ready: $path');
+      StartupProfiler.instance.markOnce('repository/data init ready');
       return decoded.map(EnemyIndexEntry.fromJson).toList(growable: false);
     } catch (error) {
       throw StateError('Failed to load enemy index from $path: $error');

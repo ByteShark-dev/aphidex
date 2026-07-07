@@ -8,6 +8,7 @@ import '../data/enemy_repository.dart';
 import '../data/local_storage.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
+import '../layout/app_breakpoints.dart';
 import '../models/enemy.dart';
 import '../models/enemy_index_entry.dart';
 import '../screens/effect_codex_screen.dart';
@@ -247,6 +248,7 @@ class TutorialController extends ChangeNotifier {
 
   static final TutorialController instance = TutorialController._();
   static const String completionKey = 'tutorial_completed';
+  static const String tutorialDetailRouteName = 'tutorial-detail-fullscreen';
 
   final Map<String, GlobalKey> _anchorKeys = {};
 
@@ -256,9 +258,19 @@ class TutorialController extends ChangeNotifier {
   EnemyIndexEntry? _demoEnemy;
   List<EnemyIndexEntry> _demoVariants = const [];
   String? _demoEffectId;
+  bool _syncingAnchor = false;
+  bool _targetRefreshQueued = false;
+  bool _isFinishing = false;
+  bool _transitionLocked = false;
+  bool _tutorialFullscreenMode = false;
+  Route<void>? _tutorialDetailRoute;
+  AppSurfaceSize? _currentListSurface;
+  bool _currentListIsTabletLike = false;
 
   TutorialStep? get step => _step;
   bool get isActive => _step != null;
+  bool get isBusy => _syncingAnchor || _transitionLocked || _isFinishing;
+  bool get tutorialFullscreenMode => _tutorialFullscreenMode;
   String? get demoEnemyId => _demoEnemy?.id;
   String? get demoEffectId => _demoEffectId;
 
@@ -273,27 +285,109 @@ class TutorialController extends ChangeNotifier {
   }
 
   Rect? currentTargetRect(BuildContext overlayContext) {
-    final anchorId = _currentAnchorId;
-    if (anchorId == null) {
+    final resolvedTarget = _resolveCurrentAnchor();
+    if (resolvedTarget == null) {
       return null;
     }
 
-    final targetContext = _anchorKeys[anchorId]?.currentContext;
-    if (targetContext == null) {
+    RenderObject? overlayBox;
+    try {
+      overlayBox = overlayContext.findRenderObject();
+    } catch (_) {
+      return null;
+    }
+    if (overlayBox is! RenderBox ||
+        !overlayBox.attached ||
+        !overlayBox.hasSize ||
+        !_hasValidSize(overlayBox.size)) {
       return null;
     }
 
-    final targetBox = targetContext.findRenderObject();
-    final overlayBox = overlayContext.findRenderObject();
-    if (targetBox is! RenderBox ||
-        overlayBox is! RenderBox ||
-        !targetBox.attached ||
-        !overlayBox.attached) {
+    try {
+      final topLeft = resolvedTarget.renderBox.localToGlobal(
+        Offset.zero,
+        ancestor: overlayBox,
+      );
+      if (!topLeft.dx.isFinite || !topLeft.dy.isFinite) {
+        return null;
+      }
+      return topLeft & resolvedTarget.renderBox.size;
+    } catch (_) {
       return null;
     }
+  }
 
-    final topLeft = targetBox.localToGlobal(Offset.zero, ancestor: overlayBox);
-    return topLeft & targetBox.size;
+  void requestTargetRefresh() {
+    if (_step == null ||
+        _targetRefreshQueued ||
+        _syncingAnchor ||
+        _isFinishing) {
+      return;
+    }
+
+    _targetRefreshQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _targetRefreshQueued = false;
+      unawaited(syncCurrentTargetVisibility(waitForNextFrame: false));
+    });
+  }
+
+  Future<void> syncCurrentTargetVisibility({
+    bool waitForNextFrame = true,
+  }) async {
+    final step = _step;
+    if (step == null || _syncingAnchor || _isFinishing) {
+      return;
+    }
+
+    _syncingAnchor = true;
+    notifyListeners();
+    try {
+      if (waitForNextFrame) {
+        await _waitForFrame();
+      }
+      if (_step != step || _isFinishing) {
+        return;
+      }
+
+      var resolvedTarget = await _resolveCurrentAnchorAfterFrames();
+      if (_step != step || _isFinishing) {
+        return;
+      }
+      if (resolvedTarget == null) {
+        await _skipMissingStep(step);
+        return;
+      }
+
+      final targetContext = resolvedTarget.context;
+      if (!targetContext.mounted) {
+        await _skipMissingStep(step);
+        return;
+      }
+
+      final scrollable = Scrollable.maybeOf(targetContext);
+      if (scrollable != null) {
+        await Scrollable.ensureVisible(
+          targetContext,
+          alignment: 0.12,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+        );
+        await _waitForFrame();
+        if (_step != step || _isFinishing) {
+          return;
+        }
+        resolvedTarget = await _resolveCurrentAnchorAfterFrames(attempts: 1);
+        if (resolvedTarget == null) {
+          await _skipMissingStep(step);
+        }
+      }
+    } catch (_) {
+      // Ignore transient route/layout races while the next frame settles.
+    } finally {
+      _syncingAnchor = false;
+      notifyListeners();
+    }
   }
 
   Future<void> maybeStart(
@@ -320,7 +414,7 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> startFromSettings() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || isActive) {
+    if (navigator == null || isActive || _isFinishing) {
       return;
     }
 
@@ -332,114 +426,168 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> next() async {
-    switch (_step) {
-      case TutorialStep.search:
-        _setStep(TutorialStep.gamePicker);
-        return;
-      case TutorialStep.gamePicker:
-        _setStep(TutorialStep.filters);
-        return;
-      case TutorialStep.filters:
-        _setStep(TutorialStep.sort);
-        return;
-      case TutorialStep.sort:
-        _setStep(TutorialStep.settings);
-        return;
-      case TutorialStep.settings:
-        _setStep(TutorialStep.codex);
-        return;
-      case TutorialStep.codex:
-        await _openDemoEnemy();
-        _setStep(TutorialStep.detailSummary);
-        return;
-      case TutorialStep.detailSummary:
-        if (_demoVariants.length > 1) {
-          _setStep(TutorialStep.detailVariant);
+    await _runLocked(() async {
+      switch (_step) {
+        case TutorialStep.search:
+          await _goToStep(TutorialStep.gamePicker);
           return;
-        }
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.detailVariant:
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.detailEffects:
-        _setStep(TutorialStep.detailEffect);
-        return;
-      case TutorialStep.detailEffect:
-        await _openDemoCodex();
-        _setStep(TutorialStep.codexCard);
-        return;
-      case TutorialStep.codexCard:
-        _setStep(TutorialStep.codexEquipment);
-        return;
-      case TutorialStep.codexEquipment:
-        await finish();
-        return;
-      case null:
-        return;
-    }
+        case TutorialStep.gamePicker:
+          await _goToStep(TutorialStep.filters);
+          return;
+        case TutorialStep.filters:
+          await _goToStep(TutorialStep.sort);
+          return;
+        case TutorialStep.sort:
+          await _goToStep(TutorialStep.settings);
+          return;
+        case TutorialStep.settings:
+          await _goToStep(TutorialStep.codex);
+          return;
+        case TutorialStep.codex:
+          await _openDemoEnemy();
+          await _goToStep(TutorialStep.detailSummary);
+          return;
+        case TutorialStep.detailSummary:
+          if (_demoVariants.length > 1) {
+            await _goToStep(TutorialStep.detailVariant);
+            return;
+          }
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.detailVariant:
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.detailEffects:
+          await _goToStep(TutorialStep.detailEffect);
+          return;
+        case TutorialStep.detailEffect:
+          await _openDemoCodex();
+          await _goToStep(TutorialStep.codexCard);
+          return;
+        case TutorialStep.codexCard:
+          await _goToStep(TutorialStep.codexEquipment);
+          return;
+        case TutorialStep.codexEquipment:
+          await finish();
+          return;
+        case null:
+          return;
+      }
+    });
   }
 
   Future<void> back() async {
-    switch (_step) {
-      case TutorialStep.search:
-      case null:
-        return;
-      case TutorialStep.gamePicker:
-        _setStep(TutorialStep.search);
-        return;
-      case TutorialStep.filters:
-        _setStep(TutorialStep.gamePicker);
-        return;
-      case TutorialStep.sort:
-        _setStep(TutorialStep.filters);
-        return;
-      case TutorialStep.settings:
-        _setStep(TutorialStep.sort);
-        return;
-      case TutorialStep.codex:
-        _setStep(TutorialStep.settings);
-        return;
-      case TutorialStep.detailSummary:
-        await _popRouteIfPossible();
-        _setStep(TutorialStep.codex);
-        return;
-      case TutorialStep.detailVariant:
-        _setStep(TutorialStep.detailSummary);
-        return;
-      case TutorialStep.detailEffects:
-        if (_demoVariants.length > 1) {
-          _setStep(TutorialStep.detailVariant);
-        } else {
-          _setStep(TutorialStep.detailSummary);
-        }
-        return;
-      case TutorialStep.detailEffect:
-        _setStep(TutorialStep.detailEffects);
-        return;
-      case TutorialStep.codexCard:
-        await _popRouteIfPossible();
-        _setStep(TutorialStep.detailEffect);
-        return;
-      case TutorialStep.codexEquipment:
-        _setStep(TutorialStep.codexCard);
-        return;
-    }
+    await _runLocked(() async {
+      switch (_step) {
+        case TutorialStep.search:
+        case null:
+          return;
+        case TutorialStep.gamePicker:
+          await _goToStep(TutorialStep.search);
+          return;
+        case TutorialStep.filters:
+          await _goToStep(TutorialStep.gamePicker);
+          return;
+        case TutorialStep.sort:
+          await _goToStep(TutorialStep.filters);
+          return;
+        case TutorialStep.settings:
+          await _goToStep(TutorialStep.sort);
+          return;
+        case TutorialStep.codex:
+          await _goToStep(TutorialStep.settings);
+          return;
+        case TutorialStep.detailSummary:
+          await _popRouteIfPossible();
+          await _goToStep(TutorialStep.codex);
+          return;
+        case TutorialStep.detailVariant:
+          await _goToStep(TutorialStep.detailSummary);
+          return;
+        case TutorialStep.detailEffects:
+          if (_demoVariants.length > 1) {
+            await _goToStep(TutorialStep.detailVariant);
+          } else {
+            await _goToStep(TutorialStep.detailSummary);
+          }
+          return;
+        case TutorialStep.detailEffect:
+          await _goToStep(TutorialStep.detailEffects);
+          return;
+        case TutorialStep.codexCard:
+          await _popRouteIfPossible();
+          await _goToStep(TutorialStep.detailEffect);
+          return;
+        case TutorialStep.codexEquipment:
+          await _goToStep(TutorialStep.codexCard);
+          return;
+      }
+    });
   }
 
   Future<void> skip() => _close(markCompleted: true);
 
   Future<void> finish() => _close(markCompleted: true);
 
-  void debugResetForTests() {
+  void resetRuntimeState() {
     _autoStartChecked = false;
     _step = null;
     _demoEnemy = null;
     _demoVariants = const [];
     _demoEffectId = null;
+    _syncingAnchor = false;
+    _targetRefreshQueued = false;
+    _isFinishing = false;
+    _transitionLocked = false;
+    _tutorialFullscreenMode = false;
+    _tutorialDetailRoute = null;
+    _currentListSurface = null;
+    _currentListIsTabletLike = false;
     _anchorKeys.clear();
     _promptVisible = false;
     notifyListeners();
+  }
+
+  void debugResetForTests() {
+    resetRuntimeState();
+  }
+
+  @visibleForTesting
+  void debugStartStepForTests(TutorialStep step) {
+    _isFinishing = false;
+    _autoStartChecked = true;
+    _transitionLocked = false;
+    _step = step;
+    notifyListeners();
+  }
+
+  @visibleForTesting
+  void debugConfigureDetailTutorialForTests({
+    required EnemyIndexEntry enemy,
+    required List<EnemyIndexEntry> variants,
+    required String effectId,
+  }) {
+    _demoEnemy = enemy;
+    _demoVariants = variants;
+    _demoEffectId = effectId;
+    _autoStartChecked = true;
+  }
+
+  @visibleForTesting
+  Future<void> debugOpenDetailTutorialRouteForTests() => _openDemoEnemy();
+
+  @visibleForTesting
+  void debugRegisterTutorialDetailRouteForTests(Route<void> route) {
+    _tutorialDetailRoute = route;
+    _setTutorialFullscreenMode(true);
+  }
+
+  void updateListLayout({
+    required AppSurfaceSize surface,
+    required bool isTabletLike,
+  }) {
+    _currentListSurface = surface;
+    _currentListIsTabletLike = isTabletLike;
   }
 
   Future<void> _start(
@@ -473,7 +621,7 @@ class TutorialController extends ChangeNotifier {
     _demoEnemy = enemy;
     _demoVariants = variants;
     _demoEffectId = effectIds.first;
-    _setStep(TutorialStep.search);
+    await _goToStep(TutorialStep.search);
   }
 
   Future<bool> _showIntroPrompt(BuildContext context) async {
@@ -511,48 +659,105 @@ class TutorialController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _runLocked(Future<void> Function() action) async {
+    if (_isFinishing || _transitionLocked) {
+      return;
+    }
+    _transitionLocked = true;
+    try {
+      await action();
+    } finally {
+      _transitionLocked = false;
+    }
+  }
+
+  Future<void> _goToStep(TutorialStep value) async {
+    if (_isFinishing) {
+      return;
+    }
+    _setStep(value);
+    requestTargetRefresh();
+    await _waitForFrame();
+  }
+
+  Future<void> _waitForFrame() async {
+    final completer = Completer<void>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      completer.complete();
+    });
+    await completer.future;
+  }
+
+  Future<void> _waitForSettledUi() async {
+    await _waitForFrame();
+    await Future<void>.delayed(const Duration(milliseconds: 16));
+    await _waitForFrame();
+  }
+
   Future<void> _openDemoEnemy() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
     final enemy = _demoEnemy;
-    if (navigator == null || enemy == null) {
+    if (navigator == null || enemy == null || _isFinishing) {
       return;
     }
 
-    unawaited(
-      navigator.push(
-        MaterialPageRoute(
-          builder: (_) => EnemyDetailScreen(
-            summary: enemy,
-            variantSummaries: _demoVariants,
-            initialGame: enemy.game,
-          ),
-        ),
+    final useFullscreenMode = _shouldUseTutorialFullscreenMode();
+    if (useFullscreenMode) {
+      _setTutorialFullscreenMode(true);
+      await _waitForFrame();
+    } else {
+      _clearTutorialDetailRoute();
+    }
+
+    final route = MaterialPageRoute<void>(
+      settings: const RouteSettings(name: tutorialDetailRouteName),
+      builder: (_) => EnemyDetailScreen(
+        summary: enemy,
+        variantSummaries: _demoVariants,
+        initialGame: enemy.game,
+        forceCompactTutorialLayout: useFullscreenMode,
       ),
     );
-    await Future<void>.delayed(const Duration(milliseconds: 350));
+    if (useFullscreenMode) {
+      _tutorialDetailRoute = route;
+    }
+
+    unawaited(navigator.push(route));
+    await _waitForSettledUi();
+    await _waitForFrame();
   }
 
   Future<void> _openDemoCodex() async {
     final context = ReviewPromptController.navigatorKey.currentContext;
     final effectId = _demoEffectId;
-    if (context == null || effectId == null) {
+    if (context == null || effectId == null || _isFinishing) {
       return;
     }
 
     unawaited(openEffectCodex(context, initialEffectId: effectId));
-    await Future<void>.delayed(const Duration(milliseconds: 350));
+    await _waitForSettledUi();
   }
 
   Future<void> _popRouteIfPossible() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || !navigator.canPop()) {
+    if (navigator == null || !navigator.canPop() || _isFinishing) {
       return;
     }
+    final isTutorialDetailRouteCurrent =
+        _tutorialDetailRoute != null && _tutorialDetailRoute!.isCurrent;
     navigator.pop();
-    await Future<void>.delayed(const Duration(milliseconds: 250));
+    await _waitForSettledUi();
+    if (isTutorialDetailRouteCurrent) {
+      _clearTutorialDetailRoute();
+    }
   }
 
   Future<void> _close({required bool markCompleted}) async {
+    if (_isFinishing) {
+      return;
+    }
+    _isFinishing = true;
+
     if (markCompleted) {
       await LocalStorage.setBool(completionKey, true);
     }
@@ -561,10 +766,17 @@ class TutorialController extends ChangeNotifier {
     _demoEnemy = null;
     _demoVariants = const [];
     _demoEffectId = null;
+    _targetRefreshQueued = false;
     notifyListeners();
 
-    final navigator = ReviewPromptController.navigatorKey.currentState;
-    navigator?.popUntil((route) => route.isFirst);
+    if (_tutorialDetailRoute != null) {
+      await _waitForFrame();
+    } else {
+      await Future<void>.delayed(Duration.zero);
+    }
+    await _closeTutorialDetailRouteIfNeeded();
+    _isFinishing = false;
+    notifyListeners();
   }
 
   String? get _currentAnchorId {
@@ -602,4 +814,136 @@ class TutorialController extends ChangeNotifier {
         return null;
     }
   }
+
+  Future<void> _skipMissingStep(TutorialStep step) async {
+    if (_step != step) {
+      return;
+    }
+
+    switch (step) {
+      case TutorialStep.detailVariant:
+        await _goToStep(TutorialStep.detailEffects);
+        return;
+      case TutorialStep.detailEffects:
+        await _goToStep(TutorialStep.detailEffect);
+        return;
+      case TutorialStep.detailEffect:
+        await _openDemoCodex();
+        await _goToStep(TutorialStep.codexCard);
+        return;
+      case TutorialStep.codexCard:
+        await _goToStep(TutorialStep.codexEquipment);
+        return;
+      case TutorialStep.codexEquipment:
+        await finish();
+        return;
+      default:
+        return;
+    }
+  }
+
+  _ResolvedTutorialAnchor? _resolveCurrentAnchor() {
+    final anchorId = _currentAnchorId;
+    if (anchorId == null) {
+      return null;
+    }
+
+    return _resolveAnchorContext(_anchorKeys[anchorId]?.currentContext);
+  }
+
+  Future<_ResolvedTutorialAnchor?> _resolveCurrentAnchorAfterFrames({
+    int attempts = 2,
+  }) async {
+    for (var index = 0; index < attempts; index++) {
+      final resolved = _resolveCurrentAnchor();
+      if (resolved != null) {
+        return resolved;
+      }
+      if (index != attempts - 1) {
+        await _waitForFrame();
+      }
+    }
+    return null;
+  }
+
+  _ResolvedTutorialAnchor? _resolveAnchorContext(BuildContext? targetContext) {
+    if (targetContext == null || !targetContext.mounted) {
+      return null;
+    }
+
+    RenderObject? targetObject;
+    try {
+      targetObject = targetContext.findRenderObject();
+    } catch (_) {
+      return null;
+    }
+    if (targetObject is! RenderBox ||
+        !targetObject.attached ||
+        !targetObject.hasSize ||
+        !_hasValidSize(targetObject.size)) {
+      return null;
+    }
+
+    return _ResolvedTutorialAnchor(
+      context: targetContext,
+      renderBox: targetObject,
+    );
+  }
+
+  bool _hasValidSize(Size size) =>
+      size.width.isFinite &&
+      size.height.isFinite &&
+      size.width > 0 &&
+      size.height > 0;
+
+  bool _shouldUseTutorialFullscreenMode() {
+    final surface = _currentListSurface;
+    if (surface == null) {
+      return false;
+    }
+    return _currentListIsTabletLike && (surface.isExpanded || surface.isWide);
+  }
+
+  void _setTutorialFullscreenMode(bool value) {
+    if (_tutorialFullscreenMode == value) {
+      return;
+    }
+    _tutorialFullscreenMode = value;
+    notifyListeners();
+  }
+
+  Future<void> _closeTutorialDetailRouteIfNeeded() async {
+    final route = _tutorialDetailRoute;
+    final navigator = ReviewPromptController.navigatorKey.currentState;
+    if (route == null || navigator == null || !route.isActive) {
+      _clearTutorialDetailRoute();
+      return;
+    }
+
+    if (route.isCurrent && navigator.canPop()) {
+      navigator.pop();
+      await _waitForSettledUi();
+      _clearTutorialDetailRoute();
+      return;
+    }
+
+    navigator.removeRoute(route);
+    await _waitForSettledUi();
+    _clearTutorialDetailRoute();
+  }
+
+  void _clearTutorialDetailRoute() {
+    _tutorialDetailRoute = null;
+    _setTutorialFullscreenMode(false);
+  }
+}
+
+class _ResolvedTutorialAnchor {
+  const _ResolvedTutorialAnchor({
+    required this.context,
+    required this.renderBox,
+  });
+
+  final BuildContext context;
+  final RenderBox renderBox;
 }
