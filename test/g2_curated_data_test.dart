@@ -442,6 +442,43 @@ void main() {
     },
   );
 
+  test('focused g2 entries now expose the approved HP values', () {
+    const approvedHealthValues = {
+      'g2_orc_cockroach_queen': 1650,
+      'g2_orc_wolf_spider': 1500,
+      'g2_orc_praying_mantis_nymph': 1400,
+      'g2_orc_cricket': 1400,
+      'g2_orc_wasp': 1075,
+      'g2_orc_wasp_drone': 1075,
+      'g2_orc_pincher_earwig': 1100,
+      'g2_orc_potato_beetle': 1500,
+      'g2_orc_rust_beetle': 938,
+      'g2_orc_firefly': 495,
+      'g2_orc_broodmother': 2250,
+      'g2_masked_fighter': 1875,
+      'g2_ogrr_wasp': 1300,
+      'g2_ogrr_wasp_drone': 1300,
+      'g2_ogrr_praying_mantis_nymph': 1600,
+      'g2_ogrr_wolf_spider': 1600,
+      'g2_ogrr_cricket': 1500,
+      'g2_ogrr_ladybug': 1500,
+      'g2_ogrr_blue_butterfly': 1400,
+      'g2_ogrr_northern_scorpion': 1500,
+      'g2_orb_weaver_jr': 320,
+      'g2_orc_stinkbug': 800,
+      'g2_orc_northern_scorpion': 875,
+      'g2_orc_blue_butterfly': 425,
+    };
+
+    for (final item in approvedHealthValues.entries) {
+      expect(entry(item.key)['health']['value'], item.value, reason: item.key);
+      expect(entry(item.key)['healthDisplay'], 'normal', reason: item.key);
+    }
+
+    expect(entry('g2_orc_black_soldier_ant')['health']['value'], 480);
+    expect(entry('g2_orc_black_soldier_ant')['healthDisplay'], isNot('hidden'));
+  });
+
   test('ogrr and late g2 location notes stay aligned to the curated map', () {
     final ogrrCricket = entry('g2_ogrr_cricket');
     final orchidMantis = entry('g2_orchid_mantis');

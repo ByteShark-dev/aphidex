@@ -256,6 +256,10 @@ class TutorialController extends ChangeNotifier {
   EnemyIndexEntry? _demoEnemy;
   List<EnemyIndexEntry> _demoVariants = const [];
   String? _demoEffectId;
+  bool _syncingAnchor = false;
+  TutorialStep? _missingAnchorStep;
+  int _missingAnchorChecks = 0;
+  bool _closing = false;
 
   TutorialStep? get step => _step;
   bool get isActive => _step != null;
@@ -296,6 +300,55 @@ class TutorialController extends ChangeNotifier {
     return topLeft & targetBox.size;
   }
 
+  Future<void> syncCurrentTargetVisibility() async {
+    final step = _step;
+    if (step == null || _syncingAnchor) {
+      return;
+    }
+
+    final anchorId = _currentAnchorId;
+    if (anchorId == null) {
+      return;
+    }
+
+    final targetContext = _anchorKeys[anchorId]?.currentContext;
+    if (targetContext == null) {
+      if (_missingAnchorStep != step) {
+        _missingAnchorStep = step;
+        _missingAnchorChecks = 1;
+        return;
+      }
+
+      _missingAnchorChecks++;
+      if (_missingAnchorChecks < 3) {
+        return;
+      }
+
+      _missingAnchorChecks = 0;
+      _missingAnchorStep = null;
+      await _skipMissingStep(step);
+      return;
+    }
+
+    _missingAnchorStep = null;
+    _missingAnchorChecks = 0;
+    _syncingAnchor = true;
+    try {
+      if (Scrollable.maybeOf(targetContext) != null) {
+        await Scrollable.ensureVisible(
+          targetContext,
+          alignment: 0.12,
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+        );
+      }
+    } catch (_) {
+      // Ignore transient route/layout races while the next frame settles.
+    } finally {
+      _syncingAnchor = false;
+    }
+  }
+
   Future<void> maybeStart(
     BuildContext context,
     List<EnemyIndexEntry> enemies,
@@ -320,7 +373,7 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> startFromSettings() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || isActive) {
+    if (navigator == null || isActive || _closing) {
       return;
     }
 
@@ -332,6 +385,9 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> next() async {
+    if (_closing) {
+      return;
+    }
     switch (_step) {
       case TutorialStep.search:
         _setStep(TutorialStep.gamePicker);
@@ -381,6 +437,9 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> back() async {
+    if (_closing) {
+      return;
+    }
     switch (_step) {
       case TutorialStep.search:
       case null:
@@ -431,14 +490,30 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> finish() => _close(markCompleted: true);
 
-  void debugResetForTests() {
+  void resetRuntimeState() {
     _autoStartChecked = false;
     _step = null;
     _demoEnemy = null;
     _demoVariants = const [];
     _demoEffectId = null;
+    _syncingAnchor = false;
+    _missingAnchorStep = null;
+    _missingAnchorChecks = 0;
+    _closing = false;
     _anchorKeys.clear();
     _promptVisible = false;
+    notifyListeners();
+  }
+
+  void debugResetForTests() {
+    resetRuntimeState();
+  }
+
+  @visibleForTesting
+  void debugStartStepForTests(TutorialStep step) {
+    _closing = false;
+    _autoStartChecked = true;
+    _step = step;
     notifyListeners();
   }
 
@@ -514,7 +589,7 @@ class TutorialController extends ChangeNotifier {
   Future<void> _openDemoEnemy() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
     final enemy = _demoEnemy;
-    if (navigator == null || enemy == null) {
+    if (navigator == null || enemy == null || _closing) {
       return;
     }
 
@@ -535,7 +610,7 @@ class TutorialController extends ChangeNotifier {
   Future<void> _openDemoCodex() async {
     final context = ReviewPromptController.navigatorKey.currentContext;
     final effectId = _demoEffectId;
-    if (context == null || effectId == null) {
+    if (context == null || effectId == null || _closing) {
       return;
     }
 
@@ -545,7 +620,7 @@ class TutorialController extends ChangeNotifier {
 
   Future<void> _popRouteIfPossible() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    if (navigator == null || !navigator.canPop()) {
+    if (navigator == null || !navigator.canPop() || _closing) {
       return;
     }
     navigator.pop();
@@ -553,6 +628,11 @@ class TutorialController extends ChangeNotifier {
   }
 
   Future<void> _close({required bool markCompleted}) async {
+    if (_closing) {
+      return;
+    }
+    _closing = true;
+
     if (markCompleted) {
       await LocalStorage.setBool(completionKey, true);
     }
@@ -561,10 +641,28 @@ class TutorialController extends ChangeNotifier {
     _demoEnemy = null;
     _demoVariants = const [];
     _demoEffectId = null;
+    _missingAnchorStep = null;
+    _missingAnchorChecks = 0;
     notifyListeners();
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_popToRootAfterFrame());
+    });
+  }
+
+  Future<void> _popToRootAfterFrame() async {
     final navigator = ReviewPromptController.navigatorKey.currentState;
-    navigator?.popUntil((route) => route.isFirst);
+    if (navigator == null || !navigator.mounted) {
+      _closing = false;
+      return;
+    }
+
+    await Future<void>.delayed(const Duration(milliseconds: 16));
+    while (navigator.canPop()) {
+      navigator.pop();
+      await Future<void>.delayed(const Duration(milliseconds: 32));
+    }
+    _closing = false;
   }
 
   String? get _currentAnchorId {
@@ -600,6 +698,33 @@ class TutorialController extends ChangeNotifier {
             : tutorialAnchorEffectEquipment(effectId);
       case null:
         return null;
+    }
+  }
+
+  Future<void> _skipMissingStep(TutorialStep step) async {
+    if (_step != step) {
+      return;
+    }
+
+    switch (step) {
+      case TutorialStep.detailVariant:
+        _setStep(TutorialStep.detailEffects);
+        return;
+      case TutorialStep.detailEffects:
+        _setStep(TutorialStep.detailEffect);
+        return;
+      case TutorialStep.detailEffect:
+        await _openDemoCodex();
+        _setStep(TutorialStep.codexCard);
+        return;
+      case TutorialStep.codexCard:
+        _setStep(TutorialStep.codexEquipment);
+        return;
+      case TutorialStep.codexEquipment:
+        await finish();
+        return;
+      default:
+        return;
     }
   }
 }

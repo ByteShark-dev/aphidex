@@ -139,6 +139,9 @@ void main() {
         if (key == 'FontManifest.json') {
           return _stringData('[]');
         }
+        if (key.endsWith('.svg')) {
+          return _stringData(_TestAssetBundle._svg);
+        }
         if (key.endsWith('assets/data/creatures/en/index_g1.json')) {
           return _stringData(jsonEncode([_indexEntry(_sampleEnemyJson)]));
         }
@@ -183,8 +186,9 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+      expect(find.text('Gas'), findsOneWidget);
+      expect(find.byType(BottomSheet), findsOneWidget);
       expect(find.text('Effect Codex'), findsOneWidget);
-      expect(find.byKey(const ValueKey('effect-card-gas')), findsOneWidget);
     });
 
     testWidgets('opens from a weak point damage icon', (tester) async {
@@ -202,10 +206,8 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('weakpoint-effect-chopping')));
       await tester.pumpAndSettle();
 
-      expect(
-        find.byKey(const ValueKey('effect-card-chopping')),
-        findsOneWidget,
-      );
+      expect(find.text('Chopping'), findsOneWidget);
+      expect(find.byType(BottomSheet), findsOneWidget);
     });
 
     testWidgets('opens from the home app bar button', (tester) async {
@@ -299,18 +301,37 @@ final ByteData _transparentImage = ByteData.view(
 );
 
 class _TestAssetBundle extends CachingAssetBundle {
+  static const _svg =
+      '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+      '<rect width="32" height="32" fill="#ffffff"/></svg>';
+
   @override
   Future<ByteData> load(String key) async {
+    if (key == 'AssetManifest.bin') {
+      return const StandardMessageCodec().encodeMessage(<Object?, Object?>{})!;
+    }
     if (key == 'AssetManifest.json') {
       return _stringData('{}');
+    }
+    if (key == 'FontManifest.json') {
+      return _stringData('[]');
+    }
+    if (key.endsWith('.svg')) {
+      return _stringData(_svg);
     }
     return _transparentImage;
   }
 
   @override
   Future<String> loadString(String key, {bool cache = true}) async {
+    if (key.endsWith('.svg')) {
+      return _svg;
+    }
     if (key == 'AssetManifest.json') {
       return '{}';
+    }
+    if (key == 'FontManifest.json') {
+      return '[]';
     }
     return '';
   }

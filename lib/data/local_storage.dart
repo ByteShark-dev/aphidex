@@ -37,6 +37,8 @@ class LocalStorage {
 
   static Future<void> setInt(String key, int value) => _box.put(key, value);
 
+  static Future<void> remove(String key) => _box.delete(key);
+
   static Future<void> clearAll({Set<String> preserveKeys = const {}}) async {
     final preserved = <String, dynamic>{};
     for (final key in preserveKeys) {

@@ -7,13 +7,18 @@ import '../controllers/tutorial_controller.dart';
 import '../data/enemy_repository.dart';
 import '../data/effect_catalog.dart';
 import '../data/local_storage.dart';
+import '../data/tier_summary.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
+import '../layout/app_breakpoints.dart';
 import '../models/enemy.dart';
 import '../models/enemy_index_entry.dart';
+import '../models/game_pick.dart';
+import '../widgets/fallback_asset_image.dart';
 import '../widgets/icon_badge.dart';
 import '../widgets/inline_banner_ad_card.dart';
 import '../widgets/overflow_marquee_text.dart';
+import '../widgets/state_panels.dart';
 import 'effect_codex_screen.dart';
 
 String? _visibleText(LocalizedText? text, String languageCode) {
@@ -36,6 +41,21 @@ bool _hasVisibleLocalizedList(
   Iterable<LocalizedText> values,
   String languageCode,
 ) => _visibleLocalizedValues(values, languageCode).isNotEmpty;
+
+Future<void> _openTutorialAwareEffectDetails(
+  BuildContext context,
+  String effectId, {
+  String? tutorialEffectId,
+}) async {
+  final tutorial = TutorialController.instance;
+  if (tutorial.step == TutorialStep.detailEffect &&
+      tutorialEffectId == effectId) {
+    await tutorial.next();
+    return;
+  }
+
+  await showEffectInfoSheet(context, effectId: effectId);
+}
 
 List<BonusInfo> _mergeBonuses(
   Iterable<BonusInfo> base,
@@ -238,12 +258,6 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     return 0;
   }
 
-  bool _isGoldUnlocked(Enemy enemy, Set<String> goldIds) {
-    return enemy.defaultGold ||
-        goldIds.contains(enemy.id) ||
-        (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
-  }
-
   bool _hasV2(Enemy enemy) =>
       enemy.health != null ||
       enemy.elementalWeaknesses.isNotEmpty ||
@@ -280,8 +294,23 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       enemy.attacks.isNotEmpty ||
       enemy.bossPhases.isNotEmpty;
 
-  void _openEffectDetails(BuildContext context, String effectId) {
-    openEffectCodex(context, initialEffectId: effectId);
+  void _openEffectDetails(
+    BuildContext context,
+    String effectId, {
+    String? tutorialEffectId,
+  }) {
+    _openTutorialAwareEffectDetails(
+      context,
+      effectId,
+      tutorialEffectId: tutorialEffectId,
+    );
+  }
+
+  GamePick _gamePickForEnemy(Enemy enemy) {
+    return switch (enemy.game) {
+      'g2' => GamePick.g2,
+      _ => GamePick.g1,
+    };
   }
 
   Future<void> _selectVariant(String game) async {
@@ -340,7 +369,16 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
-      body: const Center(child: CircularProgressIndicator()),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: AphidexLoadingPanel(
+            gamePick: GamePick.all,
+            title: context.l10n.loadingCreaturesTitle,
+            subtitle: context.l10n.loadingCreatureDetailSubtitle,
+          ),
+        ),
+      ),
     );
   }
 
@@ -355,10 +393,14 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Text(
-            '${context.l10n.errorLoadingJson}\n$error',
-            textAlign: TextAlign.center,
+          padding: const EdgeInsets.all(20),
+          child: AphidexStatePanel(
+            gamePick: GamePick.all,
+            icon: Icons.cloud_off_rounded,
+            title: context.l10n.dataUnavailableTitle,
+            subtitle: error == null
+                ? context.l10n.dataUnavailableSubtitle
+                : '${context.l10n.errorLoadingJson}\n$error',
           ),
         ),
       ),
@@ -368,6 +410,13 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
   Widget _buildLoaded(BuildContext context, Enemy enemy) {
     final l10n = context.l10n;
     final languageCode = l10n.languageCode;
+    final viewportSize = MediaQuery.sizeOf(context);
+    final surface = AppBreakpoints.surfaceForWidth(viewportSize.width);
+    final pagePadding = surface.pagePadding;
+    final useSummaryRow = surface.isExpanded || surface.isWide;
+    final showCreatureCards = AppBreakpoints.shouldShowCreatureCards(
+      viewportSize,
+    );
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
     final selectedInfusion = enemy.infusions.isEmpty
@@ -376,6 +425,8 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
             0,
             enemy.infusions.length - 1,
           )];
+    final visiblePhotoAsset =
+        selectedInfusion?.resolvedImageAsset(enemy.photo) ?? enemy.photo;
     final weaknessesV1 = enemy.weaknesses
         .where((item) => item.trim().isNotEmpty)
         .toList();
@@ -469,7 +520,12 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
         top: false,
         minimum: const EdgeInsets.only(bottom: 12),
         child: ListView(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.fromLTRB(
+            pagePadding.left,
+            pagePadding.top,
+            pagePadding.right,
+            pagePadding.bottom,
+          ),
           children: [
             if (_variantCount > 1) ...[
               Container(
@@ -481,101 +537,68 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               ),
               const SizedBox(height: 12),
             ],
-            Container(
-              key: tutorial.keyFor(tutorialAnchorDetailSummary),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(
-                      enemy.photo,
-                      height: 220,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
+            useSummaryRow
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconBadge.asset(
-                        assetName: UiMapper.dangerIcon(enemy.danger),
-                        size: 28,
-                        padding: const EdgeInsets.all(5),
-                        borderRadius: 13,
-                      ),
-                      const SizedBox(width: 10),
-                      Image.asset(
-                        UiMapper.tierIcon(tier: enemy.tier, isBoss: false),
-                        width: 36,
-                        height: 36,
+                      Expanded(
+                        flex: 11,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 180),
+                          switchInCurve: Curves.easeOutCubic,
+                          switchOutCurve: Curves.easeOutCubic,
+                          child: _DetailPhotoPanel(
+                            key: ValueKey(
+                              'detail-photo-${enemy.id}-${selectedInfusion?.id ?? 'base'}',
+                            ),
+                            photoAsset: visiblePhotoAsset,
+                            title: enemy.name.resolve(languageCode),
+                            gamePick: _gamePickForEnemy(enemy),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: ValueListenableBuilder<Set<String>>(
-                            valueListenable: gold.gold,
-                            builder: (context, goldIds, _) {
-                              final unlocked = _isGoldUnlocked(enemy, goldIds);
-                              final canToggle = !enemy.defaultGold;
-
-                              return InkWell(
-                                borderRadius: BorderRadius.circular(999),
-                                onTap: canToggle
-                                    ? () => gold.toggleLinked([
-                                        enemy.id,
-                                        enemy.goldLinkId,
-                                      ])
-                                    : null,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 14,
-                                    vertical: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(999),
-                                    border: Border.all(
-                                      width: 1.5,
-                                      color: unlocked
-                                          ? const Color(0xFFFFD54F)
-                                          : Colors.black12,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.credit_card,
-                                        size: 18,
-                                        color: unlocked
-                                            ? const Color(0xFFFFD54F)
-                                            : Colors.grey,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Flexible(
-                                        child: Text(
-                                          enemy.defaultGold
-                                              ? l10n.goldDefault
-                                              : (unlocked
-                                                    ? l10n.goldUnlocked
-                                                    : l10n.goldMark),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                        flex: 9,
+                        child: Container(
+                          key: tutorial.keyFor(tutorialAnchorDetailSummary),
+                          child: _DetailSummarySidebar(
+                            enemy: enemy,
+                            gold: gold,
+                            l10n: l10n,
+                            showCreatureCards: showCreatureCards,
                           ),
                         ),
                       ),
                     ],
+                  )
+                : Column(
+                    children: [
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 180),
+                        switchInCurve: Curves.easeOutCubic,
+                        switchOutCurve: Curves.easeOutCubic,
+                        child: _DetailPhotoPanel(
+                          key: ValueKey(
+                            'detail-photo-${enemy.id}-${selectedInfusion?.id ?? 'base'}',
+                          ),
+                          photoAsset: visiblePhotoAsset,
+                          title: enemy.name.resolve(languageCode),
+                          gamePick: _gamePickForEnemy(enemy),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        key: tutorial.keyFor(tutorialAnchorDetailSummary),
+                        child: _DetailSummarySidebar(
+                          enemy: enemy,
+                          gold: gold,
+                          l10n: l10n,
+                          showCreatureCards: showCreatureCards,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
             const SizedBox(height: 18),
             if (description != null) ...[
               _TextSection(title: l10n.descriptionTitle, value: description),
@@ -677,8 +700,11 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                                     'effect-legacy-weakness-$weakness',
                                   ),
                                   borderRadius: BorderRadius.circular(999),
-                                  onTap: () =>
-                                      _openEffectDetails(context, weakness),
+                                  onTap: () => _openEffectDetails(
+                                    context,
+                                    weakness,
+                                    tutorialEffectId: tutorialEffectId,
+                                  ),
                                   child: IconBadge.asset(
                                     assetName: UiMapper.effectIcon(weakness),
                                     size: 26,
@@ -710,8 +736,11 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                                       'effect-legacy-resistance-$resistance',
                                     ),
                                     borderRadius: BorderRadius.circular(999),
-                                    onTap: () =>
-                                        _openEffectDetails(context, resistance),
+                                    onTap: () => _openEffectDetails(
+                                      context,
+                                      resistance,
+                                      tutorialEffectId: tutorialEffectId,
+                                    ),
                                     child: IconBadge.asset(
                                       assetName: UiMapper.effectIcon(
                                         resistance,
@@ -936,6 +965,277 @@ class _VariantSwitcher extends StatelessWidget {
   }
 }
 
+class _SummaryStatCard extends StatelessWidget {
+  final Widget icon;
+  final String label;
+  final String value;
+
+  const _SummaryStatCard({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        border: Border.all(color: Colors.black12),
+      ),
+      child: Row(
+        children: [
+          icon,
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                OverflowMarqueeText(
+                  value,
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DetailPhotoPanel extends StatelessWidget {
+  final String photoAsset;
+  final String title;
+  final GamePick gamePick;
+
+  const _DetailPhotoPanel({
+    super.key,
+    required this.photoAsset,
+    required this.title,
+    required this.gamePick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (photoAsset.trim().isEmpty) {
+      return AphidexStatePanel(
+        gamePick: gamePick,
+        icon: Icons.image_not_supported_outlined,
+        title: context.l10n.noImageTitle,
+        subtitle: context.l10n.noImageSubtitle,
+        compact: true,
+      );
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(18),
+      child: AspectRatio(
+        aspectRatio: 16 / 10,
+        child: Image.asset(
+          photoAsset,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return AphidexStatePanel(
+              gamePick: gamePick,
+              icon: Icons.image_not_supported_outlined,
+              title: context.l10n.noImageTitle,
+              subtitle: title,
+              compact: true,
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailSummarySidebar extends StatelessWidget {
+  final Enemy enemy;
+  final GoldController gold;
+  final AppLocalizations l10n;
+  final bool showCreatureCards;
+
+  const _DetailSummarySidebar({
+    required this.enemy,
+    required this.gold,
+    required this.l10n,
+    required this.showCreatureCards,
+  });
+
+  bool _isGoldUnlocked(Set<String> goldIds) {
+    return enemy.defaultGold ||
+        goldIds.contains(enemy.id) ||
+        (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
+  }
+
+  String? _resolvedCardAsset(bool unlocked) {
+    if (!enemy.hasCreatureCard) {
+      return null;
+    }
+    if (unlocked && enemy.hasGoldCreatureCard) {
+      return enemy.assetForCardVariant(CreatureCardVariant.gold);
+    }
+    return enemy.assetForCardVariant(CreatureCardVariant.normal) ??
+        enemy.defaultCardAsset;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: _SummaryStatCard(
+                icon: IconBadge.asset(
+                  assetName: UiMapper.dangerIcon(enemy.danger),
+                  size: 24,
+                  padding: const EdgeInsets.all(4),
+                  borderRadius: 12,
+                ),
+                label: l10n.filterDanger,
+                value: l10n.dangerLevelLabel(
+                  UiMapper.canonicalDangerLevel(enemy.danger),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _SummaryStatCard(
+                icon: Image.asset(
+                  UiMapper.tierIcon(tier: enemy.tier, isBoss: enemy.isBoss),
+                  width: 28,
+                  height: 28,
+                ),
+                label: l10n.tierTitle,
+                value: formatTierSummaryLabel(
+                  tier: enemy.tier,
+                  isBoss: enemy.isBoss,
+                  bossLabel: l10n.filterBoss,
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (showCreatureCards && enemy.hasCreatureCard) ...[
+          const SizedBox(height: 16),
+          ValueListenableBuilder<Set<String>>(
+            valueListenable: gold.gold,
+            builder: (context, goldIds, _) {
+              final unlocked = _isGoldUnlocked(goldIds);
+              final cardAsset = _resolvedCardAsset(unlocked);
+              if (cardAsset == null || cardAsset.trim().isEmpty) {
+                return const SizedBox.shrink();
+              }
+              return _GoldCreatureCardSection(
+                enemy: enemy,
+                cardAsset: cardAsset,
+                unlocked: unlocked,
+              );
+            },
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _GoldCreatureCardSection extends StatelessWidget {
+  final Enemy enemy;
+  final String cardAsset;
+  final bool unlocked;
+
+  const _GoldCreatureCardSection({
+    required this.enemy,
+    required this.cardAsset,
+    required this.unlocked,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final canToggle = !enemy.defaultGold && enemy.hasSelectableCardVariants;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.creatureCardTitle,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(999),
+            onTap: canToggle
+                ? () => GoldController.instance.toggleLinked([
+                    enemy.id,
+                    enemy.goldLinkId,
+                  ])
+                : null,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(
+                  width: 1.5,
+                  color: unlocked ? const Color(0xFFFFD54F) : Colors.black12,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.credit_card,
+                    size: 18,
+                    color: unlocked ? const Color(0xFFFFD54F) : Colors.grey,
+                  ),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      enemy.defaultGold
+                          ? l10n.goldDefault
+                          : (unlocked ? l10n.goldUnlocked : l10n.goldMark),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(14),
+          child: FallbackAssetImage.asset(
+            key: ValueKey(
+              'creature-card-${enemy.id}-${unlocked ? 'gold' : 'normal'}',
+            ),
+            assetName: cardAsset,
+            fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
+            fit: BoxFit.contain,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _InfusionSwitcher extends StatelessWidget {
   final List<CreatureInfusion> infusions;
   final int selectedIndex;
@@ -948,6 +1248,29 @@ class _InfusionSwitcher extends StatelessWidget {
     required this.languageCode,
     required this.onChanged,
   });
+
+  ({Color background, Color border, Color foreground}) _paletteFor(
+    BuildContext context,
+    String infusionId,
+    bool selected,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final base = switch (infusionId) {
+      'fresh' => const Color(0xFF4CC2FF),
+      'sour' => const Color(0xFF4FB64D),
+      'spicy' => const Color(0xFFD34D47),
+      'salty' => const Color(0xFFD2B98C),
+      _ => colorScheme.primary,
+    };
+
+    return (
+      background: selected
+          ? base.withValues(alpha: 0.18)
+          : colorScheme.surfaceContainerHighest,
+      border: selected ? base : colorScheme.outlineVariant,
+      foreground: selected ? base : colorScheme.onSurface,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -964,16 +1287,31 @@ class _InfusionSwitcher extends StatelessWidget {
           child: Row(
             children: List.generate(infusions.length, (index) {
               final infusion = infusions[index];
+              final selected = index == selectedIndex;
+              final palette = _paletteFor(context, infusion.id, selected);
               return Padding(
                 padding: EdgeInsets.only(
                   right: index == infusions.length - 1 ? 0 : 8,
                 ),
                 child: ChoiceChip(
+                  showCheckmark: false,
                   avatar: infusion.iconAsset.isEmpty
                       ? null
                       : Image.asset(infusion.iconAsset, width: 18, height: 18),
-                  label: Text(infusion.name.resolve(languageCode)),
-                  selected: index == selectedIndex,
+                  label: Text(
+                    infusion.name.resolve(languageCode),
+                    style: TextStyle(
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                      color: palette.foreground,
+                    ),
+                  ),
+                  selected: selected,
+                  selectedColor: palette.background,
+                  backgroundColor: palette.background,
+                  side: BorderSide(
+                    color: palette.border,
+                    width: selected ? 1.5 : 1,
+                  ),
                   onSelected: (_) => onChanged(index),
                 ),
               );
@@ -1055,7 +1393,10 @@ class _BulletTextSection extends StatelessWidget {
                 .map(
                   (item) => Padding(
                     padding: const EdgeInsets.only(bottom: 6),
-                    child: Text('• $item', style: const TextStyle(height: 1.4)),
+                    child: Text(
+                      '\u2022 $item',
+                      style: const TextStyle(height: 1.4),
+                    ),
                   ),
                 )
                 .toList(),
@@ -1675,7 +2016,7 @@ class _InflictsTraitsSection extends StatelessWidget {
                     key: ValueKey('inflicts-effect-$effectId'),
                     borderRadius: BorderRadius.circular(999),
                     onTap: () =>
-                        openEffectCodex(context, initialEffectId: effectId),
+                        showEffectInfoSheet(context, effectId: effectId),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -2018,8 +2359,11 @@ class _BonusWrap extends StatelessWidget {
                 'effect-bonus-${dim ? 'resistance' : 'weakness'}-${bonus.type}',
               ),
               borderRadius: BorderRadius.circular(999),
-              onTap: () =>
-                  openEffectCodex(context, initialEffectId: bonus.type),
+              onTap: () => _openTutorialAwareEffectDetails(
+                context,
+                bonus.type,
+                tutorialEffectId: tutorialEffectId,
+              ),
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
@@ -2103,9 +2447,10 @@ class _WeakPointCard extends StatelessWidget {
                         child: InkWell(
                           key: ValueKey('weakpoint-effect-$effectId'),
                           borderRadius: BorderRadius.circular(999),
-                          onTap: () => openEffectCodex(
+                          onTap: () => _openTutorialAwareEffectDetails(
                             context,
-                            initialEffectId: effectId,
+                            effectId,
+                            tutorialEffectId: tutorialEffectId,
                           ),
                           child: IconBadge.asset(
                             assetName: UiMapper.effectIcon(effectId),

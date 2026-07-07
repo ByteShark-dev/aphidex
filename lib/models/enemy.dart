@@ -1,6 +1,9 @@
 import 'dart:convert';
 
-class Enemy {
+import 'creature_card_support.dart';
+
+class Enemy implements CreatureCardCarrier {
+  @override
   final String id;
   final String speciesKey;
   final String? collectionGroup;
@@ -16,12 +19,19 @@ class Enemy {
   final List<String> weaknesses;
   final List<String> resistances;
 
+  @override
   final bool defaultGold;
   final String favoriteKey;
+  @override
   final String? goldLinkId;
   final String cardNormal;
   final String cardGold;
+  final bool? hasCreatureCardFlag;
+  final bool? hasGoldCreatureCardFlag;
+  final bool? hasSelectableCardVariantsFlag;
+  final String? defaultCardVariantRaw;
   final String photo;
+  final String listIconAsset;
 
   final bool isKillable;
   final HealthInfo? health;
@@ -71,7 +81,12 @@ class Enemy {
     required this.resistances,
     required this.cardNormal,
     required this.cardGold,
+    this.hasCreatureCardFlag,
+    this.hasGoldCreatureCardFlag,
+    this.hasSelectableCardVariantsFlag,
+    this.defaultCardVariantRaw,
     required this.photo,
+    this.listIconAsset = '',
     this.isKillable = true,
     this.health,
     this.healthDisplay = HealthDisplayMode.hidden,
@@ -257,9 +272,14 @@ class Enemy {
       defaultGold: json['defaultGold'] as bool? ?? false,
       favoriteKey: (json['favoriteKey'] as String?) ?? (json['id'] as String),
       goldLinkId: json['goldLinkId'] as String?,
-      cardNormal: json['cardNormal'] as String,
-      cardGold: json['cardGold'] as String,
+      cardNormal: (json['cardNormal'] as String? ?? '').trim(),
+      cardGold: (json['cardGold'] as String? ?? '').trim(),
+      hasCreatureCardFlag: json['hasCreatureCard'] as bool?,
+      hasGoldCreatureCardFlag: json['hasGoldCreatureCard'] as bool?,
+      hasSelectableCardVariantsFlag: json['hasSelectableCardVariants'] as bool?,
+      defaultCardVariantRaw: json['defaultCardVariant'] as String?,
       photo: json['photo'] as String,
+      listIconAsset: (json['listIconAsset'] as String? ?? '').trim(),
       isKillable: isKillable,
       weaknesses: List<String>.from(json['weaknesses'] ?? const []),
       resistances: List<String>.from(json['resistances'] ?? const []),
@@ -323,6 +343,52 @@ class Enemy {
   }
 
   String get resolvedFavoriteKey => favoriteKey.isEmpty ? id : favoriteKey;
+
+  bool get hasValidCardNormal => cardNormal.trim().isNotEmpty;
+
+  bool get hasValidCardGold => cardGold.trim().isNotEmpty;
+
+  @override
+  bool get hasCreatureCard =>
+      hasCreatureCardFlag ?? (hasValidCardNormal || hasValidCardGold);
+
+  @override
+  bool get hasGoldCreatureCard => hasGoldCreatureCardFlag ?? hasValidCardGold;
+
+  @override
+  bool get hasSelectableCardVariants =>
+      hasSelectableCardVariantsFlag ?? (hasValidCardNormal && hasValidCardGold);
+
+  @override
+  CreatureCardVariant? get defaultCardVariant {
+    final materialized = CreatureCardVariantX.fromStorageValue(
+      defaultCardVariantRaw,
+    );
+    if (materialized != null) {
+      return materialized;
+    }
+    if (hasValidCardNormal) {
+      return CreatureCardVariant.normal;
+    }
+    if (hasValidCardGold) {
+      return CreatureCardVariant.gold;
+    }
+    return null;
+  }
+
+  String? get defaultCardAsset => switch (defaultCardVariant) {
+    CreatureCardVariant.normal => cardNormal,
+    CreatureCardVariant.gold => cardGold,
+    null => null,
+  };
+
+  @override
+  String? assetForCardVariant(CreatureCardVariant variant) {
+    return switch (variant) {
+      CreatureCardVariant.normal => hasValidCardNormal ? cardNormal : null,
+      CreatureCardVariant.gold => hasValidCardGold ? cardGold : null,
+    };
+  }
 }
 
 enum HealthDisplayMode {
@@ -485,6 +551,7 @@ class CreatureInfusion {
   final String id;
   final LocalizedText name;
   final String iconAsset;
+  final String imageAsset;
   final List<BonusInfo> elementalWeaknesses;
   final List<BonusInfo> damageWeaknesses;
   final List<BonusInfo> resistances;
@@ -497,6 +564,7 @@ class CreatureInfusion {
     required this.id,
     required this.name,
     required this.iconAsset,
+    this.imageAsset = '',
     this.elementalWeaknesses = const [],
     this.damageWeaknesses = const [],
     this.resistances = const [],
@@ -533,6 +601,7 @@ class CreatureInfusion {
       id: (json['id'] ?? '') as String,
       name: LocalizedText.fromJson(json['name']),
       iconAsset: (json['iconAsset'] ?? '') as String,
+      imageAsset: (json['imageAsset'] ?? '') as String,
       elementalWeaknesses: bonusList('elementalWeaknesses'),
       damageWeaknesses: bonusList('damageWeaknesses'),
       resistances: bonusList('resistances'),
@@ -541,6 +610,11 @@ class CreatureInfusion {
       combatTips: localizedTextList('combatTips'),
       recommendations: LocalizedText.maybeFromJson(json['recommendations']),
     );
+  }
+
+  String resolvedImageAsset(String fallbackAsset) {
+    final candidate = imageAsset.trim();
+    return candidate.isEmpty ? fallbackAsset : candidate;
   }
 }
 

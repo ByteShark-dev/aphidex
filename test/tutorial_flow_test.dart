@@ -37,7 +37,6 @@ void main() {
 
   tearDownAll(() async {
     await Hive.box('aphidex').close();
-    await hiveDir.delete(recursive: true);
   });
 
   setUp(() async {
@@ -61,6 +60,9 @@ void main() {
       }
       if (key == 'FontManifest.json') {
         return _stringData('[]');
+      }
+      if (key.endsWith('.svg')) {
+        return _stringData(_TestAssetBundle._svg);
       }
       if (key.endsWith('assets/data/creatures/en/index_g1.json')) {
         return _stringData(
@@ -150,7 +152,7 @@ void main() {
     await _showTutorial(tester);
 
     for (var i = 0; i < 10; i++) {
-      await tester.tap(find.byKey(const ValueKey('tutorial-next')));
+      await _tapTutorialNext(tester);
       await _pumpAppReady(tester, milliseconds: 900);
     }
 
@@ -159,6 +161,60 @@ void main() {
     expect(find.byKey(const ValueKey('effect-card-gas')), findsOneWidget);
     expect(find.text('Effect description'), findsOneWidget);
   });
+
+  testWidgets(
+    'tutorial survives phone landscape when some detail targets are hidden',
+    (tester) async {
+      tutorialTesterView.physicalSize = const Size(844, 390);
+
+      await tester.pumpWidget(_buildTutorialApp(const EnemyListScreen()));
+      await _pumpAppReady(tester);
+      await _showTutorial(tester);
+      expect(tester.takeException(), isNull);
+
+      for (var i = 0; i < 10; i++) {
+        await _tapTutorialNext(tester);
+        await _pumpAppReady(tester, milliseconds: 900);
+        final exception = tester.takeException();
+        expect(exception, isNull, reason: 'iteration ${i + 1}');
+      }
+
+      expect(find.byType(EffectCodexScreen), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'tablet tutorial keeps footer actions visible and removes the overlay on finish',
+    (tester) async {
+      tutorialTesterView.physicalSize = const Size(1024, 768);
+
+      await tester.pumpWidget(_buildTutorialApp(const EnemyListScreen()));
+      await _pumpAppReady(tester);
+      await _showTutorial(tester);
+
+      for (var i = 0; i < 4; i++) {
+        _expectInViewport(tester, find.byKey(const ValueKey('tutorial-skip')));
+        _expectInViewport(tester, find.byKey(const ValueKey('tutorial-next')));
+        await _tapTutorialNext(tester);
+        await _pumpAppReady(tester, milliseconds: 900);
+        expect(tester.takeException(), isNull, reason: 'iteration ${i + 1}');
+      }
+
+      await TutorialController.instance.finish();
+      await _pumpAppReady(tester, milliseconds: 900);
+      expect(find.byKey(const ValueKey('tutorial-next')), findsNothing);
+      expect(find.byKey(const ValueKey('tutorial-skip')), findsNothing);
+
+      await tester.tap(
+        find.byKey(const ValueKey('enemy-tile-tutorial_shared_enemy')),
+      );
+      await _pumpAppReady(tester, milliseconds: 900);
+
+      expect(find.byType(EnemyDetailScreen), findsOneWidget);
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 50));
+    },
+  );
 }
 
 Widget _buildTutorialApp(Widget home) {
@@ -206,6 +262,22 @@ Future<void> _requestTutorial(WidgetTester tester) async {
   await _pumpAppReady(tester);
 }
 
+Future<void> _tapTutorialNext(WidgetTester tester) async {
+  final button = find.byKey(const ValueKey('tutorial-next'));
+  await tester.ensureVisible(button);
+  await tester.tap(button, warnIfMissed: false);
+}
+
+void _expectInViewport(WidgetTester tester, Finder finder) {
+  expect(finder, findsOneWidget);
+  final rect = tester.getRect(finder);
+  final size = tester.view.physicalSize / tester.view.devicePixelRatio;
+  expect(rect.top, greaterThanOrEqualTo(0));
+  expect(rect.left, greaterThanOrEqualTo(0));
+  expect(rect.bottom, lessThanOrEqualTo(size.height));
+  expect(rect.right, lessThanOrEqualTo(size.width));
+}
+
 Map<String, dynamic> _indexEntry(Map<String, dynamic> json) {
   final enemy = Enemy.fromJson(json);
   return {
@@ -241,18 +313,37 @@ final ByteData _transparentImage = ByteData.view(
 );
 
 class _TestAssetBundle extends CachingAssetBundle {
+  static const _svg =
+      '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+      '<rect width="32" height="32" fill="#ffffff"/></svg>';
+
   @override
   Future<ByteData> load(String key) async {
+    if (key == 'AssetManifest.bin') {
+      return const StandardMessageCodec().encodeMessage(<Object?, Object?>{})!;
+    }
     if (key == 'AssetManifest.json') {
       return _stringData('{}');
+    }
+    if (key == 'FontManifest.json') {
+      return _stringData('[]');
+    }
+    if (key.endsWith('.svg')) {
+      return _stringData(_svg);
     }
     return _transparentImage;
   }
 
   @override
   Future<String> loadString(String key, {bool cache = true}) async {
+    if (key.endsWith('.svg')) {
+      return _svg;
+    }
     if (key == 'AssetManifest.json') {
       return '{}';
+    }
+    if (key == 'FontManifest.json') {
+      return '[]';
     }
     return '';
   }

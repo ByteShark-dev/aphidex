@@ -12,6 +12,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 
+final TestFlutterView detailTesterView =
+    TestWidgetsFlutterBinding.ensureInitialized()
+        .platformDispatcher
+        .views
+        .first;
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -31,6 +37,13 @@ void main() {
   setUp(() async {
     await Hive.box('aphidex').clear();
     await LocalStorage.setBool(TutorialController.completionKey, true);
+    detailTesterView.physicalSize = const Size(390, 844);
+    detailTesterView.devicePixelRatio = 1.0;
+  });
+
+  tearDown(() {
+    detailTesterView.resetPhysicalSize();
+    detailTesterView.resetDevicePixelRatio();
   });
 
   test('non-killable entities can omit conventional health', () {
@@ -55,7 +68,7 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('Weaknesses'), findsNothing);
     expect(find.text('Resistances'), findsNothing);
@@ -69,7 +82,10 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Health'), 200);
+    await tester.pumpAndSettle();
 
     expect(find.text('Health'), findsOneWidget);
     expect(find.text('Not applicable · invulnerable'), findsOneWidget);
@@ -86,10 +102,73 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('Health'), findsNothing);
     expect(find.text('Not applicable · invulnerable'), findsNothing);
+  });
+
+  testWidgets(
+    'phone portrait hides creature cards and the detail effect guide button',
+    (tester) async {
+      final enemy = Enemy.fromJson({
+        ..._baseEnemy,
+        'weaknesses': ['fresh'],
+        'resistances': ['gas'],
+      });
+
+      await tester.pumpWidget(
+        _buildTestApp(
+          EnemyDetailScreen(enemy: enemy),
+          locale: const Locale('es'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('creature-card-section')), findsNothing);
+      expect(find.text('Tarjeta de criatura'), findsNothing);
+      expect(find.byKey(const ValueKey('open-effect-guide')), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'phone landscape still hides creature cards when only width is large',
+    (tester) async {
+      detailTesterView.physicalSize = const Size(844, 390);
+
+      final enemy = Enemy.fromJson({
+        ..._baseEnemy,
+        'weaknesses': ['fresh'],
+        'resistances': ['gas'],
+      });
+
+      await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('creature-card-section')), findsNothing);
+      expect(find.byKey(const ValueKey('open-effect-guide')), findsNothing);
+    },
+  );
+
+  testWidgets('tablet keeps the creature card block visible', (tester) async {
+    detailTesterView.physicalSize = const Size(900, 1280);
+
+    final enemy = Enemy.fromJson({
+      ..._baseEnemy,
+      'weaknesses': ['fresh'],
+      'resistances': ['gas'],
+    });
+
+    await tester.pumpWidget(
+      _buildTestApp(
+        EnemyDetailScreen(enemy: enemy),
+        locale: const Locale('es'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('creature-card-section')), findsOneWidget);
+    expect(find.text('Tarjeta de criatura'), findsOneWidget);
   });
 
   test('MIX.R variants share species and favorite keys across games', () {
@@ -175,7 +254,14 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Flavor or infusion'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
 
     expect(find.text('Flavor or infusion'), findsOneWidget);
     expect(
@@ -183,22 +269,24 @@ void main() {
       findsOneWidget,
     );
     await tester.drag(find.byType(ListView), const Offset(0, -700));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Do not rely on fresh damage.'), findsOneWidget);
     expect(find.text('Base leap still staggers.'), findsOneWidget);
     expect(find.text('Base venom still applies on hit.'), findsOneWidget);
 
     await tester.drag(find.byType(ListView), const Offset(0, 700));
-    await tester.pump();
-    await tester.tap(find.text('Sour'));
-    await tester.pump();
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(ChoiceChip, 'Sour'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(ChoiceChip, 'Sour'));
+    await tester.pumpAndSettle();
 
     expect(
       find.byKey(const ValueKey('effect-bonus-weakness-spicy')),
       findsOneWidget,
     );
     await tester.drag(find.byType(ListView), const Offset(0, -700));
-    await tester.pump();
+    await tester.pumpAndSettle();
     expect(find.text('Use spicy pressure.'), findsOneWidget);
   });
 
@@ -229,7 +317,10 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.text('Lesser mutations'), 200);
+    await tester.pumpAndSettle();
 
     expect(find.text('Lesser mutations'), findsOneWidget);
     expect(
@@ -239,11 +330,11 @@ void main() {
       findsOneWidget,
     );
     expect(
-      find.text('• Extra explosions tied to attacks or close contact.'),
+      find.text('\u2022 Extra explosions tied to attacks or close contact.'),
       findsOneWidget,
     );
     expect(
-      find.text('• Candy magic that adds unexpected elemental pressure.'),
+      find.text('\u2022 Candy magic that adds unexpected elemental pressure.'),
       findsOneWidget,
     );
   });
@@ -259,7 +350,7 @@ void main() {
     });
 
     await tester.pumpWidget(_buildTestApp(EnemyDetailScreen(enemy: enemy)));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('Lesser mutations'), findsNothing);
   });
@@ -332,11 +423,11 @@ void main() {
   });
 }
 
-Widget _buildTestApp(Widget home) {
+Widget _buildTestApp(Widget home, {Locale locale = const Locale('en')}) {
   return DefaultAssetBundle(
     bundle: _TestAssetBundle(),
     child: MaterialApp(
-      locale: const Locale('en'),
+      locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       home: home,
@@ -360,6 +451,10 @@ final ByteData _transparentImage = ByteData.view(
 );
 
 class _TestAssetBundle extends CachingAssetBundle {
+  static const _svg =
+      '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+      '<rect width="32" height="32" fill="#ffffff"/></svg>';
+
   @override
   Future<ByteData> load(String key) async {
     if (key == 'AssetManifest.bin') {
@@ -371,7 +466,24 @@ class _TestAssetBundle extends CachingAssetBundle {
     if (key == 'FontManifest.json') {
       return _stringData('[]');
     }
+    if (key.endsWith('.svg')) {
+      return _stringData(_svg);
+    }
     return _transparentImage;
+  }
+
+  @override
+  Future<String> loadString(String key, {bool cache = true}) async {
+    if (key.endsWith('.svg')) {
+      return _svg;
+    }
+    if (key == 'AssetManifest.json') {
+      return '{}';
+    }
+    if (key == 'FontManifest.json') {
+      return '[]';
+    }
+    return '';
   }
 }
 

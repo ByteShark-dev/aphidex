@@ -35,7 +35,7 @@ void main() {
   });
 
   test(
-    'interstitial pitch triggers every five detail closes with cooldown',
+    'interstitial pitch keeps the five-close cadence and original cooldown',
     () {
       final now = DateTime(2026, 5, 30, 12, 0);
 
@@ -65,7 +65,7 @@ void main() {
         MonetizationController.shouldShowInterstitialPrompt(
           closeCount: 10,
           currentTime: now,
-          lastPromptAt: now.subtract(const Duration(minutes: 2)),
+          lastPromptAt: now.subtract(const Duration(minutes: 2, seconds: 59)),
           adsRemoved: false,
           promoFlowInProgress: false,
         ),
@@ -81,6 +81,36 @@ void main() {
           promoFlowInProgress: false,
         ),
         isTrue,
+      );
+    },
+  );
+
+  test(
+    'same creature taps do not increase the distinct inspection counter',
+    () {
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wasp',
+          countProgress: true,
+        ),
+        isFalse,
+      );
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wolf_spider',
+          countProgress: true,
+        ),
+        isTrue,
+      );
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wolf_spider',
+          countProgress: false,
+        ),
+        isFalse,
       );
     },
   );

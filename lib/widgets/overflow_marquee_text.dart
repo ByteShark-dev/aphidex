@@ -30,6 +30,8 @@ class OverflowMarqueeText extends StatefulWidget {
 
 class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
   final ScrollController _scrollController = ScrollController();
+  Timer? _pendingDelay;
+  Completer<void>? _pendingDelayCompleter;
   double? _lastWidth;
   String? _lastText;
   bool _overflows = false;
@@ -39,6 +41,7 @@ class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
   @override
   void dispose() {
     _generation++;
+    _cancelPendingDelay();
     _scrollController.dispose();
     super.dispose();
   }
@@ -128,7 +131,7 @@ class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
   }
 
   Future<void> _runLoop(int runId) async {
-    await Future<void>.delayed(widget.initialPause);
+    await _wait(widget.initialPause);
     while (mounted && _generation == runId && _overflows) {
       if (!_scrollController.hasClients) {
         break;
@@ -150,7 +153,7 @@ class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
       if (!mounted || _generation != runId) {
         break;
       }
-      await Future<void>.delayed(widget.edgePause);
+      await _wait(widget.edgePause);
       if (!mounted || _generation != runId) {
         break;
       }
@@ -162,10 +165,36 @@ class _OverflowMarqueeTextState extends State<OverflowMarqueeText> {
       if (!mounted || _generation != runId) {
         break;
       }
-      await Future<void>.delayed(widget.edgePause);
+      await _wait(widget.edgePause);
     }
     if (mounted && _generation == runId) {
       _running = false;
+    }
+  }
+
+  Future<void> _wait(Duration duration) {
+    if (duration <= Duration.zero) {
+      return Future<void>.value();
+    }
+
+    _cancelPendingDelay();
+    final completer = Completer<void>();
+    _pendingDelayCompleter = completer;
+    _pendingDelay = Timer(duration, () {
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
+    });
+    return completer.future;
+  }
+
+  void _cancelPendingDelay() {
+    _pendingDelay?.cancel();
+    _pendingDelay = null;
+    final completer = _pendingDelayCompleter;
+    _pendingDelayCompleter = null;
+    if (completer != null && !completer.isCompleted) {
+      completer.complete();
     }
   }
 

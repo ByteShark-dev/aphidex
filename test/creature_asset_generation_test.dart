@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:aphidex/models/enemy.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 const _languages = ['es', 'en', 'ru'];
@@ -19,6 +20,11 @@ const _allowedIndexKeys = {
   'goldLinkId',
   'cardNormal',
   'cardGold',
+  'listIconAsset',
+  'hasCreatureCard',
+  'hasGoldCreatureCard',
+  'hasSelectableCardVariants',
+  'defaultCardVariant',
   'weaknesses',
   'resistances',
   'temperament',
@@ -68,7 +74,7 @@ void main() {
 
       expect(
         combinedIndexBytes,
-        lessThan(100 * 1024),
+        lessThan(110 * 1024),
         reason: '$language index payload should stay near the startup target',
       );
     }
@@ -124,32 +130,84 @@ void main() {
   });
 
   test('spanish localization keeps key accented creature text', () {
-    final master = [
-      File('assets/data/enemies_g1.json').readAsStringSync(),
-      File('assets/data/enemies_g2.json').readAsStringSync(),
-    ].join('\n');
+    final g1 = _readList('assets/data/enemies_g1.json');
+    final worker = Enemy.fromJson(
+      g1.firstWhere((item) => item['id'] == 'g1_red_worker_ant'),
+    );
+    final ladybird = Enemy.fromJson(
+      g1.firstWhere((item) => item['id'] == 'g1_ladybird'),
+    );
     final generated = File(
       'assets/data/creatures/es/details/g2_masked_stranger_orc_waves.json',
     ).readAsStringSync();
 
-    expect(master, contains('daño'));
-    expect(master, contains('infusión'));
-    expect(master, contains('mutación'));
-    expect(master, contains('eliminación'));
-    expect(master, isNot(contains('da?o')));
-    expect(master, isNot(contains('infusi?n')));
-    expect(master, isNot(contains('mutaci?n')));
-    expect(master, isNot(contains('eliminaci?n')));
+    expect(ladybird.name.resolve('es'), 'Catarina negra');
+    expect(
+      worker.attacks.first.howToAvoid!.resolve('es'),
+      contains('da\u00f1o'),
+    );
+    expect(worker.attacks.first.notes!.resolve('es'), contains('b\u00e1sico'));
+    expect(worker.strategy!.resolve('es'), contains('s\u00ed'));
 
-    expect(generated, contains('botín específico'));
-    expect(generated, contains('presión'));
-    expect(generated, contains('qué criaturas'));
+    expect(generated, contains('bot\u00edn espec\u00edfico'));
+    expect(generated, contains('presi\u00f3n'));
+    expect(generated, contains('qu\u00e9 criaturas'));
   });
+
+  test(
+    'special list icons and O.G.R.R. infusion images resolve to real assets',
+    () {
+      final g1 = _readList('assets/data/enemies_g1.json');
+      final g2 = _readList('assets/data/enemies_g2.json');
+
+      for (final id in [
+        'g1_enemy_orc',
+        'g1_enemy_infused',
+        'g1_factional_raids',
+        'g1_mixr_defenses',
+        'g1_spicy_coaltana_event',
+        'g1_javamatic_cable_defense',
+        'g2_mixr_defenses',
+        'g2_ice_sickles_event',
+        'g2_masked_stranger_orc_waves',
+      ]) {
+        final source = id.startsWith('g1_') ? g1 : g2;
+        final path = _entry(source, id)['listIconAsset'] as String?;
+        expect(path, isNotNull, reason: id);
+        expect(File(path!).existsSync(), isTrue, reason: path);
+      }
+
+      for (final id in [
+        'g2_ogrr_blue_butterfly',
+        'g2_ogrr_cricket',
+        'g2_ogrr_ladybug',
+        'g2_ogrr_northern_scorpion',
+        'g2_ogrr_pincher_earwig',
+        'g2_ogrr_praying_mantis_nymph',
+        'g2_ogrr_rust_beetle',
+        'g2_ogrr_wasp',
+        'g2_ogrr_wasp_drone',
+        'g2_ogrr_whipper_earwig',
+        'g2_ogrr_wolf_spider',
+      ]) {
+        final entry = Enemy.fromJson(_entry(g2, id));
+        for (final infusion in entry.infusions) {
+          final imageAsset = infusion.imageAsset.trim();
+          expect(imageAsset, isNotEmpty, reason: '${entry.id}:${infusion.id}');
+          expect(File(imageAsset).existsSync(), isTrue, reason: imageAsset);
+        }
+      }
+    },
+  );
 }
 
 List<Map<String, dynamic>> _readList(String path) {
   return (jsonDecode(File(path).readAsStringSync()) as List)
       .cast<Map<String, dynamic>>();
+}
+
+Map<String, dynamic> _entry(List<Map<String, dynamic>> data, String id) {
+  return data.firstWhere((item) => item['id'] == id);
 }
 
 bool _containsLocalizedMap(Object? value) {
