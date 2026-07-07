@@ -1603,6 +1603,12 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                         final isMasterDetail = AppBreakpoints.isMasterDetail(
                           constraints.maxWidth,
                         );
+                        TutorialController.instance.updateListLayout(
+                          surface: surface,
+                          isTabletLike: AppBreakpoints.isTabletLike(
+                            constraints.biggest,
+                          ),
+                        );
                         final pagePadding = surface.pagePadding;
                         final activeFilterCount = _activeFilterCount(
                           effectiveTierFilters: effectiveTierFilters,
@@ -1941,17 +1947,29 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                               color: Theme.of(
                                                 context,
                                               ).colorScheme.surface,
-                                              child: EnemyDetailScreen(
-                                                key: ValueKey(
-                                                  'detail:${detailEntry.activeEnemy.id}',
-                                                ),
-                                                summary:
-                                                    detailEntry.activeEnemy,
-                                                variantSummaries:
-                                                    detailEntry.entry.variants,
-                                                initialGame: detailEntry
-                                                    .activeEnemy
-                                                    .game,
+                                              child: ListenableBuilder(
+                                                listenable:
+                                                    TutorialController.instance,
+                                                builder: (context, _) {
+                                                  return EnemyDetailScreen(
+                                                    key: ValueKey(
+                                                      'detail:${detailEntry.activeEnemy.id}',
+                                                    ),
+                                                    summary:
+                                                        detailEntry.activeEnemy,
+                                                    variantSummaries:
+                                                        detailEntry
+                                                            .entry
+                                                            .variants,
+                                                    initialGame: detailEntry
+                                                        .activeEnemy
+                                                        .game,
+                                                    tutorialAnchorsEnabled:
+                                                        !TutorialController
+                                                            .instance
+                                                            .tutorialFullscreenMode,
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),

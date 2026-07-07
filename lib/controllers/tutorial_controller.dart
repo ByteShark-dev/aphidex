@@ -8,6 +8,7 @@ import '../data/enemy_repository.dart';
 import '../data/local_storage.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
+import '../layout/app_breakpoints.dart';
 import '../models/enemy.dart';
 import '../models/enemy_index_entry.dart';
 import '../screens/effect_codex_screen.dart';
@@ -247,6 +248,7 @@ class TutorialController extends ChangeNotifier {
 
   static final TutorialController instance = TutorialController._();
   static const String completionKey = 'tutorial_completed';
+  static const String tutorialDetailRouteName = 'tutorial-detail-fullscreen';
 
   final Map<String, GlobalKey> _anchorKeys = {};
 
@@ -260,10 +262,15 @@ class TutorialController extends ChangeNotifier {
   bool _targetRefreshQueued = false;
   bool _isFinishing = false;
   bool _transitionLocked = false;
+  bool _tutorialFullscreenMode = false;
+  Route<void>? _tutorialDetailRoute;
+  AppSurfaceSize? _currentListSurface;
+  bool _currentListIsTabletLike = false;
 
   TutorialStep? get step => _step;
   bool get isActive => _step != null;
   bool get isBusy => _syncingAnchor || _transitionLocked || _isFinishing;
+  bool get tutorialFullscreenMode => _tutorialFullscreenMode;
   String? get demoEnemyId => _demoEnemy?.id;
   String? get demoEffectId => _demoEffectId;
 
@@ -532,6 +539,10 @@ class TutorialController extends ChangeNotifier {
     _targetRefreshQueued = false;
     _isFinishing = false;
     _transitionLocked = false;
+    _tutorialFullscreenMode = false;
+    _tutorialDetailRoute = null;
+    _currentListSurface = null;
+    _currentListIsTabletLike = false;
     _anchorKeys.clear();
     _promptVisible = false;
     notifyListeners();
@@ -548,6 +559,35 @@ class TutorialController extends ChangeNotifier {
     _transitionLocked = false;
     _step = step;
     notifyListeners();
+  }
+
+  @visibleForTesting
+  void debugConfigureDetailTutorialForTests({
+    required EnemyIndexEntry enemy,
+    required List<EnemyIndexEntry> variants,
+    required String effectId,
+  }) {
+    _demoEnemy = enemy;
+    _demoVariants = variants;
+    _demoEffectId = effectId;
+    _autoStartChecked = true;
+  }
+
+  @visibleForTesting
+  Future<void> debugOpenDetailTutorialRouteForTests() => _openDemoEnemy();
+
+  @visibleForTesting
+  void debugRegisterTutorialDetailRouteForTests(Route<void> route) {
+    _tutorialDetailRoute = route;
+    _setTutorialFullscreenMode(true);
+  }
+
+  void updateListLayout({
+    required AppSurfaceSize surface,
+    required bool isTabletLike,
+  }) {
+    _currentListSurface = surface;
+    _currentListIsTabletLike = isTabletLike;
   }
 
   Future<void> _start(
@@ -661,18 +701,30 @@ class TutorialController extends ChangeNotifier {
       return;
     }
 
-    unawaited(
-      navigator.push(
-        MaterialPageRoute(
-          builder: (_) => EnemyDetailScreen(
-            summary: enemy,
-            variantSummaries: _demoVariants,
-            initialGame: enemy.game,
-          ),
-        ),
+    final useFullscreenMode = _shouldUseTutorialFullscreenMode();
+    if (useFullscreenMode) {
+      _setTutorialFullscreenMode(true);
+      await _waitForFrame();
+    } else {
+      _clearTutorialDetailRoute();
+    }
+
+    final route = MaterialPageRoute<void>(
+      settings: const RouteSettings(name: tutorialDetailRouteName),
+      builder: (_) => EnemyDetailScreen(
+        summary: enemy,
+        variantSummaries: _demoVariants,
+        initialGame: enemy.game,
+        forceCompactTutorialLayout: useFullscreenMode,
       ),
     );
+    if (useFullscreenMode) {
+      _tutorialDetailRoute = route;
+    }
+
+    unawaited(navigator.push(route));
     await _waitForSettledUi();
+    await _waitForFrame();
   }
 
   Future<void> _openDemoCodex() async {
@@ -691,8 +743,13 @@ class TutorialController extends ChangeNotifier {
     if (navigator == null || !navigator.canPop() || _isFinishing) {
       return;
     }
+    final isTutorialDetailRouteCurrent =
+        _tutorialDetailRoute != null && _tutorialDetailRoute!.isCurrent;
     navigator.pop();
     await _waitForSettledUi();
+    if (isTutorialDetailRouteCurrent) {
+      _clearTutorialDetailRoute();
+    }
   }
 
   Future<void> _close({required bool markCompleted}) async {
@@ -712,7 +769,12 @@ class TutorialController extends ChangeNotifier {
     _targetRefreshQueued = false;
     notifyListeners();
 
-    await Future<void>.delayed(Duration.zero);
+    if (_tutorialDetailRoute != null) {
+      await _waitForFrame();
+    } else {
+      await Future<void>.delayed(Duration.zero);
+    }
+    await _closeTutorialDetailRouteIfNeeded();
     _isFinishing = false;
     notifyListeners();
   }
@@ -833,6 +895,47 @@ class TutorialController extends ChangeNotifier {
       size.height.isFinite &&
       size.width > 0 &&
       size.height > 0;
+
+  bool _shouldUseTutorialFullscreenMode() {
+    final surface = _currentListSurface;
+    if (surface == null) {
+      return false;
+    }
+    return _currentListIsTabletLike && (surface.isExpanded || surface.isWide);
+  }
+
+  void _setTutorialFullscreenMode(bool value) {
+    if (_tutorialFullscreenMode == value) {
+      return;
+    }
+    _tutorialFullscreenMode = value;
+    notifyListeners();
+  }
+
+  Future<void> _closeTutorialDetailRouteIfNeeded() async {
+    final route = _tutorialDetailRoute;
+    final navigator = ReviewPromptController.navigatorKey.currentState;
+    if (route == null || navigator == null || !route.isActive) {
+      _clearTutorialDetailRoute();
+      return;
+    }
+
+    if (route.isCurrent && navigator.canPop()) {
+      navigator.pop();
+      await _waitForSettledUi();
+      _clearTutorialDetailRoute();
+      return;
+    }
+
+    navigator.removeRoute(route);
+    await _waitForSettledUi();
+    _clearTutorialDetailRoute();
+  }
+
+  void _clearTutorialDetailRoute() {
+    _tutorialDetailRoute = null;
+    _setTutorialFullscreenMode(false);
+  }
 }
 
 class _ResolvedTutorialAnchor {

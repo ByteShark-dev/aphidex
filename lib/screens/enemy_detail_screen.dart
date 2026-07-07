@@ -118,6 +118,8 @@ class EnemyDetailScreen extends StatefulWidget {
   final EnemyIndexEntry? summary;
   final List<EnemyIndexEntry>? variantSummaries;
   final String? initialGame;
+  final bool forceCompactTutorialLayout;
+  final bool tutorialAnchorsEnabled;
 
   const EnemyDetailScreen({
     super.key,
@@ -126,6 +128,8 @@ class EnemyDetailScreen extends StatefulWidget {
     this.summary,
     this.variantSummaries,
     this.initialGame,
+    this.forceCompactTutorialLayout = false,
+    this.tutorialAnchorsEnabled = true,
   }) : assert(enemy != null || summary != null);
 
   @override
@@ -415,12 +419,16 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     final l10n = context.l10n;
     final languageCode = l10n.languageCode;
     final viewportSize = MediaQuery.sizeOf(context);
-    final surface = AppBreakpoints.surfaceForWidth(viewportSize.width);
+    final surface = widget.forceCompactTutorialLayout
+        ? AppSurfaceSize.compact
+        : AppBreakpoints.surfaceForWidth(viewportSize.width);
     final pagePadding = surface.pagePadding;
-    final useSummaryRow = surface.isExpanded || surface.isWide;
-    final showCreatureCards = AppBreakpoints.shouldShowCreatureCards(
-      viewportSize,
-    );
+    final useSummaryRow =
+        !widget.forceCompactTutorialLayout &&
+        (surface.isExpanded || surface.isWide);
+    final showCreatureCards = widget.forceCompactTutorialLayout
+        ? false
+        : AppBreakpoints.shouldShowCreatureCards(viewportSize);
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
     final selectedInfusion = enemy.infusions.isEmpty
@@ -484,7 +492,9 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       languageCode,
     );
     final tutorial = TutorialController.instance;
-    final tutorialEffectId = tutorial.tutorialEffectIdForEnemy(enemy.id);
+    final tutorialEffectId = widget.tutorialAnchorsEnabled
+        ? tutorial.tutorialEffectIdForEnemy(enemy.id)
+        : null;
     final tutorialEffectKey = tutorialEffectId == null
         ? null
         : tutorial.keyFor(tutorialAnchorDetailEffect(tutorialEffectId));
@@ -501,8 +511,15 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       return tutorialEffectKey;
     }
 
+    Widget wrapTutorialAnchor(String anchorId, {required Widget child}) {
+      if (!widget.tutorialAnchorsEnabled) {
+        return child;
+      }
+      return KeyedSubtree(key: tutorial.keyFor(anchorId), child: child);
+    }
+
     Widget wrapDetailEffectsAnchor(Widget child) {
-      if (detailEffectsAnchorAssigned) {
+      if (!widget.tutorialAnchorsEnabled || detailEffectsAnchorAssigned) {
         return child;
       }
       detailEffectsAnchorAssigned = true;
@@ -513,6 +530,9 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     }
 
     return Scaffold(
+      key: widget.forceCompactTutorialLayout
+          ? const ValueKey('tutorial-fullscreen-detail-scaffold')
+          : null,
       appBar: AppBar(
         title: OverflowMarqueeText(
           enemy.name.resolve(languageCode),
@@ -544,8 +564,8 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
           ),
           children: [
             if (_variantCount > 1) ...[
-              KeyedSubtree(
-                key: tutorial.keyFor(tutorialAnchorDetailVariant),
+              wrapTutorialAnchor(
+                tutorialAnchorDetailVariant,
                 child: _VariantSwitcher(
                   selectedGame: enemy.game,
                   onChanged: _selectVariant,
@@ -559,8 +579,8 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                     children: [
                       Expanded(
                         flex: 11,
-                        child: KeyedSubtree(
-                          key: tutorial.keyFor(tutorialAnchorDetailSummary),
+                        child: wrapTutorialAnchor(
+                          tutorialAnchorDetailSummary,
                           child: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 180),
                             switchInCurve: Curves.easeOutCubic,
@@ -590,8 +610,8 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                   )
                 : Column(
                     children: [
-                      KeyedSubtree(
-                        key: tutorial.keyFor(tutorialAnchorDetailSummary),
+                      wrapTutorialAnchor(
+                        tutorialAnchorDetailSummary,
                         child: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 180),
                           switchInCurve: Curves.easeOutCubic,
