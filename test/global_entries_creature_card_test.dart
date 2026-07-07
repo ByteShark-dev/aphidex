@@ -8,9 +8,19 @@ void main() {
       (jsonDecode(File('assets/data/enemies_g1.json').readAsStringSync())
               as List)
           .cast<Map<String, dynamic>>();
+  final index =
+      (jsonDecode(
+                File(
+                  'assets/data/creatures/en/index_g1.json',
+                ).readAsStringSync(),
+              )
+              as List)
+          .cast<Map<String, dynamic>>();
 
   Map<String, dynamic> masterEntry(String id) =>
       master.firstWhere((entry) => entry['id'] == id);
+  Map<String, dynamic> indexEntry(String id) =>
+      index.firstWhere((entry) => entry['id'] == id);
 
   Map<String, dynamic> detailEntry(String language, String id) {
     return jsonDecode(
@@ -26,14 +36,14 @@ void main() {
     String expectedListIconAsset,
   ) {
     final entry = masterEntry(id);
+    final listEntry = indexEntry(id);
 
     expect(entry['cardNormal'], isEmpty, reason: '$id should not fake a card');
     expect(entry['cardGold'], isEmpty, reason: '$id should not fake a card');
-    expect(entry['hasCreatureCard'], isFalse);
-    expect(entry['hasGoldCreatureCard'], isFalse);
-    expect(entry['hasSelectableCardVariants'], isFalse);
-    expect(entry['listIconAsset'], expectedListIconAsset);
-    expect(entry['photo'], expectedListIconAsset);
+    expect(listEntry['hasCreatureCard'], isFalse);
+    expect(listEntry['hasGoldCreatureCard'], isFalse);
+    expect(listEntry['hasSelectableCardVariants'], isFalse);
+    expect(listEntry['listIconAsset'], expectedListIconAsset);
 
     for (final language in const ['es', 'en', 'ru']) {
       final detail = detailEntry(language, id);

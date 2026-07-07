@@ -4,6 +4,7 @@ import '../controllers/favorites_controller.dart';
 import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/tutorial_controller.dart';
+import '../data/creature_card_state.dart';
 import '../data/enemy_repository.dart';
 import '../data/effect_catalog.dart';
 import '../data/local_storage.dart';
@@ -1075,23 +1076,6 @@ class _DetailSummarySidebar extends StatelessWidget {
     required this.showCreatureCards,
   });
 
-  bool _isGoldUnlocked(Set<String> goldIds) {
-    return enemy.defaultGold ||
-        goldIds.contains(enemy.id) ||
-        (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
-  }
-
-  String? _resolvedCardAsset(bool unlocked) {
-    if (!enemy.hasCreatureCard) {
-      return null;
-    }
-    if (unlocked && enemy.hasGoldCreatureCard) {
-      return enemy.assetForCardVariant(CreatureCardVariant.gold);
-    }
-    return enemy.assetForCardVariant(CreatureCardVariant.normal) ??
-        enemy.defaultCardAsset;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -1132,18 +1116,34 @@ class _DetailSummarySidebar extends StatelessWidget {
         ),
         if (showCreatureCards && enemy.hasCreatureCard) ...[
           const SizedBox(height: 16),
-          ValueListenableBuilder<Set<String>>(
-            valueListenable: gold.gold,
-            builder: (context, goldIds, _) {
-              final unlocked = _isGoldUnlocked(goldIds);
-              final cardAsset = _resolvedCardAsset(unlocked);
-              if (cardAsset == null || cardAsset.trim().isEmpty) {
-                return const SizedBox.shrink();
-              }
-              return _GoldCreatureCardSection(
+          ValueListenableBuilder<CreatureCardProgressMap>(
+            valueListenable: gold.progress,
+            builder: (context, progressByKey, _) {
+              return _CreatureCardSection(
                 enemy: enemy,
-                cardAsset: cardAsset,
-                unlocked: unlocked,
+                progress: resolveCreatureCardProgress(
+                  enemy,
+                  progressByKey,
+                  legacyGoldIds: gold.gold.value,
+                ),
+                showViewer: true,
+              );
+            },
+          ),
+        ],
+        if (!showCreatureCards && enemy.hasCreatureCard) ...[
+          const SizedBox(height: 16),
+          ValueListenableBuilder<CreatureCardProgressMap>(
+            valueListenable: gold.progress,
+            builder: (context, progressByKey, _) {
+              return _CreatureCardSection(
+                enemy: enemy,
+                progress: resolveCreatureCardProgress(
+                  enemy,
+                  progressByKey,
+                  legacyGoldIds: gold.gold.value,
+                ),
+                showViewer: false,
               );
             },
           ),
@@ -1153,86 +1153,224 @@ class _DetailSummarySidebar extends StatelessWidget {
   }
 }
 
-class _GoldCreatureCardSection extends StatelessWidget {
+class _CreatureCardSection extends StatelessWidget {
   final Enemy enemy;
-  final String cardAsset;
-  final bool unlocked;
+  final CreatureCardProgress progress;
+  final bool showViewer;
 
-  const _GoldCreatureCardSection({
+  const _CreatureCardSection({
     required this.enemy,
-    required this.cardAsset,
-    required this.unlocked,
+    required this.progress,
+    required this.showViewer,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final canToggle = !enemy.defaultGold && enemy.hasSelectableCardVariants;
+    final canToggle =
+        !enemy.defaultGold && shouldTrackCreatureCardProgress(enemy);
+    final current = normalizeCreatureCardProgress(enemy, progress);
+    final next = nextCreatureCardProgress(enemy, current);
+    final cardAsset =
+        resolveCreatureCardAsset(enemy, current) ?? enemy.defaultCardAsset;
+    final accentColor = switch (current) {
+      CreatureCardProgress.gold => const Color(0xFFFFD54F),
+      CreatureCardProgress.obtained => Theme.of(context).colorScheme.primary,
+      CreatureCardProgress.unowned => Theme.of(context).colorScheme.outline,
+    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          l10n.creatureCardTitle,
+          showViewer ? l10n.creatureCardTitle : l10n.creatureCardProgressTitle,
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),
         const SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerRight,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(999),
-            onTap: canToggle
-                ? () => GoldController.instance.toggleLinked([
-                    enemy.id,
-                    enemy.goldLinkId,
-                  ])
-                : null,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(
-                  width: 1.5,
-                  color: unlocked ? const Color(0xFFFFD54F) : Colors.black12,
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.credit_card,
-                    size: 18,
-                    color: unlocked ? const Color(0xFFFFD54F) : Colors.grey,
-                  ),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      enemy.defaultGold
-                          ? l10n.goldDefault
-                          : (unlocked ? l10n.goldUnlocked : l10n.goldMark),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        _CreatureCardProgressButton(
+          enemy: enemy,
+          current: current,
+          next: next,
+          canToggle: canToggle,
+          accentColor: accentColor,
         ),
-        const SizedBox(height: 10),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(14),
-          child: FallbackAssetImage.asset(
-            key: ValueKey(
-              'creature-card-${enemy.id}-${unlocked ? 'gold' : 'normal'}',
-            ),
+        if (showViewer && cardAsset != null && cardAsset.trim().isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _CreatureCardViewer(
             assetName: cardAsset,
-            fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
-            fit: BoxFit.contain,
+            progress: current,
+            accentColor: accentColor,
           ),
-        ),
+        ],
       ],
     );
+  }
+}
+
+class _CreatureCardProgressButton extends StatelessWidget {
+  final Enemy enemy;
+  final CreatureCardProgress current;
+  final CreatureCardProgress next;
+  final bool canToggle;
+  final Color accentColor;
+
+  const _CreatureCardProgressButton({
+    required this.enemy,
+    required this.current,
+    required this.next,
+    required this.canToggle,
+    required this.accentColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final actionLabel =
+        '${l10n.creatureCardProgressTitle}: '
+        '${l10n.creatureCardProgressLabel(current)}. '
+        '${canToggle ? l10n.creatureCardProgressLabel(next) : l10n.goldDefault}.';
+
+    return Semantics(
+      button: canToggle,
+      label: actionLabel,
+      child: InkWell(
+        key: ValueKey('detail-card-progress-${enemy.id}'),
+        borderRadius: BorderRadius.circular(16),
+        onTap: canToggle
+            ? () => GoldController.instance.setProgress(enemy, next)
+            : null,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: accentColor.withValues(alpha: 0.7)),
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.45),
+          ),
+          child: Row(
+            children: [
+              _CreatureCardProgressIcon(progress: current, color: accentColor),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.creatureCardProgressLabel(current),
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      enemy.defaultGold
+                          ? l10n.goldDefault
+                          : (canToggle
+                                ? l10n.creatureCardProgressLabel(next)
+                                : l10n.creatureCardProgressLabel(current)),
+                      style: TextStyle(
+                        color: colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (canToggle)
+                Icon(
+                  Icons.sync_rounded,
+                  size: 18,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CreatureCardViewer extends StatelessWidget {
+  final String assetName;
+  final CreatureCardProgress progress;
+  final Color accentColor;
+
+  const _CreatureCardViewer({
+    required this.assetName,
+    required this.progress,
+    required this.accentColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final locked = progress == CreatureCardProgress.unowned;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: progress == CreatureCardProgress.gold
+              ? accentColor
+              : colorScheme.outlineVariant,
+          width: progress == CreatureCardProgress.gold ? 2 : 1,
+        ),
+        boxShadow: progress == CreatureCardProgress.gold
+            ? [
+                BoxShadow(
+                  color: accentColor.withValues(alpha: 0.18),
+                  blurRadius: 18,
+                  spreadRadius: 1,
+                ),
+              ]
+            : const [],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            FallbackAssetImage.asset(
+              key: ValueKey('creature-card-${progress.name}-$assetName'),
+              assetName: assetName,
+              fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
+              fit: BoxFit.contain,
+            ),
+            if (locked)
+              Positioned.fill(
+                child: ColoredBox(
+                  color: const Color(0xB8000000),
+                  child: Center(
+                    child: Icon(
+                      Icons.lock_rounded,
+                      size: 34,
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CreatureCardProgressIcon extends StatelessWidget {
+  final CreatureCardProgress progress;
+  final Color color;
+
+  const _CreatureCardProgressIcon({
+    required this.progress,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(switch (progress) {
+      CreatureCardProgress.unowned => Icons.radio_button_unchecked_rounded,
+      CreatureCardProgress.obtained => Icons.radio_button_checked_rounded,
+      CreatureCardProgress.gold => Icons.workspace_premium_rounded,
+    }, color: color);
   }
 }
 

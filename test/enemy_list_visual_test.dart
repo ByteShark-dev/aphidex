@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:aphidex/controllers/favorites_controller.dart';
 import 'package:aphidex/controllers/gold_controller.dart';
+import 'package:aphidex/controllers/monetization_controller.dart';
 import 'package:aphidex/controllers/tutorial_controller.dart';
 import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/data/creature_card_state.dart';
@@ -51,6 +52,7 @@ void main() {
     await LocalStorage.setInt('ui_game_pick', GamePick.g2.index);
     await LocalStorage.setBool('review_prompt_disabled_forever', true);
     await LocalStorage.setBool('monetization_ads_removed', true);
+    MonetizationController.instance.adsRemoved.value = true;
 
     listTesterView.physicalSize = const Size(390, 844);
     listTesterView.devicePixelRatio = 1.0;

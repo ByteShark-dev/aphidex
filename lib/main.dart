@@ -9,8 +9,11 @@ import 'controllers/locale_controller.dart';
 import 'controllers/monetization_controller.dart';
 import 'controllers/review_prompt_controller.dart';
 import 'controllers/theme_controller.dart';
+import 'controllers/app_reset_controller.dart';
 import 'i18n/app_localizations.dart';
+import 'models/game_pick.dart';
 import 'screens/enemy_list_screen.dart';
+import 'widgets/state_panels.dart';
 import 'widgets/tutorial_overlay.dart';
 
 void main() {
@@ -90,7 +93,14 @@ class _AphidexBootstrapAppState extends State<AphidexBootstrapApp> {
         if (snapshot.connectionState != ConnectionState.done) {
           return const _BootstrapShell(child: _BootstrapLoadingScreen());
         }
-        return const AphidexApp();
+        return ListenableBuilder(
+          listenable: AppResetController.instance.revision,
+          builder: (context, _) {
+            return AphidexApp(
+              key: ValueKey(AppResetController.instance.revision.value),
+            );
+          },
+        );
       },
     );
   }
@@ -107,10 +117,32 @@ class _BootstrapShell extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF35586E)),
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF071019),
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: const Color(0xFF4D8AA8),
+        ),
       ),
       home: Scaffold(
-        body: SafeArea(child: Center(child: child)),
+        backgroundColor: const Color(0xFF071019),
+        body: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF071019), Color(0xFF101C28)],
+            ),
+          ),
+          child: SafeArea(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 460),
+                child: Padding(padding: const EdgeInsets.all(20), child: child),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -121,24 +153,10 @@ class _BootstrapLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Aphidex loaded',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-          ),
-          SizedBox(height: 12),
-          Text(
-            'Initializing local data and services...',
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 24),
-          CircularProgressIndicator(),
-        ],
-      ),
+    return const AphidexLoadingPanel(
+      gamePick: GamePick.all,
+      title: 'Starting Aphidex',
+      subtitle: 'Loading local data and services.',
     );
   }
 }

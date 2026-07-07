@@ -5,6 +5,7 @@ import 'package:aphidex/controllers/favorites_controller.dart';
 import 'package:aphidex/controllers/review_prompt_controller.dart';
 import 'package:aphidex/controllers/tutorial_controller.dart';
 import 'package:aphidex/controllers/gold_controller.dart';
+import 'package:aphidex/controllers/monetization_controller.dart';
 import 'package:aphidex/data/aphidex_view_state.dart';
 import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/data/local_storage.dart';
@@ -50,6 +51,7 @@ void main() {
     await LocalStorage.setBool(TutorialController.completionKey, true);
     await LocalStorage.setBool('review_prompt_disabled_forever', true);
     await LocalStorage.setBool('monetization_ads_removed', true);
+    MonetizationController.instance.adsRemoved.value = true;
 
     stateTesterView.physicalSize = const Size(390, 844);
     stateTesterView.devicePixelRatio = 1.0;

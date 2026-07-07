@@ -6,9 +6,7 @@ import '../models/creature_card_support.dart';
 
 class GoldController {
   GoldController._() {
-    gold.value = LocalStorage.getStringSet(_key);
-    _syncProgress();
-    gold.addListener(_syncProgress);
+    reloadFromStorage();
   }
 
   static final GoldController instance = GoldController._();
@@ -26,7 +24,11 @@ class GoldController {
   bool hasGold(String id) => gold.value.contains(id);
 
   CreatureCardProgress progressFor(CreatureCardCarrier enemy) {
-    return resolveCreatureCardProgress(enemy, _progress.value);
+    return resolveCreatureCardProgress(
+      enemy,
+      _progress.value,
+      legacyGoldIds: gold.value,
+    );
   }
 
   Future<void> toggle(String id) async {
@@ -56,22 +58,92 @@ class GoldController {
 
   Future<void> reset() async {
     gold.value = <String>{};
-    await LocalStorage.setStringSet(_key, gold.value);
+    _progress.value = <String, CreatureCardProgress>{};
+    await Future.wait([
+      LocalStorage.setStringSet(_key, gold.value),
+      LocalStorage.setString(
+        creatureCardProgressStorageKey,
+        encodeCreatureCardProgressMap(_progress.value),
+      ),
+    ]);
   }
 
-  Future<void> ensureMigrated(Iterable<CreatureCardCarrier> enemies) async {}
+  Future<void> ensureMigrated(Iterable<CreatureCardCarrier> enemies) async {
+    if (gold.value.isEmpty) {
+      return;
+    }
+
+    final next = Map<String, CreatureCardProgress>.from(_progress.value);
+    var changed = false;
+    for (final enemy in enemies) {
+      final key = creatureCardProgressKey(enemy);
+      if (next.containsKey(key)) {
+        continue;
+      }
+      final migrated = migrateLegacyCreatureCardProgress(enemy, gold.value);
+      if (migrated == CreatureCardProgress.unowned) {
+        continue;
+      }
+      next[key] = migrated;
+      changed = true;
+    }
+
+    if (!changed) {
+      return;
+    }
+
+    _progress.value = next;
+    await LocalStorage.setString(
+      creatureCardProgressStorageKey,
+      encodeCreatureCardProgressMap(next),
+    );
+  }
 
   Future<CreatureCardProgress> cycle(CreatureCardCarrier enemy) async {
-    await toggleLinked([enemy.id, enemy.goldLinkId]);
+    final next = nextCreatureCardProgress(enemy, progressFor(enemy));
+    await setProgress(enemy, next);
     return progressFor(enemy);
   }
 
-  void _syncProgress() {
-    final next = <String, CreatureCardProgress>{};
-    for (final id in gold.value) {
-      next['g1:$id'] = CreatureCardProgress.gold;
-      next['g2:$id'] = CreatureCardProgress.gold;
+  Future<void> setProgress(
+    CreatureCardCarrier enemy,
+    CreatureCardProgress progress,
+  ) async {
+    final normalized = normalizeCreatureCardProgress(enemy, progress);
+    final next = Map<String, CreatureCardProgress>.from(_progress.value);
+    final key = creatureCardProgressKey(enemy);
+    if (normalized == CreatureCardProgress.unowned) {
+      next.remove(key);
+    } else {
+      next[key] = normalized;
     }
+
+    final linkedIds = <String>{
+      enemy.id.trim(),
+      if (enemy.goldLinkId != null) enemy.goldLinkId!.trim(),
+    }..removeWhere((value) => value.isEmpty);
+    final legacyNext = Set<String>.from(gold.value);
+    if (normalized == CreatureCardProgress.gold) {
+      legacyNext.addAll(linkedIds);
+    } else {
+      legacyNext.removeAll(linkedIds);
+    }
+
     _progress.value = next;
+    gold.value = legacyNext;
+    await Future.wait([
+      LocalStorage.setString(
+        creatureCardProgressStorageKey,
+        encodeCreatureCardProgressMap(next),
+      ),
+      LocalStorage.setStringSet(_key, legacyNext),
+    ]);
+  }
+
+  void reloadFromStorage() {
+    gold.value = LocalStorage.getStringSet(_key);
+    _progress.value = decodeCreatureCardProgressMap(
+      LocalStorage.getString(creatureCardProgressStorageKey),
+    );
   }
 }

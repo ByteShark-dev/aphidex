@@ -1828,6 +1828,13 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                     controller: _listScrollController,
                                     selectedSpeciesKey: selectedSpeciesKey,
                                     onSelectEntry: handleEntryTap,
+                                    onToggleCardProgress: (entry) {
+                                      unawaited(
+                                        GoldController.instance.cycle(
+                                          entry.activeEnemy,
+                                        ),
+                                      );
+                                    },
                                     groupFromEntry: (entry) {
                                       return _groupForEnemy(
                                         _sortSourceEnemy(entry),
@@ -1844,6 +1851,13 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                     controller: _listScrollController,
                                     selectedSpeciesKey: selectedSpeciesKey,
                                     onSelectEntry: handleEntryTap,
+                                    onToggleCardProgress: (entry) {
+                                      unawaited(
+                                        GoldController.instance.cycle(
+                                          entry.activeEnemy,
+                                        ),
+                                      );
+                                    },
                                   );
 
                             if (!isMasterDetail) {
@@ -2018,6 +2032,7 @@ class _FlatEnemyList extends StatelessWidget {
   final ScrollController controller;
   final String? selectedSpeciesKey;
   final ValueChanged<ResolvedEnemyEntry> onSelectEntry;
+  final ValueChanged<ResolvedEnemyEntry> onToggleCardProgress;
 
   const _FlatEnemyList({
     required this.entries,
@@ -2027,6 +2042,7 @@ class _FlatEnemyList extends StatelessWidget {
     required this.controller,
     required this.selectedSpeciesKey,
     required this.onSelectEntry,
+    required this.onToggleCardProgress,
   });
 
   @override
@@ -2056,6 +2072,7 @@ class _FlatEnemyList extends StatelessWidget {
           cardProgressByKey: cardProgressByKey,
           selected: entry.entry.speciesKey == selectedSpeciesKey,
           onTap: () => onSelectEntry(entry),
+          onToggleCardProgress: () => onToggleCardProgress(entry),
         );
       },
     );
@@ -2232,6 +2249,7 @@ class EnemyTile extends StatelessWidget {
   final CreatureCardProgressMap cardProgressByKey;
   final bool selected;
   final VoidCallback onTap;
+  final VoidCallback onToggleCardProgress;
 
   const EnemyTile({
     super.key,
@@ -2240,6 +2258,7 @@ class EnemyTile extends StatelessWidget {
     required this.cardProgressByKey,
     required this.selected,
     required this.onTap,
+    required this.onToggleCardProgress,
   });
 
   @override
@@ -2251,6 +2270,8 @@ class EnemyTile extends StatelessWidget {
         MediaQuery.orientationOf(context) == Orientation.portrait;
     final isFavorite = favIds.contains(enemy.resolvedFavoriteKey);
     final cardProgress = resolveCreatureCardProgress(enemy, cardProgressByKey);
+    final nextCardProgress = nextCreatureCardProgress(enemy, cardProgress);
+    final tracksCardProgress = shouldTrackCreatureCardProgress(enemy);
     final thumbnailAsset = _resolveThumbnailAsset(enemy, cardProgress);
     final usesIconThumbnail = enemy.listIconAsset.trim().isNotEmpty;
     final weaknessChips = enemy.weaknesses
@@ -2337,6 +2358,15 @@ class EnemyTile extends StatelessWidget {
                     ],
                   ),
                 ),
+                if (tracksCardProgress) ...[
+                  const SizedBox(width: 10),
+                  _EnemyTileProgressButton(
+                    enemy: enemy,
+                    progress: cardProgress,
+                    nextProgress: nextCardProgress,
+                    onTap: onToggleCardProgress,
+                  ),
+                ],
                 const SizedBox(width: 12),
                 SizedBox(
                   width: 34,
@@ -2377,6 +2407,61 @@ class EnemyTile extends StatelessWidget {
       return listIcon;
     }
     return resolveCreatureCardAsset(enemy, progress);
+  }
+}
+
+class _EnemyTileProgressButton extends StatelessWidget {
+  final EnemyIndexEntry enemy;
+  final CreatureCardProgress progress;
+  final CreatureCardProgress nextProgress;
+  final VoidCallback onTap;
+
+  const _EnemyTileProgressButton({
+    required this.enemy,
+    required this.progress,
+    required this.nextProgress,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = switch (progress) {
+      CreatureCardProgress.gold => const Color(0xFFFFD54F),
+      CreatureCardProgress.obtained => colorScheme.primary,
+      CreatureCardProgress.unowned => colorScheme.outline,
+    };
+
+    return Semantics(
+      button: true,
+      label:
+          '${l10n.creatureCardProgressTitle}: '
+          '${l10n.creatureCardProgressLabel(progress)}. '
+          '${l10n.creatureCardProgressLabel(nextProgress)}.',
+      child: InkWell(
+        key: ValueKey('card-progress-${enemy.id}'),
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: SizedBox(
+          width: 34,
+          height: 34,
+          child: Center(
+            child: Icon(
+              switch (progress) {
+                CreatureCardProgress.unowned =>
+                  Icons.radio_button_unchecked_rounded,
+                CreatureCardProgress.obtained =>
+                  Icons.radio_button_checked_rounded,
+                CreatureCardProgress.gold => Icons.workspace_premium_rounded,
+              },
+              color: color,
+              size: 22,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -2436,6 +2521,7 @@ class _SectionedEnemyList extends StatelessWidget {
   final ScrollController controller;
   final String? selectedSpeciesKey;
   final ValueChanged<ResolvedEnemyEntry> onSelectEntry;
+  final ValueChanged<ResolvedEnemyEntry> onToggleCardProgress;
   final EnemyDisplayGroup Function(ResolvedEnemyEntry entry) groupFromEntry;
   final String Function(EnemyDisplayGroup temperament) groupLabel;
 
@@ -2448,6 +2534,7 @@ class _SectionedEnemyList extends StatelessWidget {
     required this.controller,
     required this.selectedSpeciesKey,
     required this.onSelectEntry,
+    required this.onToggleCardProgress,
     required this.groupFromEntry,
     required this.groupLabel,
   });
@@ -2501,6 +2588,7 @@ class _SectionedEnemyList extends StatelessWidget {
           cardProgressByKey: cardProgressByKey,
           selected: row.entry!.entry.speciesKey == selectedSpeciesKey,
           onTap: () => onSelectEntry(row.entry!),
+          onToggleCardProgress: () => onToggleCardProgress(row.entry!),
         );
       },
     );

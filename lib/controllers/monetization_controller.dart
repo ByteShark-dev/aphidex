@@ -7,6 +7,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 
 import '../data/local_storage.dart';
 import '../i18n/app_localizations.dart';
+import 'tutorial_controller.dart';
 
 enum MonetizationActionResult {
   launchedPurchaseFlow,
@@ -51,8 +52,8 @@ class MonetizationController {
       'ca-app-pub-3940256099942544/1033173712';
   static const String _testInterstitialAdUnitIdIos =
       'ca-app-pub-3940256099942544/4411468910';
-  static const int interstitialPromptThreshold = 5;
-  static const Duration interstitialPromptCooldown = Duration(minutes: 3);
+  static const int interstitialPromptThreshold = 8;
+  static const Duration interstitialPromptCooldown = Duration(seconds: 90);
   static const String _kInterstitialCloseCount =
       'monetization_interstitial_close_count';
   static const String _kInterstitialLastPromptAt =
@@ -207,7 +208,7 @@ class MonetizationController {
     required String? creatureId,
     bool countProgress = true,
   }) async {
-    if (!shouldShowAds) {
+    if (!shouldShowAds || TutorialController.instance.isActive) {
       return false;
     }
 

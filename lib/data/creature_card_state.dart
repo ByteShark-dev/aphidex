@@ -91,6 +91,15 @@ CreatureCardProgress normalizeCreatureCardProgress(
 
   final hasNormal = creatureCardHasNormalVariant(enemy);
   final hasGold = creatureCardHasGoldVariant(enemy);
+  if (enemy.defaultGold) {
+    if (hasGold) {
+      return CreatureCardProgress.gold;
+    }
+    if (hasNormal) {
+      return CreatureCardProgress.obtained;
+    }
+    return CreatureCardProgress.unowned;
+  }
 
   switch (progress) {
     case CreatureCardProgress.unowned:
@@ -119,6 +128,9 @@ CreatureCardProgress nextCreatureCardProgress(
   final hasNormal = creatureCardHasNormalVariant(enemy);
   final hasGold = creatureCardHasGoldVariant(enemy);
 
+  if (enemy.defaultGold) {
+    return normalized;
+  }
   if (!hasNormal && !hasGold) {
     return CreatureCardProgress.unowned;
   }
@@ -149,6 +161,9 @@ CreatureCardProgress migrateLegacyCreatureCardProgress(
 ) {
   if (!shouldTrackCreatureCardProgress(enemy)) {
     return CreatureCardProgress.unowned;
+  }
+  if (enemy.defaultGold) {
+    return normalizeCreatureCardProgress(enemy, CreatureCardProgress.gold);
   }
 
   final linkedIds = <String>{

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../controllers/app_reset_controller.dart';
 import '../controllers/locale_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/tutorial_controller.dart';
-import '../data/local_storage.dart';
 import '../i18n/app_localizations.dart';
 import 'credits_screen.dart';
 
@@ -46,11 +46,7 @@ class SettingsScreen extends StatelessWidget {
     );
 
     if (ok == true) {
-      await LocalStorage.clearAll(
-        preserveKeys: MonetizationController.persistentKeys,
-      );
-      await ThemeController.instance.setTheme(ThemePref.system);
-      await LocaleController.instance.setLanguage(LanguagePref.system);
+      await AppResetController.instance.wipeForFreshStart();
 
       if (context.mounted) {
         ScaffoldMessenger.of(
