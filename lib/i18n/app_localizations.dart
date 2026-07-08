@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../controllers/locale_controller.dart';
+import '../data/creature_card_state.dart';
 
 class AppLocalizations {
   AppLocalizations(this.locale);
@@ -94,11 +95,23 @@ class AppLocalizations {
   String get descendingOrder => _t('descendingOrder');
   String get ascendingOrder => _t('ascendingOrder');
   String get searchEnemyHint => _t('searchEnemyHint');
+  String get loadingCreaturesTitle => _t('loadingCreaturesTitle');
+  String get loadingCreaturesSubtitle => _t('loadingCreaturesSubtitle');
+  String get loadingCreatureDetailSubtitle =>
+      _t('loadingCreatureDetailSubtitle');
+  String get dataUnavailableTitle => _t('dataUnavailableTitle');
+  String get dataUnavailableSubtitle => _t('dataUnavailableSubtitle');
+  String get retryAction => _t('retryAction');
   String get filterAll => _t('filterAll');
+  String get filtersTitle => _t('filtersTitle');
+  String get clearFiltersAction => _t('clearFiltersAction');
+  String get clearSearchAction => _t('clearSearchAction');
+  String get favoritesFilterLabel => _t('favoritesFilterLabel');
   String get filterTiers => _t('filterTiers');
   String get filterClass => _t('filterClass');
   String get filterDanger => _t('filterDanger');
   String get filterBoss => _t('filterBoss');
+  String get tierTitle => _t('tierTitle');
   String get groupNeutrals => _t('groupNeutrals');
   String get groupAggressive => _t('groupAggressive');
   String get groupPeaceful => _t('groupPeaceful');
@@ -161,6 +174,7 @@ class AppLocalizations {
   String get errorLoadingJson => _t('errorLoadingJson');
   String get goldDefault => _t('goldDefault');
   String get goldUnlocked => _t('goldUnlocked');
+  String get goldFilterLabel => _t('goldFilterLabel');
   String get goldMark => _t('goldMark');
   String get elementalWeakness => _t('elementalWeakness');
   String get damageWeakness => _t('damageWeakness');
@@ -172,10 +186,36 @@ class AppLocalizations {
   String get upcomingItems => _t('upcomingItems');
   String get healthTitle => _t('healthTitle');
   String get notApplicableHealthLabel => _t('notApplicableHealthLabel');
+  String get creatureCardTitle => _t('creatureCardTitle');
+  String get creatureCardNormal => _t('creatureCardNormal');
+  String get creatureCardGold => _t('creatureCardGold');
+  String get creatureCardProgressTitle => _t('creatureCardProgressTitle');
+  String get creatureCardObtainedLabel => _t('creatureCardObtainedLabel');
+  String get creatureCardGoldLabel => _t('creatureCardGoldLabel');
+  String get creatureCardViewerLockedLabel =>
+      _t('creatureCardViewerLockedLabel');
+  String get creatureCardProgressA11yLabel =>
+      _t('creatureCardProgressA11yLabel');
+  String get creatureCardProgressActionTemplate =>
+      _t('creatureCardProgressActionTemplate');
   String get infusionSelectorTitle => _t('infusionSelectorTitle');
   String get infusionRecommendationsTitle => _t('infusionRecommendationsTitle');
   String get lesserMutationsTitle => _t('lesserMutationsTitle');
   String get lootTransformationsTitle => _t('lootTransformationsTitle');
+  String get effectGuideAction => _t('effectGuideAction');
+  String get noImageTitle => _t('noImageTitle');
+  String get noImageSubtitle => _t('noImageSubtitle');
+  String get emptySearchTitle => _t('emptySearchTitle');
+  String get emptySearchSubtitle => _t('emptySearchSubtitle');
+  String get emptyFavoritesTitle => _t('emptyFavoritesTitle');
+  String get emptyFavoritesSubtitle => _t('emptyFavoritesSubtitle');
+  String get emptyGoldTitle => _t('emptyGoldTitle');
+  String get emptyGoldSubtitle => _t('emptyGoldSubtitle');
+  String get emptyFiltersTitle => _t('emptyFiltersTitle');
+  String get emptyFiltersSubtitle => _t('emptyFiltersSubtitle');
+  String get masterDetailPlaceholderTitle => _t('masterDetailPlaceholderTitle');
+  String get masterDetailPlaceholderSubtitle =>
+      _t('masterDetailPlaceholderSubtitle');
   String get attackTell => _t('attackTell');
   String get attackAvoid => _t('attackAvoid');
   String get attackNotes => _t('attackNotes');
@@ -440,6 +480,21 @@ class AppLocalizations {
       default:
         return 'No hay acceso a la c\u00E1mara o galer\u00EDa. Act\u00EDvalo en la configuraci\u00F3n del sistema para usar Scanner Beta.';
     }
+  }
+
+  String creatureCardProgressLabel(CreatureCardProgress progress) {
+    return switch (progress) {
+      CreatureCardProgress.unowned => _t('creatureCardProgressUnowned'),
+      CreatureCardProgress.obtained => _t('creatureCardProgressObtained'),
+      CreatureCardProgress.gold => _t('creatureCardProgressGold'),
+    };
+  }
+
+  String creatureCardProgressSemantics(String current, String next) {
+    return creatureCardProgressActionTemplate
+        .replaceAll('{label}', creatureCardProgressA11yLabel)
+        .replaceAll('{current}', current)
+        .replaceAll('{next}', next);
   }
 
   String get scannerAnalyzing {
@@ -1283,6 +1338,17 @@ class AppLocalizations {
     }
   }
 
+  String activeFiltersCountLabel(int count) {
+    switch (languageCode) {
+      case 'en':
+        return '$count active filters';
+      case 'ru':
+        return '$count активных фильтров';
+      default:
+        return '$count filtros activos';
+    }
+  }
+
   String dangerLevelLabel(String id) {
     final value = switch (id) {
       'baja' =>
@@ -1392,11 +1458,24 @@ class AppLocalizations {
       'descendingOrder': 'Descendente',
       'ascendingOrder': 'Ascendente',
       'searchEnemyHint': 'Buscar enemigo...',
+      'loadingCreaturesTitle': 'Cargando criaturas',
+      'loadingCreaturesSubtitle':
+          'Preparando el índice y los datos locales de Aphidex.',
+      'loadingCreatureDetailSubtitle':
+          'Cargando la ficha completa de esta entrada.',
+      'dataUnavailableTitle': 'Datos no disponibles',
+      'dataUnavailableSubtitle': 'Aphidex no pudo cargar esta información.',
+      'retryAction': 'Reintentar',
       'filterAll': 'Todos',
+      'filtersTitle': 'Filtros',
+      'clearFiltersAction': 'Limpiar filtros',
+      'clearSearchAction': 'Limpiar búsqueda',
+      'favoritesFilterLabel': 'Favoritos',
       'filterTiers': 'Tiers',
       'filterClass': 'Clase',
       'filterDanger': 'Peligro',
       'filterBoss': 'Jefe',
+      'tierTitle': 'Tier',
       'groupNeutrals': 'Neutrales',
       'groupAggressive': 'Agresivos',
       'groupPeaceful': 'Pacíficos',
@@ -1409,6 +1488,7 @@ class AppLocalizations {
       'errorLoadingJson': 'Error cargando JSON:',
       'goldDefault': 'Dorada (predeterminada)',
       'goldUnlocked': 'Tarjeta dorada',
+      'goldFilterLabel': 'Doradas',
       'goldMark': 'Marcar dorada',
       'elementalWeakness': 'Debilidad elemental',
       'damageWeakness': 'Debilidad (tipo de daño)',
@@ -1421,10 +1501,40 @@ class AppLocalizations {
           '• Loot con probabilidades\n• Spawns\n• Builds por etapa (early/mid/end/NG+)',
       'healthTitle': 'Vida',
       'notApplicableHealthLabel': 'No aplica · invulnerable',
+      'creatureCardTitle': 'Tarjeta de criatura',
+      'creatureCardNormal': 'Normal',
+      'creatureCardGold': 'Dorada',
+      'creatureCardProgressTitle': 'Progreso de tarjeta',
+      'creatureCardProgressUnowned': 'Sin obtener',
+      'creatureCardProgressObtained': 'Obtenida',
+      'creatureCardProgressGold': 'Dorada',
+      'creatureCardObtainedLabel': 'Tarjeta obtenida',
+      'creatureCardGoldLabel': 'Tarjeta dorada',
+      'creatureCardViewerLockedLabel': 'Sin obtener',
+      'creatureCardProgressA11yLabel': 'progreso de tarjeta',
+      'creatureCardProgressActionTemplate':
+          '{label}: {current}. Al tocar cambiará a {next}.',
       'infusionSelectorTitle': 'Sabor o infusión',
       'infusionRecommendationsTitle': 'Recomendaciones de la infusión',
       'lesserMutationsTitle': 'Mutaciones menores',
       'lootTransformationsTitle': 'Efectos sobre el botín',
+      'effectGuideAction': 'Guía de efectos',
+      'noImageTitle': 'Sin imagen',
+      'noImageSubtitle': 'Esta entrada todavía no tiene una imagen disponible.',
+      'emptySearchTitle': 'Sin resultados',
+      'emptySearchSubtitle': 'Prueba otro nombre o limpia la búsqueda actual.',
+      'emptyFavoritesTitle': 'Sin favoritos',
+      'emptyFavoritesSubtitle':
+          'Aún no tienes entradas marcadas como favoritas.',
+      'emptyGoldTitle': 'Sin tarjetas doradas',
+      'emptyGoldSubtitle':
+          'No hay entradas con tarjeta dorada en la selección actual.',
+      'emptyFiltersTitle': 'No hay coincidencias',
+      'emptyFiltersSubtitle':
+          'Prueba con menos filtros o restablece la selección.',
+      'masterDetailPlaceholderTitle': 'Selecciona una entrada',
+      'masterDetailPlaceholderSubtitle':
+          'Elige una criatura o evento para ver su ficha aquí.',
       'attackTell': 'Señal',
       'attackAvoid': 'Cómo evitar',
       'attackNotes': 'Notas',
@@ -1561,11 +1671,22 @@ class AppLocalizations {
       'descendingOrder': 'Descending',
       'ascendingOrder': 'Ascending',
       'searchEnemyHint': 'Search enemy...',
+      'loadingCreaturesTitle': 'Loading creatures',
+      'loadingCreaturesSubtitle': 'Preparing the Aphidex index and local data.',
+      'loadingCreatureDetailSubtitle': 'Loading the full sheet for this entry.',
+      'dataUnavailableTitle': 'Data unavailable',
+      'dataUnavailableSubtitle': 'Aphidex could not load this information.',
+      'retryAction': 'Retry',
       'filterAll': 'All',
+      'filtersTitle': 'Filters',
+      'clearFiltersAction': 'Clear filters',
+      'clearSearchAction': 'Clear search',
+      'favoritesFilterLabel': 'Favorites',
       'filterTiers': 'Tiers',
       'filterClass': 'Class',
       'filterDanger': 'Danger',
       'filterBoss': 'Boss',
+      'tierTitle': 'Tier',
       'groupNeutrals': 'Neutrals',
       'groupAggressive': 'Aggressive / hostile',
       'groupPeaceful': 'Peaceful',
@@ -1578,6 +1699,7 @@ class AppLocalizations {
       'errorLoadingJson': 'Error loading JSON:',
       'goldDefault': 'Gold (default)',
       'goldUnlocked': 'Gold card',
+      'goldFilterLabel': 'Gold',
       'goldMark': 'Mark as gold',
       'elementalWeakness': 'Elemental weakness',
       'damageWeakness': 'Weakness (damage type)',
@@ -1590,10 +1712,40 @@ class AppLocalizations {
           '• Loot with drop rates\n• Spawn locations\n• Builds by progression stage (early / mid / end / NG+)',
       'healthTitle': 'Health',
       'notApplicableHealthLabel': 'Not applicable · invulnerable',
+      'creatureCardTitle': 'Creature Card',
+      'creatureCardNormal': 'Normal',
+      'creatureCardGold': 'Gold',
+      'creatureCardProgressTitle': 'Card progress',
+      'creatureCardProgressUnowned': 'Unowned',
+      'creatureCardProgressObtained': 'Obtained',
+      'creatureCardProgressGold': 'Gold',
+      'creatureCardObtainedLabel': 'Card obtained',
+      'creatureCardGoldLabel': 'Gold card',
+      'creatureCardViewerLockedLabel': 'Unowned',
+      'creatureCardProgressA11yLabel': 'card progress',
+      'creatureCardProgressActionTemplate':
+          '{label}: {current}. Tap to change to {next}.',
       'infusionSelectorTitle': 'Flavor or infusion',
       'infusionRecommendationsTitle': 'Infusion recommendations',
       'lesserMutationsTitle': 'Lesser mutations',
       'lootTransformationsTitle': 'Loot effects',
+      'effectGuideAction': 'Effect guide',
+      'noImageTitle': 'No image',
+      'noImageSubtitle': 'This entry does not have an image available yet.',
+      'emptySearchTitle': 'No results',
+      'emptySearchSubtitle': 'Try another name or clear the current search.',
+      'emptyFavoritesTitle': 'No favorites yet',
+      'emptyFavoritesSubtitle':
+          'You have not marked any entries as favorites yet.',
+      'emptyGoldTitle': 'No gold cards',
+      'emptyGoldSubtitle':
+          'There are no gold card entries in the current selection.',
+      'emptyFiltersTitle': 'No matches',
+      'emptyFiltersSubtitle':
+          'Try fewer filters or reset the current selection.',
+      'masterDetailPlaceholderTitle': 'Select an entry',
+      'masterDetailPlaceholderSubtitle':
+          'Choose a creature or event to inspect it here.',
       'attackTell': 'Tell',
       'attackAvoid': 'How to avoid',
       'attackNotes': 'Notes',
@@ -1729,11 +1881,23 @@ class AppLocalizations {
       'descendingOrder': 'По убыванию',
       'ascendingOrder': 'По возрастанию',
       'searchEnemyHint': 'Поиск врага...',
+      'loadingCreaturesTitle': 'Загрузка существ',
+      'loadingCreaturesSubtitle':
+          'Подготавливаем индекс Aphidex и локальные данные.',
+      'loadingCreatureDetailSubtitle': 'Загружаем полную карточку этой записи.',
+      'dataUnavailableTitle': 'Данные недоступны',
+      'dataUnavailableSubtitle': 'Aphidex не смог загрузить эту информацию.',
+      'retryAction': 'Повторить',
       'filterAll': 'Все',
+      'filtersTitle': 'Фильтры',
+      'clearFiltersAction': 'Сбросить фильтры',
+      'clearSearchAction': 'Очистить поиск',
+      'favoritesFilterLabel': 'Избранное',
       'filterTiers': 'Тиры',
       'filterClass': 'Класс',
       'filterDanger': 'Опасность',
       'filterBoss': 'Босс',
+      'tierTitle': 'Тир',
       'groupNeutrals': 'Нейтральные',
       'groupAggressive': 'Агрессивные / враждебные',
       'groupPeaceful': 'Мирные',
@@ -1746,6 +1910,7 @@ class AppLocalizations {
       'errorLoadingJson': 'Ошибка загрузки JSON:',
       'goldDefault': 'Золотая (по умолчанию)',
       'goldUnlocked': 'Золотая карточка',
+      'goldFilterLabel': 'Золотые',
       'goldMark': 'Отметить как золотую',
       'elementalWeakness': 'Стихийная слабость',
       'damageWeakness': 'Слабость к типу урона',
@@ -1758,10 +1923,40 @@ class AppLocalizations {
           '• Добыча с шансами выпадения\n• Места появления\n• Сборки по этапам прогресса (early / mid / end / NG+)',
       'healthTitle': 'Здоровье',
       'notApplicableHealthLabel': 'Не применимо · неуязвимо',
+      'creatureCardTitle': 'Карточка существа',
+      'creatureCardNormal': 'Обычная',
+      'creatureCardGold': 'Золотая',
+      'creatureCardProgressTitle': 'Прогресс карточки',
+      'creatureCardProgressUnowned': 'Не получена',
+      'creatureCardProgressObtained': 'Получена',
+      'creatureCardProgressGold': 'Золотая',
+      'creatureCardObtainedLabel': 'Карточка получена',
+      'creatureCardGoldLabel': 'Золотая карточка',
+      'creatureCardViewerLockedLabel': 'Не получена',
+      'creatureCardProgressA11yLabel': 'прогресс карточки',
+      'creatureCardProgressActionTemplate':
+          '{label}: {current}. По нажатию сменится на {next}.',
       'infusionSelectorTitle': 'Вкус или инфузия',
       'infusionRecommendationsTitle': 'Рекомендации по инфузии',
       'lesserMutationsTitle': 'Малые мутации',
       'lootTransformationsTitle': 'Эффекты для добычи',
+      'effectGuideAction': 'Гид по эффектам',
+      'noImageTitle': 'Нет изображения',
+      'noImageSubtitle': 'Для этой записи пока нет доступного изображения.',
+      'emptySearchTitle': 'Ничего не найдено',
+      'emptySearchSubtitle':
+          'Попробуйте другое имя или очистите текущий поиск.',
+      'emptyFavoritesTitle': 'Пока нет избранного',
+      'emptyFavoritesSubtitle':
+          'Вы ещё не отметили ни одну запись как избранную.',
+      'emptyGoldTitle': 'Нет золотых карточек',
+      'emptyGoldSubtitle': 'В текущей выборке нет записей с золотой карточкой.',
+      'emptyFiltersTitle': 'Совпадений нет',
+      'emptyFiltersSubtitle':
+          'Попробуйте уменьшить количество фильтров или сбросить их.',
+      'masterDetailPlaceholderTitle': 'Выберите запись',
+      'masterDetailPlaceholderSubtitle':
+          'Выберите существо или событие, чтобы посмотреть карточку здесь.',
       'attackTell': 'Подсказка',
       'attackAvoid': 'Как избежать',
       'attackNotes': 'Заметки',

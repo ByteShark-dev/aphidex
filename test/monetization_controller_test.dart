@@ -35,13 +35,13 @@ void main() {
   });
 
   test(
-    'interstitial pitch triggers every five detail closes with cooldown',
+    'interstitial pitch keeps the approved eight-close cadence and 90-second cooldown',
     () {
       final now = DateTime(2026, 5, 30, 12, 0);
 
       expect(
         MonetizationController.shouldShowInterstitialPrompt(
-          closeCount: 5,
+          closeCount: 8,
           currentTime: now,
           lastPromptAt: null,
           adsRemoved: false,
@@ -52,7 +52,7 @@ void main() {
 
       expect(
         MonetizationController.shouldShowInterstitialPrompt(
-          closeCount: 4,
+          closeCount: 7,
           currentTime: now,
           lastPromptAt: null,
           adsRemoved: false,
@@ -63,9 +63,9 @@ void main() {
 
       expect(
         MonetizationController.shouldShowInterstitialPrompt(
-          closeCount: 10,
+          closeCount: 16,
           currentTime: now,
-          lastPromptAt: now.subtract(const Duration(minutes: 2)),
+          lastPromptAt: now.subtract(const Duration(seconds: 89)),
           adsRemoved: false,
           promoFlowInProgress: false,
         ),
@@ -74,13 +74,43 @@ void main() {
 
       expect(
         MonetizationController.shouldShowInterstitialPrompt(
-          closeCount: 10,
+          closeCount: 16,
           currentTime: now,
-          lastPromptAt: now.subtract(const Duration(minutes: 3)),
+          lastPromptAt: now.subtract(const Duration(seconds: 90)),
           adsRemoved: false,
           promoFlowInProgress: false,
         ),
         isTrue,
+      );
+    },
+  );
+
+  test(
+    'same creature taps do not increase the distinct inspection counter',
+    () {
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wasp',
+          countProgress: true,
+        ),
+        isFalse,
+      );
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wolf_spider',
+          countProgress: true,
+        ),
+        isTrue,
+      );
+      expect(
+        MonetizationController.shouldCountCreatureInspection(
+          creatureId: 'g2_wasp',
+          lastCreatureId: 'g2_wolf_spider',
+          countProgress: false,
+        ),
+        isFalse,
       );
     },
   );

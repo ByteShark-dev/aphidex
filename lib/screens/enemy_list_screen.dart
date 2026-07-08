@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/favorites_controller.dart';
@@ -7,17 +8,24 @@ import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/tutorial_controller.dart';
+import '../data/aphidex_view_state.dart';
 import '../config/feature_flags.dart';
+import '../data/creature_card_state.dart';
 import '../data/enemy_repository.dart';
 import '../data/enemy_variants.dart';
 import '../data/local_storage.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
+import '../layout/app_breakpoints.dart';
 import '../models/enemy_index_entry.dart';
+import '../models/game_pick.dart';
+import '../startup/startup_profiler.dart';
 import '../widgets/icon_badge.dart';
 import '../widgets/fallback_asset_image.dart';
+import '../widgets/game_brand_mark.dart';
 import '../widgets/inline_banner_ad_card.dart';
 import '../widgets/overflow_marquee_text.dart';
+import '../widgets/state_panels.dart';
 import '../scanner/creature_scanner_page.dart';
 import '../scanner/creature_scanner_service.dart';
 import 'enemy_detail_screen.dart';
@@ -27,8 +35,6 @@ import 'settings_screen.dart';
 enum SortMode { defaultOrder, name, danger, tier }
 
 enum SortMenuAction { toggleDirection, defaultOrder, name, danger, tier }
-
-enum GamePick { all, g1, g2 }
 
 enum EnemyDisplayGroup {
   neutral,
@@ -197,13 +203,30 @@ class _GameHeaderGlow extends StatelessWidget {
 }
 
 class EnemyListScreen extends StatefulWidget {
-  const EnemyListScreen({super.key});
+  final Future<List<EnemyIndexEntry>> Function(String languageCode)?
+  enemiesLoaderOverride;
+  final List<EnemyIndexEntry>? preloadedEntries;
+  final String? preloadedLanguageCode;
+  final GamePick? preloadedGamePick;
+  final bool restorePhoneDetailOnStartup;
+  final VoidCallback? onInitialListInteractive;
+
+  const EnemyListScreen({
+    super.key,
+    this.enemiesLoaderOverride,
+    this.preloadedEntries,
+    this.preloadedLanguageCode,
+    this.preloadedGamePick,
+    this.restorePhoneDetailOnStartup = true,
+    this.onInitialListInteractive,
+  });
 
   @override
   State<EnemyListScreen> createState() => _EnemyListScreenState();
 }
 
-class _EnemyListScreenState extends State<EnemyListScreen> {
+class _EnemyListScreenState extends State<EnemyListScreen>
+    with WidgetsBindingObserver {
   SortMode sortMode = SortMode.defaultOrder;
   GamePick gamePick = GamePick.g1;
   bool sortDescending = false;
@@ -215,6 +238,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   final Set<String> dangerFilters = <String>{};
 
   late final TextEditingController _searchController;
+  late final ScrollController _listScrollController;
 
   static const _kLegacyFilter = 'ui_filter';
   static const _kFilterFavorites = 'ui_filter_favorites';
@@ -230,10 +254,26 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   late Future<List<EnemyIndexEntry>> enemiesFuture;
   String? _loadedLanguageCode;
   bool _tutorialQueued = false;
+  String? _selectedSpeciesKey;
+  AphidexViewState? _restoredViewState;
+  bool _pendingPhoneDetailRestore = false;
+  bool _phoneDetailRestoreConsumed = false;
+  Future<void>? _progressHydrationFuture;
+  bool _secondLoaderVisible = false;
+  bool _listInteractiveLogged = false;
+  bool _bootstrapEntriesConsumed = false;
+  String? _deferredStartupSpeciesKey;
+  String? _deferredStartupEnemyId;
+  String? _deferredStartupDetailGame;
+  bool _masterDetailRestoreQueued = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      StartupProfiler.instance.markOnce('first frame');
+    });
 
     final hasNewFilterState =
         LocalStorage.hasKey(_kFilterFavorites) ||
@@ -287,7 +327,50 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     gamePick = GamePick
         .values[LocalStorage.getInt(_kGamePick, fallback: GamePick.g1.index)];
     query = LocalStorage.getString(_kQuery) ?? '';
+
+    final restored = AphidexViewState.fromStorageString(
+      LocalStorage.getString(aphidexViewStateStorageKey),
+    );
+    if (restored != null) {
+      _restoredViewState = restored;
+      gamePick = GamePick
+          .values[restored.gamePickIndex.clamp(0, GamePick.values.length - 1)];
+      sortMode = SortMode
+          .values[restored.sortModeIndex.clamp(0, SortMode.values.length - 1)];
+      sortDescending = restored.sortDescending;
+      query = restored.query;
+      filterFavorites = restored.filterFavorites;
+      filterGold = restored.filterGold;
+      tierFilters
+        ..clear()
+        ..addAll(restored.tierFilters);
+      classFilters
+        ..clear()
+        ..addAll(restored.classFilters);
+      dangerFilters
+        ..clear()
+        ..addAll(restored.dangerFilters.map(_canonicalDanger));
+      if (!widget.restorePhoneDetailOnStartup &&
+          restored.selectedSpeciesKey != null) {
+        _deferredStartupSpeciesKey = restored.selectedSpeciesKey;
+        _deferredStartupEnemyId = restored.detailEnemyId;
+        _deferredStartupDetailGame = restored.detailGame;
+      } else {
+        _selectedSpeciesKey = restored.selectedSpeciesKey;
+      }
+      _pendingPhoneDetailRestore =
+          widget.restorePhoneDetailOnStartup &&
+          restored.detailOpen &&
+          (restored.detailEnemyId?.isNotEmpty ?? false);
+    }
+    StartupProfiler.instance.mark(
+      'restoring game/filters/search/selected creature ready',
+    );
+
     _searchController = TextEditingController(text: query);
+    _listScrollController = ScrollController(
+      initialScrollOffset: restored?.listScrollOffset ?? 0,
+    );
   }
 
   @override
@@ -298,26 +381,196 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       return;
     }
     _loadedLanguageCode = languageCode;
-    enemiesFuture = _loadEnemiesForCurrentGame(languageCode);
+    if (!_bootstrapEntriesConsumed &&
+        widget.preloadedEntries != null &&
+        widget.preloadedLanguageCode == languageCode &&
+        widget.preloadedGamePick == gamePick) {
+      _bootstrapEntriesConsumed = true;
+      enemiesFuture = SynchronousFuture(widget.preloadedEntries!);
+      return;
+    }
+    enemiesFuture =
+        widget.enemiesLoaderOverride?.call(languageCode) ??
+        _loadEnemiesForCurrentGame(languageCode);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    unawaited(_persistViewState());
+    _listScrollController.dispose();
     _searchController.dispose();
     super.dispose();
   }
 
-  bool _isGold(EnemyIndexEntry enemy, Set<String> goldIds) =>
-      enemy.defaultGold ||
-      goldIds.contains(enemy.id) ||
-      (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      unawaited(_persistViewState());
+    }
+  }
+
+  AphidexViewState _currentViewState({
+    bool? detailOpen,
+    String? detailEnemyId,
+    String? detailGame,
+    String? selectedSpeciesKey,
+  }) {
+    final restored = _restoredViewState;
+    return AphidexViewState(
+      gamePickIndex: gamePick.index,
+      sortModeIndex: sortMode.index,
+      sortDescending: sortDescending,
+      query: query,
+      filterFavorites: filterFavorites,
+      filterGold: filterGold,
+      tierFilters: {...tierFilters},
+      classFilters: {...classFilters},
+      dangerFilters: {...dangerFilters},
+      selectedSpeciesKey: selectedSpeciesKey ?? _selectedSpeciesKey,
+      detailEnemyId: detailEnemyId ?? restored?.detailEnemyId,
+      detailGame: detailGame ?? restored?.detailGame,
+      detailOpen: detailOpen ?? (restored?.detailOpen ?? false),
+      listScrollOffset: _listScrollController.hasClients
+          ? _listScrollController.offset
+          : (restored?.listScrollOffset ?? 0),
+    );
+  }
+
+  Future<void> _persistViewState({
+    bool? detailOpen,
+    String? detailEnemyId,
+    String? detailGame,
+    String? selectedSpeciesKey,
+  }) async {
+    final nextState = _currentViewState(
+      detailOpen: detailOpen,
+      detailEnemyId: detailEnemyId,
+      detailGame: detailGame,
+      selectedSpeciesKey: selectedSpeciesKey,
+    );
+    _restoredViewState = nextState;
+    await LocalStorage.setString(
+      aphidexViewStateStorageKey,
+      nextState.toStorageString(),
+    );
+  }
+
+  void _scheduleViewStatePersist({
+    bool? detailOpen,
+    String? detailEnemyId,
+    String? detailGame,
+    String? selectedSpeciesKey,
+  }) {
+    unawaited(
+      _persistViewState(
+        detailOpen: detailOpen,
+        detailEnemyId: detailEnemyId,
+        detailGame: detailGame,
+        selectedSpeciesKey: selectedSpeciesKey,
+      ),
+    );
+  }
+
+  bool _ensureProgressHydration(List<EnemyIndexEntry> enemies) {
+    final gold = GoldController.instance;
+    if (!gold.needsMigration(enemies)) {
+      _progressHydrationFuture = null;
+      return false;
+    }
+
+    _progressHydrationFuture ??= gold.ensureMigrated(enemies).whenComplete(() {
+      _progressHydrationFuture = null;
+    });
+    return true;
+  }
+
+  void _markLoaderHiddenIfNeeded() {
+    if (_secondLoaderVisible) {
+      _secondLoaderVisible = false;
+      StartupProfiler.instance.markOnce('second loader disappears');
+    }
+  }
+
+  void _markSecondLoaderVisibleIfNeeded() {
+    if (_secondLoaderVisible) {
+      return;
+    }
+    _secondLoaderVisible = true;
+    StartupProfiler.instance.markOnce('second loader appears');
+  }
+
+  void _markListInteractiveIfNeeded() {
+    if (_listInteractiveLogged) {
+      return;
+    }
+    _listInteractiveLogged = true;
+    StartupProfiler.instance.markOnce('list interactive');
+    final callback = widget.onInitialListInteractive;
+    if (callback != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        callback();
+      });
+    }
+  }
+
+  void _restoreMasterDetailSelectionIfNeeded(
+    List<ResolvedEnemyEntry> filteredEntries,
+    bool isMasterDetail,
+  ) {
+    if (!isMasterDetail ||
+        !_listInteractiveLogged ||
+        _masterDetailRestoreQueued ||
+        _selectedSpeciesKey != null ||
+        _deferredStartupSpeciesKey == null) {
+      return;
+    }
+
+    final restoredKey = _deferredStartupSpeciesKey!;
+    final restoredEntry = filteredEntries
+        .cast<ResolvedEnemyEntry?>()
+        .firstWhere(
+          (entry) => entry?.entry.speciesKey == restoredKey,
+          orElse: () => null,
+        );
+    if (restoredEntry == null) {
+      return;
+    }
+
+    _masterDetailRestoreQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || _selectedSpeciesKey != null) {
+        return;
+      }
+      setState(() {
+        _selectedSpeciesKey = restoredEntry.entry.speciesKey;
+      });
+      _deferredStartupSpeciesKey = null;
+      _scheduleViewStatePersist(
+        detailOpen: false,
+        detailEnemyId: _deferredStartupEnemyId ?? restoredEntry.activeEnemy.id,
+        detailGame:
+            _deferredStartupDetailGame ?? restoredEntry.activeEnemy.game,
+        selectedSpeciesKey: restoredEntry.entry.speciesKey,
+      );
+      _deferredStartupEnemyId = null;
+      _deferredStartupDetailGame = null;
+    });
+  }
+
+  bool _isGold(EnemyIndexEntry enemy, CreatureCardProgressMap progressByKey) {
+    return resolveCreatureCardProgress(enemy, progressByKey) ==
+        CreatureCardProgress.gold;
+  }
 
   int _displayOrder(EnemyIndexEntry enemy) => enemy.order ?? 999999;
 
   bool _matchesActiveFilters(
     EnemyIndexEntry enemy,
     Set<String> favoriteIds,
-    Set<String> goldIds,
+    CreatureCardProgressMap progressByKey,
     Set<String> effectiveTierFilters,
     Set<String> effectiveClassFilters,
     Set<String> effectiveDangerFilters,
@@ -325,7 +578,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     if (filterFavorites && !favoriteIds.contains(enemy.resolvedFavoriteKey)) {
       return false;
     }
-    if (filterGold && !_isGold(enemy, goldIds)) {
+    if (filterGold && !_isGold(enemy, progressByKey)) {
       return false;
     }
     if (effectiveTierFilters.isNotEmpty) {
@@ -461,218 +714,8 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       unawaited(LocalStorage.setStringSet(_kTierFilters, tierFilters));
       unawaited(LocalStorage.setStringSet(_kClassFilters, classFilters));
       unawaited(LocalStorage.setStringSet(_kDangerFilters, dangerFilters));
+      _scheduleViewStatePersist();
     });
-  }
-
-  String _tierFilterButtonLabel(
-    AppLocalizations l10n,
-    Set<String> effectiveTierFilters,
-  ) {
-    if (effectiveTierFilters.isEmpty) {
-      return l10n.filterTiers;
-    }
-
-    final labels = <String>[];
-    final tierValues =
-        effectiveTierFilters.where((value) => value != 'boss').toList()
-          ..sort((a, b) => int.parse(a).compareTo(int.parse(b)));
-    for (final value in tierValues) {
-      labels.add(_tierLabel(int.parse(value)));
-    }
-    if (effectiveTierFilters.contains('boss')) {
-      labels.add(l10n.filterBoss);
-    }
-    return labels.isEmpty ? l10n.filterTiers : labels.join(', ');
-  }
-
-  void _toggleTierFilter(String value) {
-    setState(() {
-      if (value == 'clear') {
-        tierFilters.clear();
-      } else if (!tierFilters.add(value)) {
-        tierFilters.remove(value);
-      }
-    });
-    unawaited(LocalStorage.setStringSet(_kTierFilters, tierFilters));
-  }
-
-  String _classFilterButtonLabel(
-    AppLocalizations l10n,
-    List<EnemyDisplayGroup> groups,
-    Set<String> effectiveClassFilters,
-  ) {
-    if (effectiveClassFilters.isEmpty) {
-      return l10n.filterClass;
-    }
-    final labels = groups
-        .where((group) => effectiveClassFilters.contains(group.name))
-        .map((group) => _groupLabel(group, l10n))
-        .toList();
-    return labels.isEmpty ? l10n.filterClass : labels.join(', ');
-  }
-
-  void _toggleClassFilter(String value) {
-    setState(() {
-      if (value == 'clear') {
-        classFilters.clear();
-      } else if (!classFilters.add(value)) {
-        classFilters.remove(value);
-      }
-    });
-    unawaited(LocalStorage.setStringSet(_kClassFilters, classFilters));
-  }
-
-  Widget _tierFilterButton(
-    BuildContext context,
-    AppLocalizations l10n,
-    _TierFilterOptions options,
-    Set<String> effectiveTierFilters,
-  ) {
-    final label = _tierFilterButtonLabel(l10n, effectiveTierFilters);
-    final active = effectiveTierFilters.isNotEmpty;
-    return PopupMenuButton<String>(
-      key: const ValueKey('tier-filter-menu'),
-      tooltip: l10n.filterTiers,
-      onSelected: _toggleTierFilter,
-      itemBuilder: (_) => [
-        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterTiers)),
-        const PopupMenuDivider(),
-        for (final tier in options.tiers)
-          CheckedPopupMenuItem<String>(
-            value: tier.toString(),
-            checked: effectiveTierFilters.contains(tier.toString()),
-            child: Text(_tierLabel(tier)),
-          ),
-        if (options.hasBoss)
-          CheckedPopupMenuItem<String>(
-            value: 'boss',
-            checked: effectiveTierFilters.contains('boss'),
-            child: Text(l10n.filterBoss),
-          ),
-      ],
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        decoration: BoxDecoration(
-          color: active
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.16)
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: active
-                ? Theme.of(context).colorScheme.primary
-                : Colors.white24,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.filter_list, size: 18),
-            const SizedBox(width: 6),
-            Text(label),
-            const SizedBox(width: 4),
-            const Icon(Icons.arrow_drop_down, size: 18),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _classFilterButton(
-    BuildContext context,
-    AppLocalizations l10n,
-    List<EnemyDisplayGroup> groups,
-    Set<String> effectiveClassFilters,
-  ) {
-    final label = _classFilterButtonLabel(l10n, groups, effectiveClassFilters);
-    final active = effectiveClassFilters.isNotEmpty;
-    return PopupMenuButton<String>(
-      key: const ValueKey('class-filter-menu'),
-      tooltip: l10n.filterClass,
-      onSelected: _toggleClassFilter,
-      itemBuilder: (_) => [
-        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterClass)),
-        const PopupMenuDivider(),
-        for (final group in groups)
-          CheckedPopupMenuItem<String>(
-            value: group.name,
-            checked: effectiveClassFilters.contains(group.name),
-            child: Text(_groupLabel(group, l10n)),
-          ),
-      ],
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        decoration: BoxDecoration(
-          color: active
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.16)
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: active
-                ? Theme.of(context).colorScheme.primary
-                : Colors.white24,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.tune, size: 18),
-            const SizedBox(width: 6),
-            Text(label),
-            const SizedBox(width: 4),
-            const Icon(Icons.arrow_drop_down, size: 18),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _dangerFilterButton(
-    BuildContext context,
-    AppLocalizations l10n,
-    List<String> dangers,
-    Set<String> effectiveDangerFilters,
-  ) {
-    final label = _dangerFilterButtonLabel(l10n, effectiveDangerFilters);
-    final active = effectiveDangerFilters.isNotEmpty;
-    return PopupMenuButton<String>(
-      key: const ValueKey('danger-filter-menu'),
-      tooltip: l10n.filterDanger,
-      onSelected: _toggleDangerFilter,
-      itemBuilder: (_) => [
-        PopupMenuItem<String>(value: 'clear', child: Text(l10n.filterDanger)),
-        const PopupMenuDivider(),
-        for (final danger in dangers)
-          CheckedPopupMenuItem<String>(
-            value: danger,
-            checked: effectiveDangerFilters.contains(danger),
-            child: Text(_dangerLabel(danger, l10n)),
-          ),
-      ],
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-        decoration: BoxDecoration(
-          color: active
-              ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.16)
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: active
-                ? Theme.of(context).colorScheme.primary
-                : Colors.white24,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.local_fire_department, size: 18),
-            const SizedBox(width: 6),
-            Text(label),
-            const SizedBox(width: 4),
-            const Icon(Icons.arrow_drop_down, size: 18),
-          ],
-        ),
-      ),
-    );
   }
 
   EnemyDisplayGroup _fallbackGroupFromOrder(String game, int order) {
@@ -796,18 +839,6 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     List<EnemyDisplayGroup> order,
   ) => order.indexOf(temperament);
 
-  static const List<String> _dangerOrder = [
-    'baja',
-    'media',
-    'intermedia',
-    'alta',
-    'muy_alta',
-    'imposible',
-    'imposible_superior',
-    'extrema',
-    'proximamente',
-  ];
-
   int _dangerRank(String danger) {
     switch (_canonicalDanger(danger)) {
       case 'baja':
@@ -848,32 +879,321 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   String _canonicalDanger(String danger) =>
       UiMapper.canonicalDangerLevel(danger);
 
-  String _dangerFilterButtonLabel(
-    AppLocalizations l10n,
-    Set<String> effectiveDangerFilters,
-  ) {
-    if (effectiveDangerFilters.isEmpty) {
-      return l10n.filterDanger;
-    }
-    final labels = _dangerOrder
-        .where((danger) => effectiveDangerFilters.contains(danger))
-        .map((danger) => _dangerLabel(danger, l10n))
-        .toList();
-    return labels.isEmpty ? l10n.filterDanger : labels.join(', ');
+  int _activeFilterCount({
+    required Set<String> effectiveTierFilters,
+    required Set<String> effectiveClassFilters,
+    required Set<String> effectiveDangerFilters,
+  }) {
+    return effectiveTierFilters.length +
+        effectiveClassFilters.length +
+        effectiveDangerFilters.length +
+        (filterFavorites ? 1 : 0) +
+        (filterGold ? 1 : 0);
   }
 
-  void _toggleDangerFilter(String value) {
+  bool _hasActiveFilters({
+    required Set<String> effectiveTierFilters,
+    required Set<String> effectiveClassFilters,
+    required Set<String> effectiveDangerFilters,
+  }) {
+    return _activeFilterCount(
+          effectiveTierFilters: effectiveTierFilters,
+          effectiveClassFilters: effectiveClassFilters,
+          effectiveDangerFilters: effectiveDangerFilters,
+        ) >
+        0;
+  }
+
+  void _clearAllFilters() {
     setState(() {
-      if (value == 'clear') {
-        dangerFilters.clear();
-      } else {
-        final canonical = _canonicalDanger(value);
-        if (!dangerFilters.add(canonical)) {
-          dangerFilters.remove(canonical);
+      filterFavorites = false;
+      filterGold = false;
+      tierFilters.clear();
+      classFilters.clear();
+      dangerFilters.clear();
+    });
+    unawaited(LocalStorage.setBool(_kFilterFavorites, false));
+    unawaited(LocalStorage.setBool(_kFilterGold, false));
+    unawaited(LocalStorage.setStringSet(_kTierFilters, tierFilters));
+    unawaited(LocalStorage.setStringSet(_kClassFilters, classFilters));
+    unawaited(LocalStorage.setStringSet(_kDangerFilters, dangerFilters));
+    _scheduleViewStatePersist();
+  }
+
+  ResolvedEnemyEntry? _effectiveSelectedEntry(
+    List<ResolvedEnemyEntry> entries,
+  ) {
+    if (entries.isEmpty) {
+      return null;
+    }
+    if (_selectedSpeciesKey == null) {
+      return entries.first;
+    }
+    for (final entry in entries) {
+      if (entry.entry.speciesKey == _selectedSpeciesKey) {
+        return entry;
+      }
+    }
+    return entries.first;
+  }
+
+  ResolvedEnemyEntry? _resolvedEntryById(
+    List<ResolvedEnemyEntry> entries,
+    String enemyId,
+  ) {
+    for (final entry in entries) {
+      for (final variant in entry.entry.variants) {
+        if (variant.id == enemyId) {
+          final preferred = entry.entry.variants.firstWhere(
+            (item) => item.id == enemyId,
+            orElse: () => entry.activeEnemy,
+          );
+          return ResolvedEnemyEntry(entry: entry.entry, activeEnemy: preferred);
         }
       }
+    }
+    return null;
+  }
+
+  void _restorePhoneDetailIfNeeded(
+    BuildContext context,
+    List<ResolvedEnemyEntry> filteredEntries,
+    bool isMasterDetail,
+  ) {
+    if (isMasterDetail ||
+        !_pendingPhoneDetailRestore ||
+        _phoneDetailRestoreConsumed) {
+      return;
+    }
+
+    final restored = _restoredViewState;
+    final detailEnemyId = restored?.detailEnemyId;
+    if (detailEnemyId == null || detailEnemyId.isEmpty) {
+      _pendingPhoneDetailRestore = false;
+      return;
+    }
+
+    final restoredEntry = _resolvedEntryById(filteredEntries, detailEnemyId);
+    if (restoredEntry == null) {
+      _pendingPhoneDetailRestore = false;
+      _phoneDetailRestoreConsumed = true;
+      _scheduleViewStatePersist(detailOpen: false);
+      return;
+    }
+
+    _pendingPhoneDetailRestore = false;
+    _phoneDetailRestoreConsumed = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted || !context.mounted) {
+        return;
+      }
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => EnemyDetailScreen(
+            summary: restoredEntry.activeEnemy,
+            variantSummaries: restoredEntry.entry.variants,
+            initialGame: restored?.detailGame ?? restoredEntry.activeEnemy.game,
+          ),
+        ),
+      );
+      if (!mounted || !context.mounted) {
+        return;
+      }
+      final consumedByAdsPrompt = await MonetizationController.instance
+          .registerCreatureInspectionEvent(
+            context,
+            creatureId: restoredEntry.activeEnemy.id,
+            countProgress: false,
+          );
+      if (context.mounted && !consumedByAdsPrompt) {
+        await ReviewPromptController.instance.registerScreenClose(context);
+      }
+      _scheduleViewStatePersist(
+        detailOpen: false,
+        detailEnemyId: restoredEntry.activeEnemy.id,
+        detailGame: restoredEntry.activeEnemy.game,
+        selectedSpeciesKey: restoredEntry.entry.speciesKey,
+      );
     });
-    unawaited(LocalStorage.setStringSet(_kDangerFilters, dangerFilters));
+  }
+
+  Future<void> _openSecondaryFilters(
+    BuildContext context, {
+    required _TierFilterOptions tierOptions,
+    required List<EnemyDisplayGroup> classOptions,
+    required List<String> dangerOptions,
+  }) async {
+    final l10n = context.l10n;
+    await showModalBottomSheet<void>(
+      context: context,
+      useSafeArea: true,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheetContext) {
+        return StatefulBuilder(
+          builder: (sheetContext, setSheetState) {
+            Future<void> sync(void Function() updater) async {
+              updater();
+              setSheetState(() {});
+            }
+
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            l10n.filtersTitle,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () async {
+                            _clearAllFilters();
+                            setSheetState(() {});
+                          },
+                          icon: const Icon(Icons.filter_alt_off_rounded),
+                          label: Text(l10n.clearFiltersAction),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.filterTiers,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final tier in tierOptions.tiers)
+                          FilterChip(
+                            label: Text(_tierLabel(tier)),
+                            selected: tierFilters.contains(tier.toString()),
+                            onSelected: (_) async {
+                              await sync(() {
+                                setState(() {
+                                  if (!tierFilters.add(tier.toString())) {
+                                    tierFilters.remove(tier.toString());
+                                  }
+                                });
+                                unawaited(
+                                  LocalStorage.setStringSet(
+                                    _kTierFilters,
+                                    tierFilters,
+                                  ),
+                                );
+                                _scheduleViewStatePersist();
+                              });
+                            },
+                          ),
+                        if (tierOptions.hasBoss)
+                          FilterChip(
+                            label: Text(l10n.filterBoss),
+                            selected: tierFilters.contains('boss'),
+                            onSelected: (_) async {
+                              await sync(() {
+                                setState(() {
+                                  if (!tierFilters.add('boss')) {
+                                    tierFilters.remove('boss');
+                                  }
+                                });
+                                unawaited(
+                                  LocalStorage.setStringSet(
+                                    _kTierFilters,
+                                    tierFilters,
+                                  ),
+                                );
+                                _scheduleViewStatePersist();
+                              });
+                            },
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.filterClass,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final group in classOptions)
+                          FilterChip(
+                            label: Text(_groupLabel(group, l10n)),
+                            selected: classFilters.contains(group.name),
+                            onSelected: (_) async {
+                              await sync(() {
+                                setState(() {
+                                  if (!classFilters.add(group.name)) {
+                                    classFilters.remove(group.name);
+                                  }
+                                });
+                                unawaited(
+                                  LocalStorage.setStringSet(
+                                    _kClassFilters,
+                                    classFilters,
+                                  ),
+                                );
+                                _scheduleViewStatePersist();
+                              });
+                            },
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.filterDanger,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final danger in dangerOptions)
+                          FilterChip(
+                            label: Text(_dangerLabel(danger, l10n)),
+                            selected: dangerFilters.contains(danger),
+                            onSelected: (_) async {
+                              await sync(() {
+                                final canonical = _canonicalDanger(danger);
+                                setState(() {
+                                  if (!dangerFilters.add(canonical)) {
+                                    dangerFilters.remove(canonical);
+                                  }
+                                });
+                                unawaited(
+                                  LocalStorage.setStringSet(
+                                    _kDangerFilters,
+                                    dangerFilters,
+                                  ),
+                                );
+                                _scheduleViewStatePersist();
+                              });
+                            },
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   String? _storedPreferredGame(String speciesKey) =>
@@ -925,7 +1245,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
   List<ResolvedEnemyEntry> _applyFilterAndSearch(
     List<EnemyIndexEntry> enemies,
     Set<String> favoriteIds,
-    Set<String> goldIds,
+    CreatureCardProgressMap progressByKey,
     Set<String> effectiveTierFilters,
     Set<String> effectiveClassFilters,
     Set<String> effectiveDangerFilters,
@@ -963,7 +1283,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
             (enemy) => _matchesActiveFilters(
               enemy,
               favoriteIds,
-              goldIds,
+              progressByKey,
               effectiveTierFilters,
               effectiveClassFilters,
               effectiveDangerFilters,
@@ -1033,6 +1353,155 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
     return resolved;
   }
 
+  void _refreshEnemies() {
+    setState(() {
+      enemiesFuture =
+          widget.enemiesLoaderOverride?.call(_loadedLanguageCode ?? 'en') ??
+          _loadEnemiesForCurrentGame(_loadedLanguageCode ?? 'en');
+    });
+  }
+
+  Widget _buildLoadingState(AppLocalizations l10n) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: AphidexLoadingPanel(
+          gamePick: gamePick,
+          title: l10n.loadingCreaturesTitle,
+          subtitle: l10n.loadingCreaturesSubtitle,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorState(AppLocalizations l10n, Object? error) {
+    return _buildResponsiveStatePanel(
+      gamePick: gamePick,
+      icon: Icons.cloud_off_rounded,
+      title: l10n.dataUnavailableTitle,
+      subtitle: error == null ? l10n.dataUnavailableSubtitle : '$error',
+      actions: [
+        FilledButton.icon(
+          onPressed: _refreshEnemies,
+          icon: const Icon(Icons.refresh_rounded),
+          label: Text(l10n.retryAction),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmptyState(
+    BuildContext context, {
+    required AppLocalizations l10n,
+    required bool hasActiveFilters,
+  }) {
+    final favoritesOnly =
+        filterFavorites &&
+        !filterGold &&
+        tierFilters.isEmpty &&
+        classFilters.isEmpty &&
+        dangerFilters.isEmpty &&
+        query.trim().isEmpty;
+    final goldOnly =
+        filterGold &&
+        !filterFavorites &&
+        tierFilters.isEmpty &&
+        classFilters.isEmpty &&
+        dangerFilters.isEmpty &&
+        query.trim().isEmpty;
+    late final String title;
+    late final String subtitle;
+    final actions = <Widget>[];
+
+    if (query.trim().isNotEmpty) {
+      title = l10n.emptySearchTitle;
+      subtitle = l10n.emptySearchSubtitle;
+    } else if (favoritesOnly) {
+      title = l10n.emptyFavoritesTitle;
+      subtitle = l10n.emptyFavoritesSubtitle;
+    } else if (goldOnly) {
+      title = l10n.emptyGoldTitle;
+      subtitle = l10n.emptyGoldSubtitle;
+    } else if (hasActiveFilters) {
+      title = l10n.emptyFiltersTitle;
+      subtitle = l10n.emptyFiltersSubtitle;
+    } else {
+      title = l10n.dataUnavailableTitle;
+      subtitle = l10n.dataUnavailableSubtitle;
+    }
+
+    if (query.trim().isNotEmpty) {
+      actions.add(
+        OutlinedButton.icon(
+          onPressed: () {
+            setState(() => query = '');
+            _searchController.clear();
+            unawaited(LocalStorage.setString(_kQuery, ''));
+            _scheduleViewStatePersist();
+          },
+          icon: const Icon(Icons.search_off_rounded),
+          label: Text(l10n.clearSearchAction),
+        ),
+      );
+    }
+
+    if (hasActiveFilters) {
+      actions.add(
+        FilledButton.icon(
+          onPressed: _clearAllFilters,
+          icon: const Icon(Icons.filter_alt_off_rounded),
+          label: Text(l10n.clearFiltersAction),
+        ),
+      );
+    }
+
+    return _buildResponsiveStatePanel(
+      gamePick: gamePick,
+      icon: Icons.search_off_rounded,
+      title: title,
+      subtitle: subtitle,
+      actions: actions,
+    );
+  }
+
+  Widget _buildResponsiveStatePanel({
+    required GamePick gamePick,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    List<Widget> actions = const <Widget>[],
+    Widget? body,
+  }) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final viewInsets = MediaQuery.viewInsetsOf(context);
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 20 + viewInsets.bottom),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: (constraints.maxHeight - 40)
+                  .clamp(0.0, double.infinity)
+                  .toDouble(),
+            ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 560),
+                child: AphidexStatePanel(
+                  gamePick: gamePick,
+                  icon: icon,
+                  title: title,
+                  subtitle: subtitle,
+                  actions: actions,
+                  body: body,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -1048,7 +1517,14 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         flexibleSpace: _GameHeaderGlow(gamePick: gamePick),
-        title: Text(l10n.appTitle),
+        titleSpacing: 8,
+        title: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 160, maxWidth: 220),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Center(child: GameBrandMark(gamePick: gamePick, height: 32)),
+          ),
+        ),
         centerTitle: true,
         actions: [
           if (scannerEnabled)
@@ -1104,6 +1580,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                   case SortMenuAction.toggleDirection:
                     setState(() => sortDescending = !sortDescending);
                     LocalStorage.setBool(_kDescending, sortDescending);
+                    _scheduleViewStatePersist();
                     break;
                   case SortMenuAction.defaultOrder:
                     setState(() => sortMode = SortMode.defaultOrder);
@@ -1111,18 +1588,22 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                       _kSortMode,
                       SortMode.defaultOrder.index,
                     );
+                    _scheduleViewStatePersist();
                     break;
                   case SortMenuAction.name:
                     setState(() => sortMode = SortMode.name);
                     LocalStorage.setInt(_kSortMode, SortMode.name.index);
+                    _scheduleViewStatePersist();
                     break;
                   case SortMenuAction.danger:
                     setState(() => sortMode = SortMode.danger);
                     LocalStorage.setInt(_kSortMode, SortMode.danger.index);
+                    _scheduleViewStatePersist();
                     break;
                   case SortMenuAction.tier:
                     setState(() => sortMode = SortMode.tier);
                     LocalStorage.setInt(_kSortMode, SortMode.tier.index);
+                    _scheduleViewStatePersist();
                     break;
                 }
               },
@@ -1172,9 +1653,9 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
       body: SafeArea(
         top: false,
         minimum: const EdgeInsets.only(bottom: 12),
-        child: ValueListenableBuilder<Set<String>>(
-          valueListenable: gold.gold,
-          builder: (context, goldIds, _) {
+        child: ValueListenableBuilder<CreatureCardProgressMap>(
+          valueListenable: gold.progress,
+          builder: (context, progressByKey, _) {
             return ValueListenableBuilder<Set<String>>(
               valueListenable: favorites.favorites,
               builder: (context, favoriteIds, _) {
@@ -1182,18 +1663,21 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                   future: enemiesFuture,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState != ConnectionState.done) {
-                      return const Center(child: CircularProgressIndicator());
+                      _markSecondLoaderVisibleIfNeeded();
+                      return _buildLoadingState(l10n);
                     }
                     if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                          '${l10n.errorLoadingJson}\n${snapshot.error}',
-                          textAlign: TextAlign.center,
-                        ),
-                      );
+                      _markLoaderHiddenIfNeeded();
+                      return _buildErrorState(l10n, snapshot.error);
                     }
 
                     final enemies = snapshot.data ?? <EnemyIndexEntry>[];
+                    if (_ensureProgressHydration(enemies)) {
+                      _markSecondLoaderVisibleIfNeeded();
+                      return _buildLoadingState(l10n);
+                    }
+                    _markLoaderHiddenIfNeeded();
+                    _markListInteractiveIfNeeded();
                     if (!_tutorialQueued) {
                       _tutorialQueued = true;
                       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -1228,139 +1712,401 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
                     final filtered = _applyFilterAndSearch(
                       enemies,
                       favoriteIds,
-                      goldIds,
+                      progressByKey,
                       effectiveTierFilters,
                       effectiveClassFilters,
                       effectiveDangerFilters,
                     );
 
-                    return Column(
-                      children: [
-                        Padding(
-                          key: TutorialController.instance.keyFor(
-                            tutorialAnchorListSearch,
+                    return LayoutBuilder(
+                      builder: (context, constraints) {
+                        final surface = AppBreakpoints.surfaceForWidth(
+                          constraints.maxWidth,
+                        );
+                        final isMasterDetail = AppBreakpoints.isMasterDetail(
+                          constraints.maxWidth,
+                        );
+                        TutorialController.instance.updateListLayout(
+                          surface: surface,
+                          isTabletLike: AppBreakpoints.isTabletLike(
+                            constraints.biggest,
                           ),
-                          padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-                          child: TextField(
-                            controller: _searchController,
-                            onChanged: (value) {
-                              setState(() => query = value);
-                              LocalStorage.setString(_kQuery, value);
-                            },
-                            decoration: InputDecoration(
-                              hintText: l10n.searchEnemyHint,
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: query.isEmpty
-                                  ? null
-                                  : IconButton(
-                                      icon: const Icon(Icons.close),
-                                      onPressed: () {
-                                        setState(() => query = '');
-                                        _searchController.clear();
-                                        LocalStorage.setString(_kQuery, '');
-                                      },
-                                    ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(14),
+                        );
+                        final pagePadding = surface.pagePadding;
+                        final activeFilterCount = _activeFilterCount(
+                          effectiveTierFilters: effectiveTierFilters,
+                          effectiveClassFilters: effectiveClassFilters,
+                          effectiveDangerFilters: effectiveDangerFilters,
+                        );
+                        final hasActiveFilters = _hasActiveFilters(
+                          effectiveTierFilters: effectiveTierFilters,
+                          effectiveClassFilters: effectiveClassFilters,
+                          effectiveDangerFilters: effectiveDangerFilters,
+                        );
+                        final selectedEntry = _effectiveSelectedEntry(filtered);
+                        final selectedSpeciesKey = isMasterDetail
+                            ? selectedEntry?.entry.speciesKey
+                            : null;
+                        _restorePhoneDetailIfNeeded(
+                          context,
+                          filtered,
+                          isMasterDetail,
+                        );
+                        _restoreMasterDetailSelectionIfNeeded(
+                          filtered,
+                          isMasterDetail,
+                        );
+
+                        Future<void> handleEntryTap(
+                          ResolvedEnemyEntry entry,
+                        ) async {
+                          if (isMasterDetail) {
+                            final previousSpeciesKey = _selectedSpeciesKey;
+                            if (previousSpeciesKey != null &&
+                                previousSpeciesKey != entry.entry.speciesKey) {
+                              final consumedByAdsPrompt =
+                                  await MonetizationController.instance
+                                      .registerCreatureInspectionEvent(
+                                        context,
+                                        creatureId:
+                                            selectedEntry?.activeEnemy.id,
+                                      );
+                              if (context.mounted && !consumedByAdsPrompt) {
+                                await ReviewPromptController.instance
+                                    .registerScreenClose(context);
+                              }
+                            }
+                            setState(
+                              () =>
+                                  _selectedSpeciesKey = entry.entry.speciesKey,
+                            );
+                            _scheduleViewStatePersist(
+                              detailOpen: false,
+                              detailEnemyId: entry.activeEnemy.id,
+                              detailGame: entry.activeEnemy.game,
+                              selectedSpeciesKey: entry.entry.speciesKey,
+                            );
+                            return;
+                          }
+
+                          _scheduleViewStatePersist(
+                            detailOpen: true,
+                            detailEnemyId: entry.activeEnemy.id,
+                            detailGame: entry.activeEnemy.game,
+                            selectedSpeciesKey: entry.entry.speciesKey,
+                          );
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EnemyDetailScreen(
+                                summary: entry.activeEnemy,
+                                variantSummaries: entry.entry.variants,
+                                initialGame: entry.activeEnemy.game,
                               ),
                             ),
+                          );
+                          if (!context.mounted) {
+                            return;
+                          }
+                          final consumedByAdsPrompt =
+                              await MonetizationController.instance
+                                  .registerCreatureInspectionEvent(
+                                    context,
+                                    creatureId: entry.activeEnemy.id,
+                                  );
+                          if (context.mounted && !consumedByAdsPrompt) {
+                            await ReviewPromptController.instance
+                                .registerScreenClose(context);
+                          }
+                          _scheduleViewStatePersist(
+                            detailOpen: false,
+                            detailEnemyId: entry.activeEnemy.id,
+                            detailGame: entry.activeEnemy.game,
+                            selectedSpeciesKey: entry.entry.speciesKey,
+                          );
+                        }
+
+                        final controls = Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            pagePadding.left,
+                            8,
+                            pagePadding.right,
+                            0,
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          key: TutorialController.instance.keyFor(
-                            tutorialAnchorListFilters,
+                          child: Column(
+                            children: [
+                              Padding(
+                                key: TutorialController.instance.keyFor(
+                                  tutorialAnchorListSearch,
+                                ),
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: TextField(
+                                  controller: _searchController,
+                                  onChanged: (value) {
+                                    setState(() => query = value);
+                                    LocalStorage.setString(_kQuery, value);
+                                    _scheduleViewStatePersist();
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: l10n.searchEnemyHint,
+                                    prefixIcon: const Icon(Icons.search),
+                                    suffixIcon: query.isEmpty
+                                        ? null
+                                        : IconButton(
+                                            icon: const Icon(Icons.close),
+                                            onPressed: () {
+                                              setState(() => query = '');
+                                              _searchController.clear();
+                                              LocalStorage.setString(
+                                                _kQuery,
+                                                '',
+                                              );
+                                              _scheduleViewStatePersist();
+                                            },
+                                          ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                key: TutorialController.instance.keyFor(
+                                  tutorialAnchorListFilters,
+                                ),
+                                alignment: Alignment.centerLeft,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: _ToolbarToggleButton(
+                                        key: const ValueKey(
+                                          'favorites-filter-chip',
+                                        ),
+                                        icon: Icons.star_rounded,
+                                        label: l10n.favoritesFilterLabel,
+                                        selected: filterFavorites,
+                                        onTap: () {
+                                          setState(
+                                            () => filterFavorites =
+                                                !filterFavorites,
+                                          );
+                                          unawaited(
+                                            LocalStorage.setBool(
+                                              _kFilterFavorites,
+                                              filterFavorites,
+                                            ),
+                                          );
+                                          _scheduleViewStatePersist();
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _ToolbarToggleButton(
+                                        key: const ValueKey('gold-filter-chip'),
+                                        icon: Icons.workspace_premium_rounded,
+                                        label: l10n.goldFilterLabel,
+                                        selected: filterGold,
+                                        onTap: () {
+                                          setState(
+                                            () => filterGold = !filterGold,
+                                          );
+                                          unawaited(
+                                            LocalStorage.setBool(
+                                              _kFilterGold,
+                                              filterGold,
+                                            ),
+                                          );
+                                          _scheduleViewStatePersist();
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: _ToolbarActionButton(
+                                        key: const ValueKey(
+                                          'open-secondary-filters',
+                                        ),
+                                        icon: Icons.filter_alt_rounded,
+                                        label: l10n.filtersTitle,
+                                        badgeCount: activeFilterCount,
+                                        active: hasActiveFilters,
+                                        onTap: () => _openSecondaryFilters(
+                                          context,
+                                          tierOptions: tierOptions,
+                                          classOptions: classOptions,
+                                          dangerOptions: dangerOptions,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
+                        );
+
+                        return ListenableBuilder(
+                          listenable:
+                              MonetizationController.instance.adsRemoved,
+                          builder: (context, _) {
+                            final showInlineAd =
+                                MonetizationController.instance.shouldShowAds;
+                            final listView = sortMode == SortMode.defaultOrder
+                                ? _SectionedEnemyList(
+                                    entries: filtered,
+                                    favIds: favoriteIds,
+                                    cardProgressByKey: progressByKey,
+                                    groupOrder: _groupOrder(sortDescending),
+                                    showInlineAd: showInlineAd,
+                                    controller: _listScrollController,
+                                    selectedSpeciesKey: selectedSpeciesKey,
+                                    onSelectEntry: handleEntryTap,
+                                    onToggleFavorite: (entry) {
+                                      unawaited(
+                                        FavoritesController.instance.toggle(
+                                          entry.activeEnemy.resolvedFavoriteKey,
+                                        ),
+                                      );
+                                    },
+                                    onToggleCardProgress: (entry) {
+                                      unawaited(
+                                        GoldController.instance.cycle(
+                                          entry.activeEnemy,
+                                        ),
+                                      );
+                                    },
+                                    groupFromEntry: (entry) {
+                                      return _groupForEnemy(
+                                        _sortSourceEnemy(entry),
+                                      );
+                                    },
+                                    groupLabel: (temperament) =>
+                                        _groupLabel(temperament, l10n),
+                                  )
+                                : _FlatEnemyList(
+                                    entries: filtered,
+                                    favIds: favoriteIds,
+                                    cardProgressByKey: progressByKey,
+                                    showInlineAd: showInlineAd,
+                                    controller: _listScrollController,
+                                    selectedSpeciesKey: selectedSpeciesKey,
+                                    onSelectEntry: handleEntryTap,
+                                    onToggleFavorite: (entry) {
+                                      unawaited(
+                                        FavoritesController.instance.toggle(
+                                          entry.activeEnemy.resolvedFavoriteKey,
+                                        ),
+                                      );
+                                    },
+                                    onToggleCardProgress: (entry) {
+                                      unawaited(
+                                        GoldController.instance.cycle(
+                                          entry.activeEnemy,
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                            final leftPaneBody = filtered.isEmpty
+                                ? _buildEmptyState(
+                                    context,
+                                    l10n: l10n,
+                                    hasActiveFilters: hasActiveFilters,
+                                  )
+                                : listView;
+
+                            if (!isMasterDetail) {
+                              return Column(
+                                children: [
+                                  controls,
+                                  const SizedBox(height: 6),
+                                  Expanded(child: leftPaneBody),
+                                ],
+                              );
+                            }
+
+                            final detailEntry = selectedEntry;
+
+                            return Row(
                               children: [
-                                _tierFilterButton(
-                                  context,
-                                  l10n,
-                                  tierOptions,
-                                  effectiveTierFilters,
+                                SizedBox(
+                                  width: (constraints.maxWidth * 0.36)
+                                      .clamp(360.0, 440.0)
+                                      .toDouble(),
+                                  child: Column(
+                                    children: [
+                                      controls,
+                                      const SizedBox(height: 6),
+                                      Expanded(child: leftPaneBody),
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(width: 8),
-                                _classFilterButton(
-                                  context,
-                                  l10n,
-                                  classOptions,
-                                  effectiveClassFilters,
+                                VerticalDivider(
+                                  width: 1,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.outlineVariant,
                                 ),
-                                const SizedBox(width: 8),
-                                _dangerFilterButton(
-                                  context,
-                                  l10n,
-                                  dangerOptions,
-                                  effectiveDangerFilters,
-                                ),
-                                const SizedBox(width: 8),
-                                FilterChip(
-                                  label: const Text('\u2605'),
-                                  selected: filterFavorites,
-                                  onSelected: (value) {
-                                    setState(() => filterFavorites = value);
-                                    unawaited(
-                                      LocalStorage.setBool(
-                                        _kFilterFavorites,
-                                        filterFavorites,
-                                      ),
-                                    );
-                                  },
-                                ),
-                                const SizedBox(width: 8),
-                                FilterChip(
-                                  label: const Text('\u25A0'),
-                                  selected: filterGold,
-                                  onSelected: (value) {
-                                    setState(() => filterGold = value);
-                                    unawaited(
-                                      LocalStorage.setBool(
-                                        _kFilterGold,
-                                        filterGold,
-                                      ),
-                                    );
-                                  },
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                      12,
+                                      12,
+                                      pagePadding.right,
+                                      12,
+                                    ),
+                                    child: detailEntry == null
+                                        ? AphidexStatePanel(
+                                            gamePick: gamePick,
+                                            icon: Icons.touch_app_rounded,
+                                            title: l10n
+                                                .masterDetailPlaceholderTitle,
+                                            subtitle: l10n
+                                                .masterDetailPlaceholderSubtitle,
+                                            compact: surface.isWide,
+                                          )
+                                        : ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              22,
+                                            ),
+                                            child: Material(
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.surface,
+                                              child: ListenableBuilder(
+                                                listenable:
+                                                    TutorialController.instance,
+                                                builder: (context, _) {
+                                                  return EnemyDetailScreen(
+                                                    key: ValueKey(
+                                                      'detail:${detailEntry.activeEnemy.id}',
+                                                    ),
+                                                    summary:
+                                                        detailEntry.activeEnemy,
+                                                    variantSummaries:
+                                                        detailEntry
+                                                            .entry
+                                                            .variants,
+                                                    initialGame: detailEntry
+                                                        .activeEnemy
+                                                        .game,
+                                                    tutorialAnchorsEnabled:
+                                                        !TutorialController
+                                                            .instance
+                                                            .tutorialFullscreenMode,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                  ),
                                 ),
                               ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Expanded(
-                          child: ListenableBuilder(
-                            listenable:
-                                MonetizationController.instance.adsRemoved,
-                            builder: (context, _) {
-                              final showInlineAd =
-                                  MonetizationController.instance.shouldShowAds;
-                              return sortMode == SortMode.defaultOrder
-                                  ? _SectionedEnemyList(
-                                      entries: filtered,
-                                      favIds: favoriteIds,
-                                      goldIds: goldIds,
-                                      groupOrder: _groupOrder(sortDescending),
-                                      showInlineAd: showInlineAd,
-                                      groupFromEntry: (entry) {
-                                        return _groupForEnemy(
-                                          _sortSourceEnemy(entry),
-                                        );
-                                      },
-                                      groupLabel: (temperament) =>
-                                          _groupLabel(temperament, l10n),
-                                    )
-                                  : _FlatEnemyList(
-                                      entries: filtered,
-                                      favIds: favoriteIds,
-                                      goldIds: goldIds,
-                                      showInlineAd: showInlineAd,
-                                    );
-                            },
-                          ),
-                        ),
-                      ],
+                            );
+                          },
+                        );
+                      },
                     );
                   },
                 );
@@ -1391,6 +2137,7 @@ class _EnemyListScreenState extends State<EnemyListScreen> {
             );
           });
           LocalStorage.setInt(_kGamePick, pick.index);
+          _scheduleViewStatePersist();
           Navigator.pop(context);
         },
       ),
@@ -1448,14 +2195,24 @@ String _scannerScopeForGamePick(GamePick pick) {
 class _FlatEnemyList extends StatelessWidget {
   final List<ResolvedEnemyEntry> entries;
   final Set<String> favIds;
-  final Set<String> goldIds;
+  final CreatureCardProgressMap cardProgressByKey;
   final bool showInlineAd;
+  final ScrollController controller;
+  final String? selectedSpeciesKey;
+  final ValueChanged<ResolvedEnemyEntry> onSelectEntry;
+  final ValueChanged<ResolvedEnemyEntry> onToggleFavorite;
+  final ValueChanged<ResolvedEnemyEntry> onToggleCardProgress;
 
   const _FlatEnemyList({
     required this.entries,
     required this.favIds,
-    required this.goldIds,
+    required this.cardProgressByKey,
     required this.showInlineAd,
+    required this.controller,
+    required this.selectedSpeciesKey,
+    required this.onSelectEntry,
+    required this.onToggleFavorite,
+    required this.onToggleCardProgress,
   });
 
   @override
@@ -1471,6 +2228,7 @@ class _FlatEnemyList extends StatelessWidget {
     }
 
     return ListView.builder(
+      controller: controller,
       padding: const EdgeInsets.only(bottom: 4),
       itemCount: rows.length,
       itemBuilder: (context, index) {
@@ -1478,8 +2236,180 @@ class _FlatEnemyList extends StatelessWidget {
         if (entry == null) {
           return const InlineBannerAdCard();
         }
-        return EnemyTile(entry: entry, favIds: favIds, goldIds: goldIds);
+        return EnemyTile(
+          entry: entry,
+          favIds: favIds,
+          cardProgressByKey: cardProgressByKey,
+          selected: entry.entry.speciesKey == selectedSpeciesKey,
+          onTap: () => onSelectEntry(entry),
+          onToggleFavorite: () => onToggleFavorite(entry),
+          onToggleCardProgress: () => onToggleCardProgress(entry),
+        );
       },
+    );
+  }
+}
+
+class _ToolbarToggleButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _ToolbarToggleButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final foreground = selected
+        ? colorScheme.primary
+        : colorScheme.onSurfaceVariant;
+    return SizedBox(
+      height: 42,
+      child: Material(
+        color: selected
+            ? colorScheme.primary.withValues(alpha: 0.12)
+            : colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: selected ? colorScheme.primary : colorScheme.outline,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 18, color: foreground),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: foreground,
+                        fontWeight: selected
+                            ? FontWeight.w700
+                            : FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ToolbarActionButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final int badgeCount;
+  final bool active;
+  final VoidCallback onTap;
+
+  const _ToolbarActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.badgeCount,
+    required this.active,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      height: 42,
+      child: Material(
+        color: active
+            ? colorScheme.primary.withValues(alpha: 0.12)
+            : colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(14),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: active ? colorScheme.primary : colorScheme.outline,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 18,
+                  color: active
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      label,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: active
+                            ? colorScheme.primary
+                            : colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+                if (badgeCount > 0) ...[
+                  const SizedBox(width: 6),
+                  Container(
+                    constraints: const BoxConstraints(minWidth: 18),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      '$badgeCount',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: colorScheme.onPrimary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -1487,108 +2417,334 @@ class _FlatEnemyList extends StatelessWidget {
 class EnemyTile extends StatelessWidget {
   final ResolvedEnemyEntry entry;
   final Set<String> favIds;
-  final Set<String> goldIds;
+  final CreatureCardProgressMap cardProgressByKey;
+  final bool selected;
+  final VoidCallback onTap;
+  final VoidCallback onToggleFavorite;
+  final VoidCallback onToggleCardProgress;
 
   const EnemyTile({
     super.key,
     required this.entry,
     required this.favIds,
-    required this.goldIds,
+    required this.cardProgressByKey,
+    required this.selected,
+    required this.onTap,
+    required this.onToggleFavorite,
+    required this.onToggleCardProgress,
   });
 
   @override
   Widget build(BuildContext context) {
     final enemy = entry.activeEnemy;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isPhonePortraitList =
+        !AppBreakpoints.isMasterDetail(screenWidth) &&
+        MediaQuery.orientationOf(context) == Orientation.portrait;
     final isFavorite = favIds.contains(enemy.resolvedFavoriteKey);
-    final isGold =
-        enemy.defaultGold ||
-        goldIds.contains(enemy.id) ||
-        (enemy.goldLinkId != null && goldIds.contains(enemy.goldLinkId));
+    final cardProgress = resolveCreatureCardProgress(enemy, cardProgressByKey);
+    final nextCardProgress = nextCreatureCardProgress(enemy, cardProgress);
+    final tracksCardProgress = shouldTrackCreatureCardProgress(enemy);
+    final thumbnailAsset = _resolveThumbnailAsset(enemy, cardProgress);
+    final usesIconThumbnail = enemy.listIconAsset.trim().isNotEmpty;
+    final weaknessChips = enemy.weaknesses
+        .map(
+          (weakness) => IconBadge.asset(
+            assetName: UiMapper.effectIcon(weakness),
+            size: 16,
+            padding: const EdgeInsets.all(3),
+            borderRadius: 10,
+          ),
+        )
+        .toList(growable: false);
+    final hasWeaknessChips = weaknessChips.isNotEmpty;
+
+    final cardColor = selected
+        ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.08)
+        : null;
+    final borderColor = selected
+        ? Theme.of(context).colorScheme.primary
+        : Theme.of(context).colorScheme.outlineVariant;
 
     return Card(
+      key: ValueKey('enemy-tile-card-${entry.entry.speciesKey}'),
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: ListTile(
+      color: cardColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(color: borderColor),
+      ),
+      child: InkWell(
         key: ValueKey('enemy-tile-${entry.entry.speciesKey}'),
-        leading: FallbackAssetImage.asset(
-          assetName: isGold ? enemy.cardGold : enemy.cardNormal,
-          fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
-          width: 48,
-          height: 48,
-          fit: BoxFit.cover,
-        ),
-        title: Row(
-          children: [
-            Expanded(
-              child: OverflowMarqueeText(
-                enemy.name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            if (isFavorite)
-              const Icon(Icons.star, size: 18, color: Colors.amber),
-            if (isGold)
-              const Padding(
-                padding: EdgeInsets.only(left: 6),
-                child: Icon(
-                  Icons.credit_card,
-                  size: 18,
-                  color: Color(0xFFFFD54F),
+        borderRadius: BorderRadius.circular(18),
+        onTap: onTap,
+        child: SizedBox(
+          height: 92,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Row(
+              children: [
+                _EnemyTileThumbnail(
+                  assetName: thumbnailAsset,
+                  isIconThumbnail: usesIconThumbnail,
                 ),
-              ),
-          ],
-        ),
-        subtitle: Wrap(
-          spacing: 6,
-          children: enemy.weaknesses
-              .map(
-                (weakness) => IconBadge.asset(
-                  assetName: UiMapper.effectIcon(weakness),
-                  size: 16,
-                  padding: const EdgeInsets.all(3),
-                  borderRadius: 10,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: hasWeaknessChips
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRect(
+                        child: OverflowMarqueeText(
+                          enemy.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: isPhonePortraitList ? 18 : null,
+                          ),
+                        ),
+                      ),
+                      if (hasWeaknessChips) ...[
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 6,
+                          runSpacing: 6,
+                          children: weaknessChips,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              )
-              .toList(),
-        ),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconBadge.asset(
-              assetName: UiMapper.dangerIcon(enemy.danger),
-              size: 22,
-              padding: const EdgeInsets.all(4),
-              borderRadius: 12,
+                const SizedBox(width: 10),
+                _EnemyTileActionColumn(
+                  enemyId: enemy.id,
+                  isFavorite: isFavorite,
+                  progress: cardProgress,
+                  nextProgress: nextCardProgress,
+                  showProgress: tracksCardProgress,
+                  onToggleFavorite: onToggleFavorite,
+                  onToggleCardProgress: onToggleCardProgress,
+                ),
+                const SizedBox(width: 12),
+                SizedBox(
+                  width: 34,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconBadge.asset(
+                        assetName: UiMapper.dangerIcon(enemy.danger),
+                        size: 22,
+                        padding: const EdgeInsets.all(4),
+                        borderRadius: 12,
+                      ),
+                      const SizedBox(height: 6),
+                      Image.asset(
+                        UiMapper.tierIcon(
+                          tier: enemy.tier,
+                          isBoss: enemy.isBoss,
+                        ),
+                        width: 26,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 6),
-            Image.asset(
-              UiMapper.tierIcon(tier: enemy.tier, isBoss: enemy.isBoss),
-              width: 26,
+          ),
+        ),
+      ),
+    );
+  }
+
+  String? _resolveThumbnailAsset(
+    EnemyIndexEntry enemy,
+    CreatureCardProgress progress,
+  ) {
+    final listIcon = enemy.listIconAsset.trim();
+    if (listIcon.isNotEmpty) {
+      return listIcon;
+    }
+    return resolveCreatureCardAsset(enemy, progress);
+  }
+}
+
+class _EnemyTileActionColumn extends StatelessWidget {
+  final String enemyId;
+  final bool isFavorite;
+  final CreatureCardProgress progress;
+  final CreatureCardProgress nextProgress;
+  final bool showProgress;
+  final VoidCallback onToggleFavorite;
+  final VoidCallback onToggleCardProgress;
+
+  const _EnemyTileActionColumn({
+    required this.enemyId,
+    required this.isFavorite,
+    required this.progress,
+    required this.nextProgress,
+    required this.showProgress,
+    required this.onToggleFavorite,
+    required this.onToggleCardProgress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 30,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _EnemyTileFavoriteButton(
+            enemyId: enemyId,
+            isFavorite: isFavorite,
+            onTap: onToggleFavorite,
+          ),
+          if (showProgress) ...[
+            const SizedBox(height: 8),
+            _EnemyTileProgressButton(
+              enemyId: enemyId,
+              progress: progress,
+              nextProgress: nextProgress,
+              onTap: onToggleCardProgress,
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+class _EnemyTileFavoriteButton extends StatelessWidget {
+  final String enemyId;
+  final bool isFavorite;
+  final VoidCallback onTap;
+
+  const _EnemyTileFavoriteButton({
+    required this.enemyId,
+    required this.isFavorite,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return InkWell(
+      key: ValueKey('favorite-toggle-$enemyId'),
+      borderRadius: BorderRadius.circular(999),
+      onTap: onTap,
+      child: SizedBox(
+        width: 28,
+        height: 28,
+        child: Center(
+          child: Icon(
+            isFavorite ? Icons.star_rounded : Icons.star_outline_rounded,
+            size: 20,
+            color: isFavorite ? Colors.amber : colorScheme.outline,
+          ),
         ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => EnemyDetailScreen(
-                summary: enemy,
-                variantSummaries: entry.entry.variants,
-                initialGame: enemy.game,
-              ),
+      ),
+    );
+  }
+}
+
+class _EnemyTileProgressButton extends StatelessWidget {
+  final String enemyId;
+  final CreatureCardProgress progress;
+  final CreatureCardProgress nextProgress;
+  final VoidCallback onTap;
+
+  const _EnemyTileProgressButton({
+    required this.enemyId,
+    required this.progress,
+    required this.nextProgress,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = switch (progress) {
+      CreatureCardProgress.gold => const Color(0xFFFFD54F),
+      CreatureCardProgress.obtained => colorScheme.primary,
+      CreatureCardProgress.unowned => colorScheme.outline,
+    };
+
+    return Semantics(
+      button: true,
+      label:
+          '${l10n.creatureCardProgressTitle}: '
+          '${l10n.creatureCardProgressLabel(progress)}. '
+          '${l10n.creatureCardProgressLabel(nextProgress)}.',
+      child: InkWell(
+        key: ValueKey('card-progress-$enemyId'),
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: SizedBox(
+          width: 28,
+          height: 28,
+          child: Center(
+            child: Icon(
+              switch (progress) {
+                CreatureCardProgress.unowned =>
+                  Icons.radio_button_unchecked_rounded,
+                CreatureCardProgress.obtained =>
+                  Icons.radio_button_checked_rounded,
+                CreatureCardProgress.gold => Icons.workspace_premium_rounded,
+              },
+              color: color,
+              size: 20,
             ),
-          ).then((_) async {
-            if (!context.mounted) {
-              return;
-            }
-            final consumedByAdsPrompt = await MonetizationController.instance
-                .registerEnemySheetClose(context);
-            if (context.mounted && !consumedByAdsPrompt) {
-              await ReviewPromptController.instance.registerScreenClose(
-                context,
-              );
-            }
-          });
-        },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EnemyTileThumbnail extends StatelessWidget {
+  final String? assetName;
+  final bool isIconThumbnail;
+
+  const _EnemyTileThumbnail({
+    required this.assetName,
+    required this.isIconThumbnail,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    if (assetName == null || assetName!.trim().isEmpty) {
+      return Container(
+        width: 56,
+        height: 56,
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Icon(Icons.layers_outlined, color: colorScheme.primary),
+      );
+    }
+
+    final child = FallbackAssetImage.asset(
+      assetName: assetName!,
+      fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
+      width: 56,
+      height: 56,
+      fit: isIconThumbnail ? BoxFit.contain : BoxFit.cover,
+    );
+
+    return Container(
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: isIconThumbnail ? const EdgeInsets.all(8) : EdgeInsets.zero,
+        child: ClipRRect(borderRadius: BorderRadius.circular(12), child: child),
       ),
     );
   }
@@ -1597,18 +2753,28 @@ class EnemyTile extends StatelessWidget {
 class _SectionedEnemyList extends StatelessWidget {
   final List<ResolvedEnemyEntry> entries;
   final Set<String> favIds;
-  final Set<String> goldIds;
+  final CreatureCardProgressMap cardProgressByKey;
   final List<EnemyDisplayGroup> groupOrder;
   final bool showInlineAd;
+  final ScrollController controller;
+  final String? selectedSpeciesKey;
+  final ValueChanged<ResolvedEnemyEntry> onSelectEntry;
+  final ValueChanged<ResolvedEnemyEntry> onToggleFavorite;
+  final ValueChanged<ResolvedEnemyEntry> onToggleCardProgress;
   final EnemyDisplayGroup Function(ResolvedEnemyEntry entry) groupFromEntry;
   final String Function(EnemyDisplayGroup temperament) groupLabel;
 
   const _SectionedEnemyList({
     required this.entries,
     required this.favIds,
-    required this.goldIds,
+    required this.cardProgressByKey,
     required this.groupOrder,
     required this.showInlineAd,
+    required this.controller,
+    required this.selectedSpeciesKey,
+    required this.onSelectEntry,
+    required this.onToggleFavorite,
+    required this.onToggleCardProgress,
     required this.groupFromEntry,
     required this.groupLabel,
   });
@@ -1638,6 +2804,7 @@ class _SectionedEnemyList extends StatelessWidget {
     }
 
     return ListView.builder(
+      controller: controller,
       padding: const EdgeInsets.only(bottom: 4),
       itemCount: rows.length,
       itemBuilder: (context, index) {
@@ -1655,7 +2822,15 @@ class _SectionedEnemyList extends StatelessWidget {
             ),
           );
         }
-        return EnemyTile(entry: row.entry!, favIds: favIds, goldIds: goldIds);
+        return EnemyTile(
+          entry: row.entry!,
+          favIds: favIds,
+          cardProgressByKey: cardProgressByKey,
+          selected: row.entry!.entry.speciesKey == selectedSpeciesKey,
+          onTap: () => onSelectEntry(row.entry!),
+          onToggleFavorite: () => onToggleFavorite(row.entry!),
+          onToggleCardProgress: () => onToggleCardProgress(row.entry!),
+        );
       },
     );
   }

@@ -7,6 +7,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 
 import '../data/local_storage.dart';
 import '../i18n/app_localizations.dart';
+import 'tutorial_controller.dart';
 
 enum MonetizationActionResult {
   launchedPurchaseFlow,
@@ -51,12 +52,14 @@ class MonetizationController {
       'ca-app-pub-3940256099942544/1033173712';
   static const String _testInterstitialAdUnitIdIos =
       'ca-app-pub-3940256099942544/4411468910';
-  static const int interstitialPromptThreshold = 5;
-  static const Duration interstitialPromptCooldown = Duration(minutes: 3);
+  static const int interstitialPromptThreshold = 8;
+  static const Duration interstitialPromptCooldown = Duration(seconds: 90);
   static const String _kInterstitialCloseCount =
       'monetization_interstitial_close_count';
   static const String _kInterstitialLastPromptAt =
       'monetization_interstitial_last_prompt_at';
+  static const String _kInterstitialLastCreatureId =
+      'monetization_interstitial_last_creature_id';
 
   final ValueNotifier<bool> adsRemoved = ValueNotifier<bool>(false);
   final ValueNotifier<bool> storeAvailable = ValueNotifier<bool>(false);
@@ -64,7 +67,9 @@ class MonetizationController {
       ValueNotifier<ProductDetails?>(null);
   final ValueNotifier<bool> isBusy = ValueNotifier<bool>(false);
 
-  bool _initialized = false;
+  Future<void>? _initializationFuture;
+  bool _purchaseStreamBound = false;
+  bool _localStatePrimed = false;
   bool _interstitialLoadInFlight = false;
   bool _promoFlowInProgress = false;
   InterstitialAd? _interstitialAd;
@@ -139,13 +144,20 @@ class MonetizationController {
     return price;
   }
 
-  Future<void> initialize() async {
-    if (_initialized) {
+  void primeLocalState() {
+    if (_localStatePrimed) {
       return;
     }
-    _initialized = true;
+    _localStatePrimed = true;
     adsRemoved.value = LocalStorage.getBool(_kAdsRemoved, fallback: false);
+  }
 
+  Future<void> initialize() {
+    primeLocalState();
+    return _initializationFuture ??= _initializeAsync();
+  }
+
+  Future<void> _initializeAsync() async {
     if (!isAdsSupportedPlatform) {
       return;
     }
@@ -156,10 +168,13 @@ class MonetizationController {
       return;
     }
 
-    InAppPurchase.instance.purchaseStream.listen(
-      _handlePurchaseUpdates,
-      onError: (_) => isBusy.value = false,
-    );
+    if (!_purchaseStreamBound) {
+      _purchaseStreamBound = true;
+      InAppPurchase.instance.purchaseStream.listen(
+        _handlePurchaseUpdates,
+        onError: (_) => isBusy.value = false,
+      );
+    }
     await refreshStore();
   }
 
@@ -182,15 +197,55 @@ class MonetizationController {
     return currentTime.difference(lastPromptAt) >= interstitialPromptCooldown;
   }
 
-  Future<bool> registerEnemySheetClose(BuildContext context) async {
-    if (!shouldShowAds) {
+  static bool shouldCountCreatureInspection({
+    required String? creatureId,
+    required String? lastCreatureId,
+    required bool countProgress,
+  }) {
+    if (!countProgress) {
+      return false;
+    }
+
+    final normalizedCreatureId = creatureId?.trim();
+    if (normalizedCreatureId == null || normalizedCreatureId.isEmpty) {
+      return false;
+    }
+
+    final normalizedLast = lastCreatureId?.trim();
+    return normalizedCreatureId != normalizedLast;
+  }
+
+  Future<bool> registerCreatureInspectionEvent(
+    BuildContext context, {
+    required String? creatureId,
+    bool countProgress = true,
+  }) async {
+    if (!shouldShowAds || TutorialController.instance.isActive) {
       return false;
     }
 
     unawaited(_primeInterstitial());
-
-    final closeCount = LocalStorage.getInt(_kInterstitialCloseCount) + 1;
-    await LocalStorage.setInt(_kInterstitialCloseCount, closeCount);
+    var closeCount = LocalStorage.getInt(_kInterstitialCloseCount);
+    final normalizedCreatureId = creatureId?.trim();
+    final lastCreatureId = LocalStorage.getString(_kInterstitialLastCreatureId);
+    final didCountInspection = shouldCountCreatureInspection(
+      creatureId: normalizedCreatureId,
+      lastCreatureId: lastCreatureId,
+      countProgress: countProgress,
+    );
+    if (didCountInspection) {
+      closeCount += 1;
+      await Future.wait([
+        LocalStorage.setInt(_kInterstitialCloseCount, closeCount),
+        LocalStorage.setString(
+          _kInterstitialLastCreatureId,
+          normalizedCreatureId!,
+        ),
+      ]);
+    }
+    if (!didCountInspection) {
+      return false;
+    }
 
     final currentTime = now();
     final lastPromptMillis = LocalStorage.getInt(_kInterstitialLastPromptAt);
@@ -245,6 +300,16 @@ class MonetizationController {
       unawaited(_primeInterstitial());
     }
   }
+
+  Future<bool> registerEnemySheetClose(
+    BuildContext context, {
+    String? creatureId,
+    bool countProgress = true,
+  }) => registerCreatureInspectionEvent(
+    context,
+    creatureId: creatureId,
+    countProgress: countProgress,
+  );
 
   Future<void> refreshStore() async {
     if (!isStoreSupportedPlatform) {

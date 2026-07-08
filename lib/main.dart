@@ -3,19 +3,26 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 import 'controllers/locale_controller.dart';
-import 'controllers/monetization_controller.dart';
 import 'controllers/review_prompt_controller.dart';
 import 'controllers/theme_controller.dart';
+import 'controllers/app_reset_controller.dart';
 import 'i18n/app_localizations.dart';
+import 'models/game_pick.dart';
 import 'screens/enemy_list_screen.dart';
+import 'startup/startup_bootstrap.dart';
+import 'startup/startup_profiler.dart';
+import 'widgets/state_panels.dart';
 import 'widgets/tutorial_overlay.dart';
 
 void main() {
   runZonedGuarded(() {
+    StartupProfiler.instance.startRun();
     WidgetsFlutterBinding.ensureInitialized();
+    StartupProfiler.instance.mark(
+      'WidgetsFlutterBinding.ensureInitialized ready',
+    );
 
     FlutterError.onError = (details) {
       FlutterError.presentError(details);
@@ -48,7 +55,7 @@ class AphidexBootstrapApp extends StatefulWidget {
 }
 
 class _AphidexBootstrapAppState extends State<AphidexBootstrapApp> {
-  late Future<void> _startupFuture;
+  late Future<StartupBootstrapData> _startupFuture;
 
   @override
   void initState() {
@@ -56,12 +63,9 @@ class _AphidexBootstrapAppState extends State<AphidexBootstrapApp> {
     _startupFuture = _bootstrap();
   }
 
-  Future<void> _bootstrap() async {
+  Future<StartupBootstrapData> _bootstrap() async {
     try {
-      await Hive.initFlutter();
-      await Hive.openBox('aphidex');
-      ReviewPromptController.instance.initialize();
-      await MonetizationController.instance.initialize();
+      return await StartupBootstrap.loadCriticalPath();
     } catch (error, stack) {
       _reportBootstrapError(error, stack);
       rethrow;
@@ -76,7 +80,8 @@ class _AphidexBootstrapAppState extends State<AphidexBootstrapApp> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
+    StartupProfiler.instance.markOnce('_BootstrapShell start');
+    return FutureBuilder<StartupBootstrapData>(
       future: _startupFuture,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -90,7 +95,16 @@ class _AphidexBootstrapAppState extends State<AphidexBootstrapApp> {
         if (snapshot.connectionState != ConnectionState.done) {
           return const _BootstrapShell(child: _BootstrapLoadingScreen());
         }
-        return const AphidexApp();
+        StartupProfiler.instance.markOnce('first loader disappears');
+        return ListenableBuilder(
+          listenable: AppResetController.instance.revision,
+          builder: (context, _) {
+            return AphidexApp(
+              key: ValueKey(AppResetController.instance.revision.value),
+              startupData: snapshot.data,
+            );
+          },
+        );
       },
     );
   }
@@ -107,10 +121,32 @@ class _BootstrapShell extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF35586E)),
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF071019),
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.dark,
+          seedColor: const Color(0xFF4D8AA8),
+        ),
       ),
       home: Scaffold(
-        body: SafeArea(child: Center(child: child)),
+        backgroundColor: const Color(0xFF071019),
+        body: DecoratedBox(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF071019), Color(0xFF101C28)],
+            ),
+          ),
+          child: SafeArea(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 460),
+                child: Padding(padding: const EdgeInsets.all(20), child: child),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -121,24 +157,10 @@ class _BootstrapLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            'Aphidex loaded',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-          ),
-          SizedBox(height: 12),
-          Text(
-            'Initializing local data and services...',
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 24),
-          CircularProgressIndicator(),
-        ],
-      ),
+    return const AphidexLoadingPanel(
+      gamePick: GamePick.all,
+      title: 'Starting Aphidex',
+      subtitle: 'Loading local data and services.',
     );
   }
 }
@@ -182,10 +204,13 @@ class _BootstrapErrorScreen extends StatelessWidget {
 }
 
 class AphidexApp extends StatelessWidget {
-  const AphidexApp({super.key});
+  const AphidexApp({super.key, this.startupData});
+
+  final StartupBootstrapData? startupData;
 
   @override
   Widget build(BuildContext context) {
+    StartupProfiler.instance.markOnce('AphidexApp build');
     final theme = ThemeController.instance;
     final locale = LocaleController.instance;
 
@@ -223,7 +248,13 @@ class AphidexApp extends StatelessWidget {
               behavior: SnackBarBehavior.floating,
             ),
           ),
-          home: const EnemyListScreen(),
+          home: EnemyListScreen(
+            preloadedEntries: startupData?.initialEntries,
+            preloadedLanguageCode: startupData?.languageCode,
+            preloadedGamePick: startupData?.gamePick,
+            restorePhoneDetailOnStartup: false,
+            onInitialListInteractive: StartupBootstrap.startDeferredServices,
+          ),
         );
       },
     );

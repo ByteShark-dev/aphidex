@@ -2,7 +2,7 @@ name: aphidex
 description: "Aphidex"
 publish_to: 'none'
 
-version: 1.0.12+17
+version: 1.1.0+18
 
 environment:
   sdk: ^3.10.7
@@ -15,6 +15,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_image_compress: ^2.4.0
+  flutter_svg: ^2.2.0
   google_mlkit_image_labeling: ^0.14.2
   google_mobile_ads: ^8.0.0
   hive: ^2.2.3
@@ -40,7 +41,6 @@ flutter:
     - assets/g2/creatures/cards/
     - assets/g2/creatures/cards_golden/
     - assets/g2/creatures/photos/
-    - assets/data/creatures/
     - assets/data/creatures/en/
     - assets/data/creatures/en/details/
     - assets/data/creatures/es/
@@ -48,6 +48,7 @@ flutter:
     - assets/data/creatures/ru/
     - assets/data/creatures/ru/details/
     - assets/global/
+    - assets/global/branding/
     - assets/global/effects_damage/
     - assets/global/rewards/
     - assets/global/weak_points/

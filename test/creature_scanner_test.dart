@@ -1443,6 +1443,10 @@ Future<List<Map<String, dynamic>>> _capturedAllowedCreatures(
 }
 
 class _TestAssetBundle extends CachingAssetBundle {
+  static const _svg =
+      '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+      '<rect width="32" height="32" fill="#ffffff"/></svg>';
+
   @override
   Future<ByteData> load(String key) async {
     if (key == 'AssetManifest.bin') {
@@ -1454,7 +1458,24 @@ class _TestAssetBundle extends CachingAssetBundle {
     if (key == 'FontManifest.json') {
       return _stringData('[]');
     }
+    if (key.endsWith('.svg')) {
+      return _stringData(_svg);
+    }
     return _transparentImage;
+  }
+
+  @override
+  Future<String> loadString(String key, {bool cache = true}) async {
+    if (key.endsWith('.svg')) {
+      return _svg;
+    }
+    if (key == 'AssetManifest.json') {
+      return '{}';
+    }
+    if (key == 'FontManifest.json') {
+      return '[]';
+    }
+    return '';
   }
 }
 
