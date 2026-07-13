@@ -20,6 +20,10 @@ class AppResetController {
 
   final ValueNotifier<int> revision = ValueNotifier<int>(0);
 
+  void refreshAppState() {
+    revision.value += 1;
+  }
+
   Future<void> wipeForFreshStart() async {
     await LocalStorage.clearAll(
       preserveKeys: MonetizationController.persistentKeys,
@@ -36,6 +40,6 @@ class AppResetController {
     TutorialController.instance.resetRuntimeState();
     // ignore: invalid_use_of_visible_for_testing_member
     EnemyRepository.clearCaches();
-    revision.value += 1;
+    refreshAppState();
   }
 }

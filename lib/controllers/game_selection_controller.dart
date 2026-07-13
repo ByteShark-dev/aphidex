@@ -58,6 +58,15 @@ class GameSelectionController {
     );
   }
 
+  Future<void> reset() async {
+    _lastConcreteGame = GamePick.g1;
+    gamePick.value = GamePick.g1;
+    await Future.wait([
+      LocalStorage.remove(_gamePickKey),
+      LocalStorage.remove(_lastConcreteGameKey),
+    ]);
+  }
+
   void _apply(GamePick pick) {
     if (_isConcrete(pick)) {
       _lastConcreteGame = pick;
