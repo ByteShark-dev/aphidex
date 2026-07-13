@@ -3,11 +3,14 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 import {
+  getPageContent,
   getPageSeo,
   getPageStructuredData,
   getStaticLocale,
   siteConfig,
 } from './src/config/site.js';
+import { renderLandingPage } from './src/components/LandingPage.js';
+import { renderPrivacyPage } from './src/components/PrivacyPage.js';
 
 function getPageKeyFromContext(context) {
   const filename = context?.filename?.replaceAll('\\', '/');
@@ -41,6 +44,13 @@ function buildMetaTokens(pageKey) {
   };
 }
 
+function renderStaticPage(pageKey) {
+  const locale = getStaticLocale(pageKey);
+  const content = getPageContent(pageKey, locale);
+
+  return pageKey === 'privacy' ? renderPrivacyPage(content) : renderLandingPage(content);
+}
+
 export default defineConfig({
   base: './',
   build: {
@@ -53,12 +63,15 @@ export default defineConfig({
   },
   plugins: [
     {
-      name: 'aphidex-meta',
+      name: 'aphidex-static-pages',
       transformIndexHtml(html, context) {
         const pageKey = getPageKeyFromContext(context);
-        const metaTokens = buildMetaTokens(pageKey);
+        const tokens = {
+          ...buildMetaTokens(pageKey),
+          '%PAGE_CONTENT%': renderStaticPage(pageKey),
+        };
 
-        return Object.entries(metaTokens).reduce(
+        return Object.entries(tokens).reduce(
           (output, [token, value]) => output.replaceAll(token, value),
           html,
         );

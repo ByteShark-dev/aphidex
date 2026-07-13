@@ -580,11 +580,23 @@ export function getPageStructuredData(pageKey, locale = defaultLocale) {
     inLanguage: activeLocale,
     description: localizedContent[activeLocale].home.seo.description,
   };
+  const webPage = {
+    '@type': 'WebPage',
+    name: seo.title,
+    url: seo.pageUrl,
+    description: seo.description,
+    inLanguage: activeLocale,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: brand.name,
+      url: siteConfig.seo.siteUrl,
+    },
+  };
 
   if (pageKey !== 'home') {
     return {
       '@context': 'https://schema.org',
-      '@graph': [organization, website],
+      '@graph': [organization, website, webPage],
     };
   }
 
@@ -593,8 +605,9 @@ export function getPageStructuredData(pageKey, locale = defaultLocale) {
     '@graph': [
       organization,
       website,
+      webPage,
       {
-        '@type': 'MobileApplication',
+        '@type': 'SoftwareApplication',
         name: brand.name,
         operatingSystem: 'Android, iOS',
         applicationCategory: 'GameApplication',
