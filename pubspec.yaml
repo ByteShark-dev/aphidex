@@ -2,7 +2,7 @@ name: aphidex
 description: "Aphidex"
 publish_to: 'none'
 
-version: 1.1.0+18
+version: 1.1.1+19
 
 environment:
   sdk: ^3.10.7
@@ -24,6 +24,7 @@ dependencies:
   image_picker: ^1.2.0
   in_app_purchase: ^3.2.3
   url_launcher: ^6.3.0
+  share_plus: ^13.2.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,7 @@ flutter:
     - assets/global/effects_damage/
     - assets/global/rewards/
     - assets/global/weak_points/
+    - assets/images/player_characters/
 
 flutter_icons:
   android: true

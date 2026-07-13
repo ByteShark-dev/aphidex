@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../controllers/app_reset_controller.dart';
 import '../controllers/locale_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/theme_controller.dart';
 import '../controllers/tutorial_controller.dart';
 import '../i18n/app_localizations.dart';
+import '../i18n/data_management_strings.dart';
 import 'credits_screen.dart';
+import 'data_management_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -25,43 +26,13 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _confirmWipe(BuildContext context) async {
-    final l10n = context.l10n;
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.wipeConfirmTitle),
-        content: Text(l10n.wipeConfirmMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.cancelAction),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.deleteAction),
-          ),
-        ],
-      ),
-    );
-
-    if (ok == true) {
-      await AppResetController.instance.wipeForFreshStart();
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(context.l10n.dataWiped)));
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = ThemeController.instance;
     final locale = LocaleController.instance;
     final monetization = MonetizationController.instance;
     final l10n = context.l10n;
+    final dataStrings = DataManagementStrings.forLanguage(l10n.languageCode);
     final systemLanguage = l10n.languageNameForCode(
       LocaleController.resolveSupportedLocale(
         View.of(context).platformDispatcher.locale,
@@ -379,10 +350,16 @@ class SettingsScreen extends StatelessWidget {
             ),
             Card(
               child: ListTile(
-                leading: const Icon(Icons.delete_forever),
-                title: Text(l10n.wipeDataTitle),
+                leading: const Icon(Icons.storage_outlined),
+                title: Text(dataStrings['title']),
                 subtitle: Text(l10n.wipeDataSubtitle),
-                onTap: () => _confirmWipe(context),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const DataManagementScreen(),
+                  ),
+                ),
               ),
             ),
           ],

@@ -88,6 +88,94 @@ class AppLocalizations {
   String get dataWiped => _t('dataWiped');
   String get chooseGameTooltip => _t('chooseGameTooltip');
   String get settingsTooltip => _t('settingsTooltip');
+  String get playerProfileTooltip => _t('playerProfileTooltip');
+  String get playerProfileTitle => _t('playerProfileTitle');
+  String get playerProfileSubtitle => _t('playerProfileSubtitle');
+  String get playerProfileNoSelection => _t('playerProfileNoSelection');
+  String get playerProfileChooseAction => _t('playerProfileChooseAction');
+  String get playerProfileChangeAction => _t('playerProfileChangeAction');
+  String get playerProfileClearAction => _t('playerProfileClearAction');
+  String get playerProfileGameSelector => _t('playerProfileGameSelector');
+  String get playerProfileCharacterLabel => _t('playerProfileCharacterLabel');
+  String get playerProfileCreatureCards => _t('playerProfileCreatureCards');
+  String get playerProfileGoldCards => _t('playerProfileGoldCards');
+  String get playerProfileKills => _t('playerProfileKills');
+  String get killCountAdd => _t('killCountAdd');
+  String get killCountEdit => _t('killCountEdit');
+  String get killCountReset => _t('killCountReset');
+  String get killCountQuantity => _t('killCountQuantity');
+  String get saveAction => _t('saveAction');
+  String get filterWithKills => _t('filterWithKills');
+  String get filterWithoutKills => _t('filterWithoutKills');
+  String get tutorialProfileTitle => _t('tutorialProfileTitle');
+  String get tutorialProfileBody => _t('tutorialProfileBody');
+  String get playerProfileSelectTooltip => _t('playerProfileSelectTooltip');
+  String get playerProfileChangeTooltip => _t('playerProfileChangeTooltip');
+  String get playerDisplayNameTitle => _t('playerDisplayNameTitle');
+  String get playerDisplayNameAdd => _t('playerDisplayNameAdd');
+  String get playerDisplayNameEdit => _t('playerDisplayNameEdit');
+  String get playerDisplayNameSave => _t('playerDisplayNameSave');
+  String get playerDisplayNameRemove => _t('playerDisplayNameRemove');
+  String get playerDisplayNameCounter => _t('playerDisplayNameCounter');
+  String get playerProfileShare => _t('playerProfileShare');
+  String get playerProfileShareTooltip => _t('playerProfileShareTooltip');
+  String get playerProfileShareUnavailable =>
+      _t('playerProfileShareUnavailable');
+  String get playerProfileShareText => _t('playerProfileShareText');
+  String get playerProfileShareError => _t('playerProfileShareError');
+  String playerProfileShareMessage({
+    required String game,
+    required String creatureCards,
+    required String goldCards,
+    String kills = '0',
+    required String website,
+    String? displayName,
+  }) {
+    final hasName = displayName != null && displayName.isNotEmpty;
+    return switch (languageCode) {
+      'en' =>
+        '${hasName ? "$displayName's Aphidex profile" : 'My Aphidex profile'} for $game:\n'
+            '$creatureCards Creature Cards\n$goldCards Gold Cards\n$kills defeated creatures\n\n'
+            'Explore creatures, weaknesses, and your progress with Aphidex:\n$website',
+      'ru' =>
+        '${hasName ? '\u041f\u0440\u043e\u0444\u0438\u043b\u044c $displayName \u0432 Aphidex' : '\u041c\u043e\u0439 \u043f\u0440\u043e\u0444\u0438\u043b\u044c Aphidex'} \u0434\u043b\u044f $game:\n'
+            '$creatureCards Creature Cards\n$goldCards \u0437\u043e\u043b\u043e\u0442\u044b\u0445 \u043a\u0430\u0440\u0442\u043e\u0447\u0435\u043a\n$kills \u0443\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d\u0438\u0439\n\n'
+            '\u0418\u0437\u0443\u0447\u0430\u0439\u0442\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432, \u0438\u0445 \u0441\u043b\u0430\u0431\u043e\u0441\u0442\u0438 \u0438 \u0441\u0432\u043e\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441 \u0441 Aphidex:\n$website',
+      _ =>
+        '${hasName ? 'Perfil de $displayName en Aphidex' : 'Mi perfil de Aphidex'} para $game:\n'
+            '$creatureCards Tarjetas de criatura\n$goldCards tarjetas doradas\n$kills eliminaciones\n\n'
+            'Consulta criaturas, debilidades y tu progreso con Aphidex:\n$website',
+    };
+  }
+
+  String get playerProfileSelectorSubtitle =>
+      _t('playerProfileSelectorSubtitle');
+  String playerProfileSelected(String name) =>
+      _t('playerProfileSelected').replaceFirst('{name}', name);
+  String playerProfileSelectorTitle(String game) =>
+      _t('playerProfileSelectorTitle').replaceFirst('{game}', game);
+
+  String playerCharacterName(String id) {
+    final value = switch (id) {
+      'g1_burgl' => 'BURG.L',
+      'g1_wendell' => 'Wendell Tully',
+      'g2_masked_stranger' => switch (languageCode) {
+        'es' => 'Extraña enmascarada',
+        'ru' => 'Таинственная незнакомка в маске',
+        _ => 'Masked Stranger',
+      },
+      _ =>
+        id
+            .split('_')
+            .last
+            .replaceFirstMapped(
+              RegExp(r'^[a-z]'),
+              (match) => match.group(0)!.toUpperCase(),
+            ),
+    };
+    return _normalizeText(value);
+  }
+
   String get sortDefaultOrder => _t('sortDefaultOrder');
   String get sortByName => _t('sortByName');
   String get sortByDanger => _t('sortByDanger');
@@ -183,6 +271,7 @@ class AppLocalizations {
   String get attacksTitle => _t('attacksTitle');
   String get weaknessesTitle => _t('weaknessesTitle');
   String get upcomingTitle => _t('upcomingTitle');
+  String get underConstructionLabel => _t('underConstructionLabel');
   String get upcomingItems => _t('upcomingItems');
   String get healthTitle => _t('healthTitle');
   String get notApplicableHealthLabel => _t('notApplicableHealthLabel');
@@ -1451,6 +1540,47 @@ class AppLocalizations {
       'dataWiped': 'Datos borrados',
       'chooseGameTooltip': 'Elegir juego',
       'settingsTooltip': 'Configuración',
+      'playerProfileTooltip': 'Perfil de jugador',
+      'playerProfileTitle': 'Perfil de jugador',
+      'playerProfileSubtitle':
+          'Elige un perfil independiente para Grounded y Grounded 2.',
+      'playerProfileNoSelection': 'Aún no has elegido un perfil.',
+      'playerProfileChooseAction': 'Elegir personaje',
+      'playerProfileChangeAction': 'Cambiar personaje',
+      'playerProfileClearAction': 'Quitar selección',
+      'playerProfileGameSelector': 'Juego del perfil',
+      'playerProfileCharacterLabel': 'Personaje del perfil',
+      'playerProfileCreatureCards': 'Tarjetas de criatura',
+      'playerProfileGoldCards': 'Tarjetas doradas',
+      'playerProfileKills': 'Eliminaciones',
+      'killCountAdd': 'AÃ±adir eliminaciÃ³n',
+      'killCountEdit': 'Editar eliminaciones',
+      'killCountReset': 'Reiniciar contador',
+      'killCountQuantity': 'Cantidad',
+      'saveAction': 'Guardar',
+      'filterWithKills': 'Con eliminaciones',
+      'filterWithoutKills': 'Sin eliminaciones',
+      'tutorialProfileTitle': 'Consulta tu perfil',
+      'tutorialProfileBody':
+          'Consulta tus personajes, tarjetas y eliminaciones desde tu perfil.',
+      'playerProfileSelectTooltip': 'Elegir personaje',
+      'playerProfileChangeTooltip': 'Cambiar personaje',
+      'playerDisplayNameTitle': 'Nombre del jugador',
+      'playerDisplayNameAdd': 'Añadir nombre',
+      'playerDisplayNameEdit': 'Editar nombre',
+      'playerDisplayNameSave': 'Guardar',
+      'playerDisplayNameRemove': 'Eliminar nombre',
+      'playerDisplayNameCounter': '{current}/24',
+      'playerProfileShare': 'Compartir perfil',
+      'playerProfileShareTooltip': 'Compartir perfil',
+      'playerProfileShareUnavailable': 'Elige un personaje para compartir.',
+      'playerProfileShareText': 'Mi perfil de Aphidex',
+      'playerProfileShareError':
+          'No se pudo preparar el perfil para compartir.',
+      'playerProfileSelected': 'Perfil seleccionado: {name}',
+      'playerProfileSelectorTitle': 'Elige tu perfil de {game}',
+      'playerProfileSelectorSubtitle':
+          'Esta selección solo se aplica a este juego.',
       'sortDefaultOrder': 'Orden del juego',
       'sortByName': 'Nombre',
       'sortByDanger': 'Peligro',
@@ -1497,6 +1627,7 @@ class AppLocalizations {
       'attacksTitle': 'Ataques',
       'weaknessesTitle': 'Debilidades',
       'upcomingTitle': 'Próximamente:',
+      'underConstructionLabel': 'En construcción',
       'upcomingItems':
           '• Loot con probabilidades\n• Spawns\n• Builds por etapa (early/mid/end/NG+)',
       'healthTitle': 'Vida',
@@ -1586,6 +1717,9 @@ class AppLocalizations {
       'tutorial_gamePicker_title': 'Elige el juego',
       'tutorial_gamePicker_body':
           'Aqu\u00ED cambias entre Grounded 1, Grounded 2 y Ambos juegos. En Ambos juegos no se repiten las especies compartidas.',
+      'tutorial_profile_title': 'Consulta tu perfil',
+      'tutorial_profile_body':
+          'Consulta tus personajes, tarjetas y eliminaciones desde tu perfil.',
       'tutorial_filters_title': 'Filtra la lista',
       'tutorial_filters_body':
           'Aqu\u00ED puedes combinar filtros m\u00FAltiples al mismo tiempo: tiers, clase, peligro, favoritos y tarjetas doradas.',
@@ -1664,6 +1798,46 @@ class AppLocalizations {
       'dataWiped': 'Data erased',
       'chooseGameTooltip': 'Choose game',
       'settingsTooltip': 'Settings',
+      'playerProfileTooltip': 'Player profile',
+      'playerProfileTitle': 'Player profile',
+      'playerProfileSubtitle':
+          'Choose an independent profile for Grounded and Grounded 2.',
+      'playerProfileNoSelection': 'You have not chosen a profile yet.',
+      'playerProfileChooseAction': 'Choose character',
+      'playerProfileChangeAction': 'Change character',
+      'playerProfileClearAction': 'Clear selection',
+      'playerProfileGameSelector': 'Profile game',
+      'playerProfileCharacterLabel': 'Profile character',
+      'playerProfileCreatureCards': 'Creature Cards',
+      'playerProfileGoldCards': 'Gold cards',
+      'playerProfileKills': 'Eliminations',
+      'killCountAdd': 'Add defeat',
+      'killCountEdit': 'Edit defeats',
+      'killCountReset': 'Reset counter',
+      'killCountQuantity': 'Quantity',
+      'saveAction': 'Save',
+      'filterWithKills': 'With defeats',
+      'filterWithoutKills': 'Without defeats',
+      'tutorialProfileTitle': 'View your profile',
+      'tutorialProfileBody':
+          'View your characters, cards, and defeated creatures from your profile.',
+      'playerProfileSelectTooltip': 'Choose character',
+      'playerProfileChangeTooltip': 'Change character',
+      'playerDisplayNameTitle': 'Player name',
+      'playerDisplayNameAdd': 'Add name',
+      'playerDisplayNameEdit': 'Edit name',
+      'playerDisplayNameSave': 'Save',
+      'playerDisplayNameRemove': 'Remove name',
+      'playerDisplayNameCounter': '{current}/24',
+      'playerProfileShare': 'Share profile',
+      'playerProfileShareTooltip': 'Share profile',
+      'playerProfileShareUnavailable': 'Choose a character to share.',
+      'playerProfileShareText': 'My Aphidex profile',
+      'playerProfileShareError':
+          'The profile could not be prepared for sharing.',
+      'playerProfileSelected': 'Selected profile: {name}',
+      'playerProfileSelectorTitle': 'Choose your {game} profile',
+      'playerProfileSelectorSubtitle': 'This choice only applies to this game.',
       'sortDefaultOrder': 'In-game order',
       'sortByName': 'Name',
       'sortByDanger': 'Danger',
@@ -1708,6 +1882,7 @@ class AppLocalizations {
       'attacksTitle': 'Attacks',
       'weaknessesTitle': 'Weaknesses',
       'upcomingTitle': 'Coming soon:',
+      'underConstructionLabel': 'Under construction',
       'upcomingItems':
           '• Loot with drop rates\n• Spawn locations\n• Builds by progression stage (early / mid / end / NG+)',
       'healthTitle': 'Health',
@@ -1796,6 +1971,9 @@ class AppLocalizations {
       'tutorial_gamePicker_title': 'Choose the game',
       'tutorial_gamePicker_body':
           'Here you switch between Grounded 1, Grounded 2, and Both games. In Both games, shared species are grouped into one entry.',
+      'tutorial_profile_title': 'View your profile',
+      'tutorial_profile_body':
+          'View your characters, cards, and defeated creatures from your profile.',
       'tutorial_filters_title': 'Filter the list',
       'tutorial_filters_body':
           'You can combine multiple filters here at the same time: tiers, class, danger, favorites, and gold cards.',
@@ -1919,6 +2097,7 @@ class AppLocalizations {
       'attacksTitle': 'Атаки',
       'weaknessesTitle': 'Слабости',
       'upcomingTitle': 'Скоро:',
+      'underConstructionLabel': 'В разработке',
       'upcomingItems':
           '• Добыча с шансами выпадения\n• Места появления\n• Сборки по этапам прогресса (early / mid / end / NG+)',
       'healthTitle': 'Здоровье',
@@ -2006,6 +2185,10 @@ class AppLocalizations {
           '\u0412\u044B\u0431\u043E\u0440 \u0438\u0433\u0440\u044B',
       'tutorial_gamePicker_body':
           '\u0417\u0434\u0435\u0441\u044c \u043c\u043e\u0436\u043d\u043e \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u044c\u0441\u044f \u043c\u0435\u0436\u0434\u0443 Grounded 1, Grounded 2 \u0438 \u0440\u0435\u0436\u0438\u043c\u043e\u043c \u00ab\u041e\u0431\u0435 \u0438\u0433\u0440\u044b\u00bb. \u0412 \u044d\u0442\u043e\u043c \u0440\u0435\u0436\u0438\u043c\u0435 \u043e\u0431\u0449\u0438\u0435 \u0432\u0438\u0434\u044b \u043d\u0435 \u0434\u0443\u0431\u043b\u0438\u0440\u0443\u044e\u0442\u0441\u044f.',
+      'tutorial_profile_title':
+          '\u0412\u0430\u0448 \u043f\u0440\u043e\u0444\u0438\u043b\u044c',
+      'tutorial_profile_body':
+          '\u0412 \u043f\u0440\u043e\u0444\u0438\u043b\u0435 \u043c\u043e\u0436\u043d\u043e \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0435\u0439, \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0438 \u043f\u043e\u0431\u0435\u0434\u044b.',
       'tutorial_filters_title':
           '\u0424\u0438\u043B\u044C\u0442\u0440\u044B \u0441\u043F\u0438\u0441\u043A\u0430',
       'tutorial_filters_body':
@@ -2074,6 +2257,77 @@ class AppLocalizations {
       'effectEquipmentTitle': 'Оружие и броня с этим эффектом',
       'effectEquipmentComingSoon': 'Скоро.',
       'immuneLabel': '\u0418\u043c\u043c\u0443\u043d\u0438\u0442\u0435\u0442',
+      'playerProfileTooltip':
+          '\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u0438\u0433\u0440\u043e\u043a\u0430',
+      'playerProfileTitle':
+          '\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u0438\u0433\u0440\u043e\u043a\u0430',
+      'playerProfileSubtitle':
+          '\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043e\u0442\u0434\u0435\u043b\u044c\u043d\u044b\u0439 \u043f\u0440\u043e\u0444\u0438\u043b\u044c \u0434\u043b\u044f Grounded \u0438 Grounded 2.',
+      'playerProfileNoSelection':
+          '\u041f\u0440\u043e\u0444\u0438\u043b\u044c \u0435\u0449\u0451 \u043d\u0435 \u0432\u044b\u0431\u0440\u0430\u043d.',
+      'playerProfileChooseAction':
+          '\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430',
+      'playerProfileChangeAction':
+          '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430',
+      'playerProfileClearAction':
+          '\u041e\u0447\u0438\u0441\u0442\u0438\u0442\u044c \u0432\u044b\u0431\u043e\u0440',
+      'playerProfileGameSelector':
+          '\u0418\u0433\u0440\u0430 \u043f\u0440\u043e\u0444\u0438\u043b\u044f',
+      'playerProfileCharacterLabel':
+          '\u041f\u0435\u0440\u0441\u043e\u043d\u0430\u0436 \u043f\u0440\u043e\u0444\u0438\u043b\u044f',
+      'playerProfileCreatureCards':
+          '\u041a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0441\u0443\u0449\u0435\u0441\u0442\u0432',
+      'playerProfileGoldCards':
+          '\u0417\u043e\u043b\u043e\u0442\u044b\u0435 \u043a\u0430\u0440\u0442\u044b',
+      'playerProfileKills':
+          '\u0423\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d\u0438\u044f',
+      'killCountAdd':
+          '\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u043f\u043e\u0431\u0435\u0434\u0443',
+      'killCountEdit':
+          '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u043f\u043e\u0431\u0435\u0434\u044b',
+      'killCountReset':
+          '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a',
+      'killCountQuantity':
+          '\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e',
+      'saveAction': '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c',
+      'filterWithKills':
+          '\u0421 \u043f\u043e\u0431\u0435\u0434\u0430\u043c\u0438',
+      'filterWithoutKills': '\u0411\u0435\u0437 \u043f\u043e\u0431\u0435\u0434',
+      'tutorialProfileTitle':
+          '\u0412\u0430\u0448 \u043f\u0440\u043e\u0444\u0438\u043b\u044c',
+      'tutorialProfileBody':
+          '\u0412 \u043f\u0440\u043e\u0444\u0438\u043b\u0435 \u043c\u043e\u0436\u043d\u043e \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0435\u0439, \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0438 \u043f\u043e\u0431\u0435\u0434\u044b.',
+      'playerProfileSelectTooltip':
+          '\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430',
+      'playerProfileChangeTooltip':
+          '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430',
+      'playerDisplayNameTitle':
+          '\u0418\u043c\u044f \u0438\u0433\u0440\u043e\u043a\u0430',
+      'playerDisplayNameAdd':
+          '\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0438\u043c\u044f',
+      'playerDisplayNameEdit':
+          '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u0438\u043c\u044f',
+      'playerDisplayNameSave':
+          '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c',
+      'playerDisplayNameRemove':
+          '\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0438\u043c\u044f',
+      'playerDisplayNameCounter': '{current}/24',
+      'playerProfileShare':
+          '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u043f\u0440\u043e\u0444\u0438\u043b\u0435\u043c',
+      'playerProfileShareTooltip':
+          '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u043f\u0440\u043e\u0444\u0438\u043b\u0435\u043c',
+      'playerProfileShareUnavailable':
+          '\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430 \u0434\u043b\u044f \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438.',
+      'playerProfileShareText':
+          '\u041c\u043e\u0439 \u043f\u0440\u043e\u0444\u0438\u043b\u044c Aphidex',
+      'playerProfileShareError':
+          '\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u0438\u0442\u044c \u043f\u0440\u043e\u0444\u0438\u043b\u044c \u0434\u043b\u044f \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0438.',
+      'playerProfileSelected':
+          '\u0412\u044b\u0431\u0440\u0430\u043d\u043d\u044b\u0439 \u043f\u0440\u043e\u0444\u0438\u043b\u044c: {name}',
+      'playerProfileSelectorTitle':
+          '\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043f\u0440\u043e\u0444\u0438\u043b\u044c \u0434\u043b\u044f {game}',
+      'playerProfileSelectorSubtitle':
+          '\u042d\u0442\u043e\u0442 \u0432\u044b\u0431\u043e\u0440 \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u043b\u044f \u044d\u0442\u043e\u0439 \u0438\u0433\u0440\u044b.',
     },
   };
 }

@@ -22,6 +22,9 @@ Grounded 1 and Grounded 2 in a single Flutter app.
 ## Repository Notes
 
 - This repository contains the main app and its bundled data.
+- Public website: [ByteShark-dev/aphidex-web](https://github.com/ByteShark-dev/aphidex-web).
+- Temporary website URL: `https://byteshark-dev.github.io/aphidex-web/`.
+- Planned website domain: `https://aphidex.byteshark.dev/`.
 - Signing keys, local release config, and research PDFs are intentionally
   excluded from version control.
 - Reference PDFs used during curation are kept outside shipped assets and are

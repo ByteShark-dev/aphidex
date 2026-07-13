@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:aphidex/controllers/app_reset_controller.dart';
+import 'package:aphidex/controllers/creature_kill_count_controller.dart';
 import 'package:aphidex/controllers/favorites_controller.dart';
 import 'package:aphidex/controllers/gold_controller.dart';
 import 'package:aphidex/controllers/locale_controller.dart';
+import 'package:aphidex/controllers/player_display_name_controller.dart';
 import 'package:aphidex/controllers/theme_controller.dart';
 import 'package:aphidex/controllers/tutorial_controller.dart';
 import 'package:aphidex/data/aphidex_view_state.dart';
@@ -45,6 +47,8 @@ void main() {
       );
       await ThemeController.instance.setTheme(ThemePref.dark);
       await LocaleController.instance.setLanguage(LanguagePref.ru);
+      await PlayerDisplayNameController.instance.save('ByteShark');
+      await CreatureKillCountController.instance.setCount('g2_wasp', 4);
       await LocalStorage.setBool(TutorialController.completionKey, true);
       await LocalStorage.setString(
         aphidexViewStateStorageKey,
@@ -79,6 +83,8 @@ void main() {
       expect(LocalStorage.getString(aphidexViewStateStorageKey), isNull);
       expect(ThemeController.instance.theme.value, ThemePref.system);
       expect(LocaleController.instance.preference.value, LanguagePref.system);
+      expect(PlayerDisplayNameController.instance.displayName.value, isEmpty);
+      expect(CreatureKillCountController.instance.counts.value, isEmpty);
     },
   );
 }

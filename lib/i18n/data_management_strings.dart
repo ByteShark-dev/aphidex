@@ -1,0 +1,107 @@
+class DataManagementStrings {
+  const DataManagementStrings._(this.values);
+  final Map<String, String> values;
+  String operator [](String key) => values[key] ?? key;
+
+  static DataManagementStrings forLanguage(String code) =>
+      DataManagementStrings._(_values[code] ?? _values['en']!);
+
+  static const _values = <String, Map<String, String>>{
+    'es': {
+      'title': 'Gestionar datos',
+      'progress': 'Datos de progreso',
+      'preferences': 'Preferencias',
+      'danger': 'Zona de peligro',
+      'favorites': 'Favoritos',
+      'favoritesBody': 'Elimina todas las criaturas marcadas como favoritas.',
+      'cards': 'Progreso de tarjetas',
+      'cardsBody': 'Restablece las tarjetas obtenidas y doradas.',
+      'kills': 'Eliminaciones',
+      'killsBody': 'Elimina todos los contadores de eliminaciones.',
+      'profile': 'Perfil del jugador',
+      'profileBody': 'Elimina el nombre y los personajes seleccionados.',
+      'filters': 'Filtros y navegación',
+      'filtersBody': 'Restablece búsqueda, filtros, orden y selección.',
+      'tutorial': 'Tutorial',
+      'tutorialBody': 'Permite mostrar el tutorial de nuevo.',
+      'all': 'Borrar todos los datos locales',
+      'allBody': 'Elimina el progreso y las preferencias locales.',
+      'delete': 'Borrar',
+      'reset': 'Restablecer',
+      'cancel': 'Cancelar',
+      'keepAds': 'La compra para quitar anuncios se conservará.',
+      'confirmPrefix': '¿',
+      'confirmSuffix': '?',
+      'confirmBody':
+          'Esta acción eliminará solo los datos indicados. Los demás datos se conservarán.',
+      'allConfirmBody':
+          'Se eliminarán progreso, perfil, favoritos, eliminaciones, filtros y tutorial. La compra para quitar anuncios se conservará.',
+      'success': 'Datos actualizados.',
+      'error': 'No se pudieron actualizar los datos. Inténtalo de nuevo.',
+    },
+    'en': {
+      'title': 'Manage data',
+      'progress': 'Progress data',
+      'preferences': 'Preferences',
+      'danger': 'Danger zone',
+      'favorites': 'Favorites',
+      'favoritesBody': 'Removes all creatures marked as favorites.',
+      'cards': 'Creature card progress',
+      'cardsBody': 'Resets obtained and gold creature cards.',
+      'kills': 'Defeats',
+      'killsBody': 'Removes all defeat counters.',
+      'profile': 'Player profile',
+      'profileBody': 'Removes the name and selected characters.',
+      'filters': 'Filters and navigation',
+      'filtersBody': 'Resets search, filters, sorting, and selection.',
+      'tutorial': 'Tutorial',
+      'tutorialBody': 'Allows the tutorial to be shown again.',
+      'all': 'Erase all local data',
+      'allBody': 'Erases local progress and preferences.',
+      'delete': 'Delete',
+      'reset': 'Reset',
+      'cancel': 'Cancel',
+      'keepAds': 'Your Remove Ads purchase will be kept.',
+      'confirmPrefix': 'Delete ',
+      'confirmSuffix': '?',
+      'confirmBody':
+          'This only removes the listed data. All other data will be kept.',
+      'allConfirmBody':
+          'This removes progress, profile, favorites, defeats, filters, and tutorial. Your Remove Ads purchase will be kept.',
+      'success': 'Data updated.',
+      'error': 'Data could not be updated. Please try again.',
+    },
+    'ru': {
+      'title': 'Управление данными',
+      'progress': 'Данные прогресса',
+      'preferences': 'Настройки',
+      'danger': 'Опасная зона',
+      'favorites': 'Избранное',
+      'favoritesBody': 'Удаляет всех существ из избранного.',
+      'cards': 'Прогресс карточек',
+      'cardsBody': 'Сбрасывает полученные и золотые карточки.',
+      'kills': 'Победы',
+      'killsBody': 'Удаляет все счётчики побед.',
+      'profile': 'Профиль игрока',
+      'profileBody': 'Удаляет имя и выбранных персонажей.',
+      'filters': 'Фильтры и навигация',
+      'filtersBody': 'Сбрасывает поиск, фильтры, сортировку и выбор.',
+      'tutorial': 'Обучение',
+      'tutorialBody': 'Позволяет снова показать обучение.',
+      'all': 'Удалить все локальные данные',
+      'allBody': 'Удаляет локальный прогресс и настройки.',
+      'delete': 'Удалить',
+      'reset': 'Сбросить',
+      'cancel': 'Отмена',
+      'keepAds': 'Покупка отключения рекламы сохранится.',
+      'confirmPrefix': 'Удалить: ',
+      'confirmSuffix': '?',
+      'confirmBody':
+          'Будут удалены только указанные данные. Остальные данные сохранятся.',
+      'allConfirmBody':
+          'Будут удалены прогресс, профиль, избранное, победы, фильтры и обучение. Покупка отключения рекламы сохранится.',
+      'success': 'Данные обновлены.',
+      'error': 'Не удалось обновить данные. Повторите попытку.',
+    },
+  };
+}

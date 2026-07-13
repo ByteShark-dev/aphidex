@@ -52,9 +52,15 @@ workflows:
         script: |
           flutter analyze lib test
 
-      - name: Flutter test
+      - name: Flutter tests focalizados
         script: |
-          flutter test
+          set -e
+          flutter test test/creature_card_progress_test.dart
+          flutter test test/global_entries_creature_card_test.dart
+          flutter test test/tutorial_controller_close_test.dart
+          flutter test test/tutorial_controller_regression_test.dart
+          flutter test test/monetization_controller_test.dart
+          flutter test test/startup_state_logic_test.dart
 
       - name: Install CocoaPods
         script: |

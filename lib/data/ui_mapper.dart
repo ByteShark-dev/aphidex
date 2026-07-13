@@ -3,6 +3,8 @@ import 'effect_catalog.dart';
 class UiMapper {
   static String canonicalDangerLevel(String level) {
     switch (level.trim().toLowerCase()) {
+      case 'media':
+        return 'intermedia';
       case 'imposible_alt':
       case 'imposible_alta':
       case 'imposible_superior':
@@ -10,6 +12,19 @@ class UiMapper {
       default:
         return level.trim().toLowerCase();
     }
+  }
+
+  static String dangerLevelForScore(int score) {
+    if (score < 0 || score > 100) {
+      throw RangeError.range(score, 0, 100, 'score');
+    }
+    if (score <= 19) return 'baja';
+    if (score <= 39) return 'intermedia';
+    if (score <= 59) return 'alta';
+    if (score <= 74) return 'muy_alta';
+    if (score <= 84) return 'imposible';
+    if (score <= 89) return 'imposible_superior';
+    return 'extrema';
   }
 
   // ================= EFFECT / DAMAGE ICONS =================

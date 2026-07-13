@@ -161,9 +161,11 @@ class _EffectSection extends StatelessWidget {
               child: _EffectCard(
                 tutorialCardKey: TutorialController.instance.keyFor(
                   tutorialAnchorEffectCard(entry.id),
+                  scope: TutorialTargetScope.codex,
                 ),
                 tutorialEquipmentKey: TutorialController.instance.keyFor(
                   tutorialAnchorEffectEquipment(entry.id),
+                  scope: TutorialTargetScope.codex,
                 ),
                 entry: entry,
                 isHighlighted: highlightedId == entry.id,

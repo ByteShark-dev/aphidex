@@ -7,7 +7,7 @@ Proyecto Flutter/Dart de Aphidex, companion app no oficial de ByteShark para Gro
 - No modificar archivos sin revisar primero la estructura del proyecto, `pubspec.yaml`, `lib/main.dart` y el area afectada.
 - No hacer commit, push, pull request ni deploy salvo autorizacion explicita.
 - No inventar metricas comerciales, ratings, descargas, precios ni disponibilidad en tiendas.
-- Antes de tocar la landing, revisar `landing/src/config/site.js`, SEO, enlaces de tiendas y responsive.
+- La web publica vive en `ByteShark-dev/aphidex-web`; no mezclar cambios web con el codigo Flutter.
 - Antes de tocar monetizacion, revisar `lib/controllers/monetization_controller.dart`, IDs de productos y AdMob.
 - Antes de tocar el scanner, revisar `lib/config/feature_flags.dart`, `lib/scanner/` y `functions/`.
 - No cambiar bundle id, `applicationId`, rutas de assets, estructura Firebase, Codemagic o GitHub Actions sin avisar primero.
@@ -19,14 +19,11 @@ Proyecto Flutter/Dart de Aphidex, companion app no oficial de ByteShark para Gro
 - Scanner beta: `flutter run --dart-define=APHIDEX_SCANNER_ENABLED=true`.
 - Android build: `flutter build appbundle --release`.
 - iOS build: `flutter build ipa --release`.
-- Landing: `cd landing && npm ci && npm run dev`.
-- Landing build: `cd landing && npm run build`.
 - Functions: `cd functions && npm ci && npm run build`.
 
 ## Validacion Esperada
 
 - Para cambios Flutter: ejecutar `flutter analyze lib test` y `flutter test` si el entorno lo permite.
-- Para landing: ejecutar `npm run build` dentro de `landing`.
 - Para functions: ejecutar `npm run build` dentro de `functions`.
 - Reportar claramente si no se pudo ejecutar algun comando.
 

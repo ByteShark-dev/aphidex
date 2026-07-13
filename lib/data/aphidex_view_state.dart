@@ -10,6 +10,8 @@ class AphidexViewState {
   final String query;
   final bool filterFavorites;
   final bool filterGold;
+  final bool filterWithKills;
+  final bool filterWithoutKills;
   final Set<String> tierFilters;
   final Set<String> classFilters;
   final Set<String> dangerFilters;
@@ -27,6 +29,8 @@ class AphidexViewState {
     required this.query,
     required this.filterFavorites,
     required this.filterGold,
+    this.filterWithKills = false,
+    this.filterWithoutKills = false,
     required this.tierFilters,
     required this.classFilters,
     required this.dangerFilters,
@@ -46,6 +50,8 @@ class AphidexViewState {
       'query': query,
       'filterFavorites': filterFavorites,
       'filterGold': filterGold,
+      'filterWithKills': filterWithKills,
+      'filterWithoutKills': filterWithoutKills,
       'tierFilters': tierFilters.toList()..sort(),
       'classFilters': classFilters.toList()..sort(),
       'dangerFilters': dangerFilters.toList()..sort(),
@@ -67,6 +73,8 @@ class AphidexViewState {
     String? query,
     bool? filterFavorites,
     bool? filterGold,
+    bool? filterWithKills,
+    bool? filterWithoutKills,
     Set<String>? tierFilters,
     Set<String>? classFilters,
     Set<String>? dangerFilters,
@@ -84,6 +92,8 @@ class AphidexViewState {
       query: query ?? this.query,
       filterFavorites: filterFavorites ?? this.filterFavorites,
       filterGold: filterGold ?? this.filterGold,
+      filterWithKills: filterWithKills ?? this.filterWithKills,
+      filterWithoutKills: filterWithoutKills ?? this.filterWithoutKills,
       tierFilters: tierFilters ?? this.tierFilters,
       classFilters: classFilters ?? this.classFilters,
       dangerFilters: dangerFilters ?? this.dangerFilters,
@@ -139,6 +149,8 @@ class AphidexViewState {
       query: json['query'] as String? ?? '',
       filterFavorites: json['filterFavorites'] as bool? ?? false,
       filterGold: json['filterGold'] as bool? ?? false,
+      filterWithKills: json['filterWithKills'] as bool? ?? false,
+      filterWithoutKills: json['filterWithoutKills'] as bool? ?? false,
       tierFilters: parseSet('tierFilters'),
       classFilters: parseSet('classFilters'),
       dangerFilters: parseSet('dangerFilters'),
