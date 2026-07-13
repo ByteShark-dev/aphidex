@@ -5,13 +5,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../controllers/favorites_controller.dart';
 import '../controllers/gold_controller.dart';
+import '../controllers/game_selection_controller.dart';
 import '../controllers/locale_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/theme_controller.dart';
-import '../data/aphidex_view_state.dart';
 import '../data/enemy_repository.dart';
-import '../data/local_storage.dart';
 import '../models/enemy_index_entry.dart';
 import '../models/game_pick.dart';
 import 'startup_profiler.dart';
@@ -96,13 +95,7 @@ class StartupBootstrap {
   }
 
   static GamePick _restoreInitialGamePick() {
-    final restored = AphidexViewState.fromStorageString(
-      LocalStorage.getString(aphidexViewStateStorageKey),
-    );
-    final index =
-        restored?.gamePickIndex ??
-        LocalStorage.getInt('ui_game_pick', fallback: GamePick.g1.index);
-    return GamePick.values[index.clamp(0, GamePick.values.length - 1)];
+    return GameSelectionController.instance.gamePick.value;
   }
 
   static String _resolveInitialLanguageCode() {

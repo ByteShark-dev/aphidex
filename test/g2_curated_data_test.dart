@@ -331,6 +331,11 @@ void main() {
     expect(entry('g2_rust_beetle')['danger'], 'muy_alta');
   });
 
+  test('g2 indirect-threat creatures use the elevated danger tier', () {
+    expect(entry('g2_woolly_aphid')['danger'], 'intermedia');
+    expect(entry('g2_garter_snake')['danger'], 'intermedia');
+  });
+
   test('g2 content corrections stay in the master data', () {
     expect(entry('g2_red_soldier_ant')['collectionGroup'], 'angry');
     expect(entry('g2_orc_rust_beetle')['tier'], 3);

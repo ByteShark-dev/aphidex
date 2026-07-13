@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/favorites_controller.dart';
+import '../controllers/game_selection_controller.dart';
 import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
@@ -31,6 +32,7 @@ import '../scanner/creature_scanner_service.dart';
 import 'enemy_detail_screen.dart';
 import 'effect_codex_screen.dart';
 import 'settings_screen.dart';
+import 'player_profile_screen.dart';
 
 enum SortMode { defaultOrder, name, danger, tier }
 
@@ -248,7 +250,6 @@ class _EnemyListScreenState extends State<EnemyListScreen>
   static const _kDangerFilters = 'ui_filter_danger_filters';
   static const _kSortMode = 'ui_sort_mode';
   static const _kDescending = 'ui_sort_desc';
-  static const _kGamePick = 'ui_game_pick';
   static const _kQuery = 'ui_query';
 
   late Future<List<EnemyIndexEntry>> enemiesFuture;
@@ -324,8 +325,7 @@ class _EnemyListScreenState extends State<EnemyListScreen>
           fallback: SortMode.defaultOrder.index,
         )];
     sortDescending = LocalStorage.getBool(_kDescending, fallback: false);
-    gamePick = GamePick
-        .values[LocalStorage.getInt(_kGamePick, fallback: GamePick.g1.index)];
+    gamePick = GameSelectionController.instance.gamePick.value;
     query = LocalStorage.getString(_kQuery) ?? '';
 
     final restored = AphidexViewState.fromStorageString(
@@ -363,6 +363,10 @@ class _EnemyListScreenState extends State<EnemyListScreen>
           restored.detailOpen &&
           (restored.detailEnemyId?.isNotEmpty ?? false);
     }
+    GameSelectionController.instance.syncFromApp(gamePick);
+    GameSelectionController.instance.gamePick.addListener(
+      _onSharedGamePickChanged,
+    );
     StartupProfiler.instance.mark(
       'restoring game/filters/search/selected creature ready',
     );
@@ -396,11 +400,28 @@ class _EnemyListScreenState extends State<EnemyListScreen>
 
   @override
   void dispose() {
+    GameSelectionController.instance.gamePick.removeListener(
+      _onSharedGamePickChanged,
+    );
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistViewState());
     _listScrollController.dispose();
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _onSharedGamePickChanged() {
+    final next = GameSelectionController.instance.gamePick.value;
+    if (!mounted || next == gamePick) {
+      return;
+    }
+    setState(() {
+      gamePick = next;
+      enemiesFuture = _loadEnemiesForCurrentGame(
+        _loadedLanguageCode ?? context.l10n.languageCode,
+      );
+    });
+    _scheduleViewStatePersist();
   }
 
   @override
@@ -1526,6 +1547,7 @@ class _EnemyListScreenState extends State<EnemyListScreen>
           ),
         ),
         centerTitle: true,
+        leading: const PlayerProfileToolbarButton(),
         actions: [
           if (scannerEnabled)
             IconButton(
@@ -2130,14 +2152,7 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       builder: (_) => _GamePickerSheet(
         selected: gamePick,
         onPick: (pick) {
-          setState(() {
-            gamePick = pick;
-            enemiesFuture = _loadEnemiesForCurrentGame(
-              _loadedLanguageCode ?? context.l10n.languageCode,
-            );
-          });
-          LocalStorage.setInt(_kGamePick, pick.index);
-          _scheduleViewStatePersist();
+          unawaited(GameSelectionController.instance.select(pick));
           Navigator.pop(context);
         },
       ),

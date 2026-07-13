@@ -7,12 +7,14 @@ class GameBrandMark extends StatelessWidget {
   final GamePick gamePick;
   final double height;
   final bool useBlackAsset;
+  final Color? color;
 
   const GameBrandMark({
     super.key,
     required this.gamePick,
     this.height = 30,
     this.useBlackAsset = false,
+    this.color,
   });
 
   String get _assetName {
@@ -37,6 +39,9 @@ class GameBrandMark extends StatelessWidget {
           ),
           height: height,
           fit: BoxFit.contain,
+          colorFilter: color == null
+              ? null
+              : ColorFilter.mode(color!, BlendMode.srcIn),
         ),
       ),
     );
