@@ -15,6 +15,7 @@ class Enemy implements CreatureCardCarrier {
 
   final int tier;
   final String danger;
+  final bool isUnderConstruction;
   final bool isBoss;
 
   final List<String> weaknesses;
@@ -76,6 +77,7 @@ class Enemy implements CreatureCardCarrier {
     required this.game,
     required this.tier,
     required this.danger,
+    this.isUnderConstruction = false,
     required this.isBoss,
     this.temperament,
     required this.weaknesses,
@@ -268,6 +270,7 @@ class Enemy implements CreatureCardCarrier {
       temperament: json['temperament'] as String?,
       tier: json['tier'] as int,
       danger: json['danger'] as String,
+      isUnderConstruction: json['underConstruction'] as bool? ?? false,
       isBoss: json['isBoss'] as bool? ?? false,
       order: json['order'] as int?,
       defaultGold: json['defaultGold'] as bool? ?? false,

@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../controllers/favorites_controller.dart';
+import '../controllers/creature_kill_count_controller.dart';
+import '../controllers/game_selection_controller.dart';
 import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
@@ -11,6 +13,7 @@ import '../controllers/tutorial_controller.dart';
 import '../data/aphidex_view_state.dart';
 import '../config/feature_flags.dart';
 import '../data/creature_card_state.dart';
+import '../data/creature_kill_tracking.dart';
 import '../data/enemy_repository.dart';
 import '../data/enemy_variants.dart';
 import '../data/local_storage.dart';
@@ -31,6 +34,7 @@ import '../scanner/creature_scanner_service.dart';
 import 'enemy_detail_screen.dart';
 import 'effect_codex_screen.dart';
 import 'settings_screen.dart';
+import 'player_profile_screen.dart';
 
 enum SortMode { defaultOrder, name, danger, tier }
 
@@ -233,6 +237,8 @@ class _EnemyListScreenState extends State<EnemyListScreen>
   String query = '';
   bool filterFavorites = false;
   bool filterGold = false;
+  bool filterWithKills = false;
+  bool filterWithoutKills = false;
   final Set<String> tierFilters = <String>{};
   final Set<String> classFilters = <String>{};
   final Set<String> dangerFilters = <String>{};
@@ -243,12 +249,13 @@ class _EnemyListScreenState extends State<EnemyListScreen>
   static const _kLegacyFilter = 'ui_filter';
   static const _kFilterFavorites = 'ui_filter_favorites';
   static const _kFilterGold = 'ui_filter_gold';
+  static const _kFilterWithKills = 'ui_filter_with_kills';
+  static const _kFilterWithoutKills = 'ui_filter_without_kills';
   static const _kTierFilters = 'ui_filter_tier_filters';
   static const _kClassFilters = 'ui_filter_class_filters';
   static const _kDangerFilters = 'ui_filter_danger_filters';
   static const _kSortMode = 'ui_sort_mode';
   static const _kDescending = 'ui_sort_desc';
-  static const _kGamePick = 'ui_game_pick';
   static const _kQuery = 'ui_query';
 
   late Future<List<EnemyIndexEntry>> enemiesFuture;
@@ -278,6 +285,8 @@ class _EnemyListScreenState extends State<EnemyListScreen>
     final hasNewFilterState =
         LocalStorage.hasKey(_kFilterFavorites) ||
         LocalStorage.hasKey(_kFilterGold) ||
+        LocalStorage.hasKey(_kFilterWithKills) ||
+        LocalStorage.hasKey(_kFilterWithoutKills) ||
         LocalStorage.hasKey(_kTierFilters) ||
         LocalStorage.hasKey(_kClassFilters) ||
         LocalStorage.hasKey(_kDangerFilters);
@@ -287,6 +296,14 @@ class _EnemyListScreenState extends State<EnemyListScreen>
         fallback: false,
       );
       filterGold = LocalStorage.getBool(_kFilterGold, fallback: false);
+      filterWithKills = LocalStorage.getBool(
+        _kFilterWithKills,
+        fallback: false,
+      );
+      filterWithoutKills = LocalStorage.getBool(
+        _kFilterWithoutKills,
+        fallback: false,
+      );
       tierFilters.addAll(LocalStorage.getStringSet(_kTierFilters));
       classFilters.addAll(LocalStorage.getStringSet(_kClassFilters));
       dangerFilters.addAll(
@@ -324,8 +341,7 @@ class _EnemyListScreenState extends State<EnemyListScreen>
           fallback: SortMode.defaultOrder.index,
         )];
     sortDescending = LocalStorage.getBool(_kDescending, fallback: false);
-    gamePick = GamePick
-        .values[LocalStorage.getInt(_kGamePick, fallback: GamePick.g1.index)];
+    gamePick = GameSelectionController.instance.gamePick.value;
     query = LocalStorage.getString(_kQuery) ?? '';
 
     final restored = AphidexViewState.fromStorageString(
@@ -341,6 +357,8 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       query = restored.query;
       filterFavorites = restored.filterFavorites;
       filterGold = restored.filterGold;
+      filterWithKills = restored.filterWithKills;
+      filterWithoutKills = restored.filterWithoutKills;
       tierFilters
         ..clear()
         ..addAll(restored.tierFilters);
@@ -363,6 +381,13 @@ class _EnemyListScreenState extends State<EnemyListScreen>
           restored.detailOpen &&
           (restored.detailEnemyId?.isNotEmpty ?? false);
     }
+    GameSelectionController.instance.syncFromApp(gamePick);
+    GameSelectionController.instance.gamePick.addListener(
+      _onSharedGamePickChanged,
+    );
+    CreatureKillCountController.instance.counts.addListener(
+      _onKillCountsChanged,
+    );
     StartupProfiler.instance.mark(
       'restoring game/filters/search/selected creature ready',
     );
@@ -396,11 +421,37 @@ class _EnemyListScreenState extends State<EnemyListScreen>
 
   @override
   void dispose() {
+    GameSelectionController.instance.gamePick.removeListener(
+      _onSharedGamePickChanged,
+    );
+    CreatureKillCountController.instance.counts.removeListener(
+      _onKillCountsChanged,
+    );
     WidgetsBinding.instance.removeObserver(this);
     unawaited(_persistViewState());
     _listScrollController.dispose();
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _onSharedGamePickChanged() {
+    final next = GameSelectionController.instance.gamePick.value;
+    if (!mounted || next == gamePick) {
+      return;
+    }
+    setState(() {
+      gamePick = next;
+      enemiesFuture = _loadEnemiesForCurrentGame(
+        _loadedLanguageCode ?? context.l10n.languageCode,
+      );
+    });
+    _scheduleViewStatePersist();
+  }
+
+  void _onKillCountsChanged() {
+    if (mounted && (filterWithKills || filterWithoutKills)) {
+      setState(() {});
+    }
   }
 
   @override
@@ -426,6 +477,8 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       query: query,
       filterFavorites: filterFavorites,
       filterGold: filterGold,
+      filterWithKills: filterWithKills,
+      filterWithoutKills: filterWithoutKills,
       tierFilters: {...tierFilters},
       classFilters: {...classFilters},
       dangerFilters: {...dangerFilters},
@@ -579,6 +632,17 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       return false;
     }
     if (filterGold && !_isGold(enemy, progressByKey)) {
+      return false;
+    }
+    if ((filterWithKills || filterWithoutKills) &&
+        !CreatureKillTracking.supportsIndex(enemy)) {
+      return false;
+    }
+    final killCount = CreatureKillCountController.instance.getCount(enemy.id);
+    if (filterWithKills && killCount == 0) {
+      return false;
+    }
+    if (filterWithoutKills && killCount > 0) {
       return false;
     }
     if (effectiveTierFilters.isNotEmpty) {
@@ -888,7 +952,9 @@ class _EnemyListScreenState extends State<EnemyListScreen>
         effectiveClassFilters.length +
         effectiveDangerFilters.length +
         (filterFavorites ? 1 : 0) +
-        (filterGold ? 1 : 0);
+        (filterGold ? 1 : 0) +
+        (filterWithKills ? 1 : 0) +
+        (filterWithoutKills ? 1 : 0);
   }
 
   bool _hasActiveFilters({
@@ -908,12 +974,16 @@ class _EnemyListScreenState extends State<EnemyListScreen>
     setState(() {
       filterFavorites = false;
       filterGold = false;
+      filterWithKills = false;
+      filterWithoutKills = false;
       tierFilters.clear();
       classFilters.clear();
       dangerFilters.clear();
     });
     unawaited(LocalStorage.setBool(_kFilterFavorites, false));
     unawaited(LocalStorage.setBool(_kFilterGold, false));
+    unawaited(LocalStorage.setBool(_kFilterWithKills, false));
+    unawaited(LocalStorage.setBool(_kFilterWithoutKills, false));
     unawaited(LocalStorage.setStringSet(_kTierFilters, tierFilters));
     unawaited(LocalStorage.setStringSet(_kClassFilters, classFilters));
     unawaited(LocalStorage.setStringSet(_kDangerFilters, dangerFilters));
@@ -1184,6 +1254,68 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                               });
                             },
                           ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      l10n.playerProfileKills,
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        FilterChip(
+                          label: Text(l10n.filterWithKills),
+                          selected: filterWithKills,
+                          onSelected: (selected) async {
+                            await sync(() {
+                              setState(() {
+                                filterWithKills = selected;
+                                if (selected) filterWithoutKills = false;
+                              });
+                              unawaited(
+                                LocalStorage.setBool(
+                                  _kFilterWithKills,
+                                  filterWithKills,
+                                ),
+                              );
+                              unawaited(
+                                LocalStorage.setBool(
+                                  _kFilterWithoutKills,
+                                  filterWithoutKills,
+                                ),
+                              );
+                              _scheduleViewStatePersist();
+                            });
+                          },
+                        ),
+                        FilterChip(
+                          label: Text(l10n.filterWithoutKills),
+                          selected: filterWithoutKills,
+                          onSelected: (selected) async {
+                            await sync(() {
+                              setState(() {
+                                filterWithoutKills = selected;
+                                if (selected) filterWithKills = false;
+                              });
+                              unawaited(
+                                LocalStorage.setBool(
+                                  _kFilterWithKills,
+                                  filterWithKills,
+                                ),
+                              );
+                              unawaited(
+                                LocalStorage.setBool(
+                                  _kFilterWithoutKills,
+                                  filterWithoutKills,
+                                ),
+                              );
+                              _scheduleViewStatePersist();
+                            });
+                          },
+                        ),
                       ],
                     ),
                   ],
@@ -1507,143 +1639,176 @@ class _EnemyListScreenState extends State<EnemyListScreen>
     final l10n = context.l10n;
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
+    final toolbarInset = AppBreakpoints.isTabletLike(MediaQuery.sizeOf(context))
+        ? 20.0
+        : 12.0;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.white),
-        actionsIconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white, size: 26),
+        actionsIconTheme: const IconThemeData(color: Colors.white, size: 26),
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         flexibleSpace: _GameHeaderGlow(gamePick: gamePick),
         titleSpacing: 8,
         title: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 160, maxWidth: 220),
+          constraints: const BoxConstraints(maxWidth: 220),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Center(child: GameBrandMark(gamePick: gamePick, height: 32)),
           ),
         ),
         centerTitle: true,
+        leadingWidth: 48 + toolbarInset,
+        leading: Padding(
+          padding: EdgeInsets.only(left: toolbarInset),
+          child: Container(
+            key: TutorialController.instance.keyFor(tutorialAnchorListProfile),
+            child: const PlayerProfileToolbarButton(),
+          ),
+        ),
         actions: [
-          if (scannerEnabled)
-            IconButton(
-              key: const ValueKey('open-creature-scanner'),
-              icon: const Icon(Icons.center_focus_strong),
-              tooltip: l10n.scannerTitle,
-              onPressed: () => _openScanner(context),
-            ),
-          Container(
-            key: TutorialController.instance.keyFor(tutorialAnchorListCodex),
-            child: IconButton(
-              key: const ValueKey('open-effect-codex'),
-              icon: const Icon(Icons.menu_book),
-              tooltip: l10n.effectCodexTooltip,
-              onPressed: () => openEffectCodex(context),
-            ),
-          ),
-          Container(
-            key: TutorialController.instance.keyFor(tutorialAnchorListGame),
-            child: IconButton(
-              icon: const Icon(Icons.videogame_asset),
-              tooltip: l10n.chooseGameTooltip,
-              onPressed: () => _openGamePicker(context),
-            ),
-          ),
-          Container(
-            key: TutorialController.instance.keyFor(tutorialAnchorListSettings),
-            child: IconButton(
-              key: const ValueKey('open-settings'),
-              icon: const Icon(Icons.settings),
-              tooltip: l10n.settingsTooltip,
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                );
-                if (context.mounted) {
-                  await ReviewPromptController.instance.registerScreenClose(
-                    context,
-                  );
-                }
-              },
-            ),
-          ),
-          Container(
-            key: TutorialController.instance.keyFor(tutorialAnchorListSort),
-            child: PopupMenuButton<SortMenuAction>(
-              key: const ValueKey('open-sort-menu'),
-              icon: Icon(sortDescending ? Icons.arrow_downward : Icons.sort),
-              onSelected: (mode) {
-                switch (mode) {
-                  case SortMenuAction.toggleDirection:
-                    setState(() => sortDescending = !sortDescending);
-                    LocalStorage.setBool(_kDescending, sortDescending);
-                    _scheduleViewStatePersist();
-                    break;
-                  case SortMenuAction.defaultOrder:
-                    setState(() => sortMode = SortMode.defaultOrder);
-                    LocalStorage.setInt(
-                      _kSortMode,
-                      SortMode.defaultOrder.index,
-                    );
-                    _scheduleViewStatePersist();
-                    break;
-                  case SortMenuAction.name:
-                    setState(() => sortMode = SortMode.name);
-                    LocalStorage.setInt(_kSortMode, SortMode.name.index);
-                    _scheduleViewStatePersist();
-                    break;
-                  case SortMenuAction.danger:
-                    setState(() => sortMode = SortMode.danger);
-                    LocalStorage.setInt(_kSortMode, SortMode.danger.index);
-                    _scheduleViewStatePersist();
-                    break;
-                  case SortMenuAction.tier:
-                    setState(() => sortMode = SortMode.tier);
-                    LocalStorage.setInt(_kSortMode, SortMode.tier.index);
-                    _scheduleViewStatePersist();
-                    break;
-                }
-              },
-              itemBuilder: (_) => [
-                PopupMenuItem(
-                  value: SortMenuAction.toggleDirection,
-                  child: Row(
-                    children: [
-                      Icon(
-                        sortDescending
-                            ? Icons.arrow_downward
-                            : Icons.arrow_upward,
-                        size: 18,
+          Padding(
+            padding: EdgeInsets.only(right: toolbarInset),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (scannerEnabled)
+                  IconButton(
+                    key: const ValueKey('open-creature-scanner'),
+                    icon: const Icon(Icons.center_focus_strong),
+                    tooltip: l10n.scannerTitle,
+                    onPressed: () => _openScanner(context),
+                  ),
+                Container(
+                  key: TutorialController.instance.keyFor(
+                    tutorialAnchorListCodex,
+                  ),
+                  child: IconButton(
+                    key: const ValueKey('open-effect-codex'),
+                    icon: const Icon(Icons.menu_book),
+                    tooltip: l10n.effectCodexTooltip,
+                    onPressed: () => openEffectCodex(context),
+                  ),
+                ),
+                Container(
+                  key: TutorialController.instance.keyFor(
+                    tutorialAnchorListGame,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.videogame_asset),
+                    tooltip: l10n.chooseGameTooltip,
+                    onPressed: () => _openGamePicker(context),
+                  ),
+                ),
+                Container(
+                  key: TutorialController.instance.keyFor(
+                    tutorialAnchorListSettings,
+                  ),
+                  child: IconButton(
+                    key: const ValueKey('open-settings'),
+                    icon: const Icon(Icons.settings),
+                    tooltip: l10n.settingsTooltip,
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const SettingsScreen(),
+                        ),
+                      );
+                      if (context.mounted) {
+                        await ReviewPromptController.instance
+                            .registerScreenClose(context);
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  key: TutorialController.instance.keyFor(
+                    tutorialAnchorListSort,
+                  ),
+                  child: PopupMenuButton<SortMenuAction>(
+                    key: const ValueKey('open-sort-menu'),
+                    icon: Icon(
+                      sortDescending ? Icons.arrow_downward : Icons.sort,
+                    ),
+                    onSelected: (mode) {
+                      switch (mode) {
+                        case SortMenuAction.toggleDirection:
+                          setState(() => sortDescending = !sortDescending);
+                          LocalStorage.setBool(_kDescending, sortDescending);
+                          _scheduleViewStatePersist();
+                          break;
+                        case SortMenuAction.defaultOrder:
+                          setState(() => sortMode = SortMode.defaultOrder);
+                          LocalStorage.setInt(
+                            _kSortMode,
+                            SortMode.defaultOrder.index,
+                          );
+                          _scheduleViewStatePersist();
+                          break;
+                        case SortMenuAction.name:
+                          setState(() => sortMode = SortMode.name);
+                          LocalStorage.setInt(_kSortMode, SortMode.name.index);
+                          _scheduleViewStatePersist();
+                          break;
+                        case SortMenuAction.danger:
+                          setState(() => sortMode = SortMode.danger);
+                          LocalStorage.setInt(
+                            _kSortMode,
+                            SortMode.danger.index,
+                          );
+                          _scheduleViewStatePersist();
+                          break;
+                        case SortMenuAction.tier:
+                          setState(() => sortMode = SortMode.tier);
+                          LocalStorage.setInt(_kSortMode, SortMode.tier.index);
+                          _scheduleViewStatePersist();
+                          break;
+                      }
+                    },
+                    itemBuilder: (_) => [
+                      PopupMenuItem(
+                        value: SortMenuAction.toggleDirection,
+                        child: Row(
+                          children: [
+                            Icon(
+                              sortDescending
+                                  ? Icons.arrow_downward
+                                  : Icons.arrow_upward,
+                              size: 18,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              sortDescending
+                                  ? l10n.descendingOrder
+                                  : l10n.ascendingOrder,
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        sortDescending
-                            ? l10n.descendingOrder
-                            : l10n.ascendingOrder,
+                      const PopupMenuDivider(),
+                      CheckedPopupMenuItem(
+                        value: SortMenuAction.defaultOrder,
+                        checked: sortMode == SortMode.defaultOrder,
+                        child: Text(l10n.sortDefaultOrder),
+                      ),
+                      PopupMenuItem(
+                        value: SortMenuAction.name,
+                        child: Text(l10n.sortByName),
+                      ),
+                      PopupMenuItem(
+                        value: SortMenuAction.danger,
+                        child: Text(l10n.sortByDanger),
+                      ),
+                      PopupMenuItem(
+                        value: SortMenuAction.tier,
+                        child: Text(l10n.sortByTier),
                       ),
                     ],
                   ),
-                ),
-                const PopupMenuDivider(),
-                CheckedPopupMenuItem(
-                  value: SortMenuAction.defaultOrder,
-                  checked: sortMode == SortMode.defaultOrder,
-                  child: Text(l10n.sortDefaultOrder),
-                ),
-                PopupMenuItem(
-                  value: SortMenuAction.name,
-                  child: Text(l10n.sortByName),
-                ),
-                PopupMenuItem(
-                  value: SortMenuAction.danger,
-                  child: Text(l10n.sortByDanger),
-                ),
-                PopupMenuItem(
-                  value: SortMenuAction.tier,
-                  child: Text(l10n.sortByTier),
                 ),
               ],
             ),
@@ -2056,8 +2221,23 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                       pagePadding.right,
                                       12,
                                     ),
-                                    child: detailEntry == null
-                                        ? AphidexStatePanel(
+                                    child: ListenableBuilder(
+                                      listenable: TutorialController.instance,
+                                      builder: (context, _) {
+                                        final tutorial =
+                                            TutorialController.instance;
+                                        final tutorialEnemy =
+                                            tutorial.inlineDetailEnemy;
+                                        final detailSummary =
+                                            tutorialEnemy ??
+                                            detailEntry?.activeEnemy;
+                                        final detailVariants =
+                                            tutorialEnemy == null
+                                            ? detailEntry?.entry.variants
+                                            : tutorial.inlineDetailVariants;
+                                        if (detailSummary == null ||
+                                            detailVariants == null) {
+                                          return AphidexStatePanel(
                                             gamePick: gamePick,
                                             icon: Icons.touch_app_rounded,
                                             title: l10n
@@ -2065,41 +2245,32 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                             subtitle: l10n
                                                 .masterDetailPlaceholderSubtitle,
                                             compact: surface.isWide,
-                                          )
-                                        : ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              22,
-                                            ),
-                                            child: Material(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.surface,
-                                              child: ListenableBuilder(
-                                                listenable:
-                                                    TutorialController.instance,
-                                                builder: (context, _) {
-                                                  return EnemyDetailScreen(
-                                                    key: ValueKey(
-                                                      'detail:${detailEntry.activeEnemy.id}',
-                                                    ),
-                                                    summary:
-                                                        detailEntry.activeEnemy,
-                                                    variantSummaries:
-                                                        detailEntry
-                                                            .entry
-                                                            .variants,
-                                                    initialGame: detailEntry
-                                                        .activeEnemy
-                                                        .game,
-                                                    tutorialAnchorsEnabled:
-                                                        !TutorialController
-                                                            .instance
-                                                            .tutorialFullscreenMode,
-                                                  );
-                                                },
+                                          );
+                                        }
+
+                                        return ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            22,
+                                          ),
+                                          child: Material(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.surface,
+                                            child: EnemyDetailScreen(
+                                              key: ValueKey(
+                                                'detail:${detailSummary.id}:${tutorialEnemy != null}',
                                               ),
+                                              summary: detailSummary,
+                                              variantSummaries: detailVariants,
+                                              initialGame: detailSummary.game,
+                                              tutorialTargetScope:
+                                                  TutorialTargetScope
+                                                      .inlineDetail,
                                             ),
                                           ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -2130,14 +2301,7 @@ class _EnemyListScreenState extends State<EnemyListScreen>
       builder: (_) => _GamePickerSheet(
         selected: gamePick,
         onPick: (pick) {
-          setState(() {
-            gamePick = pick;
-            enemiesFuture = _loadEnemiesForCurrentGame(
-              _loadedLanguageCode ?? context.l10n.languageCode,
-            );
-          });
-          LocalStorage.setInt(_kGamePick, pick.index);
-          _scheduleViewStatePersist();
+          unawaited(GameSelectionController.instance.select(pick));
           Navigator.pop(context);
         },
       ),
@@ -2532,12 +2696,17 @@ class EnemyTile extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconBadge.asset(
-                        assetName: UiMapper.dangerIcon(enemy.danger),
-                        size: 22,
-                        padding: const EdgeInsets.all(4),
-                        borderRadius: 12,
-                      ),
+                      if (enemy.collectionGroup != 'buggy')
+                        IconBadge.asset(
+                          assetName: UiMapper.dangerIcon(
+                            enemy.isUnderConstruction
+                                ? 'proximamente'
+                                : enemy.danger,
+                          ),
+                          size: 22,
+                          padding: const EdgeInsets.all(4),
+                          borderRadius: 12,
+                        ),
                       const SizedBox(height: 6),
                       Image.asset(
                         UiMapper.tierIcon(

@@ -14,6 +14,7 @@ const _indexFields = [
   'name',
   'tier',
   'danger',
+  'underConstruction',
   'isBoss',
   'order',
   'defaultGold',
@@ -47,7 +48,10 @@ void main() {
     }
 
     final decoded = jsonDecode(file.readAsStringSync()) as List<dynamic>;
-    final normalizedSource = _normalizeValue(decoded) as List<dynamic>;
+    final normalizedSource = _canonicalizeGameSource(
+      _normalizeValue(decoded) as List<dynamic>,
+      game: entry.key,
+    );
     final normalizedJson = jsonEncode(normalizedSource);
     if (file.readAsStringSync() != normalizedJson) {
       file.writeAsStringSync(normalizedJson);
@@ -83,6 +87,37 @@ void main() {
       _writeJson(File('${languageDir.path}/index_${source.key}.json'), index);
     }
   }
+}
+
+List<dynamic> _canonicalizeGameSource(
+  List<dynamic> source, {
+  required String game,
+}) {
+  if (game != 'g2') {
+    return source;
+  }
+
+  return source
+      .map((item) {
+        if (item is! Map) {
+          return item;
+        }
+
+        final creature = Map<String, dynamic>.from(
+          item.cast<String, dynamic>(),
+        );
+        final isUnderConstruction = creature['underConstruction'] == true;
+        final danger = creature['danger']?.toString().trim().toLowerCase();
+        creature['danger'] = isUnderConstruction
+            ? 'proximamente'
+            : switch (danger) {
+                'media' => 'intermedia',
+                'imposible_alt' || 'imposible_alta' => 'imposible_superior',
+                _ => danger,
+              };
+        return creature;
+      })
+      .toList(growable: false);
 }
 
 Map<String, dynamic> _buildIndexEntry(

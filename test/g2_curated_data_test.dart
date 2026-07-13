@@ -312,22 +312,29 @@ void main() {
   );
 
   test('g2 boss danger tiers match the current community read', () {
-    expect(entry('g2_axl')['danger'], 'imposible');
-    expect(entry('g2_king_dozer')['danger'], 'imposible_alt');
-    expect(entry('g2_orc_broodmother')['danger'], 'imposible_alt');
-    expect(entry('g2_masked_stranger')['danger'], 'extrema');
-    expect(entry('g2_masked_fighter')['danger'], 'imposible_alt');
-    expect(entry('g2_orchid_mantis')['danger'], 'imposible_alta');
+    expect(entry('g2_axl')['danger'], 'imposible_superior');
+    expect(entry('g2_king_dozer')['danger'], 'extrema');
+    expect(entry('g2_orc_broodmother')['danger'], 'imposible');
+    expect(entry('g2_masked_stranger')['danger'], 'imposible');
+    expect(entry('g2_masked_fighter')['danger'], 'imposible');
+    expect(entry('g2_orchid_mantis')['danger'], 'proximamente');
+    expect(entry('g2_orchid_mantis')['underConstruction'], isTrue);
   });
 
   test('heavy g2 non-boss enemies match the current community read', () {
-    expect(entry('g2_cockroach_queen')['danger'], 'imposible_alt');
-    expect(entry('g2_orc_cockroach_queen')['danger'], 'extrema');
-    expect(entry('g2_wasp')['danger'], 'imposible');
-    expect(entry('g2_wasp_drone')['danger'], 'imposible_alt');
-    expect(entry('g2_pincher_earwig')['danger'], 'imposible');
-    expect(entry('g2_whipper_earwig')['danger'], 'imposible_alt');
+    expect(entry('g2_cockroach_queen')['danger'], 'muy_alta');
+    expect(entry('g2_orc_cockroach_queen')['danger'], 'muy_alta');
+    expect(entry('g2_wasp')['danger'], 'muy_alta');
+    expect(entry('g2_wasp_drone')['danger'], 'muy_alta');
+    expect(entry('g2_pincher_earwig')['danger'], 'alta');
+    expect(entry('g2_whipper_earwig')['danger'], 'muy_alta');
     expect(entry('g2_rust_beetle')['danger'], 'muy_alta');
+  });
+
+  test('g2 indirect-threat creatures use the elevated danger tier', () {
+    expect(entry('g2_woolly_aphid')['danger'], 'intermedia');
+    expect(entry('g2_garter_snake')['danger'], 'intermedia');
+    expect(entry('g2_orc_weevil')['danger'], 'alta');
   });
 
   test('g2 content corrections stay in the master data', () {
@@ -344,17 +351,17 @@ void main() {
     }
 
     final expectedOgrrDanger = {
-      'g2_ogrr_northern_scorpion': 'extrema',
-      'g2_ogrr_blue_butterfly': 'imposible_superior',
-      'g2_ogrr_ladybug': 'imposible_superior',
-      'g2_ogrr_cricket': 'imposible_superior',
-      'g2_ogrr_rust_beetle': 'imposible_superior',
-      'g2_ogrr_pincher_earwig': 'imposible_superior',
-      'g2_ogrr_whipper_earwig': 'extrema',
-      'g2_ogrr_wasp': 'imposible_superior',
-      'g2_ogrr_wasp_drone': 'imposible_superior',
-      'g2_ogrr_praying_mantis_nymph': 'imposible_superior',
-      'g2_ogrr_wolf_spider': 'extrema',
+      'g2_ogrr_northern_scorpion': 'imposible',
+      'g2_ogrr_blue_butterfly': 'muy_alta',
+      'g2_ogrr_ladybug': 'imposible',
+      'g2_ogrr_cricket': 'imposible',
+      'g2_ogrr_rust_beetle': 'imposible',
+      'g2_ogrr_pincher_earwig': 'imposible',
+      'g2_ogrr_whipper_earwig': 'imposible',
+      'g2_ogrr_wasp': 'imposible',
+      'g2_ogrr_wasp_drone': 'imposible',
+      'g2_ogrr_praying_mantis_nymph': 'imposible',
+      'g2_ogrr_wolf_spider': 'imposible',
     };
     for (final item in expectedOgrrDanger.entries) {
       expect(entry(item.key)['danger'], item.value, reason: item.key);

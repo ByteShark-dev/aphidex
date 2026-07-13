@@ -13,6 +13,7 @@ const _allowedIndexKeys = {
   'name',
   'tier',
   'danger',
+  'underConstruction',
   'isBoss',
   'order',
   'defaultGold',

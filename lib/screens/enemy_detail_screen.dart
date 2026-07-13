@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/favorites_controller.dart';
+import '../controllers/creature_kill_count_controller.dart';
 import '../controllers/gold_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/tutorial_controller.dart';
 import '../data/creature_card_state.dart';
+import '../data/creature_kill_tracking.dart';
 import '../data/enemy_repository.dart';
 import '../data/effect_catalog.dart';
 import '../data/local_storage.dart';
@@ -118,8 +120,7 @@ class EnemyDetailScreen extends StatefulWidget {
   final EnemyIndexEntry? summary;
   final List<EnemyIndexEntry>? variantSummaries;
   final String? initialGame;
-  final bool forceCompactTutorialLayout;
-  final bool tutorialAnchorsEnabled;
+  final TutorialTargetScope tutorialTargetScope;
 
   const EnemyDetailScreen({
     super.key,
@@ -128,8 +129,7 @@ class EnemyDetailScreen extends StatefulWidget {
     this.summary,
     this.variantSummaries,
     this.initialGame,
-    this.forceCompactTutorialLayout = false,
-    this.tutorialAnchorsEnabled = true,
+    this.tutorialTargetScope = TutorialTargetScope.inlineDetail,
   }) : assert(enemy != null || summary != null);
 
   @override
@@ -419,16 +419,12 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     final l10n = context.l10n;
     final languageCode = l10n.languageCode;
     final viewportSize = MediaQuery.sizeOf(context);
-    final surface = widget.forceCompactTutorialLayout
-        ? AppSurfaceSize.compact
-        : AppBreakpoints.surfaceForWidth(viewportSize.width);
+    final surface = AppBreakpoints.surfaceForWidth(viewportSize.width);
     final pagePadding = surface.pagePadding;
-    final useSummaryRow =
-        !widget.forceCompactTutorialLayout &&
-        (surface.isExpanded || surface.isWide);
-    final showCreatureCards = widget.forceCompactTutorialLayout
-        ? false
-        : AppBreakpoints.shouldShowCreatureCards(viewportSize);
+    final useSummaryRow = surface.isExpanded || surface.isWide;
+    final showCreatureCards = AppBreakpoints.shouldShowCreatureCards(
+      viewportSize,
+    );
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
     final selectedInfusion = enemy.infusions.isEmpty
@@ -492,12 +488,13 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       languageCode,
     );
     final tutorial = TutorialController.instance;
-    final tutorialEffectId = widget.tutorialAnchorsEnabled
-        ? tutorial.tutorialEffectIdForEnemy(enemy.id)
-        : null;
+    final tutorialEffectId = tutorial.tutorialEffectIdForEnemy(enemy.id);
     final tutorialEffectKey = tutorialEffectId == null
         ? null
-        : tutorial.keyFor(tutorialAnchorDetailEffect(tutorialEffectId));
+        : tutorial.keyFor(
+            tutorialAnchorDetailEffect(tutorialEffectId),
+            scope: widget.tutorialTargetScope,
+          );
     var tutorialAnchorAssigned = false;
     var detailEffectsAnchorAssigned = false;
 
@@ -512,27 +509,27 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     }
 
     Widget wrapTutorialAnchor(String anchorId, {required Widget child}) {
-      if (!widget.tutorialAnchorsEnabled) {
-        return child;
-      }
-      return KeyedSubtree(key: tutorial.keyFor(anchorId), child: child);
+      return KeyedSubtree(
+        key: tutorial.keyFor(anchorId, scope: widget.tutorialTargetScope),
+        child: child,
+      );
     }
 
     Widget wrapDetailEffectsAnchor(Widget child) {
-      if (!widget.tutorialAnchorsEnabled || detailEffectsAnchorAssigned) {
+      if (detailEffectsAnchorAssigned) {
         return child;
       }
       detailEffectsAnchorAssigned = true;
       return KeyedSubtree(
-        key: tutorial.keyFor(tutorialAnchorDetailEffects),
+        key: tutorial.keyFor(
+          tutorialAnchorDetailEffects,
+          scope: widget.tutorialTargetScope,
+        ),
         child: child,
       );
     }
 
     return Scaffold(
-      key: widget.forceCompactTutorialLayout
-          ? const ValueKey('tutorial-fullscreen-detail-scaffold')
-          : null,
       appBar: AppBar(
         title: OverflowMarqueeText(
           enemy.name.resolve(languageCode),
@@ -636,6 +633,10 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                     ],
                   ),
             const SizedBox(height: 18),
+            if (CreatureKillTracking.supportsEnemy(enemy)) ...[
+              _KillCountSection(enemyId: enemy.id),
+              const SizedBox(height: 18),
+            ],
             if (description != null) ...[
               _TextSection(title: l10n.descriptionTitle, value: description),
               const SizedBox(height: 18),
@@ -1146,25 +1147,33 @@ class _DetailSummarySidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isBuggy = enemy.collectionGroup == 'buggy';
     return Column(
       children: [
         Row(
           children: [
-            Expanded(
-              child: _SummaryStatCard(
-                icon: IconBadge.asset(
-                  assetName: UiMapper.dangerIcon(enemy.danger),
-                  size: 24,
-                  padding: const EdgeInsets.all(4),
-                  borderRadius: 12,
-                ),
-                label: l10n.filterDanger,
-                value: l10n.dangerLevelLabel(
-                  UiMapper.canonicalDangerLevel(enemy.danger),
+            if (!isBuggy)
+              Expanded(
+                child: _SummaryStatCard(
+                  icon: IconBadge.asset(
+                    assetName: UiMapper.dangerIcon(
+                      enemy.isUnderConstruction ? 'proximamente' : enemy.danger,
+                    ),
+                    size: 24,
+                    padding: const EdgeInsets.all(4),
+                    borderRadius: 12,
+                  ),
+                  label: enemy.isUnderConstruction
+                      ? l10n.underConstructionLabel
+                      : l10n.filterDanger,
+                  value: enemy.isUnderConstruction
+                      ? l10n.underConstructionLabel
+                      : l10n.dangerLevelLabel(
+                          UiMapper.canonicalDangerLevel(enemy.danger),
+                        ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
+            if (!isBuggy) const SizedBox(width: 10),
             Expanded(
               child: _SummaryStatCard(
                 icon: Image.asset(
@@ -1507,6 +1516,166 @@ class _InfusionSwitcher extends StatelessWidget {
             }),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class _KillCountSection extends StatelessWidget {
+  const _KillCountSection({required this.enemyId});
+
+  final String enemyId;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = CreatureKillCountController.instance;
+    final l10n = context.l10n;
+    return ValueListenableBuilder<Map<String, int>>(
+      valueListenable: controller.counts,
+      builder: (context, _, _) {
+        final count = controller.getCount(enemyId);
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(
+              children: [
+                const Icon(Icons.ads_click_outlined),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.playerProfileKills,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 160),
+                        child: Text(
+                          '$count',
+                          key: ValueKey(count),
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  tooltip: l10n.killCountEdit,
+                  onPressed: () => _showKillCountEditor(context, enemyId),
+                  icon: const Icon(Icons.edit_outlined),
+                ),
+                Semantics(
+                  button: true,
+                  label: l10n.killCountAdd,
+                  child: FilledButton(
+                    key: const ValueKey('increment-kill-count'),
+                    onPressed: () => controller.increment(enemyId),
+                    child: const Text('+1'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+Future<void> _showKillCountEditor(BuildContext context, String enemyId) async {
+  await showDialog<void>(
+    context: context,
+    builder: (_) => _KillCountEditor(enemyId: enemyId),
+  );
+}
+
+class _KillCountEditor extends StatefulWidget {
+  const _KillCountEditor({required this.enemyId});
+
+  final String enemyId;
+
+  @override
+  State<_KillCountEditor> createState() => _KillCountEditorState();
+}
+
+class _KillCountEditorState extends State<_KillCountEditor> {
+  late final TextEditingController _textController;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController(
+      text: CreatureKillCountController.instance
+          .getCount(widget.enemyId)
+          .toString(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _set(int value) async {
+    await CreatureKillCountController.instance.setCount(widget.enemyId, value);
+    if (mounted) {
+      setState(() {
+        _textController.text = CreatureKillCountController.instance
+            .getCount(widget.enemyId)
+            .toString();
+        _error = null;
+      });
+    }
+  }
+
+  Future<void> _save() async {
+    final raw = _textController.text.replaceAll(' ', '');
+    final value = int.tryParse(raw);
+    if (value == null || value < 0) {
+      setState(() => _error = '0-${CreatureKillCountController.maxCount}');
+      return;
+    }
+    await _set(value);
+    if (mounted) {
+      Navigator.pop(context);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final current = CreatureKillCountController.instance.getCount(
+      widget.enemyId,
+    );
+    return AlertDialog(
+      title: Text(l10n.killCountEdit),
+      content: TextField(
+        controller: _textController,
+        autofocus: true,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: l10n.killCountQuantity,
+          errorText: _error,
+        ),
+      ),
+      actions: [
+        TextButton(onPressed: () => _set(0), child: Text(l10n.killCountReset)),
+        IconButton(
+          onPressed: () => _set(current - 1),
+          icon: const Icon(Icons.remove),
+        ),
+        IconButton(
+          onPressed: () => _set(current + 1),
+          icon: const Icon(Icons.add),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.cancelAction),
+        ),
+        FilledButton(onPressed: _save, child: Text(l10n.saveAction)),
       ],
     );
   }
