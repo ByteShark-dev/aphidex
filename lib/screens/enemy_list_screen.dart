@@ -2532,12 +2532,17 @@ class EnemyTile extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconBadge.asset(
-                        assetName: UiMapper.dangerIcon(enemy.danger),
-                        size: 22,
-                        padding: const EdgeInsets.all(4),
-                        borderRadius: 12,
-                      ),
+                      if (enemy.collectionGroup != 'buggy')
+                        IconBadge.asset(
+                          assetName: UiMapper.dangerIcon(
+                            enemy.isUnderConstruction
+                                ? 'proximamente'
+                                : enemy.danger,
+                          ),
+                          size: 22,
+                          padding: const EdgeInsets.all(4),
+                          borderRadius: 12,
+                        ),
                       const SizedBox(height: 6),
                       Image.asset(
                         UiMapper.tierIcon(

@@ -4,6 +4,7 @@ import 'package:aphidex/data/effect_catalog.dart';
 import 'package:aphidex/data/ui_mapper.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
+import 'package:aphidex/models/enemy_index_entry.dart';
 import 'package:aphidex/screens/enemy_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -101,6 +102,52 @@ void main() {
   });
 
   group('UiMapper dangerIcon', () {
+    test('keeps legacy superior-danger keys readable', () {
+      final legacyAlt = EnemyIndexEntry.fromJson({
+        'id': 'legacy_alt',
+        'name': 'Legacy alt',
+        'game': 'g2',
+        'tier': 1,
+        'danger': 'imposible_alt',
+      });
+      final legacyAlta = EnemyIndexEntry.fromJson({
+        'id': 'legacy_alta',
+        'name': 'Legacy alta',
+        'game': 'g2',
+        'tier': 1,
+        'danger': 'imposible_alta',
+      });
+
+      expect(legacyAlt.danger, 'imposible_alt');
+      expect(legacyAlta.danger, 'imposible_alta');
+      expect(
+        UiMapper.canonicalDangerLevel(legacyAlt.danger),
+        'imposible_superior',
+      );
+      expect(
+        UiMapper.canonicalDangerLevel(legacyAlta.danger),
+        'imposible_superior',
+      );
+      expect(UiMapper.canonicalDangerLevel('media'), 'intermedia');
+    });
+
+    test('maps every score band to the formal danger scale', () {
+      expect(UiMapper.dangerLevelForScore(0), 'baja');
+      expect(UiMapper.dangerLevelForScore(19), 'baja');
+      expect(UiMapper.dangerLevelForScore(20), 'intermedia');
+      expect(UiMapper.dangerLevelForScore(39), 'intermedia');
+      expect(UiMapper.dangerLevelForScore(40), 'alta');
+      expect(UiMapper.dangerLevelForScore(59), 'alta');
+      expect(UiMapper.dangerLevelForScore(60), 'muy_alta');
+      expect(UiMapper.dangerLevelForScore(74), 'muy_alta');
+      expect(UiMapper.dangerLevelForScore(75), 'imposible');
+      expect(UiMapper.dangerLevelForScore(84), 'imposible');
+      expect(UiMapper.dangerLevelForScore(85), 'imposible_superior');
+      expect(UiMapper.dangerLevelForScore(89), 'imposible_superior');
+      expect(UiMapper.dangerLevelForScore(90), 'extrema');
+      expect(UiMapper.dangerLevelForScore(100), 'extrema');
+    });
+
     test('maps hard-to-see dangers to existing assets', () {
       expect(UiMapper.dangerIcon('muy_alta'), 'assets/global/Muy_alta.png');
       expect(UiMapper.dangerIcon('imposible'), 'assets/global/Imposible.png');
@@ -180,6 +227,21 @@ void main() {
           const Locale('es'),
         ).dangerLevelLabel('imposible_superior'),
         'Imposible Superior',
+      );
+    });
+
+    test('labels the under-construction status in every supported locale', () {
+      expect(
+        AppLocalizations(const Locale('es')).underConstructionLabel,
+        'En construcción',
+      );
+      expect(
+        AppLocalizations(const Locale('en')).underConstructionLabel,
+        'Under construction',
+      );
+      expect(
+        AppLocalizations(const Locale('ru')).underConstructionLabel,
+        'В разработке',
       );
     });
   });

@@ -183,6 +183,7 @@ class AppLocalizations {
   String get attacksTitle => _t('attacksTitle');
   String get weaknessesTitle => _t('weaknessesTitle');
   String get upcomingTitle => _t('upcomingTitle');
+  String get underConstructionLabel => _t('underConstructionLabel');
   String get upcomingItems => _t('upcomingItems');
   String get healthTitle => _t('healthTitle');
   String get notApplicableHealthLabel => _t('notApplicableHealthLabel');
@@ -1497,6 +1498,7 @@ class AppLocalizations {
       'attacksTitle': 'Ataques',
       'weaknessesTitle': 'Debilidades',
       'upcomingTitle': 'Próximamente:',
+      'underConstructionLabel': 'En construcción',
       'upcomingItems':
           '• Loot con probabilidades\n• Spawns\n• Builds por etapa (early/mid/end/NG+)',
       'healthTitle': 'Vida',
@@ -1708,6 +1710,7 @@ class AppLocalizations {
       'attacksTitle': 'Attacks',
       'weaknessesTitle': 'Weaknesses',
       'upcomingTitle': 'Coming soon:',
+      'underConstructionLabel': 'Under construction',
       'upcomingItems':
           '• Loot with drop rates\n• Spawn locations\n• Builds by progression stage (early / mid / end / NG+)',
       'healthTitle': 'Health',
@@ -1919,6 +1922,7 @@ class AppLocalizations {
       'attacksTitle': 'Атаки',
       'weaknessesTitle': 'Слабости',
       'upcomingTitle': 'Скоро:',
+      'underConstructionLabel': 'В разработке',
       'upcomingItems':
           '• Добыча с шансами выпадения\n• Места появления\n• Сборки по этапам прогресса (early / mid / end / NG+)',
       'healthTitle': 'Здоровье',

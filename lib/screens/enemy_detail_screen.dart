@@ -1146,25 +1146,33 @@ class _DetailSummarySidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isBuggy = enemy.collectionGroup == 'buggy';
     return Column(
       children: [
         Row(
           children: [
-            Expanded(
-              child: _SummaryStatCard(
-                icon: IconBadge.asset(
-                  assetName: UiMapper.dangerIcon(enemy.danger),
-                  size: 24,
-                  padding: const EdgeInsets.all(4),
-                  borderRadius: 12,
-                ),
-                label: l10n.filterDanger,
-                value: l10n.dangerLevelLabel(
-                  UiMapper.canonicalDangerLevel(enemy.danger),
+            if (!isBuggy)
+              Expanded(
+                child: _SummaryStatCard(
+                  icon: IconBadge.asset(
+                    assetName: UiMapper.dangerIcon(
+                      enemy.isUnderConstruction ? 'proximamente' : enemy.danger,
+                    ),
+                    size: 24,
+                    padding: const EdgeInsets.all(4),
+                    borderRadius: 12,
+                  ),
+                  label: enemy.isUnderConstruction
+                      ? l10n.underConstructionLabel
+                      : l10n.filterDanger,
+                  value: enemy.isUnderConstruction
+                      ? l10n.underConstructionLabel
+                      : l10n.dangerLevelLabel(
+                          UiMapper.canonicalDangerLevel(enemy.danger),
+                        ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
+            if (!isBuggy) const SizedBox(width: 10),
             Expanded(
               child: _SummaryStatCard(
                 icon: Image.asset(
