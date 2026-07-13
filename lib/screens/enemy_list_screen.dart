@@ -2221,8 +2221,23 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                       pagePadding.right,
                                       12,
                                     ),
-                                    child: detailEntry == null
-                                        ? AphidexStatePanel(
+                                    child: ListenableBuilder(
+                                      listenable: TutorialController.instance,
+                                      builder: (context, _) {
+                                        final tutorial =
+                                            TutorialController.instance;
+                                        final tutorialEnemy =
+                                            tutorial.inlineDetailEnemy;
+                                        final detailSummary =
+                                            tutorialEnemy ??
+                                            detailEntry?.activeEnemy;
+                                        final detailVariants =
+                                            tutorialEnemy == null
+                                            ? detailEntry?.entry.variants
+                                            : tutorial.inlineDetailVariants;
+                                        if (detailSummary == null ||
+                                            detailVariants == null) {
+                                          return AphidexStatePanel(
                                             gamePick: gamePick,
                                             icon: Icons.touch_app_rounded,
                                             title: l10n
@@ -2230,41 +2245,32 @@ class _EnemyListScreenState extends State<EnemyListScreen>
                                             subtitle: l10n
                                                 .masterDetailPlaceholderSubtitle,
                                             compact: surface.isWide,
-                                          )
-                                        : ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              22,
-                                            ),
-                                            child: Material(
-                                              color: Theme.of(
-                                                context,
-                                              ).colorScheme.surface,
-                                              child: ListenableBuilder(
-                                                listenable:
-                                                    TutorialController.instance,
-                                                builder: (context, _) {
-                                                  return EnemyDetailScreen(
-                                                    key: ValueKey(
-                                                      'detail:${detailEntry.activeEnemy.id}',
-                                                    ),
-                                                    summary:
-                                                        detailEntry.activeEnemy,
-                                                    variantSummaries:
-                                                        detailEntry
-                                                            .entry
-                                                            .variants,
-                                                    initialGame: detailEntry
-                                                        .activeEnemy
-                                                        .game,
-                                                    tutorialAnchorsEnabled:
-                                                        !TutorialController
-                                                            .instance
-                                                            .tutorialFullscreenMode,
-                                                  );
-                                                },
+                                          );
+                                        }
+
+                                        return ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            22,
+                                          ),
+                                          child: Material(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.surface,
+                                            child: EnemyDetailScreen(
+                                              key: ValueKey(
+                                                'detail:${detailSummary.id}:${tutorialEnemy != null}',
                                               ),
+                                              summary: detailSummary,
+                                              variantSummaries: detailVariants,
+                                              initialGame: detailSummary.game,
+                                              tutorialTargetScope:
+                                                  TutorialTargetScope
+                                                      .inlineDetail,
                                             ),
                                           ),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],

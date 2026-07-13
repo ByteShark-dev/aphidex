@@ -120,8 +120,7 @@ class EnemyDetailScreen extends StatefulWidget {
   final EnemyIndexEntry? summary;
   final List<EnemyIndexEntry>? variantSummaries;
   final String? initialGame;
-  final bool forceCompactTutorialLayout;
-  final bool tutorialAnchorsEnabled;
+  final TutorialTargetScope tutorialTargetScope;
 
   const EnemyDetailScreen({
     super.key,
@@ -130,8 +129,7 @@ class EnemyDetailScreen extends StatefulWidget {
     this.summary,
     this.variantSummaries,
     this.initialGame,
-    this.forceCompactTutorialLayout = false,
-    this.tutorialAnchorsEnabled = true,
+    this.tutorialTargetScope = TutorialTargetScope.inlineDetail,
   }) : assert(enemy != null || summary != null);
 
   @override
@@ -421,16 +419,12 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     final l10n = context.l10n;
     final languageCode = l10n.languageCode;
     final viewportSize = MediaQuery.sizeOf(context);
-    final surface = widget.forceCompactTutorialLayout
-        ? AppSurfaceSize.compact
-        : AppBreakpoints.surfaceForWidth(viewportSize.width);
+    final surface = AppBreakpoints.surfaceForWidth(viewportSize.width);
     final pagePadding = surface.pagePadding;
-    final useSummaryRow =
-        !widget.forceCompactTutorialLayout &&
-        (surface.isExpanded || surface.isWide);
-    final showCreatureCards = widget.forceCompactTutorialLayout
-        ? false
-        : AppBreakpoints.shouldShowCreatureCards(viewportSize);
+    final useSummaryRow = surface.isExpanded || surface.isWide;
+    final showCreatureCards = AppBreakpoints.shouldShowCreatureCards(
+      viewportSize,
+    );
     final favorites = FavoritesController.instance;
     final gold = GoldController.instance;
     final selectedInfusion = enemy.infusions.isEmpty
@@ -494,12 +488,13 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
       languageCode,
     );
     final tutorial = TutorialController.instance;
-    final tutorialEffectId = widget.tutorialAnchorsEnabled
-        ? tutorial.tutorialEffectIdForEnemy(enemy.id)
-        : null;
+    final tutorialEffectId = tutorial.tutorialEffectIdForEnemy(enemy.id);
     final tutorialEffectKey = tutorialEffectId == null
         ? null
-        : tutorial.keyFor(tutorialAnchorDetailEffect(tutorialEffectId));
+        : tutorial.keyFor(
+            tutorialAnchorDetailEffect(tutorialEffectId),
+            scope: widget.tutorialTargetScope,
+          );
     var tutorialAnchorAssigned = false;
     var detailEffectsAnchorAssigned = false;
 
@@ -514,27 +509,27 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
     }
 
     Widget wrapTutorialAnchor(String anchorId, {required Widget child}) {
-      if (!widget.tutorialAnchorsEnabled) {
-        return child;
-      }
-      return KeyedSubtree(key: tutorial.keyFor(anchorId), child: child);
+      return KeyedSubtree(
+        key: tutorial.keyFor(anchorId, scope: widget.tutorialTargetScope),
+        child: child,
+      );
     }
 
     Widget wrapDetailEffectsAnchor(Widget child) {
-      if (!widget.tutorialAnchorsEnabled || detailEffectsAnchorAssigned) {
+      if (detailEffectsAnchorAssigned) {
         return child;
       }
       detailEffectsAnchorAssigned = true;
       return KeyedSubtree(
-        key: tutorial.keyFor(tutorialAnchorDetailEffects),
+        key: tutorial.keyFor(
+          tutorialAnchorDetailEffects,
+          scope: widget.tutorialTargetScope,
+        ),
         child: child,
       );
     }
 
     return Scaffold(
-      key: widget.forceCompactTutorialLayout
-          ? const ValueKey('tutorial-fullscreen-detail-scaffold')
-          : null,
       appBar: AppBar(
         title: OverflowMarqueeText(
           enemy.name.resolve(languageCode),

@@ -67,20 +67,23 @@ class _TutorialHostState extends State<TutorialHost>
             final targetRect = controller.currentTargetRect(context);
             final l10n = context.l10n;
 
-            return _TutorialOverlay(
-              targetRect: targetRect,
-              title: l10n.tutorialStepTitle(_tutorialStepId(step)),
-              description: l10n.tutorialStepBody(_tutorialStepId(step)),
-              skipLabel: l10n.tutorialSkipAction,
-              backLabel: l10n.tutorialBackAction,
-              nextLabel: step == TutorialStep.codexEquipment
-                  ? l10n.tutorialFinishAction
-                  : l10n.tutorialNextAction,
-              showBack: step != TutorialStep.search,
-              actionsEnabled: !controller.isBusy,
-              onSkip: controller.skip,
-              onBack: controller.back,
-              onNext: controller.next,
+            return _TutorialOverlayLifecycle(
+              controller: controller,
+              child: _TutorialOverlay(
+                targetRect: targetRect,
+                title: l10n.tutorialStepTitle(_tutorialStepId(step)),
+                description: l10n.tutorialStepBody(_tutorialStepId(step)),
+                skipLabel: l10n.tutorialSkipAction,
+                backLabel: l10n.tutorialBackAction,
+                nextLabel: step == TutorialStep.codexEquipment
+                    ? l10n.tutorialFinishAction
+                    : l10n.tutorialNextAction,
+                showBack: step != TutorialStep.search,
+                actionsEnabled: !controller.isBusy,
+                onSkip: controller.skip,
+                onBack: controller.back,
+                onNext: controller.next,
+              ),
             );
           },
         ),
@@ -133,6 +136,37 @@ class _TutorialHostState extends State<TutorialHost>
         return 'codexEquipment';
     }
   }
+}
+
+class _TutorialOverlayLifecycle extends StatefulWidget {
+  const _TutorialOverlayLifecycle({
+    required this.controller,
+    required this.child,
+  });
+
+  final TutorialController controller;
+  final Widget child;
+
+  @override
+  State<_TutorialOverlayLifecycle> createState() =>
+      _TutorialOverlayLifecycleState();
+}
+
+class _TutorialOverlayLifecycleState extends State<_TutorialOverlayLifecycle> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.registerTutorialOverlayMounted();
+  }
+
+  @override
+  void dispose() {
+    widget.controller.registerTutorialOverlayUnmounted();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 class _TutorialOverlay extends StatelessWidget {
