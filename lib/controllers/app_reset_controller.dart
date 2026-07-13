@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../data/enemy_repository.dart';
 import '../data/local_storage.dart';
 import 'favorites_controller.dart';
+import 'creature_kill_count_controller.dart';
 import 'game_selection_controller.dart';
 import 'gold_controller.dart';
 import 'locale_controller.dart';
@@ -25,6 +26,7 @@ class AppResetController {
     );
     await FavoritesController.instance.reset();
     await GoldController.instance.reset();
+    await CreatureKillCountController.instance.clearAllKillCounts();
     GoldController.instance.reloadFromStorage();
     await ThemeController.instance.setTheme(ThemePref.system);
     await LocaleController.instance.setLanguage(LanguagePref.system);

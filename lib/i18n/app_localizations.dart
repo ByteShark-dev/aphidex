@@ -100,6 +100,15 @@ class AppLocalizations {
   String get playerProfileCreatureCards => _t('playerProfileCreatureCards');
   String get playerProfileGoldCards => _t('playerProfileGoldCards');
   String get playerProfileKills => _t('playerProfileKills');
+  String get killCountAdd => _t('killCountAdd');
+  String get killCountEdit => _t('killCountEdit');
+  String get killCountReset => _t('killCountReset');
+  String get killCountQuantity => _t('killCountQuantity');
+  String get saveAction => _t('saveAction');
+  String get filterWithKills => _t('filterWithKills');
+  String get filterWithoutKills => _t('filterWithoutKills');
+  String get tutorialProfileTitle => _t('tutorialProfileTitle');
+  String get tutorialProfileBody => _t('tutorialProfileBody');
   String get playerProfileSelectTooltip => _t('playerProfileSelectTooltip');
   String get playerProfileChangeTooltip => _t('playerProfileChangeTooltip');
   String get playerDisplayNameTitle => _t('playerDisplayNameTitle');
@@ -118,6 +127,7 @@ class AppLocalizations {
     required String game,
     required String creatureCards,
     required String goldCards,
+    String kills = '0',
     required String website,
     String? displayName,
   }) {
@@ -125,15 +135,15 @@ class AppLocalizations {
     return switch (languageCode) {
       'en' =>
         '${hasName ? "$displayName's Aphidex profile" : 'My Aphidex profile'} for $game:\n'
-            '$creatureCards Creature Cards and $goldCards Gold Cards.\n\n'
+            '$creatureCards Creature Cards\n$goldCards Gold Cards\n$kills defeated creatures\n\n'
             'Explore creatures, weaknesses, and your progress with Aphidex:\n$website',
       'ru' =>
         '${hasName ? '\u041f\u0440\u043e\u0444\u0438\u043b\u044c $displayName \u0432 Aphidex' : '\u041c\u043e\u0439 \u043f\u0440\u043e\u0444\u0438\u043b\u044c Aphidex'} \u0434\u043b\u044f $game:\n'
-            '$creatureCards Creature Cards \u0438 $goldCards \u0437\u043e\u043b\u043e\u0442\u044b\u0445 \u043a\u0430\u0440\u0442\u043e\u0447\u0435\u043a.\n\n'
+            '$creatureCards Creature Cards\n$goldCards \u0437\u043e\u043b\u043e\u0442\u044b\u0445 \u043a\u0430\u0440\u0442\u043e\u0447\u0435\u043a\n$kills \u0443\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d\u0438\u0439\n\n'
             '\u0418\u0437\u0443\u0447\u0430\u0439\u0442\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432, \u0438\u0445 \u0441\u043b\u0430\u0431\u043e\u0441\u0442\u0438 \u0438 \u0441\u0432\u043e\u0439 \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441 \u0441 Aphidex:\n$website',
       _ =>
         '${hasName ? 'Perfil de $displayName en Aphidex' : 'Mi perfil de Aphidex'} para $game:\n'
-            '$creatureCards Creature Cards y $goldCards tarjetas doradas.\n\n'
+            '$creatureCards Tarjetas de criatura\n$goldCards tarjetas doradas\n$kills eliminaciones\n\n'
             'Consulta criaturas, debilidades y tu progreso con Aphidex:\n$website',
     };
   }
@@ -1543,6 +1553,16 @@ class AppLocalizations {
       'playerProfileCreatureCards': 'Tarjetas de criatura',
       'playerProfileGoldCards': 'Tarjetas doradas',
       'playerProfileKills': 'Eliminaciones',
+      'killCountAdd': 'AÃ±adir eliminaciÃ³n',
+      'killCountEdit': 'Editar eliminaciones',
+      'killCountReset': 'Reiniciar contador',
+      'killCountQuantity': 'Cantidad',
+      'saveAction': 'Guardar',
+      'filterWithKills': 'Con eliminaciones',
+      'filterWithoutKills': 'Sin eliminaciones',
+      'tutorialProfileTitle': 'Consulta tu perfil',
+      'tutorialProfileBody':
+          'Consulta tus personajes, tarjetas y eliminaciones desde tu perfil.',
       'playerProfileSelectTooltip': 'Elegir personaje',
       'playerProfileChangeTooltip': 'Cambiar personaje',
       'playerDisplayNameTitle': 'Nombre del jugador',
@@ -1697,6 +1717,9 @@ class AppLocalizations {
       'tutorial_gamePicker_title': 'Elige el juego',
       'tutorial_gamePicker_body':
           'Aqu\u00ED cambias entre Grounded 1, Grounded 2 y Ambos juegos. En Ambos juegos no se repiten las especies compartidas.',
+      'tutorial_profile_title': 'Consulta tu perfil',
+      'tutorial_profile_body':
+          'Consulta tus personajes, tarjetas y eliminaciones desde tu perfil.',
       'tutorial_filters_title': 'Filtra la lista',
       'tutorial_filters_body':
           'Aqu\u00ED puedes combinar filtros m\u00FAltiples al mismo tiempo: tiers, clase, peligro, favoritos y tarjetas doradas.',
@@ -1788,6 +1811,16 @@ class AppLocalizations {
       'playerProfileCreatureCards': 'Creature Cards',
       'playerProfileGoldCards': 'Gold cards',
       'playerProfileKills': 'Eliminations',
+      'killCountAdd': 'Add defeat',
+      'killCountEdit': 'Edit defeats',
+      'killCountReset': 'Reset counter',
+      'killCountQuantity': 'Quantity',
+      'saveAction': 'Save',
+      'filterWithKills': 'With defeats',
+      'filterWithoutKills': 'Without defeats',
+      'tutorialProfileTitle': 'View your profile',
+      'tutorialProfileBody':
+          'View your characters, cards, and defeated creatures from your profile.',
       'playerProfileSelectTooltip': 'Choose character',
       'playerProfileChangeTooltip': 'Change character',
       'playerDisplayNameTitle': 'Player name',
@@ -1938,6 +1971,9 @@ class AppLocalizations {
       'tutorial_gamePicker_title': 'Choose the game',
       'tutorial_gamePicker_body':
           'Here you switch between Grounded 1, Grounded 2, and Both games. In Both games, shared species are grouped into one entry.',
+      'tutorial_profile_title': 'View your profile',
+      'tutorial_profile_body':
+          'View your characters, cards, and defeated creatures from your profile.',
       'tutorial_filters_title': 'Filter the list',
       'tutorial_filters_body':
           'You can combine multiple filters here at the same time: tiers, class, danger, favorites, and gold cards.',
@@ -2149,6 +2185,10 @@ class AppLocalizations {
           '\u0412\u044B\u0431\u043E\u0440 \u0438\u0433\u0440\u044B',
       'tutorial_gamePicker_body':
           '\u0417\u0434\u0435\u0441\u044c \u043c\u043e\u0436\u043d\u043e \u043f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0430\u0442\u044c\u0441\u044f \u043c\u0435\u0436\u0434\u0443 Grounded 1, Grounded 2 \u0438 \u0440\u0435\u0436\u0438\u043c\u043e\u043c \u00ab\u041e\u0431\u0435 \u0438\u0433\u0440\u044b\u00bb. \u0412 \u044d\u0442\u043e\u043c \u0440\u0435\u0436\u0438\u043c\u0435 \u043e\u0431\u0449\u0438\u0435 \u0432\u0438\u0434\u044b \u043d\u0435 \u0434\u0443\u0431\u043b\u0438\u0440\u0443\u044e\u0442\u0441\u044f.',
+      'tutorial_profile_title':
+          '\u0412\u0430\u0448 \u043f\u0440\u043e\u0444\u0438\u043b\u044c',
+      'tutorial_profile_body':
+          '\u0412 \u043f\u0440\u043e\u0444\u0438\u043b\u0435 \u043c\u043e\u0436\u043d\u043e \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0435\u0439, \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0438 \u043f\u043e\u0431\u0435\u0434\u044b.',
       'tutorial_filters_title':
           '\u0424\u0438\u043B\u044C\u0442\u0440\u044B \u0441\u043F\u0438\u0441\u043A\u0430',
       'tutorial_filters_body':
@@ -2241,6 +2281,22 @@ class AppLocalizations {
           '\u0417\u043e\u043b\u043e\u0442\u044b\u0435 \u043a\u0430\u0440\u0442\u044b',
       'playerProfileKills':
           '\u0423\u043d\u0438\u0447\u0442\u043e\u0436\u0435\u043d\u0438\u044f',
+      'killCountAdd':
+          '\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u043f\u043e\u0431\u0435\u0434\u0443',
+      'killCountEdit':
+          '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c \u043f\u043e\u0431\u0435\u0434\u044b',
+      'killCountReset':
+          '\u0421\u0431\u0440\u043e\u0441\u0438\u0442\u044c \u0441\u0447\u0451\u0442\u0447\u0438\u043a',
+      'killCountQuantity':
+          '\u041a\u043e\u043b\u0438\u0447\u0435\u0441\u0442\u0432\u043e',
+      'saveAction': '\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c',
+      'filterWithKills':
+          '\u0421 \u043f\u043e\u0431\u0435\u0434\u0430\u043c\u0438',
+      'filterWithoutKills': '\u0411\u0435\u0437 \u043f\u043e\u0431\u0435\u0434',
+      'tutorialProfileTitle':
+          '\u0412\u0430\u0448 \u043f\u0440\u043e\u0444\u0438\u043b\u044c',
+      'tutorialProfileBody':
+          '\u0412 \u043f\u0440\u043e\u0444\u0438\u043b\u0435 \u043c\u043e\u0436\u043d\u043e \u043f\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0435\u0439, \u043a\u0430\u0440\u0442\u043e\u0447\u043a\u0438 \u0438 \u043f\u043e\u0431\u0435\u0434\u044b.',
       'playerProfileSelectTooltip':
           '\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u043f\u0435\u0440\u0441\u043e\u043d\u0430\u0436\u0430',
       'playerProfileChangeTooltip':

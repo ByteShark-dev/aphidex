@@ -334,6 +334,7 @@ void main() {
   test('g2 indirect-threat creatures use the elevated danger tier', () {
     expect(entry('g2_woolly_aphid')['danger'], 'intermedia');
     expect(entry('g2_garter_snake')['danger'], 'intermedia');
+    expect(entry('g2_orc_weevil')['danger'], 'alta');
   });
 
   test('g2 content corrections stay in the master data', () {

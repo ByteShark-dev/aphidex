@@ -109,6 +109,8 @@ class _TutorialHostState extends State<TutorialHost>
         return 'search';
       case TutorialStep.gamePicker:
         return 'gamePicker';
+      case TutorialStep.profile:
+        return 'profile';
       case TutorialStep.filters:
         return 'filters';
       case TutorialStep.sort:

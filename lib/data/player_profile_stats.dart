@@ -7,18 +7,21 @@ class PlayerProfileStats {
     required this.cardsTotal,
     required this.goldCardsObtained,
     required this.goldCardsTotal,
+    this.kills = 0,
   });
 
   const PlayerProfileStats.empty()
     : cardsObtained = 0,
       cardsTotal = 0,
       goldCardsObtained = 0,
-      goldCardsTotal = 0;
+      goldCardsTotal = 0,
+      kills = 0;
 
   final int cardsObtained;
   final int cardsTotal;
   final int goldCardsObtained;
   final int goldCardsTotal;
+  final int kills;
 }
 
 PlayerProfileStats summarizePlayerProfileStats(

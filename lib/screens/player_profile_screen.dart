@@ -4,10 +4,12 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../controllers/game_selection_controller.dart';
+import '../controllers/creature_kill_count_controller.dart';
 import '../controllers/gold_controller.dart';
 import '../controllers/player_display_name_controller.dart';
 import '../controllers/player_profile_controller.dart';
 import '../config/app_links.dart';
+import '../data/creature_card_state.dart';
 import '../data/enemy_repository.dart';
 import '../data/player_character_catalog.dart';
 import '../data/player_character_themes.dart';
@@ -178,6 +180,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
         game: _gameName(context.l10n, game),
         creatureCards: '${stats.cardsObtained}/${stats.cardsTotal}',
         goldCards: '${stats.goldCardsObtained}/${stats.goldCardsTotal}',
+        kills: stats.kills.toString(),
         website: AphidexLinks.publicWebsite,
       ),
       sharePositionOrigin: origin,
@@ -187,6 +190,21 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
         SnackBar(content: Text(context.l10n.playerProfileShareError)),
       );
     }
+  }
+
+  PlayerProfileStats _statsWithKills(
+    List<EnemyIndexEntry> entries,
+    CreatureCardProgressMap progress,
+    AphidexGame game,
+  ) {
+    final base = summarizePlayerProfileStats(entries, progress);
+    return PlayerProfileStats(
+      cardsObtained: base.cardsObtained,
+      cardsTotal: base.cardsTotal,
+      goldCardsObtained: base.goldCardsObtained,
+      goldCardsTotal: base.goldCardsTotal,
+      kills: CreatureKillCountController.instance.totalForGame(game, entries),
+    );
   }
 
   @override
@@ -207,6 +225,7 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
             displayName.displayName,
             gameSelection.gamePick,
             gold.progress,
+            CreatureKillCountController.instance.counts,
           ]),
           builder: (context, _) {
             final game = gameSelection.profileGame;
@@ -225,9 +244,10 @@ class _PlayerProfileScreenState extends State<PlayerProfileScreen> {
                       future: _entriesFuture,
                       builder: (context, snapshot) {
                         final stats = snapshot.hasData
-                            ? summarizePlayerProfileStats(
+                            ? _statsWithKills(
                                 snapshot.data!,
                                 gold.progress.value,
+                                game,
                               )
                             : null;
                         return AnimatedSwitcher(
@@ -862,16 +882,32 @@ class _StatsGrid extends StatelessWidget {
           : '${stats!.goldCardsObtained}/${stats!.goldCardsTotal}',
       theme: theme,
     );
+    final kills = _ProfileStatTile(
+      icon: Icons.ads_click_outlined,
+      label: context.l10n.playerProfileKills,
+      value: stats?.kills.toString(),
+      theme: theme,
+    );
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 340) {
-          return Column(children: [cards, const SizedBox(height: 8), gold]);
+          return Column(
+            children: [
+              cards,
+              const SizedBox(height: 8),
+              gold,
+              const SizedBox(height: 8),
+              kills,
+            ],
+          );
         }
-        return Row(
+        return Wrap(
+          spacing: 10,
+          runSpacing: 10,
           children: [
-            Expanded(child: cards),
-            const SizedBox(width: 10),
-            Expanded(child: gold),
+            SizedBox(width: (constraints.maxWidth - 10) / 2, child: cards),
+            SizedBox(width: (constraints.maxWidth - 10) / 2, child: gold),
+            SizedBox(width: (constraints.maxWidth - 10) / 2, child: kills),
           ],
         );
       },

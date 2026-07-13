@@ -21,6 +21,7 @@ const String tutorialAnchorListFilters = 'tutorial-list-filters';
 const String tutorialAnchorListSort = 'tutorial-list-sort';
 const String tutorialAnchorListSettings = 'tutorial-list-settings';
 const String tutorialAnchorListCodex = 'tutorial-list-codex';
+const String tutorialAnchorListProfile = 'tutorial-list-profile';
 const String tutorialAnchorDetailSummary = 'tutorial-detail-summary';
 const String tutorialAnchorDetailVariant = 'tutorial-detail-variant';
 const String tutorialAnchorDetailEffects = 'tutorial-detail-effects';
@@ -37,6 +38,7 @@ String tutorialAnchorEffectEquipment(String effectId) =>
 enum TutorialStep {
   search,
   gamePicker,
+  profile,
   filters,
   sort,
   settings,
@@ -311,7 +313,10 @@ class TutorialController extends ChangeNotifier {
       if (!topLeft.dx.isFinite || !topLeft.dy.isFinite) {
         return null;
       }
-      return topLeft & resolvedTarget.renderBox.size;
+      final viewport = Offset.zero & overlayBox.size;
+      final target = topLeft & resolvedTarget.renderBox.size;
+      final clipped = target.intersect(viewport);
+      return clipped.isEmpty ? null : clipped;
     } catch (_) {
       return null;
     }
@@ -432,6 +437,9 @@ class TutorialController extends ChangeNotifier {
           await _goToStep(TutorialStep.gamePicker);
           return;
         case TutorialStep.gamePicker:
+          await _goToStep(TutorialStep.profile);
+          return;
+        case TutorialStep.profile:
           await _goToStep(TutorialStep.filters);
           return;
         case TutorialStep.filters:
@@ -486,6 +494,9 @@ class TutorialController extends ChangeNotifier {
           await _goToStep(TutorialStep.search);
           return;
         case TutorialStep.filters:
+          await _goToStep(TutorialStep.profile);
+          return;
+        case TutorialStep.profile:
           await _goToStep(TutorialStep.gamePicker);
           return;
         case TutorialStep.sort:
@@ -785,6 +796,8 @@ class TutorialController extends ChangeNotifier {
         return tutorialAnchorListSearch;
       case TutorialStep.gamePicker:
         return tutorialAnchorListGame;
+      case TutorialStep.profile:
+        return tutorialAnchorListProfile;
       case TutorialStep.filters:
         return tutorialAnchorListFilters;
       case TutorialStep.sort:

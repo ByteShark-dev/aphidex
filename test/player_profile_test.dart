@@ -188,12 +188,14 @@ void main() {
       game: 'Grounded 2',
       creatureCards: '1/91',
       goldCards: '0/91',
+      kills: '27',
       website: AphidexLinks.publicWebsite,
     );
     final spanishMessage = spanish.playerProfileShareMessage(
       game: 'Grounded',
       creatureCards: '2/10',
       goldCards: '1/10',
+      kills: '12',
       website: AphidexLinks.publicWebsite,
     );
     final russianMessage = russian.playerProfileShareMessage(
@@ -201,15 +203,24 @@ void main() {
       game: 'Grounded 2',
       creatureCards: '3/91',
       goldCards: '2/91',
+      kills: '8',
       website: AphidexLinks.publicWebsite,
     );
 
-    for (final message in [englishMessage, spanishMessage, russianMessage]) {
+    for (final message in [englishMessage, russianMessage]) {
       expect(message, contains(AphidexLinks.publicWebsite));
       expect(message, contains('Creature Cards'));
     }
+    expect(spanishMessage, contains(AphidexLinks.publicWebsite));
     expect(englishMessage, allOf(contains('Gam3r1Shark'), contains('1/91')));
-    expect(spanishMessage, allOf(contains('Grounded'), contains('2/10')));
+    expect(
+      spanishMessage,
+      allOf(
+        contains('Grounded'),
+        contains('2/10'),
+        contains('12 eliminaciones'),
+      ),
+    );
     expect(russianMessage, allOf(contains('Игрок'), contains('3/91')));
   });
 
@@ -375,7 +386,7 @@ void main() {
       expect(find.byType(PlayerCharacterAvatar), findsOneWidget);
       expect(find.text('Max'), findsOneWidget);
       expect(find.text('Grounded 2'), findsNothing);
-      expect(find.text('Eliminations'), findsNothing);
+      expect(find.text('Eliminations'), findsOneWidget);
 
       await tester.pumpWidget(
         _testApp(
