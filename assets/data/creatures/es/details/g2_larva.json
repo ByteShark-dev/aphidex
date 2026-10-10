@@ -60,14 +60,28 @@
     {
       "item": "Acid Gland",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Acid Gland",
       "countLabel": "1",
-      "chancePct": 50,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Larva Spike",
+      "countLabel": "1",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -75,13 +89,20 @@
       "item": "Larva Spike",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Larva Spike",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Larva Spike",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -155,7 +176,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "chopping"
       ],
@@ -169,7 +189,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Arremetida",
@@ -177,7 +198,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "chopping"
       ],
@@ -191,7 +211,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     },
     {
       "name": "Doble mordida",
@@ -199,7 +220,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -213,7 +233,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     },
     {
       "name": "Triple mordida",
@@ -221,7 +242,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -235,7 +255,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     }
   ],
   "encounterVariants": [],
@@ -3180,5 +3201,6 @@
   "eventAppearances": [],
   "appearanceType": "natural",
   "mapMarkerAsset": "assets/g2/creatures/thumbnails/Larva.webp",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

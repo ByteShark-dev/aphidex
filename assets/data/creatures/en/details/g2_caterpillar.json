@@ -1044,13 +1044,6 @@
     {
       "item": "Caterpillar Goop",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Caterpillar Goop",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
@@ -1063,7 +1056,21 @@
       "notes": null
     },
     {
-      "item": "Caterpillar Hide",
+      "item": "Caterpillar Goop",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Caterpillar Goop",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Caterpillar Goop",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -1084,9 +1091,9 @@
       "notes": null
     },
     {
-      "item": "Caterpillar Meat",
+      "item": "Caterpillar Hide",
       "countLabel": "1",
-      "chancePct": 25,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1096,6 +1103,14 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Caterpillar Meat",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

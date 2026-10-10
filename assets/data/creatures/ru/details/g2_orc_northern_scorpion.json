@@ -47,7 +47,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -161,7 +161,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 28",
       "damageTypes": [
         "stabbing"
       ],
@@ -175,7 +174,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 28"
     },
     {
       "name": "Combo 4",
@@ -183,7 +183,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -197,7 +196,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Power",
@@ -205,7 +205,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 72",
       "damageTypes": [
         "stabbing"
       ],
@@ -219,7 +218,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 72"
     },
     {
       "name": "Burrow Strike",
@@ -227,7 +227,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 90",
       "damageTypes": [
         "stabbing"
       ],
@@ -236,11 +235,11 @@
       "range": 550.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Huge"
+        "VenomHuge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Huge",
+          "id": "VenomHuge",
           "value": null,
           "durationSeconds": null
         }
@@ -249,7 +248,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 90"
     },
     {
       "name": "Block Offensive",
@@ -257,7 +257,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -268,8 +267,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     }
   ],
   "encounterVariants": [
@@ -1264,29 +1264,8 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
-      "chancePct": 50,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Northern Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Scorpion Northern Chunk",
-      "countLabel": "1",
-      "chancePct": 25,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Northern Chunk",
-      "countLabel": "2",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
@@ -1299,9 +1278,37 @@
       "notes": null
     },
     {
-      "item": "Scorpion Northern Claw",
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "2",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
       "countLabel": "1",
-      "chancePct": 10,
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1309,6 +1316,13 @@
       "item": "Scorpion Northern Claw",
       "countLabel": "1",
       "chancePct": 60,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Claw",
+      "countLabel": "1",
+      "chancePct": 10,
       "rollCount": 1,
       "notes": null
     },
@@ -1321,8 +1335,8 @@
     },
     {
       "item": "Scorpion Venom",
-      "countLabel": "1",
-      "chancePct": 1,
+      "countLabel": "2",
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -1335,10 +1349,11 @@
     },
     {
       "item": "Scorpion Venom",
-      "countLabel": "2",
-      "chancePct": 50,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

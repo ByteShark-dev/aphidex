@@ -101,13 +101,6 @@
     {
       "item": "Fuzz Gnat",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Fuzz Gnat",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
@@ -120,7 +113,7 @@
       "notes": null
     },
     {
-      "item": "Gnat Meat",
+      "item": "Fuzz Gnat",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -130,6 +123,13 @@
       "item": "Gnat Meat",
       "countLabel": "1",
       "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Gnat Meat",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -2784,5 +2784,6 @@
   "eventAppearances": [],
   "appearanceType": "natural",
   "mapMarkerAsset": "assets/g2/creatures/thumbnails/Gnat.webp",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

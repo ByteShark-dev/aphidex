@@ -1,0 +1,66 @@
+{
+  "id": "g2_termite_nymph",
+  "speciesKey": "termite_nymph",
+  "technicalId": "TermiteNymph",
+  "bestiaryId": "TermiteNymph",
+  "name": "Termite Nymph",
+  "game": "g2",
+  "tier": 4,
+  "danger": "unknown",
+  "isBoss": false,
+  "order": 0,
+  "defaultGold": false,
+  "favoriteKey": "g2_termite_nymph",
+  "goldLinkId": null,
+  "cardNormal": "",
+  "cardGold": "",
+  "hasCreatureCard": false,
+  "hasGoldCreatureCard": false,
+  "hasSelectableCardVariants": false,
+  "defaultCardVariant": null,
+  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "listIconAsset": "",
+  "mapMarkerAsset": "",
+  "customAsset": "",
+  "temperament": "unknown",
+  "collectionGroup": "unknown",
+  "entityType": "creature",
+  "isKillable": true,
+  "health": {
+    "rating": 1,
+    "value": 100
+  },
+  "healthDisplay": "normal",
+  "elementalWeaknesses": [],
+  "damageWeaknesses": [
+    {
+      "type": "stabbing",
+      "bonusPct": 30
+    }
+  ],
+  "resistancesV2": [],
+  "immunities": [],
+  "weaknesses": [],
+  "resistances": [],
+  "weakPoints": [],
+  "attacks": [],
+  "combatStats": {
+    "health": 100,
+    "stunThreshold": 70,
+    "stunCooldownSeconds": 5
+  },
+  "loot": [],
+  "advancedLootTable": [],
+  "locations": [],
+  "environments": [],
+  "eventAppearances": [],
+  "appearanceType": "unknown",
+  "encounterVariants": [],
+  "availabilityStatus": "implemented_unconfirmed",
+  "sourceProvenance": {
+    "extractorStatus": "implemented_unconfirmed",
+    "extractorTechnicalId": "TermiteNymph",
+    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+  },
+  "dataRevision": "extractor_release_0_6"
+}

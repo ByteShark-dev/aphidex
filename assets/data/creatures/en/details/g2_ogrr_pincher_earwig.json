@@ -227,7 +227,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -241,7 +240,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Combo 5 X",
@@ -249,7 +249,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -263,7 +262,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Power Attack",
@@ -271,7 +271,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 90",
       "damageTypes": [
         "chopping"
       ],
@@ -285,7 +284,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 90"
     },
     {
       "name": "Block Defensive",
@@ -293,7 +293,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 7.0,
@@ -304,8 +303,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -376,10 +376,10 @@
     },
     {
       "item": "Earwig Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Earwig Part",
@@ -390,15 +390,36 @@
     },
     {
       "item": "Earwig Part",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Earwig Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Earwig Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Earwig Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Earwig Pincer",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 75,
       "rollCount": 1,
       "notes": null
     },
@@ -412,7 +433,7 @@
     {
       "item": "Earwig Pincer",
       "countLabel": "1",
-      "chancePct": 75,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -423,5 +444,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

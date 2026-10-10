@@ -61,12 +61,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "slashing",
-      "bonusPct": 50
-    },
-    {
       "type": "fresh",
       "bonusPct": 25
+    },
+    {
+      "type": "slashing",
+      "bonusPct": 50
     }
   ],
   "weakPoints": [],
@@ -77,7 +77,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -91,7 +90,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     }
   ],
   "encounterVariants": [],
@@ -801,5 +801,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -40,7 +40,11 @@
   ],
   "respawnInfo": "Incubation: 12 hours inside the Hatchery. Only one buggy can be active at a time. If you do not revive it within 90 seconds, it returns to its nest and becomes unavailable for 5 minutes.",
   "combatStats": {
-    "attackDamageSummary": "Basic bite, 3-hit bite combo, and a frontal charge. It can also throw objects carried in its jaws."
+    "attackDamageSummary": {
+      "es": "Mordisco básico, combo de 3 mordidas y embestida frontal. También puede lanzar objetos que lleve en las mandíbulas.",
+      "en": "Basic bite, 3-hit bite combo, and a frontal charge. It can also throw objects carried in its jaws.",
+      "ru": "Базовый укус, серия из 3 укусов и лобовой таран. Также может бросать предметы, которые держит в челюстях."
+    }
   },
   "inflictsEffects": [
     "chopping"
@@ -101,5 +105,285 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "appearanceType": "no_natural_spawn"
+  "appearanceType": "no_natural_spawn",
+  "buggyProfile": {
+    "technicalId": "Ant_Soldier_Brown_Augusta_Buggy",
+    "baseActor": "/Game/_Dev/Creatures/Ant/Red/Soldier/BP_Ant_Soldier_Augusta_Buggy",
+    "sourceAsset": "/Game/Releases/Release_0_4_0/Blueprints/DataTables/DA_BuggyBuffing",
+    "stats": {
+      "maxHealthRaw": 320.0,
+      "tamedMaxHealth": 200.0,
+      "averageDamageRaw": 30.0,
+      "defaultAttackTier": 1,
+      "defaultBaseDamageFirstAttack": 30.0,
+      "defaultBaseDamageTypeFirstAttack": 3,
+      "stamina": 60.0,
+      "staminaRegenRate": 60.0,
+      "staminaRegenDelay": 1.95,
+      "exhaustedStaminaDelay": 2.95,
+      "haulingCapacity": 12,
+      "blockDamageMultiplier": 0.5,
+      "blockStaminaRegenMultiplier": 0.0
+    },
+    "recipe": {
+      "sourceTable": "/Game/Blueprints/Items/CraftingTables/DT_Table_Crafting_Hatchery",
+      "row": "AntHatch",
+      "craftingBuildingTag": "CraftingBuilding.Hatchery",
+      "categoryTag": "Recipe.Crafting.Hatchery",
+      "visibility": "RecipeRequired",
+      "hiddenInCraftingMenu": true,
+      "productionTimeRaw": 12.0,
+      "overridesProductionTime": true,
+      "alwaysDropIngredientsOnDestroy": true,
+      "result": {
+        "itemRow": "AntHatch",
+        "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+        "count": 1
+      },
+      "requirements": [
+        {
+          "type": "Item",
+          "itemRow": "GrubHide",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [
+            "GrindableAmmo.Small"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Twig",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Gardening.Catalyst"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AcornShell",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggAnt",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "requirementsRaw": [
+        {
+          "type": "Item",
+          "itemRow": "GrubHide",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [
+            "GrindableAmmo.Small"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Twig",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Gardening.Catalyst"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AcornShell",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggAnt",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "technicalRequirements": [],
+      "gate": null
+    },
+    "hatching": {
+      "itemRow": "AntHatch",
+      "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "itemResolution": "direct",
+      "requiresManualHatch": true,
+      "hatchTimeRaw": 0.0,
+      "hatchData": "/Game/Blueprints/Items/Hatching/AntBuggyEggHatchData",
+      "hatchDataExportFound": true,
+      "hatchTamed": null,
+      "hatchOptions": [
+        {
+          "resultActor": "/Game/_Dev/Creatures/Ant/Red/Soldier/BP_Ant_Soldier_Augusta_Buggy",
+          "ratio": 1.0
+        }
+      ],
+      "worldActor": "/Game/Blueprints/Items/Hatching/BP_World_Hatchable_Ant_Red_Egg",
+      "tags": [],
+      "spoil": {
+        "state": "None",
+        "overrideGlobalTime": false,
+        "hours": 36.0,
+        "onlyWhenPlayerOwned": false,
+        "resultItemRow": null
+      }
+    },
+    "handling": {
+      "presetRow": "RedAnt",
+      "mappingMethod": "identity_current_game",
+      "presets": {
+        "Survival": {
+          "coreStats": {
+            "MaxWalkSpeed": 600.0,
+            "Acceleration": 2048.0,
+            "Friction": 8.0,
+            "BrakingDeceleration": 9000.0
+          },
+          "staminaStats": {
+            "MaxStamina": 60.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 60.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 1.95
+          },
+          "angleForStrafe": 65.0,
+          "blockingSpeedModifier": 0.5,
+          "useFrictionCurves": false,
+          "frictionCurve": null,
+          "speedBoostType": {
+            "row": "SpeedBoost",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 55.0,
+          "speedBoostStaminaCost": 10.0
+        },
+        "RacingStandard": {
+          "coreStats": {
+            "MaxWalkSpeed": 1300.0,
+            "Acceleration": 1600.0,
+            "Friction": 0.45,
+            "BrakingDeceleration": 600.0
+          },
+          "staminaStats": {
+            "MaxStamina": 70.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 60.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 3.0
+          },
+          "angleForStrafe": 90.0,
+          "blockingSpeedModifier": 1.0,
+          "useFrictionCurves": true,
+          "frictionCurve": "/Game/Blueprints/Creatures/Ant/CURVE_Ant_RaceBuggyFriction.0",
+          "speedBoostType": {
+            "row": "SpeedBoost_AntRace",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 100.0,
+          "speedBoostStaminaCost": 10.0
+        }
+      }
+    },
+    "raceVariant": {
+      "context": "ugc_racing",
+      "separateCreature": false,
+      "characterRow": "Ant_Soldier_Brown_Augusta_Buggy_Race",
+      "characterTable": "/Game/Blueprints/DataTables/Table_CharacterData",
+      "actor": "/Game/_Dev/Creatures/Ant/Red/Soldier/BP_Ant_Soldier_Augusta_Buggy_Race",
+      "saddleItemRow": "AntSaddle",
+      "saddleItemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "icon": "/Game/UI/Images/T_UI_Buggy_Ant_Icon",
+      "displayNameLoc": {
+        "StringTableID": 2,
+        "StringID": 2307,
+        "StringTableName": "None"
+      },
+      "localizedDescription": {
+        "StringTableID": 1,
+        "StringID": 3699,
+        "StringTableName": "None"
+      },
+      "abilities": [
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 3700,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3701,
+            "StringTableName": "None"
+          }
+        },
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 2956,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3702,
+            "StringTableName": "None"
+          }
+        }
+      ]
+    },
+    "quality": {
+      "baseActorResolved": true,
+      "hatcheryRecipeResolved": true,
+      "hatchingResolved": true,
+      "raceVariantResolved": true,
+      "gatedStages": 2,
+      "unlinkedAttackRows": 36
+    }
+  },
+  "availabilityStatus": "source_backed"
 }

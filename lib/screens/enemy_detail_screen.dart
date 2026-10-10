@@ -780,6 +780,10 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               _TextSection(title: l10n.descriptionTitle, value: description),
               const SizedBox(height: 18),
             ],
+            if (enemy.availabilityStatus == 'implemented_unconfirmed') ...[
+              _ExtractorAvailabilityNotice(languageCode: languageCode),
+              const SizedBox(height: 18),
+            ],
             if (enemy.healthDisplay.shouldRender && !enemy.hideHealth) ...[
               _HealthBar(
                 health: effectiveHealth,
@@ -1066,6 +1070,13 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                 showHealth:
                     !enemy.healthDisplay.shouldRender && !enemy.hideHealth,
                 l10n: l10n,
+                languageCode: languageCode,
+              ),
+              const SizedBox(height: 18),
+            ],
+            if (enemy.buggyProfile != null) ...[
+              _BuggyProfileSection(
+                profile: enemy.buggyProfile!,
                 languageCode: languageCode,
               ),
               const SizedBox(height: 18),
@@ -2106,6 +2117,121 @@ class _TextSection extends StatelessWidget {
             border: Border.all(color: Colors.black12),
           ),
           child: Text(visibleValue),
+        ),
+      ],
+    );
+  }
+}
+
+class _ExtractorAvailabilityNotice extends StatelessWidget {
+  final String languageCode;
+
+  const _ExtractorAvailabilityNotice({required this.languageCode});
+
+  @override
+  Widget build(BuildContext context) {
+    final message = switch (languageCode) {
+      'es' => 'Implementado en los datos actuales del juego; su aparición jugable aún no está confirmada.',
+      'ru' => 'Объект присутствует в текущих данных игры, но его появление в игровом мире ещё не подтверждено.',
+      _ => 'Implemented in the current game data; its playable encounter has not been confirmed yet.',
+    };
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.info_outline),
+          const SizedBox(width: 10),
+          Expanded(child: Text(message, style: const TextStyle(height: 1.35))),
+        ],
+      ),
+    );
+  }
+}
+
+class _BuggyProfileSection extends StatelessWidget {
+  final BuggyProfile profile;
+  final String languageCode;
+
+  const _BuggyProfileSection({
+    required this.profile,
+    required this.languageCode,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final title = switch (languageCode) {
+      'es' => 'Datos de Buggy',
+      'ru' => 'Данные багги',
+      _ => 'Buggy data',
+    };
+    final health = profile.stat('tamedMaxHealth') ?? profile.stat('maxHealthRaw');
+    final damage = profile.stat('averageDamageRaw') ?? profile.stat('defaultBaseDamageFirstAttack');
+    final stamina = profile.stat('stamina');
+    final hauling = profile.stat('haulingCapacity');
+    final labels = <MapEntry<String, String>>[];
+    void add(String en, String es, String ru, num? value, String suffix) {
+      if (value != null) {
+        labels.add(MapEntry(switch (languageCode) {
+          'es' => es,
+          'ru' => ru,
+          _ => en,
+        }, '$value$suffix'));
+      }
+    }
+    add('Tamed health', 'Vida domesticada', 'Здоровье прирученного', health, ' HP');
+    add('Base damage', 'Daño base', 'Базовый урон', damage, '');
+    add('Stamina', 'Resistencia', 'Выносливость', stamina, '');
+    add('Hauling capacity', 'Capacidad de carga', 'Грузоподъёмность', hauling, '');
+    final ingredients = profile.ingredients;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: Colors.black12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...labels.map((row) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    Expanded(child: Text(row.key, style: const TextStyle(fontWeight: FontWeight.w700))),
+                    Text(row.value),
+                  ],
+                ),
+              )),
+              if (profile.recipeRow != null) ...[
+                const SizedBox(height: 4),
+                Text(
+                  switch (languageCode) {
+                    'es' => 'Incubadora: ${profile.recipeRow}',
+                    'ru' => 'Инкубатор: ${profile.recipeRow}',
+                    _ => 'Hatchery: ${profile.recipeRow}',
+                  },
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+              ],
+              if (ingredients.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                ...ingredients.map((item) => Text(
+                  '• ${item['itemRow'] ?? item['type'] ?? 'Unknown'} × ${item['count'] ?? '?'}',
+                )),
+              ],
+            ],
+          ),
         ),
       ],
     );

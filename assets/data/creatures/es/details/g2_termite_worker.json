@@ -1,0 +1,153 @@
+{
+  "id": "g2_termite_worker",
+  "speciesKey": "termite_worker",
+  "technicalId": "TermiteWorker",
+  "bestiaryId": "TermiteWorker",
+  "name": "Termite Worker",
+  "game": "g2",
+  "tier": 4,
+  "danger": "unknown",
+  "isBoss": false,
+  "order": 0,
+  "defaultGold": false,
+  "favoriteKey": "g2_termite_worker",
+  "goldLinkId": null,
+  "cardNormal": "",
+  "cardGold": "",
+  "hasCreatureCard": false,
+  "hasGoldCreatureCard": false,
+  "hasSelectableCardVariants": false,
+  "defaultCardVariant": null,
+  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "listIconAsset": "",
+  "mapMarkerAsset": "",
+  "customAsset": "",
+  "temperament": "unknown",
+  "collectionGroup": "unknown",
+  "entityType": "creature",
+  "isKillable": true,
+  "health": {
+    "rating": 3,
+    "value": 800
+  },
+  "healthDisplay": "normal",
+  "elementalWeaknesses": [
+    {
+      "type": "sour",
+      "bonusPct": 30
+    },
+    {
+      "type": "spicy",
+      "bonusPct": 30
+    }
+  ],
+  "damageWeaknesses": [
+    {
+      "type": "stabbing",
+      "bonusPct": 15
+    }
+  ],
+  "resistancesV2": [
+    {
+      "type": "gas",
+      "bonusPct": 90
+    },
+    {
+      "type": "salty",
+      "bonusPct": 50
+    },
+    {
+      "type": "slashing",
+      "bonusPct": 25
+    }
+  ],
+  "immunities": [],
+  "weaknesses": [],
+  "resistances": [],
+  "weakPoints": [],
+  "attacks": [
+    {
+      "name": "Termite Worker Bite Left",
+      "technicalId": "TermiteWorkerBiteLeft",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 68.0,
+      "cooldownSeconds": 0.0,
+      "range": 150.0,
+      "stun": 4,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite Worker Lunge",
+      "technicalId": "TermiteWorkerLunge",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 75.0,
+      "cooldownSeconds": 10.0,
+      "range": 175.0,
+      "stun": 5,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite Worker Range",
+      "technicalId": "TermiteWorkerRange",
+      "tags": [
+        "general",
+        "projectile"
+      ],
+      "damageTypes": [
+        "general"
+      ],
+      "damage": 65.0,
+      "cooldownSeconds": 20.0,
+      "range": 300.0,
+      "stun": 12,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": true,
+      "hitResolutionType": "AOE",
+      "actionType": "projectile",
+      "blockability": "unknown"
+    }
+  ],
+  "combatStats": {
+    "health": 800,
+    "stunThreshold": 75,
+    "stunCooldownSeconds": 10
+  },
+  "loot": [],
+  "advancedLootTable": [],
+  "locations": [],
+  "environments": [],
+  "eventAppearances": [],
+  "appearanceType": "unknown",
+  "encounterVariants": [],
+  "availabilityStatus": "implemented_unconfirmed",
+  "sourceProvenance": {
+    "extractorStatus": "implemented_unconfirmed",
+    "extractorTechnicalId": "TermiteWorker",
+    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+  },
+  "dataRevision": "extractor_release_0_6"
+}

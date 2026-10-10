@@ -70,7 +70,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -84,7 +83,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 70"
     },
     {
       "name": "Cuerpo a cuerpo derecha",
@@ -92,7 +92,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -106,7 +105,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 70"
     }
   ],
   "encounterVariants": [],
@@ -533,7 +533,7 @@
     {
       "item": "Scorpion Striped Chunk",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -547,9 +547,10 @@
     {
       "item": "Scorpion Striped Chunk",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

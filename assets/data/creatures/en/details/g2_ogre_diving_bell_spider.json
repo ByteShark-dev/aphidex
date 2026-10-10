@@ -1,0 +1,147 @@
+{
+  "id": "g2_ogre_diving_bell_spider",
+  "speciesKey": "ogre_diving_bell_spider",
+  "technicalId": "SpiderDivingBellOGRE",
+  "bestiaryId": "SpiderDivingBellOGRE",
+  "name": "Diving Bell Spider O.G.R.E.",
+  "game": "g2",
+  "tier": 2,
+  "danger": "unknown",
+  "isBoss": false,
+  "order": 0,
+  "defaultGold": false,
+  "favoriteKey": "g2_ogre_diving_bell_spider",
+  "goldLinkId": null,
+  "cardNormal": "",
+  "cardGold": "",
+  "hasCreatureCard": false,
+  "hasGoldCreatureCard": false,
+  "hasSelectableCardVariants": false,
+  "defaultCardVariant": null,
+  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "listIconAsset": "",
+  "mapMarkerAsset": "",
+  "customAsset": "",
+  "temperament": "unknown",
+  "collectionGroup": "unknown",
+  "entityType": "creature",
+  "isKillable": true,
+  "health": {
+    "rating": 4,
+    "value": 1600
+  },
+  "healthDisplay": "normal",
+  "elementalWeaknesses": [],
+  "damageWeaknesses": [
+    {
+      "type": "slashing",
+      "bonusPct": 30
+    }
+  ],
+  "resistancesV2": [
+    {
+      "type": "stabbing",
+      "bonusPct": 25
+    }
+  ],
+  "immunities": [],
+  "weaknesses": [],
+  "resistances": [],
+  "weakPoints": [],
+  "attacks": [
+    {
+      "name": "Spider Diving Bell Bite Augusta",
+      "technicalId": "SpiderDivingBellBite_Augusta",
+      "tags": [
+        "stabbing"
+      ],
+      "damageTypes": [
+        "stabbing"
+      ],
+      "damage": 50.0,
+      "cooldownSeconds": 3.0,
+      "range": 400.0,
+      "stun": 8,
+      "statusEffects": [
+        "VenomSmall"
+      ],
+      "statusEffectDetails": [
+        {
+          "id": "VenomSmall",
+          "value": null,
+          "durationSeconds": null
+        }
+      ],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Spider Diving Bell Lunge Augusta",
+      "technicalId": "SpiderDivingBellLunge_Augusta",
+      "tags": [
+        "stabbing"
+      ],
+      "damageTypes": [
+        "stabbing"
+      ],
+      "damage": 68.0,
+      "cooldownSeconds": 10.0,
+      "range": 300.0,
+      "stun": 12,
+      "statusEffects": [
+        "VenomSmall"
+      ],
+      "statusEffectDetails": [
+        {
+          "id": "VenomSmall",
+          "value": null,
+          "durationSeconds": null
+        }
+      ],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "O.G.R.E. Spider Diving Bell Water Dodge Augusta",
+      "technicalId": "SpiderDivingBell_WaterDodge_Augusta",
+      "tags": [],
+      "damageTypes": [],
+      "damage": 0.0,
+      "cooldownSeconds": 10.0,
+      "range": 100.0,
+      "stun": 0,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    }
+  ],
+  "combatStats": {
+    "health": 1600,
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
+  },
+  "loot": [],
+  "advancedLootTable": [],
+  "locations": [],
+  "environments": [],
+  "eventAppearances": [],
+  "appearanceType": "unknown",
+  "encounterVariants": [],
+  "availabilityStatus": "implemented_unconfirmed",
+  "sourceProvenance": {
+    "extractorStatus": "implemented_unconfirmed",
+    "extractorTechnicalId": "SpiderDivingBellOGRE",
+    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+  },
+  "dataRevision": "extractor_release_0_6"
+}

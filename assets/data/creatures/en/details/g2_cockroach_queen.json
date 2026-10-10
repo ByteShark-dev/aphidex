@@ -166,12 +166,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "gas",
-      "bonusPct": 90
-    },
-    {
       "type": "fresh",
       "bonusPct": 50
+    },
+    {
+      "type": "gas",
+      "bonusPct": 90
     },
     {
       "type": "spicy",
@@ -273,7 +273,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -287,7 +286,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Bite Right",
@@ -295,7 +295,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -309,7 +308,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Bite Left",
@@ -317,7 +317,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -331,7 +330,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Karate Kick Left",
@@ -339,7 +339,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -353,7 +352,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Karate Kick Right",
@@ -361,7 +361,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -375,7 +374,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Combo 3",
@@ -383,7 +383,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 45",
       "damageTypes": [
         "stabbing"
       ],
@@ -397,7 +396,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 45"
     },
     {
       "name": "Slam",
@@ -405,7 +405,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 60",
       "damageTypes": [
         "general"
       ],
@@ -419,7 +418,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 60"
     },
     {
       "name": "Spray",
@@ -427,7 +427,6 @@
       "tags": [
         "sizzle"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "sizzle"
       ],
@@ -436,11 +435,11 @@
       "range": 750.0,
       "stun": 15,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -449,7 +448,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     }
   ],
   "encounterVariants": [],
@@ -589,8 +589,8 @@
     },
     {
       "item": "Cockroach Milk",
-      "countLabel": "1",
-      "chancePct": 1,
+      "countLabel": "2",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -603,22 +603,15 @@
     },
     {
       "item": "Cockroach Milk",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Cockroach Part",
-      "countLabel": "2",
-      "chancePct": 25,
+      "countLabel": "4",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -631,8 +624,29 @@
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "4",
-      "chancePct": 100,
+      "countLabel": "2",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -692,5 +706,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

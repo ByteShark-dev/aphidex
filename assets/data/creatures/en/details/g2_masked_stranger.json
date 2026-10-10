@@ -161,7 +161,6 @@
         "slashing",
         "spicy"
       ],
-      "notes": "Attack damage: 40",
       "damageTypes": [
         "slashing",
         "spicy"
@@ -171,11 +170,11 @@
       "range": 275.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -184,7 +183,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 40"
     },
     {
       "name": "Combo 3 Hits",
@@ -193,7 +193,6 @@
         "slashing",
         "spicy"
       ],
-      "notes": "Attack damage: 40",
       "damageTypes": [
         "slashing",
         "spicy"
@@ -203,11 +202,11 @@
       "range": 275.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -216,7 +215,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 40"
     },
     {
       "name": "Power",
@@ -225,7 +225,6 @@
         "slashing",
         "spicy"
       ],
-      "notes": "Attack damage: 100",
       "damageTypes": [
         "slashing",
         "spicy"
@@ -235,11 +234,11 @@
       "range": 325.0,
       "stun": 20,
       "statusEffects": [
-        "Sizzle Large Increase"
+        "SizzleLargeIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Large Increase",
+          "id": "SizzleLargeIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -248,7 +247,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 100"
     },
     {
       "name": "Leap",
@@ -258,7 +258,6 @@
         "slashing",
         "spicy"
       ],
-      "notes": "Attack damage: 45",
       "damageTypes": [
         "slashing",
         "spicy"
@@ -268,11 +267,11 @@
       "range": 325.0,
       "stun": 10,
       "statusEffects": [
-        "Sizzle Large Increase"
+        "SizzleLargeIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Large Increase",
+          "id": "SizzleLargeIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -281,7 +280,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "ranged",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 45"
     },
     {
       "name": "Area Attack Transition",
@@ -289,7 +289,6 @@
       "tags": [
         "explosive"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "explosive"
       ],
@@ -303,7 +302,8 @@
       "projectile": false,
       "hitResolutionType": "Self",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Block Offensive",
@@ -311,7 +311,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -322,8 +321,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -363,5 +363,6 @@
   "dangerOverrideProvenance": "community_calibrated_2026_08_22",
   "immunities": [],
   "loot": [],
-  "advancedLootTable": []
+  "advancedLootTable": [],
+  "sourceStatus": "extractor_merged"
 }

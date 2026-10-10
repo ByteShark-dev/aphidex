@@ -89,7 +89,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -103,7 +102,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Bite",
@@ -111,7 +111,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -125,7 +124,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Triple Bite",
@@ -133,7 +133,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -147,7 +146,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Power Attack",
@@ -155,7 +155,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -169,7 +168,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     }
   ],
   "encounterVariants": [],
@@ -5877,14 +5877,14 @@
     {
       "item": "Spider Chunk",
       "countLabel": "1",
-      "chancePct": 25,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Spider Chunk",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -5895,5 +5895,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -247,7 +247,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 65",
       "damageTypes": [
         "general"
       ],
@@ -256,11 +255,11 @@
       "range": 700.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -269,7 +268,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 65"
     },
     {
       "name": "Mordida",
@@ -277,7 +277,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 65",
       "damageTypes": [
         "general"
       ],
@@ -286,11 +285,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -299,7 +298,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 65"
     },
     {
       "name": "Spider Wolf Flurry",
@@ -307,7 +307,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "general"
       ],
@@ -316,11 +315,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -329,7 +328,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     },
     {
       "name": "Potente ataque",
@@ -337,7 +337,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 80",
       "damageTypes": [
         "general"
       ],
@@ -346,11 +345,11 @@
       "range": 300.0,
       "stun": 20,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -359,7 +358,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 80"
     },
     {
       "name": "Spider salto ataque",
@@ -367,7 +367,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 95",
       "damageTypes": [
         "general"
       ],
@@ -376,11 +375,11 @@
       "range": 600.0,
       "stun": 15,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -389,7 +388,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 95"
     },
     {
       "name": "Spider Wolf Riposte Stance",
@@ -397,7 +397,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 10.0,
@@ -409,7 +408,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [],
@@ -457,22 +457,22 @@
     },
     {
       "item": "Spider Venom",
-      "countLabel": "1",
-      "chancePct": 25,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Spider Venom",
       "countLabel": "2",
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Spider Wolf Chunk",
+      "item": "Spider Venom",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Spider Wolf Chunk",
+      "countLabel": "3",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -485,15 +485,8 @@
     },
     {
       "item": "Spider Wolf Chunk",
-      "countLabel": "3",
-      "chancePct": 100,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Spider Wolf Fang",
       "countLabel": "1",
-      "chancePct": 35,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -503,6 +496,14 @@
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Spider Wolf Fang",
+      "countLabel": "1",
+      "chancePct": 35,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -42,7 +42,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -103,7 +103,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -117,7 +116,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Left Strike",
@@ -125,7 +125,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -139,7 +138,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     }
   ],
   "encounterVariants": [
@@ -608,7 +608,7 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 10,
       "rollCount": 1,
@@ -617,7 +617,7 @@
     {
       "item": "Scorpion Northern Chunk",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -631,9 +631,10 @@
     {
       "item": "Scorpion Northern Chunk",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

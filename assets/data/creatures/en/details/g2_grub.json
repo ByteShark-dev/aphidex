@@ -63,10 +63,10 @@
   "advancedLootTable": [
     {
       "item": "Grub Goop",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "countLabel": "5",
+      "chancePct": 30,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Grub Goop",
@@ -77,17 +77,17 @@
     },
     {
       "item": "Grub Goop",
-      "countLabel": "5",
-      "chancePct": 30,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Grub Hide",
+      "item": "Grub Goop",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Grub Hide",
@@ -100,6 +100,27 @@
       "item": "Grub Hide",
       "countLabel": "2",
       "chancePct": 20,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Grub Hide",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Grub Hide",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Grub Hide",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -6008,5 +6029,6 @@
   "environmentHazards": [],
   "eventAppearances": [],
   "appearanceType": "natural",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

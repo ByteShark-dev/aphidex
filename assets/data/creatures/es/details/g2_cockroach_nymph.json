@@ -64,12 +64,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "gas",
-      "bonusPct": 90
-    },
-    {
       "type": "fresh",
       "bonusPct": 25
+    },
+    {
+      "type": "gas",
+      "bonusPct": 90
     },
     {
       "type": "spicy",
@@ -97,7 +97,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 15",
       "damageTypes": [
         "stabbing"
       ],
@@ -111,7 +110,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 15"
     },
     {
       "name": "Mordida izquierda",
@@ -119,7 +119,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 15",
       "damageTypes": [
         "stabbing"
       ],
@@ -133,7 +132,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 15"
     },
     {
       "name": "Mordida derecha",
@@ -141,7 +141,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 15",
       "damageTypes": [
         "stabbing"
       ],
@@ -155,7 +154,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 15"
     }
   ],
   "encounterVariants": [],
@@ -2135,13 +2135,6 @@
     {
       "item": "Cockroach Part",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Cockroach Part",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
@@ -2152,6 +2145,28 @@
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -50,7 +50,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -111,7 +111,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "chopping"
       ],
@@ -125,7 +124,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Lunge",
@@ -133,7 +133,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 40",
       "damageTypes": [
         "chopping"
       ],
@@ -147,7 +146,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 40"
     },
     {
       "name": "Double Bite",
@@ -155,7 +155,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -169,7 +168,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Triple Bite",
@@ -177,7 +177,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -191,7 +190,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     }
   ],
   "encounterVariants": [
@@ -875,23 +875,23 @@
     {
       "item": "Acid Gland",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
-    },
-    {
-      "item": "Acid Gland",
-      "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Larva Spike",
+      "item": "Acid Gland",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Larva Spike",
@@ -901,11 +901,33 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Larva Spike",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Larva Spike",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Larva Spike",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 30,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

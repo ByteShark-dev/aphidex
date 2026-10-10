@@ -61,19 +61,19 @@
     {
       "item": "Mosquito Beak",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Mosquito Beak",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Mosquito Blood Sack",
+      "item": "Mosquito Beak",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -83,6 +83,13 @@
       "item": "Mosquito Blood Sack",
       "countLabel": "1",
       "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mosquito Blood Sack",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -157,7 +164,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 60",
       "damageTypes": [
         "stabbing"
       ],
@@ -171,7 +177,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 60"
     },
     {
       "name": "Combo estocada",
@@ -179,7 +186,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 45",
       "damageTypes": [
         "stabbing"
       ],
@@ -193,7 +199,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 45"
     },
     {
       "name": "Picada Bomb",
@@ -201,7 +208,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -215,7 +221,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 70"
     }
   ],
   "encounterVariants": [],
@@ -390,5 +397,6 @@
   "environmentHazards": [],
   "eventAppearances": [],
   "appearanceType": "natural",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

@@ -1,0 +1,803 @@
+{
+  "schema": "aphidex-release-0-6-diff-v1",
+  "extractorStatus": "PASS_WITH_SOURCE_WARNINGS",
+  "releaseEntitiesMissing": [],
+  "newBuggy": "PotatoBug_Buggy",
+  "sourceBuggyCount": 6,
+  "changes": {
+    "stats": 0,
+    "attacks": 106,
+    "resistancesWeaknesses": 0,
+    "loot": 0
+  },
+  "creatures": [
+    {
+      "publicId": "g2_ancient_pond_jockey",
+      "technicalId": "PondJockeyAncient",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_bee",
+      "technicalId": "Bee",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_black_soldier_ant",
+      "technicalId": "AntBlackSoldier",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_black_worker_ant",
+      "technicalId": "AntBlackWorker",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_blue_butterfly",
+      "technicalId": "BlueButterfly",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_bombardier_beetle",
+      "technicalId": "Bombardier",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_toe_biter_nymph",
+      "technicalId": "ToeBiterNymph",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_chop_r",
+      "technicalId": "SphereBotChopR",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_cku",
+      "technicalId": "SphereBotCKU",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_cockroach",
+      "technicalId": "Cockroach",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_cockroach_nymph",
+      "technicalId": "Cockroach_Nymph",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_cockroach_queen",
+      "technicalId": "Cockroach_Queen",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_cricket",
+      "technicalId": "Cricket",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_diving_bell_spider",
+      "technicalId": "SpiderDivingBell",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_green_shield_bug",
+      "technicalId": "GreenShieldBug",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_koi_calico",
+      "technicalId": "KoiB",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_koi_dagon",
+      "technicalId": "KoiD",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_koi_oriole",
+      "technicalId": "KoiC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_koi_sunny",
+      "technicalId": "KoiA",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ladybug",
+      "technicalId": "Ladybug",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_larva",
+      "technicalId": "Larva",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_masked_fighter",
+      "technicalId": "SubjectVGarden",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_masked_stranger",
+      "technicalId": "SubjectV",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_mosquito",
+      "technicalId": "Mosquito",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_northern_scorpion",
+      "technicalId": "NorthernScorpion",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_northern_scorpion_jr",
+      "technicalId": "NorthernScorpionJr",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_northern_scorpling",
+      "technicalId": "Scorpling",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_blue_butterfly",
+      "technicalId": "BlueButterflyOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_cricket",
+      "technicalId": "CricketOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_green_shield_bug",
+      "technicalId": "GreenShieldBugOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_ladybug",
+      "technicalId": "LadybugOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_northern_scorpion",
+      "technicalId": "NorthernScorpionOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_pincher_earwig",
+      "technicalId": "EarwigOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_praying_mantis_nymph",
+      "technicalId": "GreenMantisOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_rust_beetle",
+      "technicalId": "RustBeetleOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_striped_bark_scorpion",
+      "technicalId": "StripedBarkScorpionAdultOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_tiger_mosquito",
+      "technicalId": "MosquitoTigerOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_toe_biter",
+      "technicalId": "ToeBiterAdultOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_toe_biter_leviathan",
+      "technicalId": "ToeBiterLeviathanOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_wasp",
+      "technicalId": "WaspOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_wasp_drone",
+      "technicalId": "WaspDroneOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_whipper_earwig",
+      "technicalId": "EarwigRangeOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_ogrr_wolf_spider",
+      "technicalId": "SpiderWolfOGRE",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orb_weaver",
+      "technicalId": "SpiderOrb",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orb_weaver_jr",
+      "technicalId": "SpiderOrbJr",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_bee",
+      "technicalId": "BeeORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_black_soldier_ant",
+      "technicalId": "AntBlackSoldierORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_blue_butterfly",
+      "technicalId": "BlueButterflyORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_bombardier_beetle",
+      "technicalId": "BombardierORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_cockroach",
+      "technicalId": "CockroachORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_cockroach_nymph",
+      "technicalId": "Cockroach_NymphORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_cockroach_queen",
+      "technicalId": "Cockroach_QueenORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_cricket",
+      "technicalId": "CricketORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_green_shield_bug",
+      "technicalId": "GreenShieldBugORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_ladybug",
+      "technicalId": "LadybugORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_larva",
+      "technicalId": "LarvaORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_mosquito",
+      "technicalId": "MosquitoORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_northern_scorpion",
+      "technicalId": "NorthernScorpionORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_northern_scorpion_jr",
+      "technicalId": "NorthernScorpionJrORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_northern_scorpling",
+      "technicalId": "ScorplingORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_pincher_earwig",
+      "technicalId": "EarwigORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_potato_beetle",
+      "technicalId": "PotatoBeetleORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_praying_mantis_nymph",
+      "technicalId": "GreenMantisORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_red_soldier_ant",
+      "technicalId": "AntRedSoldierORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_rust_beetle",
+      "technicalId": "RustBeetleORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_spiderling",
+      "technicalId": "SpiderlingORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_stinkbug",
+      "technicalId": "StinkbugORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_striped_bark_scorpion",
+      "technicalId": "StripedBarkScorpionAdultORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_striped_bark_scorpion_jr",
+      "technicalId": "StripedBarkScorpionJrORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_striped_bark_scorpling",
+      "technicalId": "StripedBarkScorplingORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_tiger_mosquito",
+      "technicalId": "MosquitoTigerORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_toe_biter",
+      "technicalId": "ToeBiterAdultORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_toe_biter_leviathan",
+      "technicalId": "ToeBiterLeviathanORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_toe_biter_nymph",
+      "technicalId": "ToeBiterNymphORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_wasp",
+      "technicalId": "WaspORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_wasp_drone",
+      "technicalId": "WaspDroneORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_weaver",
+      "technicalId": "SpiderOrbORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_weaver_jr",
+      "technicalId": "SpiderOrbJrORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_whipper_earwig",
+      "technicalId": "EarwigRangeORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_orc_wolf_spider",
+      "technicalId": "SpiderWolfORC",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_papa_toe_biter",
+      "technicalId": "ToeBiterLeviathanEggs",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_pincher_earwig",
+      "technicalId": "Earwig",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_pond_jockey",
+      "technicalId": "PondJockey",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_potato_beetle",
+      "technicalId": "PotatoBeetle",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_praying_mantis_nymph",
+      "technicalId": "GreenMantis",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_red_soldier_ant",
+      "technicalId": "AntRedSoldier",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_red_worker_ant",
+      "technicalId": "AntRedWorker",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_rust_beetle",
+      "technicalId": "RustBeetle",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_sauc_r",
+      "technicalId": "SphereBotSaucR",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_spiderling",
+      "technicalId": "Spiderling",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_spiny_water_flea",
+      "technicalId": "WaterFleaSpiny",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_stinkbug",
+      "technicalId": "Stinkbug",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_striped_bark_scorpion",
+      "technicalId": "StripedBarkScorpionAdult",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_striped_bark_scorpion_jr",
+      "technicalId": "StripedBarkScorpionJr",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_striped_bark_scorpling",
+      "technicalId": "StripedBarkScorpling",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_tick",
+      "technicalId": "MiteTick",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_tiger_mosquito",
+      "technicalId": "MosquitoTiger",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_toe_biter",
+      "technicalId": "ToeBiterAdult",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_toe_biter_leviathan",
+      "technicalId": "ToeBiterLeviathan",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_wasp",
+      "technicalId": "Wasp",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_wasp_drone",
+      "technicalId": "WaspDrone",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_water_boatman",
+      "technicalId": "WaterBoatman",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_water_flea",
+      "technicalId": "WaterFlea",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_whipper_earwig",
+      "technicalId": "EarwigRange",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_wolf_spider",
+      "technicalId": "SpiderWolf",
+      "fields": [
+        "attacks"
+      ]
+    },
+    {
+      "publicId": "g2_woolly_aphid",
+      "technicalId": "WoollyAphid",
+      "fields": [
+        "attacks"
+      ]
+    }
+  ],
+  "equipment": {
+    "driftStatus": "closed_baseline_compatible",
+    "identityDrift": {
+      "newCandidates": [],
+      "missingCandidates": [],
+      "changedCandidates": [],
+      "baselineCount": 302,
+      "freshCount": 302
+    },
+    "source": {
+      "weapons": 55,
+      "shields": 9,
+      "armorPieces": 97,
+      "armorSets": 29,
+      "trinkets": 48
+    },
+    "aphidex": {
+      "weapons": 55,
+      "shields": 9,
+      "armorPieces": 97,
+      "armorSets": 29,
+      "trinkets": 48
+    }
+  },
+  "applied": true,
+  "extractorManifest": "/mnt/F/ByteShark-Dev/Aphidex_extractor_v1/aphidex_extractor_v1/output_aphidex_extractor_v1_missing_export_verification/final/aphidex_extractor_manifest_v1.json",
+  "sourceWarnings": [
+    {
+      "code": "UNRESOLVED_EQUIPMENT_ACQUISITION",
+      "count": 11,
+      "items": [
+        "AccessoryBlockStrength",
+        "AccessoryHedgeWeb",
+        "AccessoryLips",
+        "AccessoryWidowling",
+        "BombSourUnique",
+        "OminentBadgeCustomerSatisfaction",
+        "OminentBadgeLegal",
+        "OminentBadgeMouthFeel",
+        "OminentBadgeOfficeSupplies",
+        "OminentBadgeWaspDen",
+        "RomanCandle"
+      ],
+      "note": "Preserved as unresolved; no acquisition method is invented."
+    }
+  ]
+}

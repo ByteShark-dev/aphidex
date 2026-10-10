@@ -91,15 +91,15 @@
   ],
   "resistancesV2": [
     {
+      "type": "sour",
+      "bonusPct": 50
+    },
+    {
       "type": "spicy",
       "bonusPct": 25
     },
     {
       "type": "venom",
-      "bonusPct": 50
-    },
-    {
-      "type": "sour",
       "bonusPct": 50
     },
     {
@@ -290,7 +290,6 @@
         "slashing",
         "sour"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "slashing",
         "sour"
@@ -300,11 +299,11 @@
       "range": 275.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -313,7 +312,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Combo 4 Hits Spin",
@@ -322,7 +322,6 @@
         "slashing",
         "sour"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "slashing",
         "sour"
@@ -332,11 +331,11 @@
       "range": 275.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -345,7 +344,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Combo 5 Hits",
@@ -354,7 +354,6 @@
         "slashing",
         "sour"
       ],
-      "notes": "Attack damage: 43",
       "damageTypes": [
         "slashing",
         "sour"
@@ -364,11 +363,11 @@
       "range": 275.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -377,7 +376,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 43"
     },
     {
       "name": "Power",
@@ -386,7 +386,6 @@
         "slashing",
         "sour"
       ],
-      "notes": "Attack damage: 110",
       "damageTypes": [
         "slashing",
         "sour"
@@ -396,11 +395,11 @@
       "range": 325.0,
       "stun": 12,
       "statusEffects": [
-        "Corrosion Large"
+        "CorrosionLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Large",
+          "id": "CorrosionLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -409,7 +408,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 110"
     },
     {
       "name": "Leap",
@@ -419,7 +419,6 @@
         "slashing",
         "sour"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "slashing",
         "sour"
@@ -429,11 +428,11 @@
       "range": 325.0,
       "stun": 10,
       "statusEffects": [
-        "Corrosion Large"
+        "CorrosionLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Large",
+          "id": "CorrosionLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -442,7 +441,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "ranged",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Block Offensive",
@@ -450,7 +450,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -461,8 +460,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -502,5 +502,6 @@
   "immunities": [
     "acid"
   ],
-  "advancedLootTable": []
+  "advancedLootTable": [],
+  "sourceStatus": "extractor_merged"
 }

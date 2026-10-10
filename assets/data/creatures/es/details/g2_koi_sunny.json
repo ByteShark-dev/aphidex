@@ -46,7 +46,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 500",
       "damageTypes": [
         "general"
       ],
@@ -58,9 +57,10 @@
       "statusEffectDetails": [],
       "ranged": false,
       "projectile": false,
-      "hitResolutionType": "Default",
+      "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 500"
     },
     {
       "name": "Koi Eat",
@@ -68,7 +68,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 500",
       "damageTypes": [
         "general"
       ],
@@ -82,7 +81,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 500"
     },
     {
       "name": "Koi Thrash",
@@ -90,7 +90,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 500",
       "damageTypes": [
         "general"
       ],
@@ -104,7 +103,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 500"
     }
   ],
   "encounterVariants": [],
@@ -162,5 +162,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

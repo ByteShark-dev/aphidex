@@ -72,12 +72,12 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
       "type": "slashing",
       "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 50
     }
   ],
   "weakPoints": [
@@ -98,26 +98,25 @@
       "tags": [
         "smashing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "smashing"
       ],
       "damage": 40.0,
       "cooldownSeconds": 0.0,
-      "range": 200.0,
+      "range": 250.0,
       "stun": 10,
       "statusEffects": [
-        "Infection Damage Debuff Short",
-        "Infection Speed Debuff Short"
+        "InfectionDamageDebuffShort",
+        "InfectionSpeedDebuffShort"
       ],
       "statusEffectDetails": [
         {
-          "id": "Infection Damage Debuff Short",
+          "id": "InfectionDamageDebuffShort",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Infection Speed Debuff Short",
+          "id": "InfectionSpeedDebuffShort",
           "value": null,
           "durationSeconds": null
         }
@@ -126,7 +125,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     },
     {
       "name": "Combo",
@@ -134,26 +134,25 @@
       "tags": [
         "smashing"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "smashing"
       ],
       "damage": 35.0,
       "cooldownSeconds": 0.0,
-      "range": 200.0,
+      "range": 250.0,
       "stun": 10,
       "statusEffects": [
-        "Infection Damage Debuff Short",
-        "Infection Speed Debuff Short"
+        "InfectionDamageDebuffShort",
+        "InfectionSpeedDebuffShort"
       ],
       "statusEffectDetails": [
         {
-          "id": "Infection Damage Debuff Short",
+          "id": "InfectionDamageDebuffShort",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Infection Speed Debuff Short",
+          "id": "InfectionSpeedDebuffShort",
           "value": null,
           "durationSeconds": null
         }
@@ -162,7 +161,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Tayz T Pincher",
@@ -170,13 +170,12 @@
       "tags": [
         "smashing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "smashing"
       ],
       "damage": 40.0,
       "cooldownSeconds": 0.0,
-      "range": 200.0,
+      "range": 250.0,
       "stun": 10,
       "statusEffects": [],
       "statusEffectDetails": [],
@@ -184,7 +183,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     }
   ],
   "encounterVariants": [],
@@ -457,23 +457,16 @@
     {
       "item": "Sphere Bot Diode",
       "countLabel": "1",
-      "chancePct": 10,
+      "chancePct": 60,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Sphere Bot Diode",
       "countLabel": "1",
-      "chancePct": 60,
+      "chancePct": 10,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Sphere Bot Parts",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
     },
     {
       "item": "Sphere Bot Parts",
@@ -488,6 +481,28 @@
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

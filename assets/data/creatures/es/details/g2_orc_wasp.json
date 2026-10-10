@@ -37,7 +37,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -108,27 +108,27 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
+      "type": "all",
+      "bonusPct": 25
     },
     {
       "type": "explosive",
       "bonusPct": 50
     },
     {
-      "type": "all",
-      "bonusPct": 25
-    },
-    {
-      "type": "slashing",
-      "bonusPct": 25
+      "type": "gas",
+      "bonusPct": 50
     },
     {
       "type": "poison",
       "bonusPct": 75
     },
     {
-      "type": "gas",
+      "type": "slashing",
+      "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
       "bonusPct": 50
     }
   ],
@@ -140,7 +140,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -149,11 +148,11 @@
       "range": 400.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -162,7 +161,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     },
     {
       "name": "Aguijonazo cargado",
@@ -170,7 +170,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -179,11 +178,11 @@
       "range": 200.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -192,7 +191,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 70"
     },
     {
       "name": "Wasp Stinger Shot",
@@ -202,7 +202,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "general"
       ],
@@ -211,11 +210,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -223,8 +222,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     }
   ],
   "encounterVariants": [
@@ -793,16 +793,9 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 75,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Pollen",
-      "countLabel": "1",
-      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -814,11 +807,11 @@
       "notes": null
     },
     {
-      "item": "Wasp Leg",
+      "item": "Pollen",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Wasp Leg",
@@ -828,7 +821,14 @@
       "notes": null
     },
     {
-      "item": "Wasp Part",
+      "item": "Wasp Leg",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Wasp Leg",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -847,6 +847,14 @@
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Wasp Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -72,7 +72,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -120,12 +120,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "gas",
-      "bonusPct": 90
-    },
-    {
       "type": "fresh",
       "bonusPct": 25
+    },
+    {
+      "type": "gas",
+      "bonusPct": 90
     },
     {
       "type": "spicy",
@@ -199,7 +199,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -213,7 +212,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     },
     {
       "name": "Mordida derecha",
@@ -221,7 +221,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -235,7 +234,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     },
     {
       "name": "Mordida izquierda",
@@ -243,7 +243,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -257,7 +256,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     },
     {
       "name": "Karate patada izquierda",
@@ -265,7 +265,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -279,7 +278,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Karate patada derecha",
@@ -287,7 +287,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -301,7 +300,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Combo 3",
@@ -309,7 +309,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 25",
       "damageTypes": [
         "stabbing"
       ],
@@ -323,7 +322,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 25"
     }
   ],
   "encounterVariants": [
@@ -846,10 +846,10 @@
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Cockroach Part",
@@ -860,8 +860,29 @@
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -894,7 +915,7 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
@@ -907,5 +928,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

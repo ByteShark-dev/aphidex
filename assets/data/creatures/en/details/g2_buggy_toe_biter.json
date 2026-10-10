@@ -85,5 +85,240 @@
   "defaultCardVariant": "normal",
   "appearanceType": "no_natural_spawn",
   "presentationOverrideProvenance": "explicit_editorial",
-  "dangerOverrideProvenance": "community_calibrated_2026_08_22"
+  "dangerOverrideProvenance": "community_calibrated_2026_08_22",
+  "immunities": [],
+  "advancedLootTable": [
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "2",
+      "chancePct": 35,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
+  "sourceStatus": "extractor_merged",
+  "buggyProfile": {
+    "technicalId": "ToeBiter_Nymph_Buggy",
+    "baseActor": "/Game/Releases/Release_0_5_0/Blueprints/Creatures/ToeBiter/BP_ToeBiter_Nymph_Buggy",
+    "sourceAsset": "/Game/Releases/Release_0_4_0/Blueprints/DataTables/DA_BuggyBuffing",
+    "stats": {
+      "maxHealthRaw": 505.0,
+      "tamedMaxHealth": 505.0,
+      "averageDamageRaw": null,
+      "defaultAttackTier": 3,
+      "defaultBaseDamageFirstAttack": 75.0,
+      "defaultBaseDamageTypeFirstAttack": 1,
+      "stamina": 60.0,
+      "staminaRegenRate": 60.0,
+      "staminaRegenDelay": 1.95,
+      "exhaustedStaminaDelay": 2.95,
+      "haulingCapacity": 8,
+      "blockDamageMultiplier": null,
+      "blockStaminaRegenMultiplier": 0.0
+    },
+    "recipe": {
+      "sourceTable": "/Game/Releases/Release_0_5_0/Blueprints/DataTables/ItemTables/DT_Table_Crafting_Hatchery_Summer",
+      "row": "ToeBiterHatch",
+      "craftingBuildingTag": "CraftingBuilding.Hatchery",
+      "categoryTag": "Recipe.Crafting.Hatchery",
+      "visibility": "RecipeRequired",
+      "hiddenInCraftingMenu": true,
+      "productionTimeRaw": 12.0,
+      "overridesProductionTime": true,
+      "alwaysDropIngredientsOnDestroy": true,
+      "result": {
+        "itemRow": "ToeBiterHatch",
+        "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+        "count": 1
+      },
+      "requirements": [
+        {
+          "type": "Item",
+          "itemRow": "Horsetail",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "KoiFishScale",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Bone",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggToeBiter",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "PondMoss",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 4,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        }
+      ],
+      "requirementsRaw": [
+        {
+          "type": "Item",
+          "itemRow": "Horsetail",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "KoiFishScale",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Bone",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggToeBiter",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "PondMoss",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 4,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        }
+      ],
+      "technicalRequirements": [],
+      "gate": null
+    },
+    "hatching": {
+      "itemRow": "ToeBiterHatch",
+      "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "itemResolution": "direct",
+      "requiresManualHatch": true,
+      "hatchTimeRaw": 0.0,
+      "hatchData": "/Game/Releases/Release_0_5_0/Blueprints/Creatures/ToeBiter/HatchingEgg/ToeBiterBuggyEggHatchData",
+      "hatchDataExportFound": true,
+      "hatchTamed": true,
+      "hatchOptions": [
+        {
+          "resultActor": "/Game/Releases/Release_0_5_0/Blueprints/Creatures/ToeBiter/BP_ToeBiter_Nymph_Buggy",
+          "ratio": 1.0
+        }
+      ],
+      "worldActor": "/Game/Releases/Release_0_5_0/Blueprints/Creatures/ToeBiter/HatchingEgg/BP_World_Hatchable_ToeBiter",
+      "tags": [],
+      "spoil": {
+        "state": "None",
+        "overrideGlobalTime": false,
+        "hours": 36.0,
+        "onlyWhenPlayerOwned": false,
+        "resultItemRow": null
+      }
+    },
+    "handling": {
+      "presetRow": null,
+      "mappingMethod": null,
+      "presets": null
+    },
+    "raceVariant": null,
+    "quality": {
+      "baseActorResolved": true,
+      "hatcheryRecipeResolved": true,
+      "hatchingResolved": true,
+      "raceVariantResolved": false,
+      "gatedStages": 1,
+      "unlinkedAttackRows": 75
+    }
+  },
+  "availabilityStatus": "source_backed"
 }

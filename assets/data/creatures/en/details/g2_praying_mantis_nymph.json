@@ -119,15 +119,15 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
       "type": "general",
       "bonusPct": 25
     },
     {
       "type": "spicy",
+      "bonusPct": 50
+    },
+    {
+      "type": "stabbing",
       "bonusPct": 50
     }
   ],
@@ -170,7 +170,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -185,7 +184,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     },
     {
       "name": "Right Strike",
@@ -194,7 +194,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -209,7 +208,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     },
     {
       "name": "Praying Mantis Pounce",
@@ -218,7 +218,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Attack damage: 90",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -233,7 +232,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 90"
     },
     {
       "name": "Praying Mantis Slash",
@@ -243,7 +243,6 @@
         "projectile",
         "slashing"
       ],
-      "notes": "Attack damage: 85",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -258,13 +257,31 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 85"
     },
     {
       "name": "Praying Mantis Powerattack",
-      "technicalId": "PrayingMantisPowerattack",
-      "tags": [],
-      "notes": "Unidentified"
+      "technicalId": "PrayingMantisPowerAttack",
+      "tags": [
+        "chopping",
+        "slashing"
+      ],
+      "damageTypes": [
+        "chopping",
+        "slashing"
+      ],
+      "damage": 100.0,
+      "cooldownSeconds": 15.0,
+      "range": 850.0,
+      "stun": 15,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Combo",
@@ -273,7 +290,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -288,7 +304,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     },
     {
       "name": "Praying Mantis Stealth Jump Attack",
@@ -297,7 +314,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Attack damage: 80",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -312,7 +328,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 80"
     },
     {
       "name": "Block Offensive",
@@ -320,7 +337,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -331,8 +347,15 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Praying Mantis Powerattack",
+      "technicalId": "PrayingMantisPowerattack",
+      "tags": [],
+      "notes": "Unidentified"
     }
   ],
   "encounterVariants": [],
@@ -582,15 +605,8 @@
     },
     {
       "item": "Mantis Green Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 9,
-      "notes": "9 independent rolls"
-    },
-    {
-      "item": "Mantis Green Chunk",
       "countLabel": "2",
-      "chancePct": 25,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -604,14 +620,70 @@
     {
       "item": "Mantis Green Chunk",
       "countLabel": "2",
-      "chancePct": 100,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Mantis Green Claw",
+      "item": "Mantis Green Chunk",
       "countLabel": "1",
-      "chancePct": 40,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -623,11 +695,19 @@
       "notes": null
     },
     {
+      "item": "Mantis Green Claw",
+      "countLabel": "1",
+      "chancePct": 40,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
       "item": "Mantis Green Head",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

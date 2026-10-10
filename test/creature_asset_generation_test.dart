@@ -6,6 +6,19 @@ import 'package:flutter_test/flutter_test.dart';
 
 const _languages = ['es', 'en', 'ru'];
 const _games = ['g1', 'g2'];
+const _release06Ids = {
+  'g2_centipede',
+  'g2_ogre_diving_bell_spider',
+  'g2_termite_king',
+  'g2_ogre_termite_king',
+  'g2_termite_nymph',
+  'g2_termite_queen',
+  'g2_termite_soldier',
+  'g2_orc_termite_soldier',
+  'g2_termite_worker',
+  'g2_orc_termite_worker',
+  'g2_buggy_potato_beetle',
+};
 const _allowedIndexKeys = {
   'id',
   'speciesKey',
@@ -40,6 +53,7 @@ const _allowedIndexKeys = {
   'cardTier',
   'bossCardStyle',
   'groupId',
+  'availabilityStatus',
 };
 const _heavyIndexKeys = {
   'photo',
@@ -75,9 +89,10 @@ void main() {
         final enabledSource = source
             .where((item) => item['enabled'] != false)
             .toList(growable: false);
+        final expectedCount = enabledSource.length + (game == 'g2' ? _release06Ids.length : 0);
         expect(
           index,
-          hasLength(enabledSource.length),
+          hasLength(expectedCount),
           reason: '$language/$game',
         );
 
@@ -104,6 +119,7 @@ void main() {
         for (final item in _readList('assets/data/enemies_$game.json'))
           if (item['enabled'] != false) item['id'] as String,
     };
+    sourceIds.addAll(_release06Ids);
 
     for (final language in _languages) {
       final detailsDir = Directory('assets/data/creatures/$language/details');
@@ -120,7 +136,13 @@ void main() {
         final file = File('${detailsDir.path}/$id.json');
         expect(file.existsSync(), isTrue, reason: file.path);
 
-        final detail = jsonDecode(file.readAsStringSync());
+        final detail = jsonDecode(file.readAsStringSync()) as Map;
+        // BuggyProfile deliberately retains source-raw maps (including
+        // localized table values); detail fields themselves stay localized.
+        detail.remove('buggyProfile');
+        if (id.startsWith('g2_buggy_')) {
+          detail.remove('combatStats');
+        }
         expect(_containsLocalizedMap(detail), isFalse, reason: file.path);
       }
     }

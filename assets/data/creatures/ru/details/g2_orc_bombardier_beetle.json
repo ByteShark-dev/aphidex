@@ -79,12 +79,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 25
-    },
-    {
       "type": "spicy",
       "bonusPct": 50
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 25
     }
   ],
   "weakPoint": {
@@ -125,7 +125,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -139,7 +138,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Melee Right",
@@ -147,7 +147,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -161,7 +160,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Ranged",
@@ -171,7 +171,6 @@
         "ranged",
         "sizzle"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "sizzle"
       ],
@@ -180,11 +179,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -192,8 +191,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Spray",
@@ -201,7 +201,6 @@
       "tags": [
         "sizzle"
       ],
-      "notes": "Урон атаки: 20",
       "damageTypes": [
         "sizzle"
       ],
@@ -210,11 +209,11 @@
       "range": 750.0,
       "stun": 20,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -223,13 +222,38 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 20"
     },
     {
-      "name": "Area Attack",
-      "technicalId": "BeetleAOE",
-      "tags": [],
-      "notes": "Не идентифицировано"
+      "name": "Beetle AOE",
+      "technicalId": "BeetleAoE",
+      "tags": [
+        "projectile",
+        "sizzle"
+      ],
+      "damageTypes": [
+        "sizzle"
+      ],
+      "damage": 35.0,
+      "cooldownSeconds": 30.0,
+      "range": 300.0,
+      "stun": 8,
+      "statusEffects": [
+        "SizzleSmallIncrease"
+      ],
+      "statusEffectDetails": [
+        {
+          "id": "SizzleSmallIncrease",
+          "value": null,
+          "durationSeconds": null
+        }
+      ],
+      "ranged": false,
+      "projectile": true,
+      "hitResolutionType": "AOE",
+      "actionType": "projectile",
+      "blockability": "unknown"
     },
     {
       "name": "Block Defensive",
@@ -237,7 +261,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -248,8 +271,15 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
+    },
+    {
+      "name": "Area Attack",
+      "technicalId": "BeetleAOE",
+      "tags": [],
+      "notes": "Не идентифицировано"
     }
   ],
   "encounterVariants": [],
@@ -552,7 +582,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -568,23 +598,16 @@
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 50,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Bombardier Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 5,
-      "notes": "5 independent rolls"
     },
     {
       "item": "Bombardier Part",
@@ -601,11 +624,47 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Bombardier Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Bombardier Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Bombardier Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Bombardier Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Bombardier Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 35,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

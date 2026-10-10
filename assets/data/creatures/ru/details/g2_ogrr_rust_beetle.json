@@ -250,7 +250,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -264,7 +263,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 40"
     },
     {
       "name": "Melee Left",
@@ -272,7 +272,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -286,7 +285,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 40"
     },
     {
       "name": "Area Attack Mint",
@@ -295,7 +295,6 @@
         "fresh",
         "projectile"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "fresh"
       ],
@@ -304,11 +303,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Chill Large"
+        "ChillLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Chill Large",
+          "id": "ChillLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -316,8 +315,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Area Attack Sour",
@@ -326,7 +326,6 @@
         "projectile",
         "sour"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "sour"
       ],
@@ -335,11 +334,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -347,8 +346,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Area Attack Spicy",
@@ -357,7 +357,6 @@
         "projectile",
         "sizzle"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "sizzle"
       ],
@@ -366,11 +365,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -378,8 +377,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Ranged Mint",
@@ -389,7 +389,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "fresh"
       ],
@@ -398,11 +397,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Chill Large"
+        "ChillLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Chill Large",
+          "id": "ChillLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -410,8 +409,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Ranged Sour",
@@ -421,7 +421,6 @@
         "ranged",
         "sour"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "sour"
       ],
@@ -430,11 +429,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -442,8 +441,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Ranged Spicy",
@@ -453,7 +453,6 @@
         "ranged",
         "sizzle"
       ],
-      "notes": "Урон атаки: 45",
       "damageTypes": [
         "sizzle"
       ],
@@ -462,11 +461,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -474,8 +473,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 45"
     },
     {
       "name": "Spray Mint",
@@ -483,7 +483,6 @@
       "tags": [
         "fresh"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "fresh"
       ],
@@ -492,11 +491,11 @@
       "range": 750.0,
       "stun": 8,
       "statusEffects": [
-        "Chill Large"
+        "ChillLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Chill Large",
+          "id": "ChillLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -505,7 +504,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Spray Sour",
@@ -513,7 +513,6 @@
       "tags": [
         "sour"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "sour"
       ],
@@ -522,11 +521,11 @@
       "range": 750.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -535,7 +534,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Spray Spicy",
@@ -543,7 +543,6 @@
       "tags": [
         "sizzle"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "sizzle"
       ],
@@ -552,11 +551,11 @@
       "range": 750.0,
       "stun": 8,
       "statusEffects": [
-        "Sizzle Small Increase"
+        "SizzleSmallIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Small Increase",
+          "id": "SizzleSmallIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -565,7 +564,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Block Defensive",
@@ -573,7 +573,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 7.0,
@@ -584,8 +583,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     },
     {
       "name": "Block Offensive",
@@ -593,7 +593,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 9.0,
@@ -604,8 +603,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     }
   ],
   "encounterVariants": [],
@@ -663,14 +663,14 @@
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 70,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 70,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -680,13 +680,6 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Rust Beetle Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 6,
-      "notes": "6 independent rolls"
     },
     {
       "item": "Rust Beetle Part",
@@ -701,6 +694,49 @@
       "chancePct": 80,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

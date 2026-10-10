@@ -2784,14 +2784,49 @@
     {
       "item": "Aphid Meat",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 6,
-      "notes": "6 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Aphid Meat",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Aphid Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Aphid Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Aphid Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Aphid Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Aphid Meat",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -2799,8 +2834,29 @@
       "item": "Honeydew",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Honeydew",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Honeydew",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Honeydew",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Pet Tombstone Aphid",
@@ -2809,5 +2865,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

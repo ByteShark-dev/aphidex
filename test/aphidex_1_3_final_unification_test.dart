@@ -104,7 +104,25 @@ void main() {
       expect(entry('g2_king_dozer')['danger'], 'imposible_superior');
       expect(entry('g2_ogrr_toe_biter_leviathan')['danger'], 'extrema');
       expect(entry('g2_orchid_mantis')['danger'], 'proximamente');
-      expect(index.where((row) => row['danger'] == 'unknown'), isEmpty);
+      expect(
+        index
+            .where((row) => row['danger'] == 'unknown')
+            .map((row) => row['id'])
+            .toSet(),
+        {
+          'g2_centipede',
+          'g2_ogre_diving_bell_spider',
+          'g2_termite_king',
+          'g2_ogre_termite_king',
+          'g2_termite_nymph',
+          'g2_termite_queen',
+          'g2_termite_soldier',
+          'g2_orc_termite_soldier',
+          'g2_termite_worker',
+          'g2_orc_termite_worker',
+          'g2_buggy_potato_beetle',
+        },
+      );
     });
   });
 

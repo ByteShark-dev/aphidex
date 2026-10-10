@@ -51,7 +51,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -150,7 +150,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 60",
       "damageTypes": [
         "stabbing"
       ],
@@ -164,7 +163,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 60"
     },
     {
       "name": "Aguijonazo cargado",
@@ -172,7 +172,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 80",
       "damageTypes": [
         "stabbing"
       ],
@@ -186,7 +185,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 80"
     },
     {
       "name": "Mordida",
@@ -194,7 +194,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -208,7 +207,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     },
     {
       "name": "Polen nube",
@@ -218,7 +218,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Daño del ataque: 25",
       "damageTypes": [
         "general"
       ],
@@ -231,8 +230,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 25"
     }
   ],
   "encounterVariants": [
@@ -678,10 +678,10 @@
   "advancedLootTable": [
     {
       "item": "Bee Fuzz",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Bee Fuzz",
@@ -692,13 +692,20 @@
     },
     {
       "item": "Bee Fuzz",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Bee Stinger",
+      "item": "Bee Fuzz",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Bee Fuzz",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -712,16 +719,16 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Bee Stinger",
       "countLabel": "1",
-      "chancePct": 35,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Pollen",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 35,
       "rollCount": 1,
       "notes": null
     },
@@ -731,6 +738,14 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Pollen",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

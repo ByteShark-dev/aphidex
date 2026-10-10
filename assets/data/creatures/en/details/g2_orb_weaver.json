@@ -69,13 +69,6 @@
     {
       "item": "Spider Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
-    },
-    {
-      "item": "Spider Chunk",
-      "countLabel": "1",
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
@@ -95,9 +88,16 @@
       "notes": null
     },
     {
-      "item": "Spider Fang",
+      "item": "Spider Chunk",
       "countLabel": "1",
-      "chancePct": 25,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -109,9 +109,9 @@
       "notes": null
     },
     {
-      "item": "Web",
+      "item": "Spider Fang",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -119,6 +119,13 @@
       "item": "Web",
       "countLabel": "4",
       "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -208,7 +215,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -222,7 +228,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Bite",
@@ -230,7 +237,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -244,7 +250,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Triple Bite",
@@ -252,7 +259,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -266,7 +272,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Power Attack",
@@ -274,7 +281,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 65",
       "damageTypes": [
         "stabbing"
       ],
@@ -288,7 +294,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 65"
     },
     {
       "name": "Spider Web",
@@ -298,7 +305,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 25",
       "damageTypes": [
         "general"
       ],
@@ -307,11 +313,11 @@
       "range": 1500.0,
       "stun": 8,
       "statusEffects": [
-        "Web Slow"
+        "WebSlow"
       ],
       "statusEffectDetails": [
         {
-          "id": "Web Slow",
+          "id": "WebSlow",
           "value": null,
           "durationSeconds": null
         }
@@ -320,7 +326,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 25"
     },
     {
       "name": "Spider Scripted Web Target",
@@ -328,7 +335,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -342,7 +348,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Block Offensive",
@@ -350,7 +357,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -361,8 +367,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -3223,5 +3230,6 @@
   "environmentHazards": [],
   "eventAppearances": [],
   "appearanceType": "natural",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

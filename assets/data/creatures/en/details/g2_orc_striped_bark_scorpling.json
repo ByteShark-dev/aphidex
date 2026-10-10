@@ -11,7 +11,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -76,7 +76,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -90,7 +89,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 70"
     },
     {
       "name": "Melee Right",
@@ -98,7 +98,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 70",
       "damageTypes": [
         "stabbing"
       ],
@@ -112,7 +111,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 70"
     }
   ],
   "encounterVariants": [
@@ -391,21 +391,7 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
-      "countLabel": "1",
-      "chancePct": 20,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Striped Chunk",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 20,
       "rollCount": 1,
@@ -417,6 +403,21 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 20,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -136,20 +136,20 @@
   ],
   "resistancesV2": [
     {
-      "type": "spicy",
-      "bonusPct": 50
-    },
-    {
-      "type": "water",
-      "bonusPct": 35
-    },
-    {
       "type": "explosive",
       "bonusPct": 50
     },
     {
       "type": "slashing",
       "bonusPct": 25
+    },
+    {
+      "type": "spicy",
+      "bonusPct": 50
+    },
+    {
+      "type": "water",
+      "bonusPct": 35
     }
   ],
   "bossPhases": [
@@ -332,29 +332,50 @@
     },
     {
       "item": "Lizard Horn",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 5,
-      "notes": "5 independent rolls"
-    },
-    {
-      "item": "Lizard Horn",
       "countLabel": "2",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Lizard Scale",
+      "item": "Lizard Horn",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 9,
-      "notes": "9 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Horn",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Horn",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Horn",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Horn",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Lizard Scale",
-      "countLabel": "1",
-      "chancePct": 25,
+      "countLabel": "3",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -367,7 +388,77 @@
     },
     {
       "item": "Lizard Scale",
-      "countLabel": "3",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Scale",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Stone",
+      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
@@ -376,15 +467,23 @@
       "item": "Lizard Stone",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Lizard Stone",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Lizard Stone",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

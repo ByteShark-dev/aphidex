@@ -61,7 +61,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -105,12 +105,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "general",
-      "bonusPct": 25
-    },
-    {
       "type": "fresh",
       "bonusPct": 50
+    },
+    {
+      "type": "general",
+      "bonusPct": 25
     }
   ],
   "healthDisplay": "normal",
@@ -139,7 +139,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "general"
       ],
@@ -148,11 +147,11 @@
       "range": 1600.0,
       "stun": 15,
       "statusEffects": [
-        "Blue Butterfly Chill Gust"
+        "BlueButterflyChillGust"
       ],
       "statusEffectDetails": [
         {
-          "id": "Blue Butterfly Chill Gust",
+          "id": "BlueButterflyChillGust",
           "value": null,
           "durationSeconds": null
         }
@@ -160,8 +159,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Charge",
@@ -169,7 +169,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "general"
       ],
@@ -183,7 +182,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Triple Bite",
@@ -191,7 +191,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 20",
       "damageTypes": [
         "general"
       ],
@@ -205,7 +204,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 20"
     }
   ],
   "encounterVariants": [
@@ -806,14 +806,14 @@
     {
       "item": "Butterfly Blue Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "1",
-      "chancePct": 100,
+      "countLabel": "2",
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -826,7 +826,35 @@
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "2",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Scale",
+      "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Scale",
+      "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
@@ -839,20 +867,6 @@
       "notes": null
     },
     {
-      "item": "Butterfly Blue Scale",
-      "countLabel": "1",
-      "chancePct": 50,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Butterfly Blue Scale",
-      "countLabel": "1",
-      "chancePct": 75,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
       "item": "Butterfly Blue Wing",
       "countLabel": "1",
       "chancePct": 40,
@@ -860,11 +874,12 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

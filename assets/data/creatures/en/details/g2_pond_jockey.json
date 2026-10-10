@@ -54,196 +54,147 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Pond Jockey Homing Projectile 5 Projectile",
-      "technicalId": "PondJockey_HomingProjectile_5Projectile",
+      "name": "Pond Jockey Homing Projectile 5 Projectiles",
+      "technicalId": "PondJockey_HomingProjectile_5Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 75.0,
       "cooldownSeconds": 10.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 5 Projectile Passive Attack"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 5 Projectile Passive Attack",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
-      "name": "Pond Jockey Homing Projectile 5 Projectile Burst",
-      "technicalId": "PondJockey_HomingProjectile_5Projectile_Burst",
+      "name": "Pond Jockey Burst Homing Projectile 5 Projectiles",
+      "technicalId": "PondJockey_ProjectileBurst_5Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 80.0,
       "cooldownSeconds": 15.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 5 Projectile Passive Attack Burst"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 5 Projectile Passive Attack Burst",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
-      "name": "Pond Jockey Homing Projectile 3 Projectile",
-      "technicalId": "PondJockey_HomingProjectile_3Projectile",
+      "name": "Pond Jockey Homing Projectile 3 Projectiles",
+      "technicalId": "PondJockey_HomingProjectile_3Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 75.0,
       "cooldownSeconds": 10.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 3 Projectile Passive Attack"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 3 Projectile Passive Attack",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
-      "name": "Pond Jockey Homing Projectile 3 Projectile Burst",
-      "technicalId": "PondJockey_HomingProjectile_3Projectile_Burst",
+      "name": "Pond Jockey Burst Homing Projectile 3 Projectiles",
+      "technicalId": "PondJockey_ProjectileBurst_3Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 80.0,
       "cooldownSeconds": 15.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 3 Projectile Passive Attack Burst"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 3 Projectile Passive Attack Burst",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
-      "name": "Pond Jockey Homing Projectile 1 Projectile",
-      "technicalId": "PondJockey_HomingProjectile_1Projectile",
+      "name": "Pond Jockey Homing Projectile 1 Projectiles",
+      "technicalId": "PondJockey_HomingProjectile_1Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 75.0,
       "cooldownSeconds": 5.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 1 Projectile Passive Attack"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 1 Projectile Passive Attack",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
-      "name": "Pond Jockey Homing Projectile 1 Projectile Burst",
-      "technicalId": "PondJockey_HomingProjectile_1Projectile_Burst",
+      "name": "Pond Jockey Burst Homing Projectile 1 Projectiles",
+      "technicalId": "PondJockey_ProjectileBurst_1Projectiles",
       "tags": [
         "general",
+        "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
-      "damage": 0.0,
+      "damage": 80.0,
       "cooldownSeconds": 15.0,
-      "range": 100.0,
+      "range": 300.0,
       "stun": 0,
-      "statusEffects": [
-        "Pond Jockey Homing Proctile 1 Projectile Passive Attack Burst"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Pond Jockey Homing Proctile 1 Projectile Passive Attack Burst",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
+      "statusEffects": [],
+      "statusEffectDetails": [],
       "ranged": true,
-      "projectile": false,
-      "hitResolutionType": "Self",
-      "actionType": "ranged",
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
       "blockability": "unknown"
     },
     {
       "name": "Pond Jockey Water Dodge",
       "technicalId": "PondJockey_WaterDodge",
       "tags": [],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 10.0,
@@ -254,8 +205,9 @@
       "ranged": false,
       "projectile": false,
       "hitResolutionType": "Default",
-      "actionType": "movement_action",
-      "blockability": "unknown"
+      "actionType": "melee",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Melee",
@@ -263,7 +215,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 120",
       "damageTypes": [
         "general"
       ],
@@ -277,7 +228,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 120"
     },
     {
       "name": "Melee W Swarm",
@@ -285,7 +237,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 100",
       "damageTypes": [
         "general"
       ],
@@ -299,7 +250,62 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 100"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 5 Projectile",
+      "technicalId": "PondJockey_HomingProjectile_5Projectile",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 5 Projectile Burst",
+      "technicalId": "PondJockey_HomingProjectile_5Projectile_Burst",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 3 Projectile",
+      "technicalId": "PondJockey_HomingProjectile_3Projectile",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 3 Projectile Burst",
+      "technicalId": "PondJockey_HomingProjectile_3Projectile_Burst",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 1 Projectile",
+      "technicalId": "PondJockey_HomingProjectile_1Projectile",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
+    },
+    {
+      "name": "Pond Jockey Homing Projectile 1 Projectile Burst",
+      "technicalId": "PondJockey_HomingProjectile_1Projectile_Burst",
+      "tags": [
+        "buff",
+        "ranged"
+      ],
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -1371,24 +1377,17 @@
   "advancedLootTable": [
     {
       "item": "Algae",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Algae",
       "countLabel": "2",
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Pond Jockey Meat",
+      "item": "Algae",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Pond Jockey Meat",
@@ -1396,6 +1395,35 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Pond Jockey Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Pond Jockey Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Pond Jockey Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Pond Jockey Meat",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

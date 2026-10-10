@@ -34,7 +34,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -94,12 +94,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "general",
-      "bonusPct": 25
-    },
-    {
       "type": "gas",
       "bonusPct": 90
+    },
+    {
+      "type": "general",
+      "bonusPct": 25
     }
   ],
   "healthDisplay": "normal",
@@ -127,7 +127,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "chopping"
       ],
@@ -141,7 +140,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Bite R",
@@ -149,7 +149,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "chopping"
       ],
@@ -163,7 +162,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     },
     {
       "name": "Fart",
@@ -172,7 +172,6 @@
         "general",
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
@@ -185,8 +184,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Leap",
@@ -195,7 +195,6 @@
         "projectile",
         "smashing"
       ],
-      "notes": "Attack damage: 65",
       "damageTypes": [
         "smashing"
       ],
@@ -208,8 +207,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 65"
     }
   ],
   "encounterVariants": [
@@ -831,18 +831,11 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Stink Bug Feelers",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
     },
     {
       "item": "Stink Bug Feelers",
@@ -859,11 +852,25 @@
       "notes": null
     },
     {
-      "item": "Stink Bug Gas Sack",
+      "item": "Stink Bug Feelers",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Feelers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Feelers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Stink Bug Gas Sack",
@@ -871,6 +878,21 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Stink Bug Gas Sack",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Gas Sack",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

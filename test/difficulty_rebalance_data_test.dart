@@ -4,6 +4,12 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 const _languages = ['es', 'en', 'ru'];
+const _release06Ids = {
+  'g2_centipede', 'g2_ogre_diving_bell_spider', 'g2_termite_king',
+  'g2_ogre_termite_king', 'g2_termite_nymph', 'g2_termite_queen',
+  'g2_termite_soldier', 'g2_orc_termite_soldier', 'g2_termite_worker',
+  'g2_orc_termite_worker', 'g2_buggy_potato_beetle',
+};
 
 void main() {
   test('new creature JSON uses only the canonical superior-danger key', () {
@@ -39,13 +45,13 @@ void main() {
         );
         expect(
           index.map((item) => item['id']).toSet(),
-          sourceById.keys.toSet(),
+          {...sourceById.keys, ..._release06Ids},
           reason: '$language index IDs',
         );
 
         for (final item in index) {
           final id = item['id'] as String;
-          final sourceItem = sourceById[id]!;
+          final sourceItem = sourceById[id];
           final detail =
               jsonDecode(
                     File(
@@ -54,6 +60,10 @@ void main() {
                   )
                   as Map<String, dynamic>;
 
+          if (sourceItem == null) {
+            expect(item['danger'], 'unknown', reason: '$language/$id');
+            continue;
+          }
           expect(item['danger'], sourceItem['danger'], reason: '$language/$id');
           expect(
             detail['danger'],

@@ -149,7 +149,11 @@ void main() {
           .map((row) => row['technicalId'])
           .whereType<String>()
           .toSet();
-      expect(technicalIds.intersection(excluded), isEmpty);
+      // Release 0.6 reintroduces these three formerly excluded technical rows.
+      expect(
+        technicalIds.intersection(excluded),
+        {'TermiteKing', 'TermiteSoldier', 'TermiteWorker'},
+      );
     });
 
     test('map validation includes five cases per layer and no outliers', () {

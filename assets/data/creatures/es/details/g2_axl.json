@@ -149,6 +149,14 @@
   ],
   "resistancesV2": [
     {
+      "type": "all",
+      "bonusPct": 75
+    },
+    {
+      "type": "explosive",
+      "bonusPct": 50
+    },
+    {
       "type": "fresh",
       "bonusPct": 50
     },
@@ -159,14 +167,6 @@
     {
       "type": "venom",
       "bonusPct": 90
-    },
-    {
-      "type": "all",
-      "bonusPct": 75
-    },
-    {
-      "type": "explosive",
-      "bonusPct": 50
     },
     {
       "type": "water",
@@ -358,17 +358,10 @@
     },
     {
       "item": "Tarantula Chunk",
-      "countLabel": "1",
-      "chancePct": 0,
-      "rollCount": 5,
-      "notes": "5 independent rolls"
-    },
-    {
-      "item": "Tarantula Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 9,
-      "notes": "9 independent rolls"
+      "countLabel": "3",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Tarantula Chunk",
@@ -379,8 +372,99 @@
     },
     {
       "item": "Tarantula Chunk",
-      "countLabel": "3",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
       "rollCount": 1,
       "notes": null
     },
@@ -393,10 +477,10 @@
     },
     {
       "item": "Tarantula Talon",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Tarantula Talon",
@@ -407,17 +491,31 @@
     },
     {
       "item": "Tarantula Talon",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Talon",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Talon",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Tarantula Venom",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Tarantula Venom",
@@ -429,9 +527,24 @@
     {
       "item": "Tarantula Venom",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Venom",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Tarantula Venom",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

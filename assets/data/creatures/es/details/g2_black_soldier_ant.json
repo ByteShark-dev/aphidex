@@ -68,28 +68,14 @@
     {
       "item": "Ant Head Black",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Ant Head Black",
       "countLabel": "1",
-      "chancePct": 50,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Ant Mandibles Black",
-      "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Ant Mandibles Black",
-      "countLabel": "1",
-      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -101,16 +87,44 @@
       "notes": null
     },
     {
-      "item": "Ant Part Black",
+      "item": "Ant Mandibles Black",
+      "countLabel": "1",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Mandibles Black",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Ant Part Black",
       "countLabel": "2",
       "chancePct": 70,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -216,7 +230,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -230,7 +243,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 55"
     },
     {
       "name": "Mordida derecha",
@@ -238,7 +252,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -252,7 +265,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 55"
     },
     {
       "name": "Golpe múltiple",
@@ -260,7 +274,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -274,7 +287,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 55"
     },
     {
       "name": "Potente ataque",
@@ -282,7 +296,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 85",
       "damageTypes": [
         "chopping"
       ],
@@ -296,7 +309,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 85"
     },
     {
       "name": "Aplastamiento",
@@ -304,7 +318,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 60",
       "damageTypes": [
         "chopping"
       ],
@@ -318,7 +331,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 60"
     },
     {
       "name": "Rocío",
@@ -328,7 +342,6 @@
         "ranged",
         "sour"
       ],
-      "notes": "Daño del ataque: 80",
       "damageTypes": [
         "sour"
       ],
@@ -337,11 +350,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -349,8 +362,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 80"
     },
     {
       "name": "Bloqueo ofensivo",
@@ -358,7 +372,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -369,8 +382,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [],
@@ -1972,5 +1986,6 @@
   "mapMarkerAsset": "assets/g2/creatures/thumbnails/Black_Soldier_Ant.webp",
   "immunities": [
     "acid"
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

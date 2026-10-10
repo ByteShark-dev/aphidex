@@ -42,7 +42,11 @@
   ],
   "respawnInfo": "Инкубация: 12 игровых часов в Hatchery. Одновременно может быть активен только один багги. Если не поднять его за 90 секунд, он вернётся в гнездо и станет недоступен на 5 минут.",
   "combatStats": {
-    "attackDamageSummary": "Выстрел водой: 12 урона, 2 оглушения и ещё 20 против летунов. Shove: 92 дробящего урона и 20 оглушения. Heal: восстанавливает 160 здоровья."
+    "attackDamageSummary": {
+      "es": "Disparo de agua: 12 de daño, 2 de aturdimiento y 20 extra contra voladores. Shove: 92 de daño busting y 20 de aturdimiento. Heal: restaura 160 de vida.",
+      "en": "Water shot: 12 damage, 2 stun, and 20 extra against flyers. Shove: 92 busting damage and 20 stun. Heal: restores 160 health.",
+      "ru": "Выстрел водой: 12 урона, 2 оглушения и ещё 20 против летунов. Shove: 92 дробящего урона и 20 оглушения. Heal: восстанавливает 160 здоровья."
+    }
   },
   "inflictsEffects": [
     "water",
@@ -112,5 +116,295 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "appearanceType": "no_natural_spawn"
+  "appearanceType": "no_natural_spawn",
+  "buggyProfile": {
+    "technicalId": "Ladybug_Augusta_Buggy",
+    "baseActor": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/Base/BP_Ladybug_Augusta_Buggy",
+    "sourceAsset": "/Game/Releases/Release_0_4_0/Blueprints/DataTables/DA_BuggyBuffing",
+    "stats": {
+      "maxHealthRaw": 1600.0,
+      "tamedMaxHealth": 550.0,
+      "averageDamageRaw": 55.0,
+      "defaultAttackTier": 2,
+      "defaultBaseDamageFirstAttack": 55.0,
+      "defaultBaseDamageTypeFirstAttack": 3,
+      "stamina": 50.0,
+      "staminaRegenRate": 35.0,
+      "staminaRegenDelay": 1.95,
+      "exhaustedStaminaDelay": 2.95,
+      "haulingCapacity": 6,
+      "blockDamageMultiplier": 0.5,
+      "blockStaminaRegenMultiplier": 0.0
+    },
+    "recipe": {
+      "sourceTable": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/HatchingEgg/DT_Table_Crafting_Hatchery_Garden",
+      "row": "LadybugHatch",
+      "craftingBuildingTag": "CraftingBuilding.Hatchery",
+      "categoryTag": "Recipe.Crafting.Hatchery",
+      "visibility": "RecipeRequired",
+      "hiddenInCraftingMenu": true,
+      "productionTimeRaw": 12.0,
+      "overridesProductionTime": true,
+      "alwaysDropIngredientsOnDestroy": true,
+      "result": {
+        "itemRow": "LadybugHatch",
+        "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+        "count": 1
+      },
+      "requirements": [
+        {
+          "type": "Item",
+          "itemRow": "Fabric",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Rubber",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "PumpkinBits",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [
+            "Vital.Hunger.Ant",
+            "Vital.Hunger.Bombardier"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggLadybug",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "requirementsRaw": [
+        {
+          "type": "Item",
+          "itemRow": "Fabric",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Rubber",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 2,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "PumpkinBits",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [
+            "Vital.Hunger.Ant",
+            "Vital.Hunger.Bombardier"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggLadybug",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "technicalRequirements": [],
+      "gate": null
+    },
+    "hatching": {
+      "itemRow": "LadybugHatch",
+      "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "itemResolution": "direct",
+      "requiresManualHatch": true,
+      "hatchTimeRaw": 0.0,
+      "hatchData": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/HatchingEgg/LadybugBuggyEggHatchData",
+      "hatchDataExportFound": true,
+      "hatchTamed": null,
+      "hatchOptions": [
+        {
+          "resultActor": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/Base/BP_Ladybug_Augusta_Buggy",
+          "ratio": 1.0
+        }
+      ],
+      "worldActor": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/HatchingEgg/BP_World_Hatchable_Ladybug_Egg",
+      "tags": [],
+      "spoil": {
+        "state": "None",
+        "overrideGlobalTime": false,
+        "hours": 36.0,
+        "onlyWhenPlayerOwned": false,
+        "resultItemRow": null
+      }
+    },
+    "handling": {
+      "presetRow": "LadyBug",
+      "mappingMethod": "identity_current_game",
+      "presets": {
+        "Survival": {
+          "coreStats": {
+            "MaxWalkSpeed": 500.0,
+            "Acceleration": 2048.0,
+            "Friction": 8.0,
+            "BrakingDeceleration": 5000.0
+          },
+          "staminaStats": {
+            "MaxStamina": 50.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 35.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 1.95
+          },
+          "angleForStrafe": 45.0,
+          "blockingSpeedModifier": 0.5,
+          "useFrictionCurves": false,
+          "frictionCurve": null,
+          "speedBoostType": {
+            "row": "SpeedBoostLadybug",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 55.0,
+          "speedBoostStaminaCost": 10.0
+        },
+        "RacingStandard": {
+          "coreStats": {
+            "MaxWalkSpeed": 1250.0,
+            "Acceleration": 1000.0,
+            "Friction": 0.55,
+            "BrakingDeceleration": 500.0
+          },
+          "staminaStats": {
+            "MaxStamina": 100.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 40.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 2.0
+          },
+          "angleForStrafe": 90.0,
+          "blockingSpeedModifier": 1.0,
+          "useFrictionCurves": true,
+          "frictionCurve": "/Game/Blueprints/Creatures/Ladybug/CURVE_LadyBug_RaceBuggyFriction.0",
+          "speedBoostType": {
+            "row": "SpeedBoostLadybugRace",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 100.0,
+          "speedBoostStaminaCost": 10.0
+        }
+      }
+    },
+    "raceVariant": {
+      "context": "ugc_racing",
+      "separateCreature": false,
+      "characterRow": "Ladybug_Augusta_Buggy_Race",
+      "characterTable": "/Game/Blueprints/DataTables/Table_CharacterData",
+      "actor": "/Game/Releases/Release_0_3_0/Blueprints/Creatures/Ladybug/Base/BP_Ladybug_Augusta_Buggy_Race",
+      "saddleItemRow": "LadybugSaddle",
+      "saddleItemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "icon": "/Game/Releases/Release_0_3_0/UI/Images/T_UI_Buggy_Ladybug_Icon",
+      "displayNameLoc": {
+        "StringTableID": 2,
+        "StringID": 2058,
+        "StringTableName": "None"
+      },
+      "localizedDescription": {
+        "StringTableID": 1,
+        "StringID": 3708,
+        "StringTableName": "None"
+      },
+      "abilities": [
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 3709,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3710,
+            "StringTableName": "None"
+          }
+        },
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 2958,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3711,
+            "StringTableName": "None"
+          }
+        },
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 3468,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3712,
+            "StringTableName": "None"
+          }
+        }
+      ]
+    },
+    "quality": {
+      "baseActorResolved": true,
+      "hatcheryRecipeResolved": true,
+      "hatchingResolved": true,
+      "raceVariantResolved": true,
+      "gatedStages": 2,
+      "unlinkedAttackRows": 29
+    }
+  },
+  "availabilityStatus": "source_backed"
 }

@@ -11,7 +11,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 1,
       "maxCount": 1
     },
@@ -74,16 +74,16 @@
   ],
   "resistancesV2": [
     {
+      "type": "gas",
+      "bonusPct": 90
+    },
+    {
       "type": "general",
       "bonusPct": 25
     },
     {
       "type": "spicy",
       "bonusPct": 75
-    },
-    {
-      "type": "gas",
-      "bonusPct": 90
     }
   ],
   "weakPoints": [],
@@ -94,11 +94,10 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 100",
       "damageTypes": [
         "general"
       ],
-      "damage": 100.0,
+      "damage": 80.0,
       "cooldownSeconds": 0.0,
       "range": 500.0,
       "stun": 5,
@@ -108,7 +107,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 100"
     },
     {
       "name": "Bite R",
@@ -116,11 +116,10 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 100",
       "damageTypes": [
         "general"
       ],
-      "damage": 100.0,
+      "damage": 80.0,
       "cooldownSeconds": 0.0,
       "range": 500.0,
       "stun": 5,
@@ -130,18 +129,18 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 100"
     },
     {
       "name": "Fart",
       "technicalId": "GreenShieldBug_Fart_Augusta",
       "tags": [
-        "gas",
+        "general",
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
-        "gas"
+        "general"
       ],
       "damage": 0.0,
       "cooldownSeconds": 25.0,
@@ -152,8 +151,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Leap",
@@ -162,11 +162,10 @@
         "general",
         "projectile"
       ],
-      "notes": "Attack damage: 125",
       "damageTypes": [
         "general"
       ],
-      "damage": 125.0,
+      "damage": 85.0,
       "cooldownSeconds": 30.0,
       "range": 500.0,
       "stun": 15,
@@ -175,8 +174,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 125"
     },
     {
       "name": "Leap Dodge",
@@ -185,7 +185,6 @@
         "general",
         "projectile"
       ],
-      "notes": "Attack damage: 45",
       "damageTypes": [
         "general"
       ],
@@ -198,8 +197,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "movement_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 45"
     },
     {
       "name": "Charge",
@@ -207,11 +207,10 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 125",
       "damageTypes": [
         "general"
       ],
-      "damage": 125.0,
+      "damage": 100.0,
       "cooldownSeconds": 30.0,
       "range": 500.0,
       "stun": 20,
@@ -221,7 +220,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 125"
     }
   ],
   "encounterVariants": [
@@ -924,7 +924,7 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
@@ -939,10 +939,10 @@
     },
     {
       "item": "Stink Bug Gas Sack Super",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Stink Bug Gas Sack Super",
@@ -953,17 +953,24 @@
     },
     {
       "item": "Stink Bug Gas Sack Super",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Gas Sack Super",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Stinkbug Part Green Shield",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Stinkbug Part Green Shield",
@@ -974,10 +981,18 @@
     },
     {
       "item": "Stinkbug Part Green Shield",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stinkbug Part Green Shield",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

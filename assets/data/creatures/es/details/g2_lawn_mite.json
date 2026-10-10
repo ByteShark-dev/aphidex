@@ -58,28 +58,21 @@
     {
       "item": "Fuzz Mite",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Fuzz Mite",
-      "countLabel": "1",
-      "chancePct": 10,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Fuzz Mite",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Mite Lawn Fang",
+      "item": "Fuzz Mite",
       "countLabel": "1",
       "chancePct": 10,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Fuzz Mite",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -87,6 +80,13 @@
       "item": "Mite Lawn Fang",
       "countLabel": "1",
       "chancePct": 30,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mite Lawn Fang",
+      "countLabel": "1",
+      "chancePct": 10,
       "rollCount": 1,
       "notes": null
     }
@@ -127,7 +127,29 @@
   "elementalWeaknesses": [],
   "resistancesV2": [],
   "weakPoints": [],
-  "attacks": [],
+  "attacks": [
+    {
+      "name": "Mite Lunge",
+      "technicalId": "MiteLunge",
+      "tags": [
+        "general"
+      ],
+      "damageTypes": [
+        "general"
+      ],
+      "damage": 15.0,
+      "cooldownSeconds": null,
+      "range": 100.0,
+      "stun": 2,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    }
+  ],
   "encounterVariants": [],
   "contextVariants": [],
   "specialCombatModifiers": [],
@@ -2099,5 +2121,6 @@
   "eventAppearances": [],
   "appearanceType": "story_related",
   "appearanceCondition": "Bloqueado por progreso de historia",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

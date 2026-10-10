@@ -66,7 +66,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -159,7 +159,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -173,7 +172,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Right Strike",
@@ -181,7 +181,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -195,7 +194,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Multistrike",
@@ -203,7 +203,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 25",
       "damageTypes": [
         "chopping"
       ],
@@ -217,7 +216,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 25"
     },
     {
       "name": "Power Attack",
@@ -225,7 +225,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -239,7 +238,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 55"
     },
     {
       "name": "Smash",
@@ -247,7 +247,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "chopping"
       ],
@@ -261,7 +260,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Block Offensive",
@@ -269,7 +269,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -280,8 +279,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     }
   ],
   "encounterVariants": [
@@ -1002,14 +1002,14 @@
     {
       "item": "Acid Gland",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Acid Gland",
       "countLabel": "1",
-      "chancePct": 50,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1023,28 +1023,14 @@
     {
       "item": "Ant Mandibles",
       "countLabel": "1",
-      "chancePct": 25,
+      "chancePct": 75,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Ant Mandibles",
       "countLabel": "1",
-      "chancePct": 75,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Ant Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Ant Part",
-      "countLabel": "1",
-      "chancePct": 70,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -1056,11 +1042,40 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 70,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 35,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

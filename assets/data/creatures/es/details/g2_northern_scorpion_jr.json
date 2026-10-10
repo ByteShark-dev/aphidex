@@ -147,7 +147,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 28",
       "damageTypes": [
         "stabbing"
       ],
@@ -161,7 +160,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 28"
     },
     {
       "name": "Combo 4",
@@ -169,7 +169,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -183,7 +182,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Potente",
@@ -191,7 +191,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 55",
       "damageTypes": [
         "stabbing"
       ],
@@ -205,7 +204,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 55"
     },
     {
       "name": "Subterráneo golpe",
@@ -213,7 +213,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 60",
       "damageTypes": [
         "stabbing"
       ],
@@ -222,11 +221,11 @@
       "range": 450.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Large"
+        "VenomLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Large",
+          "id": "VenomLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -235,7 +234,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 60"
     }
   ],
   "encounterVariants": [
@@ -1415,28 +1415,35 @@
     {
       "item": "Scorpion Northern Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Scorpion Northern Chunk",
-      "countLabel": "1",
-      "chancePct": 25,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Northern Chunk",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Scorpion Venom",
+      "item": "Scorpion Northern Chunk",
       "countLabel": "1",
       "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Northern Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1446,6 +1453,14 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Scorpion Venom",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

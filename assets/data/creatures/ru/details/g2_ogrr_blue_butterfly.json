@@ -242,7 +242,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "general"
       ],
@@ -251,11 +250,11 @@
       "range": 1600.0,
       "stun": 15,
       "statusEffects": [
-        "OGRE Blue Butterfly Gust Mint"
+        "OGRE_BlueButterflyGust_Mint"
       ],
       "statusEffectDetails": [
         {
-          "id": "OGRE Blue Butterfly Gust Mint",
+          "id": "OGRE_BlueButterflyGust_Mint",
           "value": null,
           "durationSeconds": null
         }
@@ -263,8 +262,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Charge",
@@ -272,7 +272,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "general"
       ],
@@ -286,7 +285,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Triple Bite",
@@ -294,7 +294,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 20",
       "damageTypes": [
         "general"
       ],
@@ -308,7 +307,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 20"
     },
     {
       "name": "Gust Sour",
@@ -317,7 +317,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "general"
       ],
@@ -326,11 +325,11 @@
       "range": 1600.0,
       "stun": 15,
       "statusEffects": [
-        "OGRE Blue Butterfly Gust Sour"
+        "OGRE_BlueButterflyGust_Sour"
       ],
       "statusEffectDetails": [
         {
-          "id": "OGRE Blue Butterfly Gust Sour",
+          "id": "OGRE_BlueButterflyGust_Sour",
           "value": null,
           "durationSeconds": null
         }
@@ -338,8 +337,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     },
     {
       "name": "Gust Spicy",
@@ -348,7 +348,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Урон атаки: 35",
       "damageTypes": [
         "general"
       ],
@@ -357,11 +356,11 @@
       "range": 1600.0,
       "stun": 15,
       "statusEffects": [
-        "OGRE Blue Butterfly Gust Spicy"
+        "OGRE_BlueButterflyGust_Spicy"
       ],
       "statusEffectDetails": [
         {
-          "id": "OGRE Blue Butterfly Gust Spicy",
+          "id": "OGRE_BlueButterflyGust_Spicy",
           "value": null,
           "durationSeconds": null
         }
@@ -369,8 +368,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 35"
     }
   ],
   "encounterVariants": [],
@@ -419,14 +419,14 @@
     {
       "item": "Butterfly Blue Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "1",
-      "chancePct": 100,
+      "countLabel": "2",
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -439,13 +439,27 @@
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "2",
-      "chancePct": 50,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Butterfly Blue Scale",
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -454,6 +468,13 @@
     {
       "item": "Butterfly Blue Scale",
       "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Scale",
+      "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
@@ -461,7 +482,7 @@
     {
       "item": "Butterfly Blue Scale",
       "countLabel": "1",
-      "chancePct": 75,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -479,5 +500,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

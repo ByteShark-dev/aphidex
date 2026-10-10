@@ -756,14 +756,14 @@
     {
       "item": "Snail Eye Stalk",
       "countLabel": "1",
-      "chancePct": 10,
+      "chancePct": 40,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Snail Eye Stalk",
       "countLabel": "1",
-      "chancePct": 40,
+      "chancePct": 10,
       "rollCount": 1,
       "notes": null
     },
@@ -773,13 +773,6 @@
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Snail Slime",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 5,
-      "notes": "5 independent rolls"
     },
     {
       "item": "Snail Slime",
@@ -794,6 +787,42 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Snail Slime",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Snail Slime",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Snail Slime",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Snail Slime",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Snail Slime",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

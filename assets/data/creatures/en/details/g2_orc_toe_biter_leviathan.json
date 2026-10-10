@@ -17,7 +17,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -81,11 +81,11 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "water",
-      "bonusPct": 35
+      "type": "fresh",
+      "bonusPct": 50
     },
     {
-      "type": "fresh",
+      "type": "stabbing",
       "bonusPct": 50
     },
     {
@@ -93,8 +93,8 @@
       "bonusPct": 50
     },
     {
-      "type": "stabbing",
-      "bonusPct": 50
+      "type": "water",
+      "bonusPct": 35
     }
   ],
   "weakPoints": [
@@ -115,7 +115,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 140",
       "damageTypes": [
         "general"
       ],
@@ -129,7 +128,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 140"
     },
     {
       "name": "Toe Biter Leviathan Range",
@@ -139,7 +139,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Attack damage: 100",
       "damageTypes": [
         "general"
       ],
@@ -152,8 +151,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 100"
     },
     {
       "name": "Combo 5 A",
@@ -161,7 +161,6 @@
       "tags": [
         "slashing"
       ],
-      "notes": "Attack damage: 85",
       "damageTypes": [
         "slashing"
       ],
@@ -175,7 +174,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 85"
     },
     {
       "name": "Combo 5 B",
@@ -183,7 +183,6 @@
       "tags": [
         "slashing"
       ],
-      "notes": "Attack damage: 85",
       "damageTypes": [
         "slashing"
       ],
@@ -197,7 +196,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 85"
     },
     {
       "name": "Power Attack",
@@ -205,7 +205,6 @@
       "tags": [
         "slashing"
       ],
-      "notes": "Attack damage: 150",
       "damageTypes": [
         "slashing"
       ],
@@ -219,7 +218,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 150"
     },
     {
       "name": "Block Offensive",
@@ -227,7 +227,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -238,8 +237,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Gas",
@@ -248,7 +248,6 @@
         "gas",
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "gas"
       ],
@@ -261,8 +260,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Laser Attack Long",
@@ -271,7 +271,6 @@
         "projectile",
         "shock"
       ],
-      "notes": "Attack damage: 5",
       "damageTypes": [
         "shock"
       ],
@@ -285,7 +284,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 5"
     }
   ],
   "encounterVariants": [
@@ -1243,7 +1243,7 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 70,
       "rollCount": 1,
@@ -1252,14 +1252,14 @@
     {
       "item": "Toe Biter Claw",
       "countLabel": "1",
-      "chancePct": 20,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Toe Biter Claw",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 20,
       "rollCount": 1,
       "notes": null
     },
@@ -1272,10 +1272,10 @@
     },
     {
       "item": "Toe Biter Shell",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "countLabel": "3",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Toe Biter Shell",
@@ -1286,13 +1286,27 @@
     },
     {
       "item": "Toe Biter Shell",
-      "countLabel": "3",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Toe Biter Venom",
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Toe Biter Shell",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -1311,6 +1325,14 @@
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Toe Biter Venom",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

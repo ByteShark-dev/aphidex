@@ -244,7 +244,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 88",
       "damageTypes": [
         "stabbing"
       ],
@@ -258,7 +257,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 88"
     },
     {
       "name": "Power Attack",
@@ -266,7 +266,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 112",
       "damageTypes": [
         "stabbing"
       ],
@@ -280,7 +279,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 112"
     },
     {
       "name": "Back Kick",
@@ -288,7 +288,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 95",
       "damageTypes": [
         "stabbing"
       ],
@@ -302,7 +301,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 95"
     },
     {
       "name": "Leap Of Faith",
@@ -310,7 +310,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 120",
       "damageTypes": [
         "chopping"
       ],
@@ -324,7 +323,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 120"
     },
     {
       "name": "Sonic Screech",
@@ -332,7 +332,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [
         "general"
       ],
@@ -346,7 +345,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Block Defensive",
@@ -354,7 +354,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 7.0,
@@ -365,8 +364,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Block Offensive",
@@ -374,7 +374,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 9.0,
@@ -385,8 +384,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [],
@@ -435,14 +435,14 @@
     {
       "item": "Cricket Drumstick",
       "countLabel": "1",
-      "chancePct": 30,
+      "chancePct": 60,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Cricket Drumstick",
       "countLabel": "1",
-      "chancePct": 60,
+      "chancePct": 30,
       "rollCount": 1,
       "notes": null
     },
@@ -452,13 +452,6 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Cricket Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
     },
     {
       "item": "Cricket Part",
@@ -475,11 +468,40 @@
       "notes": null
     },
     {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
       "item": "Ogrr Gland",
       "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

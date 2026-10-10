@@ -72,14 +72,14 @@
     {
       "item": "Cricket Drumstick",
       "countLabel": "1",
-      "chancePct": 30,
+      "chancePct": 60,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Cricket Drumstick",
       "countLabel": "1",
-      "chancePct": 60,
+      "chancePct": 30,
       "rollCount": 1,
       "notes": null
     },
@@ -93,13 +93,6 @@
     {
       "item": "Cricket Part",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
-    },
-    {
-      "item": "Cricket Part",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
@@ -108,6 +101,34 @@
       "item": "Cricket Part",
       "countLabel": "4",
       "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cricket Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -170,11 +191,11 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "stabbing",
+      "type": "spicy",
       "bonusPct": 25
     },
     {
-      "type": "spicy",
+      "type": "stabbing",
       "bonusPct": 25
     }
   ],
@@ -193,7 +214,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 88",
       "damageTypes": [
         "stabbing"
       ],
@@ -207,7 +227,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 88"
     },
     {
       "name": "Potente ataque",
@@ -215,7 +236,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 112",
       "damageTypes": [
         "stabbing"
       ],
@@ -229,7 +249,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 112"
     },
     {
       "name": "Trasera patada",
@@ -237,7 +258,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 95",
       "damageTypes": [
         "stabbing"
       ],
@@ -251,7 +271,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 95"
     },
     {
       "name": "Salto Of Faith",
@@ -259,7 +280,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 120",
       "damageTypes": [
         "chopping"
       ],
@@ -273,7 +293,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 120"
     },
     {
       "name": "Sónico Screech",
@@ -281,7 +302,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [
         "general"
       ],
@@ -295,7 +315,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     },
     {
       "name": "Bloqueo defensivo",
@@ -303,7 +324,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -314,8 +334,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [],
@@ -690,5 +711,6 @@
   "environmentHazards": [],
   "eventAppearances": [],
   "appearanceType": "natural",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

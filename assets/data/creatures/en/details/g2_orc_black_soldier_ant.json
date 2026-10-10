@@ -57,7 +57,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -157,7 +157,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -171,7 +170,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Bite Right",
@@ -179,7 +179,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -193,7 +192,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Multistrike",
@@ -201,7 +201,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 55",
       "damageTypes": [
         "chopping"
       ],
@@ -215,7 +214,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 55"
     },
     {
       "name": "Power Attack",
@@ -223,7 +223,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 85",
       "damageTypes": [
         "chopping"
       ],
@@ -237,7 +236,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 85"
     },
     {
       "name": "Smash",
@@ -245,7 +245,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Attack damage: 60",
       "damageTypes": [
         "chopping"
       ],
@@ -259,7 +258,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 60"
     },
     {
       "name": "Spray",
@@ -269,7 +269,6 @@
         "ranged",
         "sour"
       ],
-      "notes": "Attack damage: 80",
       "damageTypes": [
         "sour"
       ],
@@ -278,11 +277,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -290,8 +289,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 80"
     },
     {
       "name": "Block Offensive",
@@ -299,7 +299,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -310,8 +309,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     }
   ],
   "encounterVariants": [
@@ -1452,28 +1452,14 @@
     {
       "item": "Ant Head Black",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Ant Head Black",
       "countLabel": "1",
-      "chancePct": 50,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Ant Mandibles Black",
-      "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Ant Mandibles Black",
-      "countLabel": "1",
-      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -1485,11 +1471,18 @@
       "notes": null
     },
     {
-      "item": "Ant Part Black",
+      "item": "Ant Mandibles Black",
+      "countLabel": "1",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Mandibles Black",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Ant Part Black",
@@ -1499,11 +1492,33 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part Black",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 60,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -59,7 +59,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -114,15 +114,15 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
       "type": "general",
       "bonusPct": 25
     },
     {
       "type": "spicy",
+      "bonusPct": 50
+    },
+    {
+      "type": "stabbing",
       "bonusPct": 50
     }
   ],
@@ -169,7 +169,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Урон атаки: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -184,7 +183,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 75"
     },
     {
       "name": "Right Strike",
@@ -193,7 +193,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Урон атаки: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -208,7 +207,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 75"
     },
     {
       "name": "Praying Mantis Pounce",
@@ -217,7 +217,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Урон атаки: 90",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -232,7 +231,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 90"
     },
     {
       "name": "Praying Mantis Slash",
@@ -242,7 +242,6 @@
         "projectile",
         "slashing"
       ],
-      "notes": "Урон атаки: 85",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -257,13 +256,31 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 85"
     },
     {
       "name": "Praying Mantis Powerattack",
-      "technicalId": "PrayingMantisPowerattack",
-      "tags": [],
-      "notes": "Не идентифицировано"
+      "technicalId": "PrayingMantisPowerAttack",
+      "tags": [
+        "chopping",
+        "slashing"
+      ],
+      "damageTypes": [
+        "chopping",
+        "slashing"
+      ],
+      "damage": 100.0,
+      "cooldownSeconds": 15.0,
+      "range": 850.0,
+      "stun": 15,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Combo",
@@ -272,7 +289,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Урон атаки: 75",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -287,7 +303,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 75"
     },
     {
       "name": "Praying Mantis Stealth Jump Attack",
@@ -296,7 +313,6 @@
         "chopping",
         "slashing"
       ],
-      "notes": "Урон атаки: 80",
       "damageTypes": [
         "chopping",
         "slashing"
@@ -311,7 +327,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 80"
     },
     {
       "name": "Block Offensive",
@@ -319,7 +336,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -330,8 +346,15 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
+    },
+    {
+      "name": "Praying Mantis Powerattack",
+      "technicalId": "PrayingMantisPowerattack",
+      "tags": [],
+      "notes": "Не идентифицировано"
     }
   ],
   "encounterVariants": [
@@ -1115,15 +1138,8 @@
     },
     {
       "item": "Mantis Green Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 6,
-      "notes": "6 independent rolls"
-    },
-    {
-      "item": "Mantis Green Chunk",
       "countLabel": "2",
-      "chancePct": 25,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -1137,14 +1153,49 @@
     {
       "item": "Mantis Green Chunk",
       "countLabel": "2",
-      "chancePct": 100,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Mantis Green Claw",
+      "item": "Mantis Green Chunk",
       "countLabel": "1",
-      "chancePct": 40,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Mantis Green Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1156,6 +1207,13 @@
       "notes": null
     },
     {
+      "item": "Mantis Green Claw",
+      "countLabel": "1",
+      "chancePct": 40,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
       "item": "Mantis Green Head",
       "countLabel": "1",
       "chancePct": 50,
@@ -1163,11 +1221,12 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -112,19 +112,7 @@
   ],
   "resistancesV2": [
     {
-      "type": "explosive",
-      "bonusPct": 50
-    },
-    {
-      "type": "gas",
-      "bonusPct": 25
-    },
-    {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
-      "type": "smashing",
+      "type": "all",
       "bonusPct": 25
     },
     {
@@ -132,7 +120,7 @@
       "bonusPct": 25
     },
     {
-      "type": "salty",
+      "type": "explosive",
       "bonusPct": 50
     },
     {
@@ -140,8 +128,20 @@
       "bonusPct": 50
     },
     {
-      "type": "all",
+      "type": "gas",
       "bonusPct": 25
+    },
+    {
+      "type": "salty",
+      "bonusPct": 50
+    },
+    {
+      "type": "smashing",
+      "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 50
     }
   ],
   "bossPhases": [
@@ -264,6 +264,56 @@
   "weakPoints": [],
   "attacks": [
     {
+      "name": "Spider Boss Lunge",
+      "technicalId": "SpiderBossLunge",
+      "tags": [
+        "stabbing"
+      ],
+      "damageTypes": [
+        "stabbing"
+      ],
+      "damage": 100.0,
+      "cooldownSeconds": 5.0,
+      "range": 500.0,
+      "stun": 15,
+      "statusEffects": [
+        "ParryTimeDebuffMantis"
+      ],
+      "statusEffectDetails": [
+        {
+          "id": "ParryTimeDebuffMantis",
+          "value": null,
+          "durationSeconds": null
+        }
+      ],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Spider Boss Triple Bite",
+      "technicalId": "SpiderBMTripleBite",
+      "tags": [
+        "stabbing"
+      ],
+      "damageTypes": [
+        "stabbing"
+      ],
+      "damage": 80.0,
+      "cooldownSeconds": 10.0,
+      "range": 600.0,
+      "stun": 12,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
       "name": "Mordida izquierda",
       "technicalId": "BroodmotherBiteLeft",
       "tags": [
@@ -310,56 +360,6 @@
         "stabbing"
       ],
       "notes": "Daño del ataque: 100"
-    },
-    {
-      "name": "Spider Boss Lunge",
-      "technicalId": "SpiderBossLunge",
-      "tags": [
-        "stabbing"
-      ],
-      "damageTypes": [
-        "stabbing"
-      ],
-      "damage": 100.0,
-      "cooldownSeconds": 5.0,
-      "range": 500.0,
-      "stun": 15,
-      "statusEffects": [
-        "Parry Time Debuff Mantis"
-      ],
-      "statusEffectDetails": [
-        {
-          "id": "Parry Time Debuff Mantis",
-          "value": null,
-          "durationSeconds": null
-        }
-      ],
-      "ranged": false,
-      "projectile": false,
-      "hitResolutionType": "Default",
-      "actionType": "melee",
-      "blockability": "unknown"
-    },
-    {
-      "name": "Spider Boss Triple Bite",
-      "technicalId": "SpiderBMTripleBite",
-      "tags": [
-        "stabbing"
-      ],
-      "damageTypes": [
-        "stabbing"
-      ],
-      "damage": 80.0,
-      "cooldownSeconds": 10.0,
-      "range": 600.0,
-      "stun": 12,
-      "statusEffects": [],
-      "statusEffectDetails": [],
-      "ranged": false,
-      "projectile": false,
-      "hitResolutionType": "Default",
-      "actionType": "melee",
-      "blockability": "unknown"
     }
   ],
   "encounterVariants": [],
@@ -412,17 +412,87 @@
     },
     {
       "item": "Boss Spider Chunk",
-      "countLabel": "1",
-      "chancePct": 0,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "countLabel": "3",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Boss Spider Chunk",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 12,
-      "notes": "12 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Boss Spider Chunk",
@@ -440,17 +510,38 @@
     },
     {
       "item": "Boss Spider Chunk",
-      "countLabel": "3",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Boss Spider Fang",
+      "item": "Boss Spider Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 0,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Boss Spider Fang",
@@ -460,11 +551,18 @@
       "notes": null
     },
     {
-      "item": "Boss Spider Venom",
+      "item": "Boss Spider Fang",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Fang",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Boss Spider Venom",
@@ -474,11 +572,25 @@
       "notes": null
     },
     {
-      "item": "Web",
+      "item": "Boss Spider Venom",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Venom",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Boss Spider Venom",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Web",
@@ -486,6 +598,21 @@
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

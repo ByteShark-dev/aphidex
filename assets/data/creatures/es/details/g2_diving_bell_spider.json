@@ -61,11 +61,11 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
+      "type": "fresh",
       "bonusPct": 25
     },
     {
-      "type": "fresh",
+      "type": "stabbing",
       "bonusPct": 25
     }
   ],
@@ -77,7 +77,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -86,11 +85,11 @@
       "range": 400.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Small"
+        "VenomSmall"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Small",
+          "id": "VenomSmall",
           "value": null,
           "durationSeconds": null
         }
@@ -99,7 +98,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     },
     {
       "name": "Arremetida",
@@ -107,7 +107,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 68",
       "damageTypes": [
         "stabbing"
       ],
@@ -116,11 +115,11 @@
       "range": 300.0,
       "stun": 12,
       "statusEffects": [
-        "Venom Small"
+        "VenomSmall"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Small",
+          "id": "VenomSmall",
           "value": null,
           "durationSeconds": null
         }
@@ -129,13 +128,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 68"
     },
     {
       "name": "Spider Diving Bell Water Dodge",
       "technicalId": "SpiderDivingBell_WaterDodge_Augusta",
       "tags": [],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 10.0,
@@ -146,8 +145,9 @@
       "ranged": false,
       "projectile": false,
       "hitResolutionType": "Default",
-      "actionType": "movement_action",
-      "blockability": "unknown"
+      "actionType": "melee",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [],
@@ -2514,23 +2514,23 @@
     {
       "item": "Diving Bell Spider Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
-    },
-    {
-      "item": "Diving Bell Spider Chunk",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Web",
+      "item": "Diving Bell Spider Chunk",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Diving Bell Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Web",
@@ -2538,6 +2538,21 @@
       "chancePct": 80,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

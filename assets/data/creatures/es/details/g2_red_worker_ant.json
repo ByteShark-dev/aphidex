@@ -127,7 +127,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 25",
       "damageTypes": [
         "chopping"
       ],
@@ -141,7 +140,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 25"
     },
     {
       "name": "Ant Worker",
@@ -149,7 +149,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 18",
       "damageTypes": [
         "chopping"
       ],
@@ -163,7 +162,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 18"
     }
   ],
   "encounterVariants": [],
@@ -2831,23 +2831,23 @@
     {
       "item": "Ant Head",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 30,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Ant Head",
       "countLabel": "1",
-      "chancePct": 30,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Ant Part",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Ant Part",
@@ -2859,9 +2859,24 @@
     {
       "item": "Ant Part",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ant Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

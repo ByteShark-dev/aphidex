@@ -1,0 +1,143 @@
+{
+  "id": "g2_centipede",
+  "speciesKey": "centipede",
+  "technicalId": "Centipede",
+  "bestiaryId": "Centipede",
+  "name": "Centipede",
+  "game": "g2",
+  "tier": 4,
+  "danger": "unknown",
+  "isBoss": true,
+  "order": 0,
+  "defaultGold": false,
+  "favoriteKey": "g2_centipede",
+  "goldLinkId": null,
+  "cardNormal": "",
+  "cardGold": "",
+  "hasCreatureCard": false,
+  "hasGoldCreatureCard": false,
+  "hasSelectableCardVariants": false,
+  "defaultCardVariant": null,
+  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "listIconAsset": "",
+  "mapMarkerAsset": "",
+  "customAsset": "",
+  "temperament": "unknown",
+  "collectionGroup": "unknown",
+  "entityType": "creature",
+  "isKillable": true,
+  "health": {
+    "rating": 5,
+    "value": 9000
+  },
+  "healthDisplay": "normal",
+  "elementalWeaknesses": [],
+  "damageWeaknesses": [],
+  "resistancesV2": [
+    {
+      "type": "all",
+      "bonusPct": 90
+    },
+    {
+      "type": "explosive",
+      "bonusPct": 50
+    },
+    {
+      "type": "fresh",
+      "bonusPct": 75
+    },
+    {
+      "type": "general",
+      "bonusPct": 75
+    },
+    {
+      "type": "sour",
+      "bonusPct": 75
+    },
+    {
+      "type": "spicy",
+      "bonusPct": 75
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 75
+    },
+    {
+      "type": "venom",
+      "bonusPct": 90
+    }
+  ],
+  "immunities": [],
+  "weaknesses": [],
+  "resistances": [],
+  "weakPoints": [
+    {
+      "part": "underbelly",
+      "susceptibleDamage": "unknown",
+      "susceptibleDamageTypes": [],
+      "weaponFamilies": [],
+      "provenance": "extractor_region_only"
+    }
+  ],
+  "attacks": [
+    {
+      "name": "Centipede Eat Larva Only",
+      "technicalId": "CentipedeEatTermite",
+      "tags": [
+        "general"
+      ],
+      "damageTypes": [
+        "general"
+      ],
+      "damage": 125.0,
+      "cooldownSeconds": 16.0,
+      "range": 1000.0,
+      "stun": 10,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Centipede Unburrow Wall CA",
+      "technicalId": "CentipedeUnburrowWall_CA",
+      "tags": [
+        "projectile"
+      ],
+      "damageTypes": [],
+      "damage": 0.0,
+      "cooldownSeconds": 0.0,
+      "range": 650.0,
+      "stun": 0,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
+      "blockability": "unknown"
+    }
+  ],
+  "combatStats": {
+    "health": 9000,
+    "stunThreshold": 120,
+    "stunCooldownSeconds": 25
+  },
+  "loot": [],
+  "advancedLootTable": [],
+  "locations": [],
+  "environments": [],
+  "eventAppearances": [],
+  "appearanceType": "unknown",
+  "encounterVariants": [],
+  "availabilityStatus": "implemented_unconfirmed",
+  "sourceProvenance": {
+    "extractorStatus": "implemented_unconfirmed",
+    "extractorTechnicalId": "Centipede",
+    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+  },
+  "dataRevision": "extractor_release_0_6"
+}

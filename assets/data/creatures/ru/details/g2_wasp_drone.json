@@ -65,24 +65,17 @@
   "advancedLootTable": [
     {
       "item": "Pollen",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Pollen",
       "countLabel": "4",
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Wasp Leg",
+      "item": "Pollen",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Wasp Leg",
@@ -92,7 +85,14 @@
       "notes": null
     },
     {
-      "item": "Wasp Part",
+      "item": "Wasp Leg",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Wasp Leg",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -109,6 +109,13 @@
       "item": "Wasp Part",
       "countLabel": "4",
       "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Wasp Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -154,28 +161,28 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
       "type": "explosive",
       "bonusPct": 50
-    },
-    {
-      "type": "slashing",
-      "bonusPct": 25
-    },
-    {
-      "type": "poison",
-      "bonusPct": 75
     },
     {
       "type": "gas",
       "bonusPct": 50
     },
     {
+      "type": "poison",
+      "bonusPct": 75
+    },
+    {
+      "type": "slashing",
+      "bonusPct": 25
+    },
+    {
       "type": "spicy",
       "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 50
     }
   ],
   "groupId": null,
@@ -196,7 +203,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "general"
       ],
@@ -205,11 +211,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -217,8 +223,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Wasp Drone Heal",
@@ -227,7 +234,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [
         "general"
       ],
@@ -236,11 +242,11 @@
       "range": 2000.0,
       "stun": 0,
       "statusEffects": [
-        "Wasp Support Heal Apply Attack Effect"
+        "WaspSupportHealApplyAttackEffect"
       ],
       "statusEffectDetails": [
         {
-          "id": "Wasp Support Heal Apply Attack Effect",
+          "id": "WaspSupportHealApplyAttackEffect",
           "value": null,
           "durationSeconds": null
         }
@@ -248,8 +254,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     },
     {
       "name": "Sting",
@@ -257,7 +264,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -266,11 +272,11 @@
       "range": 400.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -279,7 +285,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 40"
     }
   ],
   "encounterVariants": [],
@@ -434,5 +441,6 @@
   "eventAppearances": [],
   "appearanceType": "natural",
   "mapMarkerAsset": "assets/g2/creatures/thumbnails/Wasp_Drone.webp",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

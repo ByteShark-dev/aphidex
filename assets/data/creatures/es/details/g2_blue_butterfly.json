@@ -95,12 +95,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "general",
-      "bonusPct": 25
-    },
-    {
       "type": "fresh",
       "bonusPct": 50
+    },
+    {
+      "type": "general",
+      "bonusPct": 25
     }
   ],
   "groupId": null,
@@ -125,7 +125,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Daño del ataque: 35",
       "damageTypes": [
         "general"
       ],
@@ -134,11 +133,11 @@
       "range": 1600.0,
       "stun": 15,
       "statusEffects": [
-        "Blue Butterfly Chill Gust"
+        "BlueButterflyChillGust"
       ],
       "statusEffectDetails": [
         {
-          "id": "Blue Butterfly Chill Gust",
+          "id": "BlueButterflyChillGust",
           "value": null,
           "durationSeconds": null
         }
@@ -146,8 +145,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 35"
     },
     {
       "name": "Carga",
@@ -155,7 +155,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "general"
       ],
@@ -169,7 +168,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     },
     {
       "name": "Triple mordida",
@@ -177,7 +177,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 20",
       "damageTypes": [
         "general"
       ],
@@ -191,7 +190,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 20"
     }
   ],
   "encounterVariants": [],
@@ -914,14 +914,14 @@
     {
       "item": "Butterfly Blue Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "1",
-      "chancePct": 100,
+      "countLabel": "2",
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -934,7 +934,42 @@
     },
     {
       "item": "Butterfly Blue Chunk",
-      "countLabel": "2",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Scale",
+      "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Butterfly Blue Scale",
+      "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
@@ -947,25 +982,12 @@
       "notes": null
     },
     {
-      "item": "Butterfly Blue Scale",
-      "countLabel": "1",
-      "chancePct": 50,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Butterfly Blue Scale",
-      "countLabel": "1",
-      "chancePct": 75,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
       "item": "Butterfly Blue Wing",
       "countLabel": "1",
       "chancePct": 40,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

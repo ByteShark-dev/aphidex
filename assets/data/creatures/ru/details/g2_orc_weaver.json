@@ -42,7 +42,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -129,7 +129,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -143,7 +142,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Bite",
@@ -151,7 +151,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -165,7 +164,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Triple Bite",
@@ -173,7 +173,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -187,7 +186,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 30"
     },
     {
       "name": "Power Attack",
@@ -195,7 +195,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 65",
       "damageTypes": [
         "stabbing"
       ],
@@ -209,7 +208,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 65"
     },
     {
       "name": "Spider Web",
@@ -219,7 +219,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Урон атаки: 25",
       "damageTypes": [
         "general"
       ],
@@ -228,11 +227,11 @@
       "range": 1500.0,
       "stun": 8,
       "statusEffects": [
-        "Web Slow"
+        "WebSlow"
       ],
       "statusEffectDetails": [
         {
-          "id": "Web Slow",
+          "id": "WebSlow",
           "value": null,
           "durationSeconds": null
         }
@@ -241,7 +240,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 25"
     },
     {
       "name": "Spider Scripted Web Target",
@@ -249,7 +249,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -263,7 +262,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Roar",
@@ -271,7 +271,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [
         "general"
       ],
@@ -280,23 +279,23 @@
       "range": 1700.0,
       "stun": 0,
       "statusEffects": [
-        "Orb Weaver Swarm Roar Speed Buff ORC",
-        "Orb Weaver Swarm Roar Token Debuff ORC",
-        "ORCs Scream Slow"
+        "OrbWeaverSwarmRoarSpeedBuffORC",
+        "OrbWeaverSwarmRoarTokenDebuffORC",
+        "ORCsScreamSlow"
       ],
       "statusEffectDetails": [
         {
-          "id": "Orb Weaver Swarm Roar Speed Buff ORC",
+          "id": "OrbWeaverSwarmRoarSpeedBuffORC",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Orb Weaver Swarm Roar Token Debuff ORC",
+          "id": "OrbWeaverSwarmRoarTokenDebuffORC",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "ORCs Scream Slow",
+          "id": "ORCsScreamSlow",
           "value": null,
           "durationSeconds": null
         }
@@ -305,7 +304,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     }
   ],
   "encounterVariants": [
@@ -904,18 +904,11 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Spider Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
     },
     {
       "item": "Spider Chunk",
@@ -939,9 +932,16 @@
       "notes": null
     },
     {
-      "item": "Spider Fang",
+      "item": "Spider Chunk",
       "countLabel": "1",
-      "chancePct": 25,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -953,9 +953,9 @@
       "notes": null
     },
     {
-      "item": "Web",
+      "item": "Spider Fang",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -965,6 +965,14 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

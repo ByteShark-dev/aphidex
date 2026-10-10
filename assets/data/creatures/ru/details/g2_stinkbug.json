@@ -59,13 +59,6 @@
   "advancedLootTable": [
     {
       "item": "Stink Bug Feelers",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Stink Bug Feelers",
       "countLabel": "2",
       "chancePct": 100,
       "rollCount": 1,
@@ -79,16 +72,44 @@
       "notes": null
     },
     {
-      "item": "Stink Bug Gas Sack",
+      "item": "Stink Bug Feelers",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Feelers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Feelers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Stink Bug Gas Sack",
       "countLabel": "2",
       "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Gas Sack",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Stink Bug Gas Sack",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
@@ -143,12 +164,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "general",
-      "bonusPct": 25
-    },
-    {
       "type": "gas",
       "bonusPct": 90
+    },
+    {
+      "type": "general",
+      "bonusPct": 25
     }
   ],
   "groupId": null,
@@ -166,7 +187,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "chopping"
       ],
@@ -180,7 +200,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Bite R",
@@ -188,7 +209,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "chopping"
       ],
@@ -202,7 +222,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Fart",
@@ -211,7 +232,6 @@
         "general",
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [
         "general"
       ],
@@ -224,8 +244,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     },
     {
       "name": "Leap",
@@ -234,7 +255,6 @@
         "projectile",
         "smashing"
       ],
-      "notes": "Урон атаки: 65",
       "damageTypes": [
         "smashing"
       ],
@@ -247,8 +267,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 65"
     }
   ],
   "encounterVariants": [],
@@ -1014,5 +1035,6 @@
   "environmentHazards": [],
   "eventAppearances": [],
   "appearanceType": "natural",
-  "immunities": []
+  "immunities": [],
+  "sourceStatus": "extractor_merged"
 }

@@ -40,7 +40,7 @@
   "loot": [
     {
       "section": "rare",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -87,7 +87,29 @@
   ],
   "resistancesV2": [],
   "weakPoints": [],
-  "attacks": [],
+  "attacks": [
+    {
+      "name": "Evil Weevil Death",
+      "technicalId": "EvilWeevilDeath",
+      "tags": [
+        "explosive"
+      ],
+      "damageTypes": [
+        "explosive"
+      ],
+      "damage": 50.0,
+      "cooldownSeconds": null,
+      "range": 600.0,
+      "stun": 26,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "AOE",
+      "actionType": "aoe",
+      "blockability": "unknown"
+    }
+  ],
   "encounterVariants": [
     {
       "id": "g2_wave_weevil_orc_wave",
@@ -678,16 +700,9 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 5,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Unstable Goo",
-      "countLabel": "1",
-      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -699,11 +714,19 @@
       "notes": null
     },
     {
+      "item": "Unstable Goo",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
       "item": "Weevil Nose",
       "countLabel": "1",
       "chancePct": 30,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

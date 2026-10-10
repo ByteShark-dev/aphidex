@@ -104,11 +104,11 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
+      "type": "spicy",
       "bonusPct": 25
     },
     {
-      "type": "spicy",
+      "type": "stabbing",
       "bonusPct": 25
     }
   ],
@@ -144,7 +144,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 120",
       "damageTypes": [
         "chopping"
       ],
@@ -158,7 +157,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 120"
     },
     {
       "name": "Embestida",
@@ -166,7 +166,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 120",
       "damageTypes": [
         "general"
       ],
@@ -180,13 +179,29 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 120"
     },
     {
-      "name": "Cuerpo a cuerpo",
-      "technicalId": "LadybugMelee",
-      "tags": [],
-      "notes": "Sin identificar"
+      "name": "Ladybug Melee",
+      "technicalId": "LadyBugMelee",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 75.0,
+      "cooldownSeconds": 10.0,
+      "range": 240.0,
+      "stun": 8,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Mordida R",
@@ -194,7 +209,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 75",
       "damageTypes": [
         "chopping"
       ],
@@ -208,7 +222,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 75"
     },
     {
       "name": "Mordida L",
@@ -216,7 +231,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 75",
       "damageTypes": [
         "chopping"
       ],
@@ -230,13 +244,29 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 75"
     },
     {
-      "name": "Potente ataque",
-      "technicalId": "LadybugPowerAttack",
-      "tags": [],
-      "notes": "Sin identificar"
+      "name": "Ladybug Power Attack",
+      "technicalId": "LadyBugPowerAttack",
+      "tags": [
+        "general"
+      ],
+      "damageTypes": [
+        "general"
+      ],
+      "damage": 100.0,
+      "cooldownSeconds": 10.0,
+      "range": 240.0,
+      "stun": 15,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Rugido",
@@ -244,7 +274,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [
         "general"
       ],
@@ -253,23 +282,23 @@
       "range": 250.0,
       "stun": 0,
       "statusEffects": [
-        "Ladybug Roar Attack Up",
-        "Ladybug Roar Move Speed Up",
-        "Full Heal"
+        "LadybugRoarAttackUp",
+        "LadybugRoarMoveSpeedUp",
+        "FullHeal"
       ],
       "statusEffectDetails": [
         {
-          "id": "Ladybug Roar Attack Up",
+          "id": "LadybugRoarAttackUp",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Ladybug Roar Move Speed Up",
+          "id": "LadybugRoarMoveSpeedUp",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Full Heal",
+          "id": "FullHeal",
           "value": null,
           "durationSeconds": null
         }
@@ -278,7 +307,8 @@
       "projectile": false,
       "hitResolutionType": "Self",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     },
     {
       "name": "Bloqueo defensivo",
@@ -286,7 +316,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -297,8 +326,21 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
+    },
+    {
+      "name": "Cuerpo a cuerpo",
+      "technicalId": "LadybugMelee",
+      "tags": [],
+      "notes": "Sin identificar"
+    },
+    {
+      "name": "Potente ataque",
+      "technicalId": "LadybugPowerAttack",
+      "tags": [],
+      "notes": "Sin identificar"
     }
   ],
   "encounterVariants": [
@@ -858,5 +900,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -43,7 +43,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -100,11 +100,11 @@
       "bonusPct": 25
     },
     {
-      "type": "stabbing",
+      "type": "poison",
       "bonusPct": 25
     },
     {
-      "type": "poison",
+      "type": "stabbing",
       "bonusPct": 25
     }
   ],
@@ -124,7 +124,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -138,7 +137,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Bite",
@@ -146,7 +146,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -160,7 +159,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Triple Bite",
@@ -168,7 +168,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -182,7 +181,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Power Attack",
@@ -190,7 +190,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 50",
       "damageTypes": [
         "stabbing"
       ],
@@ -204,7 +203,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 50"
     }
   ],
   "encounterVariants": [
@@ -846,14 +846,7 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
-      "countLabel": "1",
-      "chancePct": 25,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Spider Chunk",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 25,
       "rollCount": 1,
@@ -867,11 +860,19 @@
       "notes": null
     },
     {
+      "item": "Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
       "item": "Web",
       "countLabel": "3",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

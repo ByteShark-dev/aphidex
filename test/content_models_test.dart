@@ -34,7 +34,7 @@ void main() {
   test('all normalized G2 creature details deserialize', () async {
     EnemyRepository.clearCaches();
     final entries = await EnemyRepository.loadGame('g2', 'en');
-    expect(entries, hasLength(132));
+    expect(entries, hasLength(143));
     for (final entry in entries) {
       final detail = await EnemyRepository.loadDetail(
         entry.game,

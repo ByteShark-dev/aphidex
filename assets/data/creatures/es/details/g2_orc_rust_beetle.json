@@ -40,7 +40,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -98,12 +98,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 25
-    },
-    {
       "type": "sour",
       "bonusPct": 50
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 25
     }
   ],
   "weakPoint": {
@@ -143,7 +143,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -157,7 +156,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     },
     {
       "name": "Cuerpo a cuerpo izquierda",
@@ -165,7 +165,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -179,7 +178,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     },
     {
       "name": "A distancia",
@@ -189,7 +189,6 @@
         "ranged",
         "sour"
       ],
-      "notes": "Daño del ataque: 45",
       "damageTypes": [
         "sour"
       ],
@@ -198,11 +197,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -210,8 +209,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 45"
     },
     {
       "name": "Rocío",
@@ -219,7 +219,6 @@
       "tags": [
         "sour"
       ],
-      "notes": "Daño del ataque: 30",
       "damageTypes": [
         "sour"
       ],
@@ -228,11 +227,11 @@
       "range": 750.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -241,7 +240,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 30"
     },
     {
       "name": "Área ataque",
@@ -250,7 +250,6 @@
         "projectile",
         "sour"
       ],
-      "notes": "Daño del ataque: 45",
       "damageTypes": [
         "sour"
       ],
@@ -259,11 +258,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Corrosion Medium"
+        "CorrosionMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Corrosion Medium",
+          "id": "CorrosionMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -271,8 +270,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 45"
     },
     {
       "name": "Bloqueo defensivo",
@@ -280,7 +280,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -291,8 +290,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [
@@ -1052,30 +1052,23 @@
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 70,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Bombardier Exp Gland",
       "countLabel": "1",
-      "chancePct": 70,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
-    },
-    {
-      "item": "Rust Beetle Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 6,
-      "notes": "6 independent rolls"
     },
     {
       "item": "Rust Beetle Part",
@@ -1090,6 +1083,49 @@
       "chancePct": 80,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Rust Beetle Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

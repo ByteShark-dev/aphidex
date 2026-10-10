@@ -1,0 +1,213 @@
+{
+  "id": "g2_termite_king",
+  "speciesKey": "termite_king",
+  "technicalId": "TermiteKing",
+  "bestiaryId": "TermiteKing",
+  "name": "Termite King",
+  "game": "g2",
+  "tier": 4,
+  "danger": "unknown",
+  "isBoss": false,
+  "order": 0,
+  "defaultGold": false,
+  "favoriteKey": "g2_termite_king",
+  "goldLinkId": null,
+  "cardNormal": "",
+  "cardGold": "",
+  "hasCreatureCard": false,
+  "hasGoldCreatureCard": false,
+  "hasSelectableCardVariants": false,
+  "defaultCardVariant": null,
+  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "listIconAsset": "",
+  "mapMarkerAsset": "",
+  "customAsset": "",
+  "temperament": "unknown",
+  "collectionGroup": "unknown",
+  "entityType": "creature",
+  "isKillable": true,
+  "health": {
+    "rating": 4,
+    "value": 1900
+  },
+  "healthDisplay": "normal",
+  "elementalWeaknesses": [
+    {
+      "type": "sour",
+      "bonusPct": 30
+    },
+    {
+      "type": "spicy",
+      "bonusPct": 30
+    }
+  ],
+  "damageWeaknesses": [
+    {
+      "type": "stabbing",
+      "bonusPct": 15
+    }
+  ],
+  "resistancesV2": [
+    {
+      "type": "gas",
+      "bonusPct": 90
+    },
+    {
+      "type": "salty",
+      "bonusPct": 50
+    },
+    {
+      "type": "slashing",
+      "bonusPct": 25
+    }
+  ],
+  "immunities": [],
+  "weaknesses": [],
+  "resistances": [],
+  "weakPoints": [],
+  "attacks": [
+    {
+      "name": "Termite King Bite Left",
+      "technicalId": "TermiteKingBiteLeft",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 95.0,
+      "cooldownSeconds": 10.0,
+      "range": 250.0,
+      "stun": 3,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Multi Strike",
+      "technicalId": "TermiteKingMultiStrike",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 84.0,
+      "cooldownSeconds": 10.0,
+      "range": 300.0,
+      "stun": 3,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Power Attack",
+      "technicalId": "TermiteKingPowerAttack",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 105.0,
+      "cooldownSeconds": 20.0,
+      "range": 300.0,
+      "stun": 10,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Multi Strike 5",
+      "technicalId": "TermiteKingMultiStrike_5",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 95.0,
+      "cooldownSeconds": 10.0,
+      "range": 300.0,
+      "stun": 3,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Block Offensive",
+      "technicalId": "BlockOffensive",
+      "tags": [
+        "projectile"
+      ],
+      "damageTypes": [],
+      "damage": 0.0,
+      "cooldownSeconds": 6.0,
+      "range": 100.0,
+      "stun": 0,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": true,
+      "hitResolutionType": "Default",
+      "actionType": "projectile",
+      "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Range",
+      "technicalId": "TermiteKingRange",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 115.0,
+      "cooldownSeconds": 10.0,
+      "range": 850.0,
+      "stun": 10,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "AOE",
+      "actionType": "aoe",
+      "blockability": "unknown"
+    }
+  ],
+  "combatStats": {
+    "health": 1900,
+    "stunThreshold": 120,
+    "stunCooldownSeconds": 20
+  },
+  "loot": [],
+  "advancedLootTable": [],
+  "locations": [],
+  "environments": [],
+  "eventAppearances": [],
+  "appearanceType": "unknown",
+  "encounterVariants": [],
+  "availabilityStatus": "implemented_unconfirmed",
+  "sourceProvenance": {
+    "extractorStatus": "implemented_unconfirmed",
+    "extractorTechnicalId": "TermiteKing",
+    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+  },
+  "dataRevision": "extractor_release_0_6"
+}

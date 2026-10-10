@@ -111,12 +111,12 @@
   ],
   "resistancesV2": [
     {
-      "type": "gas",
-      "bonusPct": 90
-    },
-    {
       "type": "fresh",
       "bonusPct": 25
+    },
+    {
+      "type": "gas",
+      "bonusPct": 90
     },
     {
       "type": "spicy",
@@ -178,7 +178,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -192,7 +191,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Bite Right",
@@ -200,7 +200,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -214,7 +213,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Bite Left",
@@ -222,7 +222,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 30",
       "damageTypes": [
         "stabbing"
       ],
@@ -236,7 +235,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 30"
     },
     {
       "name": "Karate Kick Left",
@@ -244,7 +244,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -258,7 +257,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Karate Kick Right",
@@ -266,7 +266,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 35",
       "damageTypes": [
         "stabbing"
       ],
@@ -280,7 +279,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 35"
     },
     {
       "name": "Combo 3",
@@ -288,7 +288,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 25",
       "damageTypes": [
         "stabbing"
       ],
@@ -302,7 +301,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 25"
     }
   ],
   "encounterVariants": [],
@@ -979,10 +979,10 @@
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 4,
-      "notes": "4 independent rolls"
+      "countLabel": "2",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Cockroach Part",
@@ -993,8 +993,29 @@
     },
     {
       "item": "Cockroach Part",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Cockroach Part",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1033,5 +1054,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

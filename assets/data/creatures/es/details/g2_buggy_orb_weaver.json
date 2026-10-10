@@ -35,7 +35,11 @@
   ],
   "respawnInfo": "Incubación: 24 horas dentro del Hatchery. Solo un buggy puede estar activo a la vez. Si no lo reanimas dentro de 90 segundos, vuelve a su nido y queda indisponible durante 5 minutos.",
   "combatStats": {
-    "attackDamageSummary": "Mordisco, ráfaga de colmillos, salto ofensivo y control con telarañas. Prioriza la movilidad por encima de la resistencia pura."
+    "attackDamageSummary": {
+      "es": "Mordisco, ráfaga de colmillos, salto ofensivo y control con telarañas. Prioriza la movilidad por encima de la resistencia pura.",
+      "en": "Bite, fang flurry, offensive leap, and web-based control. It prioritizes mobility over raw durability.",
+      "ru": "Укус, серия ударов клыками, атакующий прыжок и контроль паутиной. Делает ставку на мобильность, а не на чистую живучесть."
+    }
   },
   "inflictsEffects": [
     "slashing"
@@ -102,5 +106,295 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "appearanceType": "no_natural_spawn"
+  "appearanceType": "no_natural_spawn",
+  "buggyProfile": {
+    "technicalId": "Spider_OrbWeaver_Augusta_Buggy",
+    "baseActor": "/Game/_Dev/Creatures/Spider/OrbWeaver/BP_Spider_Web_Augusta_Buggy",
+    "sourceAsset": "/Game/Releases/Release_0_4_0/Blueprints/DataTables/DA_BuggyBuffing",
+    "stats": {
+      "maxHealthRaw": 730.0,
+      "tamedMaxHealth": 420.0,
+      "averageDamageRaw": 50.0,
+      "defaultAttackTier": 1,
+      "defaultBaseDamageFirstAttack": 50.0,
+      "defaultBaseDamageTypeFirstAttack": 8,
+      "stamina": 70.0,
+      "staminaRegenRate": 65.0,
+      "staminaRegenDelay": 1.95,
+      "exhaustedStaminaDelay": 2.95,
+      "haulingCapacity": null,
+      "blockDamageMultiplier": 0.5,
+      "blockStaminaRegenMultiplier": 0.0
+    },
+    "recipe": {
+      "sourceTable": "/Game/Blueprints/Items/CraftingTables/DT_Table_Crafting_Hatchery",
+      "row": "SpiderHatch",
+      "craftingBuildingTag": "CraftingBuilding.Hatchery",
+      "categoryTag": "Recipe.Crafting.Hatchery",
+      "visibility": "RecipeRequired",
+      "hiddenInCraftingMenu": true,
+      "productionTimeRaw": 12.0,
+      "overridesProductionTime": true,
+      "alwaysDropIngredientsOnDestroy": true,
+      "result": {
+        "itemRow": "SpiderHatch",
+        "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+        "count": 1
+      },
+      "requirements": [
+        {
+          "type": "Item",
+          "itemRow": "Fabric",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AntMandibles",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 4,
+          "showCount": true,
+          "tags": [
+            "Faction.Ant.Brown",
+            "GrindableAmmo.Small"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AcornShell",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggOrb",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "requirementsRaw": [
+        {
+          "type": "Item",
+          "itemRow": "Fabric",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AntMandibles",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 4,
+          "showCount": true,
+          "tags": [
+            "Faction.Ant.Brown",
+            "GrindableAmmo.Small"
+          ],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "AcornShell",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 3,
+          "showCount": true,
+          "tags": [],
+          "isAcquisitionEgg": false,
+          "isTechnicalGate": false
+        },
+        {
+          "type": "Item",
+          "itemRow": "Taming_EggOrb",
+          "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+          "itemResolution": "direct",
+          "count": 1,
+          "showCount": true,
+          "tags": [
+            "ItemProcessing.Hatching.Egg"
+          ],
+          "isAcquisitionEgg": true,
+          "isTechnicalGate": false
+        }
+      ],
+      "technicalRequirements": [],
+      "gate": null
+    },
+    "hatching": {
+      "itemRow": "SpiderHatch",
+      "itemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "itemResolution": "direct",
+      "requiresManualHatch": true,
+      "hatchTimeRaw": 0.0,
+      "hatchData": "/Game/Blueprints/Items/Hatching/OrbWeaverBuggyEggHatchData",
+      "hatchDataExportFound": true,
+      "hatchTamed": null,
+      "hatchOptions": [
+        {
+          "resultActor": "/Game/_Dev/Creatures/Spider/OrbWeaver/BP_Spider_Web_Augusta_Buggy",
+          "ratio": 1.0
+        }
+      ],
+      "worldActor": "/Game/Blueprints/Items/Hatching/BP_World_Hatchable_Spider_Orb_Egg",
+      "tags": [],
+      "spoil": {
+        "state": "None",
+        "overrideGlobalTime": false,
+        "hours": 36.0,
+        "onlyWhenPlayerOwned": false,
+        "resultItemRow": null
+      }
+    },
+    "handling": {
+      "presetRow": "Spider",
+      "mappingMethod": "identity_current_game",
+      "presets": {
+        "Survival": {
+          "coreStats": {
+            "MaxWalkSpeed": 850.0,
+            "Acceleration": 2048.0,
+            "Friction": 8.0,
+            "BrakingDeceleration": 2048.0
+          },
+          "staminaStats": {
+            "MaxStamina": 70.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 65.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 1.95
+          },
+          "angleForStrafe": 45.0,
+          "blockingSpeedModifier": 0.5,
+          "useFrictionCurves": false,
+          "frictionCurve": null,
+          "speedBoostType": {
+            "row": "SpeedBoostSpider",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 55.0,
+          "speedBoostStaminaCost": 10.0
+        },
+        "RacingStandard": {
+          "coreStats": {
+            "MaxWalkSpeed": 1400.0,
+            "Acceleration": 1700.0,
+            "Friction": 0.3,
+            "BrakingDeceleration": 500.0
+          },
+          "staminaStats": {
+            "MaxStamina": 40.0,
+            "RegenDelay": 1.95,
+            "RegenRate": 50.0,
+            "bShouldInstanceRegenWhenExhausted": true,
+            "ChunkSize": 10.0,
+            "ExhaustedStaminaDelay": 4.0
+          },
+          "angleForStrafe": 90.0,
+          "blockingSpeedModifier": 1.0,
+          "useFrictionCurves": true,
+          "frictionCurve": "/Game/Blueprints/Creatures/Spider/CURVE_Spider_RaceBuggyFriction.0",
+          "speedBoostType": {
+            "row": "SpeedBoostSpiderRace",
+            "table": "/Game/_Dev/DataTables/DT_StatusEffects"
+          },
+          "speedBoostExitForwardAngle": 100.0,
+          "speedBoostStaminaCost": 10.0
+        }
+      }
+    },
+    "raceVariant": {
+      "context": "ugc_racing",
+      "separateCreature": false,
+      "characterRow": "Spider_OrbWeaver_Augusta_Buggy_Race",
+      "characterTable": "/Game/Blueprints/DataTables/Table_CharacterData",
+      "actor": "/Game/_Dev/Creatures/Spider/OrbWeaver/BP_Spider_Web_Augusta_Buggy_Race",
+      "saddleItemRow": "SpiderSaddle",
+      "saddleItemTable": "/Game/Blueprints/Items/Table_AllItems",
+      "icon": "/Game/UI/Images/T_UI_Buggy_Spider_Icon",
+      "displayNameLoc": {
+        "StringTableID": 2,
+        "StringID": 2308,
+        "StringTableName": "None"
+      },
+      "localizedDescription": {
+        "StringTableID": 1,
+        "StringID": 3703,
+        "StringTableName": "None"
+      },
+      "abilities": [
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 3704,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3705,
+            "StringTableName": "None"
+          }
+        },
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 3029,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3706,
+            "StringTableName": "None"
+          }
+        },
+        {
+          "titleLoc": {
+            "StringTableID": 1,
+            "StringID": 2957,
+            "StringTableName": "None"
+          },
+          "descriptionLoc": {
+            "StringTableID": 1,
+            "StringID": 3707,
+            "StringTableName": "None"
+          }
+        }
+      ]
+    },
+    "quality": {
+      "baseActorResolved": true,
+      "hatcheryRecipeResolved": true,
+      "hatchingResolved": true,
+      "raceVariantResolved": true,
+      "gatedStages": 2,
+      "unlinkedAttackRows": 36
+    }
+  },
+  "availabilityStatus": "source_backed"
 }

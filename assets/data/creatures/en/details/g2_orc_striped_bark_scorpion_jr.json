@@ -11,7 +11,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -101,7 +101,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 85",
       "damageTypes": [
         "stabbing"
       ],
@@ -115,7 +114,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 85"
     },
     {
       "name": "Combo 4",
@@ -123,7 +123,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 68",
       "damageTypes": [
         "stabbing"
       ],
@@ -137,7 +136,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 68"
     },
     {
       "name": "Power",
@@ -145,7 +145,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 122",
       "damageTypes": [
         "stabbing"
       ],
@@ -159,7 +158,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 122"
     },
     {
       "name": "Burrow Strike",
@@ -167,7 +167,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 145",
       "damageTypes": [
         "stabbing"
       ],
@@ -176,11 +175,11 @@
       "range": 450.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Very Large"
+        "VenomVeryLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Very Large",
+          "id": "VenomVeryLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -189,7 +188,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 145"
     },
     {
       "name": "Tail Whip",
@@ -197,7 +197,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 10",
       "damageTypes": [
         "stabbing"
       ],
@@ -211,7 +210,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 10"
     }
   ],
   "encounterVariants": [
@@ -730,23 +730,9 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 35,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
@@ -758,9 +744,30 @@
       "notes": null
     },
     {
-      "item": "Scorpion Venom",
+      "item": "Scorpion Striped Chunk",
       "countLabel": "1",
       "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -770,6 +777,14 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Scorpion Venom",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

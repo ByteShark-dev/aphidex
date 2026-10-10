@@ -100,27 +100,27 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
+      "type": "all",
+      "bonusPct": 25
     },
     {
       "type": "explosive",
       "bonusPct": 50
     },
     {
-      "type": "all",
-      "bonusPct": 25
-    },
-    {
-      "type": "slashing",
-      "bonusPct": 25
+      "type": "gas",
+      "bonusPct": 50
     },
     {
       "type": "poison",
       "bonusPct": 75
     },
     {
-      "type": "gas",
+      "type": "slashing",
+      "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
       "bonusPct": 50
     }
   ],
@@ -134,7 +134,6 @@
         "projectile",
         "ranged"
       ],
-      "notes": "Daño del ataque: 50",
       "damageTypes": [
         "general"
       ],
@@ -143,11 +142,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -155,8 +154,9 @@
       "ranged": true,
       "projectile": true,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 50"
     },
     {
       "name": "Wasp Drone Heal",
@@ -165,7 +165,6 @@
         "general",
         "ranged"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [
         "general"
       ],
@@ -174,11 +173,11 @@
       "range": 2000.0,
       "stun": 0,
       "statusEffects": [
-        "Wasp Support Heal Apply Attack Effect"
+        "WaspSupportHealApplyAttackEffect"
       ],
       "statusEffectDetails": [
         {
-          "id": "Wasp Support Heal Apply Attack Effect",
+          "id": "WaspSupportHealApplyAttackEffect",
           "value": null,
           "durationSeconds": null
         }
@@ -186,8 +185,9 @@
       "ranged": true,
       "projectile": false,
       "hitResolutionType": "AOE",
-      "actionType": "aoe",
-      "blockability": "unknown"
+      "actionType": "ranged",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     },
     {
       "name": "Aguijonazo",
@@ -195,7 +195,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "stabbing"
       ],
@@ -204,11 +203,11 @@
       "range": 400.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Tiny"
+        "VenomTiny"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Tiny",
+          "id": "VenomTiny",
           "value": null,
           "durationSeconds": null
         }
@@ -217,7 +216,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     }
   ],
   "encounterVariants": [
@@ -635,5 +635,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

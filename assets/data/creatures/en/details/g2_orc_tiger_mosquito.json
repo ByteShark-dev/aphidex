@@ -23,7 +23,7 @@
     },
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     }
@@ -78,7 +78,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "stabbing"
       ],
@@ -92,7 +91,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     },
     {
       "name": "Combo Stab",
@@ -100,7 +100,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "stabbing"
       ],
@@ -114,7 +113,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     },
     {
       "name": "Dive Bomb",
@@ -122,7 +122,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 120",
       "damageTypes": [
         "stabbing"
       ],
@@ -136,13 +135,13 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 120"
     },
     {
       "name": "Mosquito Tiger Dodge",
       "technicalId": "MosquitoTigerDodge",
       "tags": [],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 10.0,
@@ -153,8 +152,9 @@
       "ranged": false,
       "projectile": false,
       "hitResolutionType": "Default",
-      "actionType": "movement_action",
-      "blockability": "unknown"
+      "actionType": "melee",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Combo",
@@ -162,7 +162,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 75",
       "damageTypes": [
         "stabbing"
       ],
@@ -176,7 +175,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 75"
     }
   ],
   "encounterVariants": [
@@ -888,19 +888,19 @@
     {
       "item": "Mosquito Beak Tiger",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Mosquito Beak Tiger",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Mosquito Blood Sack",
+      "item": "Mosquito Beak Tiger",
       "countLabel": "1",
       "chancePct": 1,
       "rollCount": 1,
@@ -914,11 +914,19 @@
       "notes": null
     },
     {
-      "item": "ORCChip",
+      "item": "Mosquito Blood Sack",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

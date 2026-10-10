@@ -251,7 +251,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 120",
       "damageTypes": [
         "chopping"
       ],
@@ -265,7 +264,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 120"
     },
     {
       "name": "Buck",
@@ -273,7 +273,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 120",
       "damageTypes": [
         "general"
       ],
@@ -287,13 +286,29 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 120"
     },
     {
-      "name": "Melee",
-      "technicalId": "LadybugMelee",
-      "tags": [],
-      "notes": "Не идентифицировано"
+      "name": "Ladybug Melee",
+      "technicalId": "LadyBugMelee",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 75.0,
+      "cooldownSeconds": 10.0,
+      "range": 240.0,
+      "stun": 8,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Bite R",
@@ -301,7 +316,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 75",
       "damageTypes": [
         "chopping"
       ],
@@ -315,7 +329,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 75"
     },
     {
       "name": "Bite L",
@@ -323,7 +338,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Урон атаки: 75",
       "damageTypes": [
         "chopping"
       ],
@@ -337,13 +351,29 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 75"
     },
     {
-      "name": "Power Attack",
-      "technicalId": "LadybugPowerAttack",
-      "tags": [],
-      "notes": "Не идентифицировано"
+      "name": "Ladybug Power Attack",
+      "technicalId": "LadyBugPowerAttack",
+      "tags": [
+        "general"
+      ],
+      "damageTypes": [
+        "general"
+      ],
+      "damage": 100.0,
+      "cooldownSeconds": 10.0,
+      "range": 240.0,
+      "stun": 15,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     },
     {
       "name": "Roar",
@@ -351,7 +381,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [
         "general"
       ],
@@ -360,23 +389,23 @@
       "range": 250.0,
       "stun": 0,
       "statusEffects": [
-        "Ladybug Roar Attack Up",
-        "Ladybug Roar Move Speed Up",
-        "Full Heal"
+        "LadybugRoarAttackUp",
+        "LadybugRoarMoveSpeedUp",
+        "FullHeal"
       ],
       "statusEffectDetails": [
         {
-          "id": "Ladybug Roar Attack Up",
+          "id": "LadybugRoarAttackUp",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Ladybug Roar Move Speed Up",
+          "id": "LadybugRoarMoveSpeedUp",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Full Heal",
+          "id": "FullHeal",
           "value": null,
           "durationSeconds": null
         }
@@ -385,7 +414,8 @@
       "projectile": false,
       "hitResolutionType": "Self",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     },
     {
       "name": "Block Defensive",
@@ -393,7 +423,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 7.0,
@@ -404,8 +433,21 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
+    },
+    {
+      "name": "Melee",
+      "technicalId": "LadybugMelee",
+      "tags": [],
+      "notes": "Не идентифицировано"
+    },
+    {
+      "name": "Power Attack",
+      "technicalId": "LadybugPowerAttack",
+      "tags": [],
+      "notes": "Не идентифицировано"
     }
   ],
   "encounterVariants": [],
@@ -486,5 +528,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

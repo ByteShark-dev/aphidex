@@ -66,12 +66,12 @@
   "damageWeaknesses": [],
   "resistancesV2": [
     {
-      "type": "stabbing",
-      "bonusPct": 50
-    },
-    {
       "type": "slashing",
       "bonusPct": 25
+    },
+    {
+      "type": "stabbing",
+      "bonusPct": 50
     }
   ],
   "weakPoints": [],
@@ -84,20 +84,19 @@
         "ranged",
         "sizzle"
       ],
-      "notes": "Daño del ataque: 60",
       "damageTypes": [
         "sizzle"
       ],
       "damage": 60.0,
       "cooldownSeconds": 0.0,
-      "range": 200.0,
+      "range": 300.0,
       "stun": 5,
       "statusEffects": [
-        "Sizzle Large Increase"
+        "SizzleLargeIncrease"
       ],
       "statusEffectDetails": [
         {
-          "id": "Sizzle Large Increase",
+          "id": "SizzleLargeIncrease",
           "value": null,
           "durationSeconds": null
         }
@@ -106,7 +105,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 60"
     },
     {
       "name": "Tayz T Pincher",
@@ -114,13 +114,12 @@
       "tags": [
         "smashing"
       ],
-      "notes": "Daño del ataque: 40",
       "damageTypes": [
         "smashing"
       ],
       "damage": 40.0,
       "cooldownSeconds": 0.0,
-      "range": 200.0,
+      "range": 250.0,
       "stun": 10,
       "statusEffects": [],
       "statusEffectDetails": [],
@@ -128,7 +127,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 40"
     }
   ],
   "encounterVariants": [],
@@ -276,22 +276,22 @@
   "advancedLootTable": [
     {
       "item": "Food Candy Spicy",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 2,
-      "notes": "2 independent rolls"
-    },
-    {
-      "item": "Food Candy Spicy",
       "countLabel": "2",
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Sphere Bot Diode",
+      "item": "Food Candy Spicy",
       "countLabel": "1",
-      "chancePct": 10,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Food Candy Spicy",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -303,11 +303,11 @@
       "notes": null
     },
     {
-      "item": "Sphere Bot Parts",
+      "item": "Sphere Bot Diode",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "chancePct": 10,
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Sphere Bot Parts",
@@ -322,6 +322,28 @@
       "chancePct": 25,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Sphere Bot Parts",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

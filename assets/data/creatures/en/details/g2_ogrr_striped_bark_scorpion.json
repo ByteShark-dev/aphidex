@@ -114,7 +114,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 105",
       "damageTypes": [
         "stabbing"
       ],
@@ -128,7 +127,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 105"
     },
     {
       "name": "Combo 4",
@@ -136,7 +136,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 88",
       "damageTypes": [
         "stabbing"
       ],
@@ -150,7 +149,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 88"
     },
     {
       "name": "Power",
@@ -158,7 +158,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 142",
       "damageTypes": [
         "stabbing"
       ],
@@ -172,7 +171,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 142"
     },
     {
       "name": "Burrow Strike",
@@ -180,7 +180,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 165",
       "damageTypes": [
         "stabbing"
       ],
@@ -189,11 +188,11 @@
       "range": 550.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Huge"
+        "VenomHuge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Huge",
+          "id": "VenomHuge",
           "value": null,
           "durationSeconds": null
         }
@@ -202,7 +201,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 165"
     },
     {
       "name": "Block Offensive",
@@ -210,10 +210,9 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Attack damage: 0",
       "damageTypes": [],
       "damage": 0.0,
-      "cooldownSeconds": 6.0,
+      "cooldownSeconds": 9.0,
       "range": 100.0,
       "stun": 0,
       "statusEffects": [],
@@ -221,8 +220,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Attack damage: 0"
     },
     {
       "name": "Tail Whip",
@@ -230,7 +230,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Attack damage: 10",
       "damageTypes": [
         "stabbing"
       ],
@@ -244,7 +243,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Attack damage: 10"
     }
   ],
   "encounterVariants": [],
@@ -419,15 +419,8 @@
     },
     {
       "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 25,
+      "countLabel": "2",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -440,15 +433,29 @@
     },
     {
       "item": "Scorpion Striped Chunk",
-      "countLabel": "2",
-      "chancePct": 100,
+      "countLabel": "1",
+      "chancePct": 25,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Scorpion Striped Claw",
+      "item": "Scorpion Striped Chunk",
       "countLabel": "1",
-      "chancePct": 10,
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -456,6 +463,13 @@
       "item": "Scorpion Striped Claw",
       "countLabel": "1",
       "chancePct": 60,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Claw",
+      "countLabel": "1",
+      "chancePct": 10,
       "rollCount": 1,
       "notes": null
     },
@@ -468,8 +482,8 @@
     },
     {
       "item": "Scorpion Venom",
-      "countLabel": "1",
-      "chancePct": 1,
+      "countLabel": "2",
+      "chancePct": 50,
       "rollCount": 1,
       "notes": null
     },
@@ -482,10 +496,11 @@
     },
     {
       "item": "Scorpion Venom",
-      "countLabel": "2",
-      "chancePct": 50,
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

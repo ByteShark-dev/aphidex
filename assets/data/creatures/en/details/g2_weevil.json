@@ -3297,14 +3297,14 @@
     {
       "item": "Weevil Meat",
       "countLabel": "1",
-      "chancePct": 1,
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
       "item": "Weevil Meat",
       "countLabel": "1",
-      "chancePct": 100,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -3315,5 +3315,6 @@
       "rollCount": 1,
       "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

@@ -35,7 +35,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -147,7 +147,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 65",
       "damageTypes": [
         "general"
       ],
@@ -156,11 +155,11 @@
       "range": 700.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -169,7 +168,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 65"
     },
     {
       "name": "Bite",
@@ -177,7 +177,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 65",
       "damageTypes": [
         "general"
       ],
@@ -186,11 +185,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -199,7 +198,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 65"
     },
     {
       "name": "Spider Wolf Flurry",
@@ -207,7 +207,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 50",
       "damageTypes": [
         "general"
       ],
@@ -216,11 +215,11 @@
       "range": 300.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -229,7 +228,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 50"
     },
     {
       "name": "Power Attack",
@@ -237,7 +237,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 80",
       "damageTypes": [
         "general"
       ],
@@ -246,11 +245,11 @@
       "range": 300.0,
       "stun": 20,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -259,7 +258,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 80"
     },
     {
       "name": "Spider Jump Attack",
@@ -267,7 +267,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Урон атаки: 95",
       "damageTypes": [
         "general"
       ],
@@ -276,11 +275,11 @@
       "range": 600.0,
       "stun": 15,
       "statusEffects": [
-        "Venom Medium"
+        "VenomMedium"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Medium",
+          "id": "VenomMedium",
           "value": null,
           "durationSeconds": null
         }
@@ -289,7 +288,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 95"
     },
     {
       "name": "Spider Wolf Riposte Stance",
@@ -297,7 +297,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Урон атаки: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 10.0,
@@ -309,7 +308,8 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 0"
     }
   ],
   "encounterVariants": [
@@ -1047,8 +1047,15 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Spider Venom",
+      "countLabel": "2",
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
@@ -1061,16 +1068,9 @@
       "notes": null
     },
     {
-      "item": "Spider Venom",
-      "countLabel": "2",
-      "chancePct": 75,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
       "item": "Spider Wolf Chunk",
-      "countLabel": "1",
-      "chancePct": 1,
+      "countLabel": "3",
+      "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
@@ -1083,15 +1083,8 @@
     },
     {
       "item": "Spider Wolf Chunk",
-      "countLabel": "3",
-      "chancePct": 100,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Spider Wolf Fang",
       "countLabel": "1",
-      "chancePct": 35,
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1101,6 +1094,14 @@
       "chancePct": 75,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Spider Wolf Fang",
+      "countLabel": "1",
+      "chancePct": 35,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

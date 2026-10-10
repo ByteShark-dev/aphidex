@@ -36,7 +36,7 @@
   "loot": [
     {
       "section": "loot",
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "minCount": 0,
       "maxCount": 1
     },
@@ -96,11 +96,11 @@
   ],
   "resistancesV2": [
     {
-      "type": "stabbing",
+      "type": "spicy",
       "bonusPct": 25
     },
     {
-      "type": "spicy",
+      "type": "stabbing",
       "bonusPct": 25
     }
   ],
@@ -146,7 +146,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 130",
       "damageTypes": [
         "chopping"
       ],
@@ -160,7 +159,8 @@
       "projectile": false,
       "hitResolutionType": "ActiveLoop",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 130"
     },
     {
       "name": "Embestida",
@@ -168,7 +168,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 130",
       "damageTypes": [
         "general"
       ],
@@ -182,7 +181,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 130"
     },
     {
       "name": "Cuerpo a cuerpo",
@@ -190,7 +190,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 85",
       "damageTypes": [
         "chopping"
       ],
@@ -204,7 +203,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 85"
     },
     {
       "name": "Mordida derecha",
@@ -212,7 +212,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 85",
       "damageTypes": [
         "chopping"
       ],
@@ -226,7 +225,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 85"
     },
     {
       "name": "Mordida izquierda",
@@ -234,7 +234,6 @@
       "tags": [
         "chopping"
       ],
-      "notes": "Daño del ataque: 85",
       "damageTypes": [
         "chopping"
       ],
@@ -248,7 +247,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 85"
     },
     {
       "name": "Potente ataque",
@@ -256,7 +256,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 110",
       "damageTypes": [
         "general"
       ],
@@ -270,7 +269,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 110"
     },
     {
       "name": "Rugido",
@@ -278,7 +278,6 @@
       "tags": [
         "general"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [
         "general"
       ],
@@ -287,17 +286,17 @@
       "range": 250.0,
       "stun": 0,
       "statusEffects": [
-        "Potato Beetle Roar Venon Resist",
-        "Potato Beetle Roar Health Regen"
+        "PotatoBeetleRoar_VenonResist",
+        "PotatoBeetleRoar_HealthRegen"
       ],
       "statusEffectDetails": [
         {
-          "id": "Potato Beetle Roar Venon Resist",
+          "id": "PotatoBeetleRoar_VenonResist",
           "value": null,
           "durationSeconds": null
         },
         {
-          "id": "Potato Beetle Roar Health Regen",
+          "id": "PotatoBeetleRoar_HealthRegen",
           "value": null,
           "durationSeconds": null
         }
@@ -306,7 +305,8 @@
       "projectile": false,
       "hitResolutionType": "Self",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     },
     {
       "name": "Bloqueo defensivo",
@@ -314,7 +314,6 @@
       "tags": [
         "projectile"
       ],
-      "notes": "Daño del ataque: 0",
       "damageTypes": [],
       "damage": 0.0,
       "cooldownSeconds": 6.0,
@@ -325,8 +324,9 @@
       "ranged": false,
       "projectile": true,
       "hitResolutionType": "Default",
-      "actionType": "defensive_action",
-      "blockability": "unknown"
+      "actionType": "projectile",
+      "blockability": "unknown",
+      "notes": "Daño del ataque: 0"
     }
   ],
   "encounterVariants": [
@@ -1472,16 +1472,9 @@
   "immunities": [],
   "advancedLootTable": [
     {
-      "item": "ORCChip",
+      "item": "O.R.C.Chip",
       "countLabel": "1",
       "chancePct": 85,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Potato Beetle Head",
-      "countLabel": "1",
-      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -1493,11 +1486,11 @@
       "notes": null
     },
     {
-      "item": "Potato Beetle Shell",
+      "item": "Potato Beetle Head",
       "countLabel": "1",
       "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
+      "rollCount": 1,
+      "notes": null
     },
     {
       "item": "Potato Beetle Shell",
@@ -1512,6 +1505,28 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Potato Beetle Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Potato Beetle Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Potato Beetle Shell",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }

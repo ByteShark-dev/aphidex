@@ -95,6 +95,9 @@ class Enemy implements CreatureCardCarrier {
   final LocalizedText? appearanceCondition;
   final String? appearanceSourceId;
   final String? appearanceSourceTargetId;
+  /// Extractor-backed availability, kept separate from editorial presentation.
+  final String availabilityStatus;
+  final BuggyProfile? buggyProfile;
 
   const Enemy({
     required this.order,
@@ -168,6 +171,8 @@ class Enemy implements CreatureCardCarrier {
     this.appearanceCondition,
     this.appearanceSourceId,
     this.appearanceSourceTargetId,
+    this.availabilityStatus = 'confirmed',
+    this.buggyProfile,
   });
 
   factory Enemy.fromJson(Map<String, dynamic> json) {
@@ -418,6 +423,13 @@ class Enemy implements CreatureCardCarrier {
       ),
       appearanceSourceId: json['appearanceSourceId']?.toString(),
       appearanceSourceTargetId: json['appearanceSourceTargetId']?.toString(),
+      availabilityStatus:
+          json['availabilityStatus']?.toString() ?? 'confirmed',
+      buggyProfile: json['buggyProfile'] is Map
+          ? BuggyProfile.fromJson(
+              (json['buggyProfile'] as Map).cast<String, dynamic>(),
+            )
+          : null,
     );
   }
 
@@ -653,6 +665,57 @@ class BonusInfo {
     type: (json['type'] ?? '') as String,
     bonusPct: (json['bonusPct'] ?? 0) as int,
   );
+}
+
+/// A compact, lossless view of a rideable Buggy's extractor data.
+///
+/// Some values are intentionally raw maps: FModel exposes these recipes and
+/// handling presets without a stable player-facing schema. Keeping them here
+/// prevents Aphidex from guessing at unavailable stats or recipe semantics.
+class BuggyProfile {
+  final String technicalId;
+  final String? baseActor;
+  final String? sourceAsset;
+  final Map<String, dynamic> stats;
+  final Map<String, dynamic> recipe;
+  final Map<String, dynamic> hatching;
+  final Map<String, dynamic> handling;
+  final Map<String, dynamic> quality;
+  final Map<String, dynamic>? raceVariant;
+
+  const BuggyProfile({
+    required this.technicalId,
+    required this.stats,
+    required this.recipe,
+    required this.hatching,
+    required this.handling,
+    required this.quality,
+    this.baseActor,
+    this.sourceAsset,
+    this.raceVariant,
+  });
+
+  factory BuggyProfile.fromJson(Map<String, dynamic> json) => BuggyProfile(
+    technicalId: json['technicalId']?.toString() ?? '',
+    baseActor: json['baseActor']?.toString(),
+    sourceAsset: json['sourceAsset']?.toString(),
+    stats: (json['stats'] as Map?)?.cast<String, dynamic>() ?? const {},
+    recipe: (json['recipe'] as Map?)?.cast<String, dynamic>() ?? const {},
+    hatching: (json['hatching'] as Map?)?.cast<String, dynamic>() ?? const {},
+    handling: (json['handling'] as Map?)?.cast<String, dynamic>() ?? const {},
+    quality: (json['quality'] as Map?)?.cast<String, dynamic>() ?? const {},
+    raceVariant: (json['raceVariant'] as Map?)?.cast<String, dynamic>(),
+  );
+
+  num? stat(String key) => stats[key] as num?;
+
+  String? get recipeRow => recipe['row']?.toString();
+
+  List<Map<String, dynamic>> get ingredients =>
+      (recipe['requirements'] as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList(growable: false);
 }
 
 class CreatureInfusion {

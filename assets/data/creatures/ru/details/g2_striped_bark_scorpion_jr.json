@@ -95,7 +95,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 85",
       "damageTypes": [
         "stabbing"
       ],
@@ -109,7 +108,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 85"
     },
     {
       "name": "Combo 4",
@@ -117,7 +117,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 68",
       "damageTypes": [
         "stabbing"
       ],
@@ -131,7 +130,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 68"
     },
     {
       "name": "Power",
@@ -139,7 +139,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 122",
       "damageTypes": [
         "stabbing"
       ],
@@ -153,7 +152,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 122"
     },
     {
       "name": "Burrow Strike",
@@ -161,7 +161,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 145",
       "damageTypes": [
         "stabbing"
       ],
@@ -170,11 +169,11 @@
       "range": 450.0,
       "stun": 8,
       "statusEffects": [
-        "Venom Very Large"
+        "VenomVeryLarge"
       ],
       "statusEffectDetails": [
         {
-          "id": "Venom Very Large",
+          "id": "VenomVeryLarge",
           "value": null,
           "durationSeconds": null
         }
@@ -183,7 +182,8 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 145"
     },
     {
       "name": "Tail Whip",
@@ -191,7 +191,6 @@
       "tags": [
         "stabbing"
       ],
-      "notes": "Урон атаки: 10",
       "damageTypes": [
         "stabbing"
       ],
@@ -205,7 +204,8 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "notes": "Урон атаки: 10"
     }
   ],
   "encounterVariants": [],
@@ -666,28 +666,35 @@
     {
       "item": "Scorpion Striped Chunk",
       "countLabel": "1",
-      "chancePct": 1,
-      "rollCount": 3,
-      "notes": "3 independent rolls"
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
-      "chancePct": 25,
-      "rollCount": 1,
-      "notes": null
-    },
-    {
-      "item": "Scorpion Striped Chunk",
-      "countLabel": "1",
       "chancePct": 100,
       "rollCount": 1,
       "notes": null
     },
     {
-      "item": "Scorpion Venom",
+      "item": "Scorpion Striped Chunk",
       "countLabel": "1",
       "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Scorpion Striped Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
       "rollCount": 1,
       "notes": null
     },
@@ -697,6 +704,14 @@
       "chancePct": 50,
       "rollCount": 1,
       "notes": null
+    },
+    {
+      "item": "Scorpion Venom",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
     }
-  ]
+  ],
+  "sourceStatus": "extractor_merged"
 }
