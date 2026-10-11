@@ -7,6 +7,7 @@
   "game": "g2",
   "tier": 4,
   "danger": "baja",
+  "underConstruction": false,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -18,7 +19,7 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "photo": "assets/g2/creatures/photos/release_0_6_termite_larva.webp",
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
@@ -46,8 +47,8 @@
   "attacks": [],
   "combatStats": {
     "health": 100,
-    "stunThreshold": 70.0,
-    "stunCooldownSeconds": 5.0
+    "stunThreshold": 70,
+    "stunCooldownSeconds": 5
   },
   "loot": [
     {

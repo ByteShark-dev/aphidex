@@ -7,6 +7,7 @@
   "game": "g2",
   "tier": 4,
   "danger": "imposible",
+  "underConstruction": false,
   "isBoss": true,
   "order": 0,
   "defaultGold": false,
@@ -18,7 +19,7 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "photo": "assets/g2/creatures/photos/release_0_6_centipede.webp",
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
@@ -545,8 +546,8 @@
   ],
   "combatStats": {
     "health": 9000,
-    "stunThreshold": 120.0,
-    "stunCooldownSeconds": 25.0
+    "stunThreshold": 120,
+    "stunCooldownSeconds": 25
   },
   "loot": [
     {
@@ -845,21 +846,6 @@
         "x": -251423.45,
         "y": 54904.523,
         "z": -12801.829
-      },
-      "type": "encounter_spawn",
-      "conditional": false,
-      "environmentHazards": []
-    },
-    {
-      "id": "release_0_6_centipede_1",
-      "targetType": "creature",
-      "targetId": "g2_centipede",
-      "technicalId": "Centipede",
-      "map": "surface",
-      "world": {
-        "x": -246735.55,
-        "y": 62852.906,
-        "z": -7018.8496
       },
       "type": "encounter_spawn",
       "conditional": false,

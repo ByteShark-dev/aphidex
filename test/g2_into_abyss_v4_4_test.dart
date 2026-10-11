@@ -131,6 +131,7 @@ void main() {
       'g2_buggy_orb_weaver': 'g2_orb_weaver',
       'g2_buggy_red_soldier_ant': 'g2_red_soldier_ant',
       'g2_buggy_toe_biter': 'g2_toe_biter_nymph',
+      'g2_buggy_potato_beetle': 'g2_potato_beetle',
     };
 
     for (final mapping in cardSources.entries) {
@@ -249,7 +250,7 @@ void main() {
         .where((entry) => entry.collectionGroup == 'ogrr')
         .map((entry) => loadDetail(entry.id))
         .toList();
-    expect(ogrr, hasLength(16));
+    expect(ogrr, hasLength(17));
     expect(
       ogrr.every(
         (entry) => entry.infusions

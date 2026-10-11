@@ -31,7 +31,9 @@
       "rating": 5,
       "value": 9000
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_centipede.webp"
   },
   {
     "id": "g2_ogre_diving_bell_spider",
@@ -39,7 +41,7 @@
     "game": "g2",
     "name": "Водолазный паук O.G.R.R.",
     "tier": 2,
-    "danger": "muy_alta",
+    "danger": "proximamente",
     "isBoss": false,
     "order": 0,
     "defaultGold": false,
@@ -56,8 +58,8 @@
     "defaultCardVariant": "normal",
     "weaknesses": [],
     "resistances": [],
-    "temperament": "unknown",
-    "collectionGroup": "unknown",
+    "temperament": "aggressive",
+    "collectionGroup": "ogrr",
     "technicalId": "SpiderDivingBellOGRE",
     "bestiaryId": "SpiderDivingBellOGRE",
     "entityType": "creature",
@@ -65,7 +67,8 @@
       "rating": 4,
       "value": 1600
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "implemented_unconfirmed",
+    "underConstruction": true
   },
   {
     "id": "g2_ogre_termite_king",
@@ -99,7 +102,9 @@
       "rating": 5,
       "value": 2400
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_ogre_termite_king.webp"
   },
   {
     "id": "g2_orc_termite_soldier",
@@ -107,7 +112,7 @@
     "game": "g2",
     "name": "Термит-солдат O.R.C.",
     "tier": 4,
-    "danger": "muy_alta",
+    "danger": "proximamente",
     "isBoss": false,
     "order": 0,
     "defaultGold": false,
@@ -133,7 +138,8 @@
       "rating": 4,
       "value": 1300
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "implemented_unconfirmed",
+    "underConstruction": true
   },
   {
     "id": "g2_orc_termite_worker",
@@ -141,7 +147,7 @@
     "game": "g2",
     "name": "Термит-рабочий O.R.C.",
     "tier": 4,
-    "danger": "alta",
+    "danger": "proximamente",
     "isBoss": false,
     "order": 0,
     "defaultGold": false,
@@ -167,7 +173,8 @@
       "rating": 3,
       "value": 960
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "implemented_unconfirmed",
+    "underConstruction": true
   },
   {
     "id": "g2_termite_king",
@@ -175,7 +182,7 @@
     "game": "g2",
     "name": "Король термитов",
     "tier": 4,
-    "danger": "muy_alta",
+    "danger": "proximamente",
     "isBoss": false,
     "order": 0,
     "defaultGold": false,
@@ -201,7 +208,8 @@
       "rating": 4,
       "value": 1900
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "implemented_unconfirmed",
+    "underConstruction": true
   },
   {
     "id": "g2_termite_nymph",
@@ -235,7 +243,9 @@
       "rating": 1,
       "value": 100
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_termite_larva.webp"
   },
   {
     "id": "g2_termite_queen",
@@ -254,7 +264,7 @@
     "listIconAsset": "",
     "mapMarkerAsset": "",
     "customAsset": "",
-    "hasCreatureCard": false,
+    "hasCreatureCard": true,
     "hasGoldCreatureCard": true,
     "hasSelectableCardVariants": false,
     "defaultCardVariant": "gold",
@@ -266,7 +276,9 @@
     "bestiaryId": "TermiteQueen",
     "entityType": "interactable",
     "health": null,
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_termite_queen.webp"
   },
   {
     "id": "g2_termite_soldier",
@@ -300,7 +312,9 @@
       "rating": 4,
       "value": 1300
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_termite_soldier.webp"
   },
   {
     "id": "g2_termite_worker",
@@ -334,7 +348,9 @@
       "rating": 3,
       "value": 800
     },
-    "availabilityStatus": "confirmed"
+    "availabilityStatus": "confirmed",
+    "underConstruction": false,
+    "photo": "assets/g2/creatures/photos/release_0_6_termite_worker.webp"
   },
   {
     "id": "g2_buggy_potato_beetle",
@@ -348,13 +364,13 @@
     "defaultGold": false,
     "favoriteKey": "g2_buggy_potato_beetle",
     "goldLinkId": null,
-    "cardNormal": "",
-    "cardGold": "",
+    "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PotatoBeetle.png",
+    "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PotatoBeetle_G.png",
     "listIconAsset": "",
-    "hasCreatureCard": false,
-    "hasGoldCreatureCard": false,
-    "hasSelectableCardVariants": false,
-    "defaultCardVariant": null,
+    "hasCreatureCard": true,
+    "hasGoldCreatureCard": true,
+    "hasSelectableCardVariants": true,
+    "defaultCardVariant": "normal",
     "weaknesses": [
       "spicy"
     ],
@@ -373,7 +389,8 @@
     "cardTier": 3,
     "bossCardStyle": null,
     "health": null,
-    "availabilityStatus": "source_backed"
+    "availabilityStatus": "source_backed",
+    "photo": "assets/g2/creatures/photos/release_0_6_buggy_potato_beetle.webp"
   },
   {
     "id": "g2_black_soldier_ant",

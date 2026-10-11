@@ -7,6 +7,7 @@
   "game": "g2",
   "tier": 4,
   "danger": "intermedia",
+  "underConstruction": false,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -18,7 +19,7 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "photo": "assets/g2/creatures/photos/release_0_6_termite_worker.webp",
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
@@ -166,8 +167,8 @@
   ],
   "combatStats": {
     "health": 800,
-    "stunThreshold": 75.0,
-    "stunCooldownSeconds": 10.0
+    "stunThreshold": 75,
+    "stunCooldownSeconds": 10
   },
   "loot": [
     {

@@ -7,6 +7,7 @@
   "game": "g2",
   "tier": 4,
   "danger": "alta",
+  "underConstruction": false,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -18,7 +19,7 @@
   "hasGoldCreatureCard": true,
   "hasSelectableCardVariants": true,
   "defaultCardVariant": "normal",
-  "photo": "assets/global/Aphidex_Proximamente.webp",
+  "photo": "assets/g2/creatures/photos/release_0_6_termite_soldier.webp",
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
@@ -255,8 +256,8 @@
   ],
   "combatStats": {
     "health": 1300,
-    "stunThreshold": 90.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {

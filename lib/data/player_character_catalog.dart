@@ -9,7 +9,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_max',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_max.png',
+      assetPath: 'assets/images/player_characters/g1_max.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -21,7 +21,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_willow',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_willow.png',
+      assetPath: 'assets/images/player_characters/g1_willow.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -33,7 +33,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_pete',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_pete.png',
+      assetPath: 'assets/images/player_characters/g1_pete.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -45,7 +45,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_hoops',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_hoops.png',
+      assetPath: 'assets/images/player_characters/g1_hoops.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -57,7 +57,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_burgl',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_burgl.png',
+      assetPath: 'assets/images/player_characters/g1_burgl.webp',
       type: PlayerCharacterType.portrait,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -69,7 +69,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g1_wendell',
       game: AphidexGame.grounded,
-      assetPath: 'assets/images/player_characters/g1_wendell.png',
+      assetPath: 'assets/images/player_characters/g1_wendell.webp',
       type: PlayerCharacterType.portrait,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g2_max',
       game: AphidexGame.groundedTwo,
-      assetPath: 'assets/images/player_characters/g2_max.png',
+      assetPath: 'assets/images/player_characters/g2_max.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -93,7 +93,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g2_willow',
       game: AphidexGame.groundedTwo,
-      assetPath: 'assets/images/player_characters/g2_willow.png',
+      assetPath: 'assets/images/player_characters/g2_willow.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -105,7 +105,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g2_pete',
       game: AphidexGame.groundedTwo,
-      assetPath: 'assets/images/player_characters/g2_pete.png',
+      assetPath: 'assets/images/player_characters/g2_pete.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -117,7 +117,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g2_hoops',
       game: AphidexGame.groundedTwo,
-      assetPath: 'assets/images/player_characters/g2_hoops.png',
+      assetPath: 'assets/images/player_characters/g2_hoops.webp',
       type: PlayerCharacterType.fullBody,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,
@@ -129,7 +129,7 @@ class PlayerCharacterCatalog {
     PlayerCharacter(
       id: 'g2_masked_stranger',
       game: AphidexGame.groundedTwo,
-      assetPath: 'assets/images/player_characters/g2_masked_stranger.png',
+      assetPath: 'assets/images/player_characters/g2_masked_stranger.webp',
       type: PlayerCharacterType.portrait,
       avatar: PlayerCharacterAvatarConfig(
         fit: BoxFit.cover,

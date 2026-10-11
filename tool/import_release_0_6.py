@@ -55,6 +55,15 @@ BUGGY_IDS = {
     "PotatoBug_Buggy": "g2_buggy_potato_beetle",
 }
 POTATO_BUGGY_NAME = "Potato Beetle Buggy"
+RELEASE_PHOTOS = {
+    "Centipede": "assets/g2/creatures/photos/release_0_6_centipede.webp",
+    "TermiteKingOGRE": "assets/g2/creatures/photos/release_0_6_ogre_termite_king.webp",
+    "TermiteNymph": "assets/g2/creatures/photos/release_0_6_termite_larva.webp",
+    "TermiteQueen": "assets/g2/creatures/photos/release_0_6_termite_queen.webp",
+    "TermiteSoldier": "assets/g2/creatures/photos/release_0_6_termite_soldier.webp",
+    "TermiteWorker": "assets/g2/creatures/photos/release_0_6_termite_worker.webp",
+}
+POTATO_BUGGY_PHOTO = "assets/g2/creatures/photos/release_0_6_buggy_potato_beetle.webp"
 ELEMENTAL = {"fresh", "salty", "sour", "spicy"}
 
 # Grounded 2 has no Russian resources for these rows.  These are Aphidex
@@ -81,6 +90,25 @@ APHIDEX_ES_NAME_OVERRIDES = {
     "SpiderDivingBellOGRE": "Araña campana buceadora I.R.G.O.",
 }
 
+# The runtime label is Skritch. Keep its official name while retaining
+# Centipede in the English display label so catalogue search stays intuitive.
+APHIDEX_EN_NAME_OVERRIDES = {
+    "Centipede": "Skritch Centipede",
+}
+
+# The extractor reports two actor coordinates for one Centipede encounter in the
+# termite arena. Aphidex represents the user-confirmed arena with one marker.
+RELEASE_LOCATION_LIMITS = {
+    "Centipede": 1,
+}
+
+# This encounter actor resolves to the O.G.R.R. Blueprint in exported assets,
+# but has no runtime/public encounter confirmation. Keep the data visible while
+# withholding its map marker and live-encounter status.
+UNCONFIRMED_EXTRACTOR_SPAWNS = {
+    "SpiderDivingBellOGRE",
+}
+
 EDITORIAL_ES = {
     "Centipede": {"behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos.", "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable.", "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada.", "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto.", "temperament": "aggressive", "collectionGroup": "boss", "environments": ["Termitero — arena profunda (invocación)"]},
     "TermiteKing": {"behavior": "Permanece en su cámara y responde al intruso con una rotación de mordidas, golpes y tierra a distancia. Al morir libera una explosión.", "interactionWithPlayer": "Ataca de inmediato y combina mordidas, empujones y proyectiles de tierra.", "interactionWithCreatures": "Aunque está apartado de la reina, conserva autoridad sobre el termitero y combate rodeado de sus súbditos.", "strategy": "Limpia primero a las termitas cercanas; después aprende el ritmo de su cadena de ataques y aléjate al caer para evitar el sacrificio explosivo.", "temperament": "aggressive", "collectionGroup": "termite", "environments": ["Termitero — sala del rey (sin spawn confirmado)"]},
@@ -103,6 +131,58 @@ EDITORIAL_ES_EXPANSIONS = {
     "TermiteSoldierORC": {"behavior": " La estética C.R.O. deja claro que ya no combate por protección territorial, sino como parte de una fuerza hostil organizada.", "strategy": " Si comparte encuentro con una criatura élite, gana espacio primero y vuelve por el soldado cuando no pueda forzarte una explosión."},
     "TermiteWorker": {"behavior": " Por sí sola es manejable; el riesgo aparece cuando varias obreras mezclan mordidas y tierra en un pasillo estrecho.", "strategy": " No te quedes retrocediendo en línea recta: abre el grupo con daño de área y desplázate por sus flancos."},
     "TermiteWorkerORC": {"behavior": " Conserva su función de masa y control de espacio, ahora al servicio de C.R.O.", "strategy": " Separa al grupo antes de comprometerte con enemigos de mayor rango; sus ataques sencillos se vuelven peligrosos por acumulación."},
+}
+
+# The O.G.R.E. diving bell spider has a verified, fixed encounter.  Its three
+# resolved actions use the same technical move family as the ordinary diving
+# bell spider, so the guidance below describes that shared pattern without
+# claiming that the extractor proved extra moves or behaviour.
+SPIDER_DIVING_BELL_OGRE_GUIDANCE = {
+    "en": {
+        "behavior": "A mutated diving bell spider encountered underwater. Its resolved move set matches the ordinary diving bell spider's bite, lunge, and aquatic dodge pattern.",
+        "interactionWithPlayer": "Treat it as a close-range underwater threat: both damaging moves apply VenomSmall, while its aquatic dodge can reset its position.",
+        "interactionWithCreatures": "A normal Diving Bell Spider encounter is recorded about 322 world units from this encounter. Water Fleas and Spiny Water Fleas also have recorded spawns in the surrounding water; proximity confirms a shared area, not cooperation.",
+        "strategy": "Bring the equipment needed for underwater travel, keep enough stamina to move sideways after its lunge, and do not rely on stabbing damage because the mutation resists it. Slashing is the verified weakness.",
+        "temperament": "aggressive",
+        "collectionGroup": "ogrr",
+        "environments": ["Augusta Main — underwater encounter"],
+    },
+    "es": {
+        "behavior": "Araña campana mutada que se encuentra bajo el agua. Su repertorio resuelto coincide con el de la araña campana común: mordida, embestida y esquiva acuática.",
+        "interactionWithPlayer": "Trátala como una amenaza submarina de corto alcance: sus dos ataques de daño aplican Veneno pequeño y su esquiva acuática puede reposicionarla.",
+        "interactionWithCreatures": "Hay un encuentro de Araña campana de buceo común registrado a unas 322 unidades del mundo. También hay Pulgas de agua y Pulgas de agua espinosas en el agua circundante; la cercanía confirma zona compartida, no cooperación.",
+        "strategy": "Lleva el equipo necesario para moverte bajo el agua, reserva resistencia para desplazarte de lado tras su embestida y no dependas del daño perforante: la mutación lo resiste. El corte es su debilidad verificada.",
+        "temperament": "aggressive",
+        "collectionGroup": "ogrr",
+        "environments": ["Augusta Main — encuentro submarino"],
+    },
+    "ru": {
+        "behavior": "Мутировавший водолазный паук, встречающийся под водой. Его подтверждённый набор приёмов совпадает с обычным водолазным пауком: укус, рывок и водное уклонение.",
+        "interactionWithPlayer": "Считайте его подводной угрозой ближнего боя: оба наносящих урон приёма накладывают VenomSmall, а водное уклонение позволяет ему сменить позицию.",
+        "interactionWithCreatures": "Примерно в 322 игровых единицах зарегистрирована обычная особь водолазного паука. В окружающей воде также есть водяные блохи и колючие водяные блохи; близость подтверждает общую зону, но не сотрудничество.",
+        "strategy": "Возьмите снаряжение для передвижения под водой, сохраняйте выносливость для ухода в сторону после рывка и не полагайтесь на колющий урон: мутация ему сопротивляется. Подтверждённая слабость — рубящий урон.",
+        "temperament": "aggressive",
+        "collectionGroup": "ogrr",
+        "environments": ["Augusta Main — подводная встреча"],
+    },
+}
+
+SPIDER_DIVING_BELL_OGRE_ATTACK_GUIDANCE = {
+    "en": {
+        "SpiderDivingBellBite_Augusta": ("Bite", "It closes to biting range and turns toward its target.", "Block if stamina allows or move out of its front before it connects.", "50 stabbing damage, 8 stun, and VenomSmall. Shared with the ordinary Diving Bell Spider."),
+        "SpiderDivingBellLunge_Augusta": ("Lunge", "It pauses briefly before committing forward.", "Move decisively to the side; backing straight away leaves little margin.", "68 stabbing damage, 12 stun, and VenomSmall. Its 10-second cooldown creates the clearest reset window."),
+        "SpiderDivingBell_WaterDodge_Augusta": ("Aquatic dodge", "It shifts through the water instead of committing to a direct strike.", "Keep it in view and reserve stamina for the follow-up bite or lunge.", "No direct damage is resolved for this action; it is a repositioning tool shared with the ordinary spider."),
+    },
+    "es": {
+        "SpiderDivingBellBite_Augusta": ("Mordida", "Entra en alcance de mordida y orienta el cuerpo hacia el objetivo.", "Bloquea si tienes resistencia o sal de su frente antes del impacto.", "50 de daño perforante, 8 de aturdimiento y Veneno pequeño. Compartida con la Araña campana de buceo común."),
+        "SpiderDivingBellLunge_Augusta": ("Embestida", "Se afirma un instante antes de lanzarse hacia delante.", "Muévete con decisión hacia un lado; retroceder en línea recta deja poco margen.", "68 de daño perforante, 12 de aturdimiento y Veneno pequeño. Sus 10 segundos de recarga abren la ventana más clara para reiniciar el ritmo."),
+        "SpiderDivingBell_WaterDodge_Augusta": ("Esquiva acuática", "Se desplaza por el agua en vez de comprometerse con un golpe directo.", "No la pierdas de vista y guarda resistencia para la mordida o embestida posterior.", "El extractor no resuelve daño directo para esta acción; es una herramienta de reposicionamiento compartida con la araña común."),
+    },
+    "ru": {
+        "SpiderDivingBellBite_Augusta": ("Укус", "Паук входит в радиус укуса и разворачивается к цели.", "Блокируйте при наличии выносливости или уйдите из сектора перед собой до попадания.", "50 колющего урона, 8 оглушения и VenomSmall. Приём общий с обычным водолазным пауком."),
+        "SpiderDivingBellLunge_Augusta": ("Рывок", "Перед броском вперёд он ненадолго замирает.", "Резко уходите в сторону: отступление по прямой оставляет мало запаса.", "68 колющего урона, 12 оглушения и VenomSmall. Перезарядка в 10 секунд — самое удобное окно для восстановления темпа."),
+        "SpiderDivingBell_WaterDodge_Augusta": ("Водное уклонение", "Он смещается в воде вместо прямой атаки.", "Не теряйте его из вида и сохраните выносливость для следующего укуса или рывка.", "Прямой урон для этого действия не подтверждён; это инструмент смены позиции, общий с обычным пауком."),
+    },
 }
 
 RELEASE_DANGER = {
@@ -146,6 +226,60 @@ def write_json(path: Path, payload) -> None:
     content = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     if not path.exists() or path.read_text(encoding="utf-8") != content:
         path.write_text(content, encoding="utf-8")
+
+
+def map_position(world: dict, map_definition: dict) -> tuple[float, float]:
+    """Convert an extractor world coordinate to Aphidex's displayed map space."""
+    bounds = map_definition["worldBounds"]
+    source = map_definition["sourceTextureSize"]
+    content = map_definition["contentPixelBounds"]
+    source_x = ((float(world["x"]) - bounds["minX"]) /
+                (bounds["maxX"] - bounds["minX"])) * source["width"]
+    source_y = ((float(world["y"]) - bounds["minY"]) /
+                (bounds["maxY"] - bounds["minY"])) * source["height"]
+    return (
+        (source_x - content["x"]) / content["width"],
+        (source_y - content["y"]) / content["height"],
+    )
+
+
+def sync_release_map_markers(spawn_data: dict) -> None:
+    """Project confirmed Release 0.6 coordinates into MapScreen's catalogue."""
+    map_path = DATA / "g2" / "map.json"
+    catalog = read_json(map_path)
+    maps = catalog["maps"]
+    prefix = "release_0_6_"
+    markers = [row for row in catalog.get("markers", [])
+               if not str(row.get("id", "")).startswith(prefix)]
+    for technical_id, spawn in spawn_data.items():
+        public_id = RELEASE_0_6_IDS.get(technical_id)
+        if public_id is None or technical_id in UNCONFIRMED_EXTRACTOR_SPAWNS:
+            continue
+        coordinates = (spawn.get("coordinates") or [])[
+            :RELEASE_LOCATION_LIMITS.get(technical_id)
+        ]
+        for index, coordinate in enumerate(coordinates):
+            world = coordinate.get("coordinates") or {}
+            if "x" not in world or "y" not in world:
+                continue
+            u, v = map_position(world, maps["surface"])
+            if not (0 <= u <= 1 and 0 <= v <= 1):
+                continue
+            markers.append({
+                "id": "release_0_6_{}_{}".format(technical_id.lower(), index),
+                "targetType": "creature",
+                "targetId": public_id,
+                "technicalId": technical_id,
+                "map": "surface",
+                "world": world,
+                "u": u,
+                "v": v,
+                "type": spawn.get("spawnStatus", "spawn"),
+                "conditional": False,
+                "environmentHazards": [],
+            })
+    catalog["markers"] = markers
+    write_json(map_path, catalog)
 
 
 def clean_description(value):
@@ -266,6 +400,8 @@ def localized_release_text(technical_id: str, source: dict, language: str):
         raise ValueError(f"Missing runtime {locale} localization for {technical_id}")
     if language == "es":
         name = APHIDEX_ES_NAME_OVERRIDES.get(technical_id, name)
+    elif language == "en":
+        name = APHIDEX_EN_NAME_OVERRIDES.get(technical_id, name)
     return clean_description(name), clean_description(description)
 
 
@@ -279,6 +415,21 @@ def polish_es_attack(attack: dict):
     elif "Lunge" in ident or "Power" in ident or "Bodyslam" in ident: attack.update({"tell": "Se afirma un instante antes de comprometerse en un golpe frontal.", "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.", "notes": "Ataque de compromiso que abre una ventana si falla."})
     elif attack.get("damage", 0) > 0: attack.update({"tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.", "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.", "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."})
     else: attack.update({"tell": "Cambia de posición o prepara la continuación de su patrón.", "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.", "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."})
+
+
+def apply_spider_diving_bell_ogre_guidance(detail: dict, language: str):
+    """Apply Aphidex-owned, explicitly sourced presentation for this encounter.
+
+    Mechanical values remain exclusively from the completion export.  These
+    entries document that the moves are shared with the common spider and that
+    nearby records are spatial evidence, not an inferred faction relation.
+    """
+    detail.update(copy.deepcopy(SPIDER_DIVING_BELL_OGRE_GUIDANCE[language]))
+    for attack in detail["attacks"]:
+        base_id = attack.get("technicalId", "").split("#")[0]
+        guidance = SPIDER_DIVING_BELL_OGRE_ATTACK_GUIDANCE[language].get(base_id)
+        if guidance:
+            attack["name"], attack["tell"], attack["howToAvoid"], attack["notes"] = guidance
 
 
 def centipede_es_phases(attacks: list[dict]):
@@ -379,10 +530,10 @@ def release_detail(technical_id: str, source: dict, language: str, order: int):
     return {
         "id": RELEASE_0_6_IDS[technical_id], "speciesKey": RELEASE_SPECIES_KEYS.get(technical_id, RELEASE_0_6_IDS[technical_id].removeprefix("g2_")),
         "technicalId": technical_id, "bestiaryId": technical_id, "name": RELEASE_NAMES[technical_id],
-        "game": "g2", "tier": int(source.get("tier") or 0), "danger": RELEASE_DANGER[technical_id], "isBoss": technical_id == "Centipede",
+        "game": "g2", "tier": int(source.get("tier") or 0), "danger": "proximamente", "underConstruction": True, "isBoss": technical_id == "Centipede",
         "order": order, "defaultGold": False, "favoriteKey": RELEASE_0_6_IDS[technical_id], "goldLinkId": None,
         "cardNormal": "", "cardGold": "", "hasCreatureCard": False, "hasGoldCreatureCard": False,
-        "hasSelectableCardVariants": False, "defaultCardVariant": None, "photo": "assets/global/Aphidex_Proximamente.webp",
+        "hasSelectableCardVariants": False, "defaultCardVariant": None, "photo": RELEASE_PHOTOS.get(technical_id, "assets/global/Aphidex_Proximamente.webp"),
         "listIconAsset": "", "mapMarkerAsset": "", "customAsset": "", "temperament": "unknown",
         "collectionGroup": "unknown", "entityType": "interactable" if technical_id == "TermiteQueen" else "creature",
         "isKillable": technical_id != "TermiteQueen", "health": None if health is None else {"rating": 1 if health < 400 else 2 if health < 700 else 3 if health < 1100 else 4 if health < 2000 else 5, "value": round(health)},
@@ -415,7 +566,7 @@ def compact_buggy(row: dict):
 
 
 def summary_index(detail: dict):
-    return {key: detail.get(key) for key in ("id", "speciesKey", "game", "name", "tier", "danger", "isBoss", "order", "defaultGold", "favoriteKey", "goldLinkId", "cardNormal", "cardGold", "listIconAsset", "mapMarkerAsset", "customAsset", "hasCreatureCard", "hasGoldCreatureCard", "hasSelectableCardVariants", "defaultCardVariant", "weaknesses", "resistances", "temperament", "collectionGroup", "technicalId", "bestiaryId", "groupId", "cardTier", "bossCardStyle", "entityType", "hideHealth", "health", "availabilityStatus") if key in detail}
+    return {key: detail.get(key) for key in ("id", "speciesKey", "game", "name", "tier", "danger", "isBoss", "order", "defaultGold", "favoriteKey", "goldLinkId", "cardNormal", "cardGold", "listIconAsset", "mapMarkerAsset", "customAsset", "hasCreatureCard", "hasGoldCreatureCard", "hasSelectableCardVariants", "defaultCardVariant", "weaknesses", "resistances", "temperament", "collectionGroup", "technicalId", "bestiaryId", "groupId", "cardTier", "bossCardStyle", "entityType", "hideHealth", "health", "availabilityStatus", "underConstruction") if key in detail}
 
 
 def compute_diff(source: dict, app_creatures: dict, buggy_rows: list[dict]):
@@ -515,8 +666,10 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
     }
     detail["combatStats"] = {
         "health": None if health is None else round(health),
-        "stunThreshold": stats.get("stun", {}).get("max"),
-        "stunCooldownSeconds": stats.get("stun", {}).get("cooldown"),
+        # Aphidex's CombatStats model intentionally stores these as ints.
+        # The extractor serializes whole values such as 90.0 as doubles.
+        "stunThreshold": None if stats.get("stun", {}).get("max") is None else round(stats["stun"]["max"]),
+        "stunCooldownSeconds": None if stats.get("stun", {}).get("cooldown") is None else round(stats["stun"]["cooldown"]),
     }
     detail["attacks"] = normalized_attacks(fields["attacks"].get("items"))
     detail["weakPoints"] = [
@@ -536,7 +689,9 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
     gold_folder = "cards_golden" if "/Gold/" in str(gold.get("localImage") or "") else "cards"
     gold_asset = f"assets/g2/creatures/{gold_folder}/{gold.get('textureName')}.png" if gold.get("textureName") else ""
     detail.update({"cardNormal": normal_asset, "cardGold": gold_asset,
-                   "hasCreatureCard": bool(normal_asset), "hasGoldCreatureCard": bool(gold_asset),
+                   # A gold-only card (such as Termite Queen) is still a
+                   # trackable creature card.  It cycles unowned <-> gold.
+                   "hasCreatureCard": bool(normal_asset or gold_asset), "hasGoldCreatureCard": bool(gold_asset),
                    "hasSelectableCardVariants": bool(normal_asset and gold_asset),
                    "defaultCardVariant": "normal" if normal_asset else "gold" if gold_asset else None})
     detail["cardEvidence"] = {
@@ -555,9 +710,12 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
         detail.update({"environments": [environment], "appearanceType": "summoned" if technical_id == "Centipede" else "interactable", "appearanceCondition": condition, "availabilityStatus": "confirmed"})
         detail["sourceProvenance"]["spawn"] = "user_confirmed_editorial_no_coordinates"
     spawn = (spawn_data or {}).get(technical_id)
-    if spawn and spawn.get("coordinates"):
+    if spawn and spawn.get("coordinates") and technical_id not in UNCONFIRMED_EXTRACTOR_SPAWNS:
         locations = []
-        for index, coordinate in enumerate(spawn["coordinates"]):
+        coordinates = spawn["coordinates"][
+            :RELEASE_LOCATION_LIMITS.get(technical_id)
+        ]
+        for index, coordinate in enumerate(coordinates):
             world = coordinate.get("coordinates") or {}
             if "x" not in world or "y" not in world:
                 continue
@@ -566,6 +724,18 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
             detail["locations"] = locations
             detail["availabilityStatus"] = "confirmed"
             detail["sourceProvenance"]["spawn"] = "extractor_spawn_coordinates_high_confidence"
+    elif spawn and spawn.get("coordinates"):
+        detail["sourceProvenance"]["spawn"] = (
+            "extractor_actor_reference_pending_runtime_confirmation"
+        )
+    # Combat data may exist before an encounter is actually available. Reuse the
+    # app's under-construction fallback rather than presenting a speculative
+    # difficulty. Confirmed coordinates or a confirmed interaction restore it.
+    if detail["availabilityStatus"] == "confirmed":
+        detail["underConstruction"] = False
+    else:
+        detail["danger"] = "proximamente"
+        detail["underConstruction"] = True
     if language == "es" and technical_id in EDITORIAL_ES:
         editorial = EDITORIAL_ES[technical_id]
         detail.update({key: value for key, value in editorial.items() if key != "environments"})
@@ -575,6 +745,8 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
             detail["environments"] = editorial["environments"]
         for attack in detail["attacks"]:
             polish_es_attack(attack)
+    if technical_id == "SpiderDivingBellOGRE":
+        apply_spider_diving_bell_ogre_guidance(detail, language)
     if technical_id == "Centipede":
         detail["bossPhases"] = localized_centipede_phases(language, detail["attacks"])
     if technical_id == "TermiteQueen":
@@ -652,7 +824,7 @@ def apply_completion(args):
             buggy = read_json(path)
             buggy["danger"] = "unknown"
             if language == "es" and public_id == "g2_buggy_potato_beetle":
-                buggy["name"] = "Buggie Escarabajo de la papa"
+                buggy["name"] = "Buggie de la papa"
                 buggy.update({
                     "description": "Un Buggie pesado que recicla biomasa de enemigos derrotados para alimentar su cañón de residuos biológicos.",
                     "behavior": "Acompañante resistente, similar a Ladybuggy, diseñado para aprovechar restos de combate.",
@@ -675,6 +847,7 @@ def apply_completion(args):
         if public_id in by_public:
             by_public[public_id]["danger"] = "unknown"
     write_json(DATA / "g2" / "creatures.json", app)
+    sync_release_map_markers(spawn_data)
     diff["applied"] = True
     write_json(ROOT / "outputs" / "release_0_6_completion_diff.json", diff)
     print(json.dumps(diff, ensure_ascii=False, indent=2))
@@ -784,8 +957,9 @@ def apply(args):
                 detail = release_detail(technical_id, extracted, language, snapshot.get("order") or 0)
             elif public_id == "g2_buggy_potato_beetle":
                 base = copy.deepcopy(details["g2_buggy_toe_biter"])
+                card_source = details["g2_potato_beetle"]
                 detail = base
-                detail.update({"id": public_id, "speciesKey": "buggy_potato_beetle", "technicalId": "PotatoBug_Buggy", "bestiaryId": None, "name": POTATO_BUGGY_NAME, "danger": "unknown", "order": snapshot.get("order") or buggy_order, "favoriteKey": public_id, "goldLinkId": None, "cardNormal": "", "cardGold": "", "hasCreatureCard": False, "hasGoldCreatureCard": False, "hasSelectableCardVariants": False, "defaultCardVariant": None, "photo": "assets/global/Aphidex_Proximamente.webp", "health": None, "healthDisplay": "hidden", "attacks": [], "loot": [], "advancedLootTable": [], "locations": [], "availabilityStatus": "source_backed", "buggyProfile": snapshot["buggyProfile"], "sourceProvenance": {"extractorTechnicalId": "PotatoBug_Buggy", "source": "Release 0.6 BuggyBuffing/Hatchery data"}})
+                detail.update({"id": public_id, "speciesKey": "buggy_potato_beetle", "technicalId": "PotatoBug_Buggy", "bestiaryId": None, "name": "Buggie de la papa" if language == "es" else POTATO_BUGGY_NAME, "danger": "unknown", "order": snapshot.get("order") or buggy_order, "favoriteKey": public_id, "goldLinkId": None, "cardNormal": card_source.get("cardNormal", ""), "cardGold": card_source.get("cardGold", ""), "cardTier": card_source.get("cardTier", 3), "hasCreatureCard": card_source.get("hasCreatureCard", True), "hasGoldCreatureCard": card_source.get("hasGoldCreatureCard", True), "hasSelectableCardVariants": card_source.get("hasSelectableCardVariants", True), "defaultCardVariant": card_source.get("defaultCardVariant", "normal"), "photo": POTATO_BUGGY_PHOTO, "health": None, "healthDisplay": "hidden", "attacks": [], "loot": [], "advancedLootTable": [], "locations": [], "availabilityStatus": "source_backed", "buggyProfile": snapshot["buggyProfile"], "sourceProvenance": {"extractorTechnicalId": "PotatoBug_Buggy", "source": "Release 0.6 BuggyBuffing/Hatchery data"}})
             else:
                 detail = details.get(public_id)
                 if detail is None:
@@ -806,6 +980,7 @@ def apply(args):
         write_json(index_path, index)
 
     write_json(DATA / "g2" / "creatures.json", app_creatures)
+    sync_release_map_markers(spawn_data)
     diff["applied"] = True
     diff["extractorManifest"] = str(extractor / "final" / "aphidex_extractor_manifest_v1.json")
     diff["sourceWarnings"] = qa.get("sourceWarnings", [])
