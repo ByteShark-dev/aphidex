@@ -117,6 +117,11 @@ RELEASE_DANGER = {
     "TermiteWorker": "intermedia",
     "TermiteWorkerORC": "alta",
 }
+RELEASE_SPECIES_KEYS = {
+    "TermiteKing": "g1_termite_king",
+    "TermiteSoldier": "g1_termite_soldier",
+    "TermiteWorker": "g1_termite_worker",
+}
 USER_CONFIRMED_SPAWNS = {
     "Centipede": {
         "es": ("Termitero — arena más profunda", "Se invoca repetidamente con una receta de partes de termita en lo más profundo del termitero."),
@@ -372,7 +377,7 @@ def release_detail(technical_id: str, source: dict, language: str, order: int):
     health = stats.get("health")
     weaknesses = normalized_bonuses(source.get("weaknesses"))
     return {
-        "id": RELEASE_0_6_IDS[technical_id], "speciesKey": RELEASE_0_6_IDS[technical_id].removeprefix("g2_"),
+        "id": RELEASE_0_6_IDS[technical_id], "speciesKey": RELEASE_SPECIES_KEYS.get(technical_id, RELEASE_0_6_IDS[technical_id].removeprefix("g2_")),
         "technicalId": technical_id, "bestiaryId": technical_id, "name": RELEASE_NAMES[technical_id],
         "game": "g2", "tier": int(source.get("tier") or 0), "danger": RELEASE_DANGER[technical_id], "isBoss": technical_id == "Centipede",
         "order": order, "defaultGold": False, "favoriteKey": RELEASE_0_6_IDS[technical_id], "goldLinkId": None,

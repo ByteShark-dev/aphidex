@@ -171,7 +171,7 @@
   },
   {
     "id": "g2_termite_king",
-    "speciesKey": "termite_king",
+    "speciesKey": "g1_termite_king",
     "game": "g2",
     "name": "Rey termita",
     "tier": 4,
@@ -270,7 +270,7 @@
   },
   {
     "id": "g2_termite_soldier",
-    "speciesKey": "termite_soldier",
+    "speciesKey": "g1_termite_soldier",
     "game": "g2",
     "name": "Termita soldado",
     "tier": 4,
@@ -304,7 +304,7 @@
   },
   {
     "id": "g2_termite_worker",
-    "speciesKey": "termite_worker",
+    "speciesKey": "g1_termite_worker",
     "game": "g2",
     "name": "Termita obrera",
     "tier": 4,

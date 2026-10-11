@@ -43,7 +43,12 @@ void main() {
   test('enriched Release 0.6 records retain unknown encounters but expose resolved loot', () {
     for (final id in releaseIds) {
       final detail = _json('assets/data/creatures/en/details/$id.json');
-      expect(detail['availabilityStatus'], 'implemented_unconfirmed');
+      expect(
+        detail['availabilityStatus'],
+        id == 'g2_centipede' || id == 'g2_termite_queen'
+            ? 'confirmed'
+            : 'implemented_unconfirmed',
+      );
       expect(detail['locations'], isEmpty);
       if (id == 'g2_termite_queen') {
         expect(detail['loot'], isEmpty);
@@ -134,5 +139,17 @@ void main() {
         'g2_buggy_toe_biter',
       ]),
     );
+  });
+
+  test('shared G1 termites use the same cross-game species keys', () {
+    const expected = {
+      'g2_termite_king': 'g1_termite_king',
+      'g2_termite_soldier': 'g1_termite_soldier',
+      'g2_termite_worker': 'g1_termite_worker',
+    };
+    for (final entry in expected.entries) {
+      final detail = _json('assets/data/creatures/en/details/${entry.key}.json');
+      expect(detail['speciesKey'], entry.value);
+    }
   });
 }

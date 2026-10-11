@@ -1,6 +1,6 @@
 {
   "id": "g2_termite_worker",
-  "speciesKey": "termite_worker",
+  "speciesKey": "g1_termite_worker",
   "technicalId": "TermiteWorker",
   "bestiaryId": "TermiteWorker",
   "name": "Termite Worker",
