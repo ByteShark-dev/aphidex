@@ -81,6 +81,20 @@ APHIDEX_ES_NAME_OVERRIDES = {
     "SpiderDivingBellOGRE": "Araña campana buceadora I.R.G.O.",
 }
 
+RELEASE_DANGER = {
+    "Centipede": "imposible",  # one level below King Dozer
+    "SpiderDivingBellOGRE": "muy_alta",
+    "TermiteKing": "muy_alta",
+    "TermiteKingOGRE": "imposible",
+    "TermiteNymph": "baja",
+    "TermiteQueen": "baja",  # non-combat interaction
+    "TermiteSoldier": "alta",
+    "TermiteSoldierORC": "muy_alta",
+    "TermiteWorker": "intermedia",
+    "TermiteWorkerORC": "alta",
+}
+BUGGY_PUBLIC_IDS = frozenset(BUGGY_IDS.values())
+
 
 def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -254,7 +268,7 @@ def release_detail(technical_id: str, source: dict, language: str, order: int):
     return {
         "id": RELEASE_0_6_IDS[technical_id], "speciesKey": RELEASE_0_6_IDS[technical_id].removeprefix("g2_"),
         "technicalId": technical_id, "bestiaryId": technical_id, "name": RELEASE_NAMES[technical_id],
-        "game": "g2", "tier": int(source.get("tier") or 0), "danger": "unknown", "isBoss": technical_id == "Centipede",
+        "game": "g2", "tier": int(source.get("tier") or 0), "danger": RELEASE_DANGER[technical_id], "isBoss": technical_id == "Centipede",
         "order": order, "defaultGold": False, "favoriteKey": RELEASE_0_6_IDS[technical_id], "goldLinkId": None,
         "cardNormal": "", "cardGold": "", "hasCreatureCard": False, "hasGoldCreatureCard": False,
         "hasSelectableCardVariants": False, "defaultCardVariant": None, "photo": "assets/global/Aphidex_Proximamente.webp",
@@ -381,7 +395,7 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
     detail = release_detail(technical_id, source, language, order)
     fields = completed[technical_id]["fields"]
     name, description = localized_release_text(technical_id, source, language)
-    detail["name"], detail["description"] = name, description
+    detail["name"], detail["description"], detail["danger"] = name, description, RELEASE_DANGER[technical_id]
     stats = fields["hpStats"].get("value") or {}
     health = stats.get("health")
     detail["health"] = None if health is None else {
@@ -407,9 +421,13 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
     detail["loot"], detail["advancedLootTable"] = loot, advanced
     normal = fields["normalCard"].get("value") or {}
     gold = fields["goldCard"].get("value") or {}
-    # The extractor proves card ownership and textures.  Image binaries are not
-    # distributed with it, therefore cards remain non-selectable until assets
-    # are imported rather than pointing the app at a nonexistent file.
+    normal_asset = f"assets/g2/creatures/cards/{normal.get('textureName')}.png" if normal.get("textureName") else ""
+    gold_folder = "cards_golden" if "/Gold/" in str(gold.get("localImage") or "") else "cards"
+    gold_asset = f"assets/g2/creatures/{gold_folder}/{gold.get('textureName')}.png" if gold.get("textureName") else ""
+    detail.update({"cardNormal": normal_asset, "cardGold": gold_asset,
+                   "hasCreatureCard": bool(normal_asset), "hasGoldCreatureCard": bool(gold_asset),
+                   "hasSelectableCardVariants": bool(normal_asset and gold_asset),
+                   "defaultCardVariant": "normal" if normal_asset else "gold" if gold_asset else None})
     detail["cardEvidence"] = {
         "normal": normal.get("textureName"), "gold": gold.get("textureName"),
         "goldChance": gold.get("chance"), "status": "source_texture_resolved_asset_not_distributed",
@@ -478,9 +496,29 @@ def apply_completion(args):
         for technical_id, public_id in RELEASE_0_6_IDS.items():
             updated[public_id] = summary_index(read_json(directory / f"{public_id}.json"))
         write_json(index_path, sorted(updated.values(), key=lambda row: (row.get("order") or 0, row["id"])))
+        # Buggies are player companions, so Aphidex deliberately does not show
+        # a combat difficulty for any of them.
+        for public_id in BUGGY_PUBLIC_IDS:
+            path = directory / f"{public_id}.json"
+            if not path.exists():
+                continue
+            buggy = read_json(path)
+            buggy["danger"] = "unknown"
+            if language == "es" and public_id == "g2_buggy_potato_beetle":
+                buggy["name"] = "Buggie Escarabajo de la papa"
+            write_json(path, buggy)
+        updated = {row["id"]: row for row in read_json(index_path)}
+        for public_id in BUGGY_PUBLIC_IDS:
+            path = directory / f"{public_id}.json"
+            if path.exists():
+                updated[public_id] = summary_index(read_json(path))
+        write_json(index_path, sorted(updated.values(), key=lambda row: (row.get("order") or 0, row["id"])))
     for technical_id, public_id in RELEASE_0_6_IDS.items():
         detail = completion_detail(technical_id, source[technical_id], completed, "en", by_public[public_id].get("order") or 0)
         by_public[public_id].update({key: value for key, value in detail.items() if key not in {"id", "name", "description"}})
+    for public_id in BUGGY_PUBLIC_IDS:
+        if public_id in by_public:
+            by_public[public_id]["danger"] = "unknown"
     write_json(DATA / "g2" / "creatures.json", app)
     diff["applied"] = True
     write_json(ROOT / "outputs" / "release_0_6_completion_diff.json", diff)

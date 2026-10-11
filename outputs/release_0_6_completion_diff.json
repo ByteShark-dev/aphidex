@@ -1,0 +1,97 @@
+{
+  "schema": "aphidex-release-0-6-completion-diff-v1",
+  "source": "/mnt/F/ByteShark-Dev/Aphidex_extractor_v1/aphidex_extractor_v1/modules/phase1/output_aphidex_extractor_v1_release_0_6_completion",
+  "entities": [
+    {
+      "id": "g2_centipede",
+      "technicalId": "Centipede",
+      "health": 9000.0,
+      "attackCount": 19,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier4_Centipede",
+      "goldCard": "T_UI_Tier4_Centipede_G"
+    },
+    {
+      "id": "g2_ogre_diving_bell_spider",
+      "technicalId": "SpiderDivingBellOGRE",
+      "health": 1600.0,
+      "attackCount": 3,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier2_DivingBell_OGRR",
+      "goldCard": "T_UI_Tier2_DivingBell_OGRR_G"
+    },
+    {
+      "id": "g2_termite_king",
+      "technicalId": "TermiteKing",
+      "health": 1900.0,
+      "attackCount": 7,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_KingTermite",
+      "goldCard": "T_UI_Tier3_KingTermite_G"
+    },
+    {
+      "id": "g2_ogre_termite_king",
+      "technicalId": "TermiteKingOGRE",
+      "health": 2400.0,
+      "attackCount": 7,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_KingTermite_OGRR",
+      "goldCard": "T_UI_Tier3_KingTermite_OGRR_G"
+    },
+    {
+      "id": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "health": 100.0,
+      "attackCount": 0,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier4_TermiteLarva",
+      "goldCard": "T_UI_Tier4_TermiteLarva_G"
+    },
+    {
+      "id": "g2_termite_queen",
+      "technicalId": "TermiteQueen",
+      "health": null,
+      "attackCount": 0,
+      "lootResolved": false,
+      "normalCard": null,
+      "goldCard": "T_UI_Tier3_QueenTermite_G"
+    },
+    {
+      "id": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "health": 1300.0,
+      "attackCount": 8,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_TermiteSoldier",
+      "goldCard": "T_UI_Tier3_TermiteSoldier_G"
+    },
+    {
+      "id": "g2_orc_termite_soldier",
+      "technicalId": "TermiteSoldierORC",
+      "health": 1300.0,
+      "attackCount": 8,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_TermiteSoldier_ORC",
+      "goldCard": "T_UI_Tier3_TermiteSoldier_ORC_G"
+    },
+    {
+      "id": "g2_termite_worker",
+      "technicalId": "TermiteWorker",
+      "health": 800.0,
+      "attackCount": 4,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_TermiteWorker",
+      "goldCard": "T_UI_Tier3_TermiteWorker"
+    },
+    {
+      "id": "g2_orc_termite_worker",
+      "technicalId": "TermiteWorkerORC",
+      "health": 960.0,
+      "attackCount": 4,
+      "lootResolved": true,
+      "normalCard": "T_UI_Tier3_TermiteWorker_ORC",
+      "goldCard": "T_UI_Tier3_TermiteWorker_ORC_G"
+    }
+  ],
+  "applied": true
+}

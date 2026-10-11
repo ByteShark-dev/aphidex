@@ -5,7 +5,7 @@
   "name": "Black Soldier Ant Buggy",
   "game": "g2",
   "tier": 3,
-  "danger": "alta",
+  "danger": "unknown",
   "isBoss": false,
   "order": 215,
   "defaultGold": false,

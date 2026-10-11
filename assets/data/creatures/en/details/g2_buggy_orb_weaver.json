@@ -5,7 +5,7 @@
   "name": "Orb Weaver Buggy",
   "game": "g2",
   "tier": 2,
-  "danger": "alta",
+  "danger": "unknown",
   "isBoss": false,
   "order": 213,
   "defaultGold": false,

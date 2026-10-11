@@ -5,7 +5,7 @@
   "name": "Ladybuggy",
   "game": "g2",
   "tier": 2,
-  "danger": "intermedia",
+  "danger": "unknown",
   "isBoss": false,
   "order": 214,
   "defaultGold": false,

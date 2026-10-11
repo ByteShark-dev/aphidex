@@ -50,8 +50,15 @@ void main() {
       } else {
         expect(detail['loot'], isNotEmpty);
       }
-      expect(detail['cardNormal'], isEmpty);
-      expect(detail['cardGold'], isEmpty);
+      if (id == 'g2_termite_queen') {
+        expect(detail['cardNormal'], isEmpty);
+        expect(detail['cardGold'], isNotEmpty);
+      } else {
+        expect(detail['cardNormal'], isNotEmpty);
+        expect(detail['cardGold'], isNotEmpty);
+        expect(File(detail['cardNormal'] as String).existsSync(), isTrue);
+        expect(File(detail['cardGold'] as String).existsSync(), isTrue);
+      }
       expect(detail['cardEvidence'], isA<Map>());
     }
   });
@@ -98,7 +105,7 @@ void main() {
     expect(kingMoves, contains('TermiteKingSacrifice'));
   });
 
-  test('Potato Beetle Buggy has source-backed hatchery data without cards', () {
+  test('Potato Beetle Buggy has source-backed hatchery data and no cards', () {
     final buggy = _json(
       'assets/data/creatures/en/details/g2_buggy_potato_beetle.json',
     );

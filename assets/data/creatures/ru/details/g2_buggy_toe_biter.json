@@ -3,7 +3,7 @@
   "speciesKey": "buggy_toe_biter",
   "collectionGroup": "buggy",
   "game": "g2",
-  "danger": "baja",
+  "danger": "unknown",
   "order": 310,
   "defaultGold": false,
   "photo": "assets/g2/creatures/photos/v4_4_g2_buggy_toe_biter.webp",

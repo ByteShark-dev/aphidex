@@ -5,7 +5,7 @@
   "name": "Red Soldier Ant Buggy",
   "game": "g2",
   "tier": 1,
-  "danger": "alta",
+  "danger": "unknown",
   "isBoss": false,
   "order": 212,
   "defaultGold": false,
