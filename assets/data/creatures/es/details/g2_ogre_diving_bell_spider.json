@@ -201,17 +201,34 @@
       "notes": null
     }
   ],
-  "locations": [],
+  "locations": [
+    {
+      "id": "release_0_6_spiderdivingbellogre_0",
+      "targetType": "creature",
+      "targetId": "g2_ogre_diving_bell_spider",
+      "technicalId": "SpiderDivingBellOGRE",
+      "map": "surface",
+      "world": {
+        "x": -28800.74,
+        "y": 7415.3267,
+        "z": -11530.327
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    }
+  ],
   "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "SpiderDivingBellOGRE",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "extractor_spawn_coordinates_high_confidence"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "A diving bell spider with something seriously wrong going on. They are resistant to the flavor of their mutation.",

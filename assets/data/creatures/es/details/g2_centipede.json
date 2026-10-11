@@ -834,7 +834,38 @@
       "notes": "conditional"
     }
   ],
-  "locations": [],
+  "locations": [
+    {
+      "id": "release_0_6_centipede_0",
+      "targetType": "creature",
+      "targetId": "g2_centipede",
+      "technicalId": "Centipede",
+      "map": "surface",
+      "world": {
+        "x": -251423.45,
+        "y": 54904.523,
+        "z": -12801.829
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_centipede_1",
+      "targetType": "creature",
+      "targetId": "g2_centipede",
+      "technicalId": "Centipede",
+      "map": "surface",
+      "world": {
+        "x": -246735.55,
+        "y": 62852.906,
+        "z": -7018.8496
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    }
+  ],
   "environments": [
     "Termitero — arena más profunda"
   ],
@@ -847,7 +878,7 @@
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
     "locationStatus": "not_resolved",
-    "spawn": "user_confirmed_editorial_no_coordinates"
+    "spawn": "extractor_spawn_coordinates_high_confidence"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "Las termitas de la pila de madera y el empleado esporádico de Ominent adoraban a este ciempiés. Todavía no lo entiendes.",

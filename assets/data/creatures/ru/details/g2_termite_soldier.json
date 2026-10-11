@@ -319,17 +319,289 @@
       "notes": null
     }
   ],
-  "locations": [],
+  "locations": [
+    {
+      "id": "release_0_6_termitesoldier_0",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -250758.56,
+        "y": 56417.848,
+        "z": -9133.021
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_1",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -248549.06,
+        "y": 54321.297,
+        "z": -9133.021
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_2",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -246230.33,
+        "y": 58122.535,
+        "z": -8953.021
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_3",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -252103.44,
+        "y": 68741.27,
+        "z": -790.4222
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_4",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -251619.31,
+        "y": 69331.04,
+        "z": -966.46014
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_5",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -251378.86,
+        "y": 70543.93,
+        "z": -498.74545
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_6",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -249070.77,
+        "y": 55205.99,
+        "z": -4569.805
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_7",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -250525.34,
+        "y": 58096.47,
+        "z": -4649.3677
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_8",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -251117.83,
+        "y": 59080.375,
+        "z": -4289.691
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_9",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -249175.47,
+        "y": 59969.83,
+        "z": -4656.4717
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_10",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -249298.55,
+        "y": 56562.953,
+        "z": -4836.422
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_11",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -247966.62,
+        "y": 55511.13,
+        "z": -4513.0386
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_12",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -257153.03,
+        "y": 56418.348,
+        "z": -3365.4104
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_13",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -254522.98,
+        "y": 57138.273,
+        "z": -2565.822
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_14",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -246347.56,
+        "y": 73089.94,
+        "z": 2357.6853
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_15",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -257833.66,
+        "y": 49954.96,
+        "z": -8071.929
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_16",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -258424.44,
+        "y": 51735.457,
+        "z": -8156.6274
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitesoldier_17",
+      "targetType": "creature",
+      "targetId": "g2_termite_soldier",
+      "technicalId": "TermiteSoldier",
+      "map": "surface",
+      "world": {
+        "x": -258506.22,
+        "y": 50059.5,
+        "z": -7940.7886
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    }
+  ],
   "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteSoldier",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "extractor_spawn_coordinates_high_confidence"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "Крупный солдат, грызущий древесину и готовый на всё, чтобы не пустить чужаков в гнездо термитов, вплоть до взрыва липкой жижей. После смерти может оставить часть термита и челюсти термита.",

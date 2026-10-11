@@ -501,7 +501,7 @@ def equipment_summary(extractor: Path) -> dict:
     }
 
 
-def completion_detail(technical_id: str, source: dict, completed: dict, language: str, order: int):
+def completion_detail(technical_id: str, source: dict, completed: dict, language: str, order: int, spawn_data=None):
     """Build one Release 0.6 detail from its enriched, final record."""
     detail = release_detail(technical_id, source, language, order)
     fields = completed[technical_id]["fields"]
@@ -554,6 +554,18 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
         environment, condition = USER_CONFIRMED_SPAWNS[technical_id][language]
         detail.update({"environments": [environment], "appearanceType": "summoned" if technical_id == "Centipede" else "interactable", "appearanceCondition": condition, "availabilityStatus": "confirmed"})
         detail["sourceProvenance"]["spawn"] = "user_confirmed_editorial_no_coordinates"
+    spawn = (spawn_data or {}).get(technical_id)
+    if spawn and spawn.get("coordinates"):
+        locations = []
+        for index, coordinate in enumerate(spawn["coordinates"]):
+            world = coordinate.get("coordinates") or {}
+            if "x" not in world or "y" not in world:
+                continue
+            locations.append({"id": f"release_0_6_{technical_id.lower()}_{index}", "targetType": "creature", "targetId": RELEASE_0_6_IDS[technical_id], "technicalId": technical_id, "map": "surface", "world": world, "type": spawn.get("spawnStatus", "spawn"), "conditional": False, "environmentHazards": []})
+        if locations:
+            detail["locations"] = locations
+            detail["availabilityStatus"] = "confirmed"
+            detail["sourceProvenance"]["spawn"] = "extractor_spawn_coordinates_high_confidence"
     if language == "es" and technical_id in EDITORIAL_ES:
         editorial = EDITORIAL_ES[technical_id]
         detail.update({key: value for key, value in editorial.items() if key != "environments"})
@@ -588,6 +600,15 @@ def apply_completion(args):
     payload = read_json(extractor / "phase1" / "aphidex_grounded2_v5_1_1.json")
     source = {row["id"]: row for row in payload["creatures"]}
     completed = {row["id"]: row for row in read_json(extractor / "release_0_6" / "release_0_6_entities_complete.json")["entities"]}
+    spawn_data = {}
+    for filename in ("release_0_6_spawn_coordinates.json", "termite_spawn_coordinates.json"):
+        path = extractor / "release_0_6" / filename
+        if not path.exists():
+            continue
+        for row in read_json(path).get("entities", []):
+            technical_id = row.get("creatureId") or row.get("entity")
+            if technical_id and row.get("coordinates"):
+                spawn_data[technical_id] = row
     missing = sorted(set(RELEASE_0_6_IDS) - set(completed))
     if missing:
         raise ValueError(f"Completion export is missing Release 0.6 entities: {missing}")
@@ -611,7 +632,7 @@ def apply_completion(args):
         directory = DATA / "creatures" / language / "details"
         for technical_id, public_id in RELEASE_0_6_IDS.items():
             prior = read_json(directory / f"{public_id}.json")
-            detail = completion_detail(technical_id, source[technical_id], completed, language, prior.get("order") or 0)
+            detail = completion_detail(technical_id, source[technical_id], completed, language, prior.get("order") or 0, spawn_data)
             # Retain app-owned compatibility keys and artwork placeholders.
             for key in ("photo", "listIconAsset", "mapMarkerAsset", "customAsset", "favoriteKey", "goldLinkId"):
                 detail[key] = prior.get(key, detail.get(key))
@@ -648,7 +669,7 @@ def apply_completion(args):
                 updated[public_id] = summary_index(read_json(path))
         write_json(index_path, sorted(updated.values(), key=lambda row: (row.get("order") or 0, row["id"])))
     for technical_id, public_id in RELEASE_0_6_IDS.items():
-        detail = completion_detail(technical_id, source[technical_id], completed, "en", by_public[public_id].get("order") or 0)
+        detail = completion_detail(technical_id, source[technical_id], completed, "en", by_public[public_id].get("order") or 0, spawn_data)
         by_public[public_id].update({key: value for key, value in detail.items() if key not in {"id", "name", "description"}})
     for public_id in BUGGY_PUBLIC_IDS:
         if public_id in by_public:

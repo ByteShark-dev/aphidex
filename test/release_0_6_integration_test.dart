@@ -45,11 +45,28 @@ void main() {
       final detail = _json('assets/data/creatures/en/details/$id.json');
       expect(
         detail['availabilityStatus'],
-        id == 'g2_centipede' || id == 'g2_termite_queen'
+        const {
+          'g2_centipede',
+          'g2_ogre_diving_bell_spider',
+          'g2_ogre_termite_king',
+          'g2_termite_nymph',
+          'g2_termite_queen',
+          'g2_termite_soldier',
+          'g2_termite_worker',
+        }.contains(id)
             ? 'confirmed'
             : 'implemented_unconfirmed',
       );
-      expect(detail['locations'], isEmpty);
+      final hasRecoveredSpawn = const {
+        'g2_centipede',
+        'g2_ogre_diving_bell_spider',
+        'g2_ogre_termite_king',
+        'g2_termite_nymph',
+        'g2_termite_queen',
+        'g2_termite_soldier',
+        'g2_termite_worker',
+      }.contains(id);
+      expect(detail['locations'], hasRecoveredSpawn ? isNotEmpty : isEmpty);
       if (id == 'g2_termite_queen') {
         expect(detail['loot'], isEmpty);
       } else {

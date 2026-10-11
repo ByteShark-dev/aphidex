@@ -43,7 +43,23 @@
   },
   "loot": [],
   "advancedLootTable": [],
-  "locations": [],
+  "locations": [
+    {
+      "id": "release_0_6_termitequeen_0",
+      "targetType": "creature",
+      "targetId": "g2_termite_queen",
+      "technicalId": "TermiteQueen",
+      "map": "surface",
+      "world": {
+        "x": -248030.95,
+        "y": 65215.168,
+        "z": -2139.9712
+      },
+      "type": "placed_actor",
+      "conditional": false,
+      "environmentHazards": []
+    }
+  ],
   "environments": [
     "Termite Nest — deepest chamber"
   ],
@@ -56,7 +72,7 @@
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
     "locationStatus": "not_resolved",
-    "spawn": "user_confirmed_editorial_no_coordinates"
+    "spawn": "extractor_spawn_coordinates_high_confidence"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "The queen of the nest leaves the fighting to her subjects while she produces an endless supply of heirs.",

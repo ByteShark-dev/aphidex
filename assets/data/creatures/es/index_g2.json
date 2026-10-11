@@ -65,7 +65,7 @@
       "rating": 4,
       "value": 1600
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_ogre_termite_king",
@@ -99,7 +99,7 @@
       "rating": 5,
       "value": 2400
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_orc_termite_soldier",
@@ -235,7 +235,7 @@
       "rating": 1,
       "value": 100
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_termite_queen",
@@ -300,7 +300,7 @@
       "rating": 4,
       "value": 1300
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_termite_worker",
@@ -334,7 +334,7 @@
       "rating": 3,
       "value": 800
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_buggy_potato_beetle",

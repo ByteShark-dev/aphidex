@@ -87,7 +87,458 @@
       "notes": null
     }
   ],
-  "locations": [],
+  "locations": [
+    {
+      "id": "release_0_6_termitenymph_0",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247334.55,
+        "y": 55960.48,
+        "z": -8510.598
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_1",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247603.81,
+        "y": 56270.2,
+        "z": -8511.087
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_2",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247119.6,
+        "y": 56164.227,
+        "z": -8510.598
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_3",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247595.28,
+        "y": 55700.812,
+        "z": -8510.598
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_4",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247872.1,
+        "y": 57548.71,
+        "z": -4704.919
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_5",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -249485.86,
+        "y": 59221.95,
+        "z": -4618.986
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_6",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248130.31,
+        "y": 64215.56,
+        "z": -2150.0
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_7",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248725.83,
+        "y": 64968.94,
+        "z": -2129.3635
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_8",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248583.94,
+        "y": 65425.086,
+        "z": -2161.8281
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_9",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248679.95,
+        "y": 64573.707,
+        "z": -2127.5642
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_10",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248430.3,
+        "y": 64442.73,
+        "z": -2168.186
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_11",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248033.62,
+        "y": 64979.066,
+        "z": -2125.8027
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_12",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248038.1,
+        "y": 64739.297,
+        "z": -2110.901
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_13",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247821.92,
+        "y": 64572.652,
+        "z": -2110.901
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_14",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248643.61,
+        "y": 55771.625,
+        "z": -4692.5625
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_15",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -249338.2,
+        "y": 55990.016,
+        "z": -4723.0137
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_16",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248446.98,
+        "y": 56598.566,
+        "z": -4695.8057
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_17",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -249594.0,
+        "y": 57475.5,
+        "z": -4731.6064
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_18",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -249297.83,
+        "y": 58520.406,
+        "z": -4702.544
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_19",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248378.9,
+        "y": 58589.723,
+        "z": -4727.0977
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_20",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248911.17,
+        "y": 59512.336,
+        "z": -4596.637
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_21",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -250190.6,
+        "y": 58043.82,
+        "z": -4681.125
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_22",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248788.55,
+        "y": 56843.055,
+        "z": -4709.6704
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_23",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247844.25,
+        "y": 56911.17,
+        "z": -4708.53
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_24",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247518.88,
+        "y": 64220.023,
+        "z": -2174.854
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_25",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248699.03,
+        "y": 65248.78,
+        "z": -2125.8027
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_26",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248832.83,
+        "y": 66104.766,
+        "z": -2100.2817
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_27",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -248699.92,
+        "y": 66596.47,
+        "z": -2160.5378
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_28",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -249087.5,
+        "y": 65574.7,
+        "z": -2100.2817
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    },
+    {
+      "id": "release_0_6_termitenymph_29",
+      "targetType": "creature",
+      "targetId": "g2_termite_nymph",
+      "technicalId": "TermiteNymph",
+      "map": "surface",
+      "world": {
+        "x": -247115.27,
+        "y": 55670.76,
+        "z": -8510.109
+      },
+      "type": "encounter_spawn",
+      "conditional": false,
+      "environmentHazards": []
+    }
+  ],
   "environments": [
     "Termitero",
     "Pozo de sacrificios"
@@ -95,12 +546,13 @@
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteNymph",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "extractor_spawn_coordinates_high_confidence"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "Una termita bebé. No se decide si quiere ser trabajadora o soldado.",
