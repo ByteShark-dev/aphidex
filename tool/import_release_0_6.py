@@ -73,6 +73,14 @@ RU_TEXT = {
     "TermiteWorkerORC": ("Термит-рабочий O.R.C.", "Термит-солдат с двойной верностью. После смерти вместе с частями существа может оставить приёмник O.R.C."),
 }
 
+# Aphidex editorial Spanish terminology.  Runtime text remains the source for
+# descriptions; these two names are intentionally normalized for consistency
+# with the app's existing creature naming style.
+APHIDEX_ES_NAME_OVERRIDES = {
+    "TermiteNymph": "Larva de termita",
+    "SpiderDivingBellOGRE": "Araña campana buceadora I.R.G.O.",
+}
+
 
 def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -201,6 +209,8 @@ def localized_release_text(technical_id: str, source: dict, language: str):
     description = (localization.get("description") or {}).get(locale)
     if not name or not description:
         raise ValueError(f"Missing runtime {locale} localization for {technical_id}")
+    if language == "es":
+        name = APHIDEX_ES_NAME_OVERRIDES.get(technical_id, name)
     return clean_description(name), clean_description(description)
 
 

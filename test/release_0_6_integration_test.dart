@@ -77,12 +77,16 @@ void main() {
     final es = _json('assets/data/creatures/es/details/g2_termite_nymph.json');
     final ru = _json('assets/data/creatures/ru/details/g2_termite_nymph.json');
     expect(en['name'], 'Termite Larva');
-    expect(es['name'], 'Termita larva');
+    expect(es['name'], 'Larva de termita');
     expect(ru['name'], 'Личинка термита');
     for (final detail in [en, es, ru]) {
       expect(detail['description'], isNot(contains('<')));
       expect(detail['description'], isNot(contains('--->')));
     }
+    final spiderEs = _json(
+      'assets/data/creatures/es/details/g2_ogre_diving_bell_spider.json',
+    );
+    expect(spiderEs['name'], 'Araña campana buceadora I.R.G.O.');
   });
 
   test('recovered default-combo and death attacks remain visible', () {
