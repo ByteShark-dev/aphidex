@@ -32,8 +32,7 @@
       "value": 9000
     },
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_centipede.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_ogre_diving_bell_spider",
@@ -103,8 +102,7 @@
       "value": 2400
     },
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_ogre_termite_king.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_orc_termite_soldier",
@@ -234,8 +232,8 @@
     "defaultCardVariant": "normal",
     "weaknesses": [],
     "resistances": [],
-    "temperament": "passive",
-    "collectionGroup": "termite",
+    "temperament": "peaceful",
+    "collectionGroup": "harmless",
     "technicalId": "TermiteNymph",
     "bestiaryId": "TermiteNymph",
     "entityType": "creature",
@@ -244,15 +242,14 @@
       "value": 100
     },
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_termite_larva.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_termite_queen",
     "speciesKey": "termite_queen",
     "game": "g2",
     "name": "Reina termita",
-    "tier": 0,
+    "tier": 4,
     "danger": "baja",
     "isBoss": false,
     "order": 0,
@@ -270,15 +267,14 @@
     "defaultCardVariant": "gold",
     "weaknesses": [],
     "resistances": [],
-    "temperament": "passive",
-    "collectionGroup": "termite",
+    "temperament": "peaceful",
+    "collectionGroup": "harmless",
     "technicalId": "TermiteQueen",
     "bestiaryId": "TermiteQueen",
     "entityType": "interactable",
     "health": null,
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_termite_queen.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_termite_soldier",
@@ -313,8 +309,7 @@
       "value": 1300
     },
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_termite_soldier.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_termite_worker",
@@ -349,8 +344,7 @@
       "value": 800
     },
     "availabilityStatus": "confirmed",
-    "underConstruction": false,
-    "photo": "assets/g2/creatures/photos/release_0_6_termite_worker.webp"
+    "underConstruction": false
   },
   {
     "id": "g2_buggy_potato_beetle",
@@ -389,8 +383,7 @@
     "cardTier": 3,
     "bossCardStyle": null,
     "health": null,
-    "availabilityStatus": "source_backed",
-    "photo": "assets/g2/creatures/photos/release_0_6_buggy_potato_beetle.webp"
+    "availabilityStatus": "source_backed"
   },
   {
     "id": "g2_black_soldier_ant",

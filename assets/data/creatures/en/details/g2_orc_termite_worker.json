@@ -6,7 +6,8 @@
   "name": "O.R.C. Termite Worker",
   "game": "g2",
   "tier": 4,
-  "danger": "alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -150,8 +151,8 @@
   ],
   "combatStats": {
     "health": 960,
-    "stunThreshold": 75.0,
-    "stunCooldownSeconds": 10.0
+    "stunThreshold": 75,
+    "stunCooldownSeconds": 10
   },
   "loot": [
     {

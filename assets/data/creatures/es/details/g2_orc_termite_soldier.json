@@ -6,7 +6,8 @@
   "name": "Termita soldado C.R.O.",
   "game": "g2",
   "tier": 4,
-  "danger": "muy_alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -251,8 +252,8 @@
   ],
   "combatStats": {
     "health": 1300,
-    "stunThreshold": 90.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {

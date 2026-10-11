@@ -6,7 +6,8 @@
   "name": "Король термитов",
   "game": "g2",
   "tier": 4,
-  "danger": "muy_alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -214,8 +215,8 @@
   ],
   "combatStats": {
     "health": 1900,
-    "stunThreshold": 120.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 120,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {

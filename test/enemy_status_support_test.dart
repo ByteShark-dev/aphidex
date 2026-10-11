@@ -230,6 +230,12 @@ void main() {
       );
     });
 
+    test('translates the O.R.C. creature-list section into Spanish', () {
+      expect(AppLocalizations(const Locale('es')).groupOrc, 'C.R.O.');
+      expect(AppLocalizations(const Locale('en')).groupOrc, 'O.R.C.');
+      expect(AppLocalizations(const Locale('ru')).groupOrc, 'O.R.C.');
+    });
+
     test('labels the under-construction status in every supported locale', () {
       expect(
         AppLocalizations(const Locale('es')).underConstructionLabel,

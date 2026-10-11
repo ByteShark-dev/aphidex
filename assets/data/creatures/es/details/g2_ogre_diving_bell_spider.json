@@ -6,7 +6,8 @@
   "name": "Araña campana buceadora I.R.G.O.",
   "game": "g2",
   "tier": 2,
-  "danger": "muy_alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -22,8 +23,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "ogrr",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -50,7 +51,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Spider Diving Bell Bite Augusta",
+      "name": "Mordida",
       "technicalId": "SpiderDivingBellBite_Augusta",
       "tags": [
         "stabbing"
@@ -76,10 +77,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance de mordida y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o sal de su frente antes del impacto.",
+      "notes": "50 de daño perforante, 8 de aturdimiento y Veneno pequeño. Compartida con la Araña campana de buceo común."
     },
     {
-      "name": "Spider Diving Bell Lunge Augusta",
+      "name": "Embestida",
       "technicalId": "SpiderDivingBellLunge_Augusta",
       "tags": [
         "stabbing"
@@ -105,10 +109,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma un instante antes de lanzarse hacia delante.",
+      "howToAvoid": "Muévete con decisión hacia un lado; retroceder en línea recta deja poco margen.",
+      "notes": "68 de daño perforante, 12 de aturdimiento y Veneno pequeño. Sus 10 segundos de recarga abren la ventana más clara para reiniciar el ritmo."
     },
     {
-      "name": "O.G.R.E. Spider Diving Bell Water Dodge Augusta",
+      "name": "Esquiva acuática",
       "technicalId": "SpiderDivingBell_WaterDodge_Augusta",
       "tags": [],
       "damageTypes": [],
@@ -122,13 +129,16 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se desplaza por el agua en vez de comprometerse con un golpe directo.",
+      "howToAvoid": "No la pierdas de vista y guarda resistencia para la mordida o embestida posterior.",
+      "notes": "El extractor no resuelve daño directo para esta acción; es una herramienta de reposicionamiento compartida con la araña común."
     }
   ],
   "combatStats": {
     "health": 1600,
-    "stunThreshold": 90.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {
@@ -201,34 +211,20 @@
       "notes": null
     }
   ],
-  "locations": [
-    {
-      "id": "release_0_6_spiderdivingbellogre_0",
-      "targetType": "creature",
-      "targetId": "g2_ogre_diving_bell_spider",
-      "technicalId": "SpiderDivingBellOGRE",
-      "map": "surface",
-      "world": {
-        "x": -28800.74,
-        "y": 7415.3267,
-        "z": -11530.327
-      },
-      "type": "encounter_spawn",
-      "conditional": false,
-      "environmentHazards": []
-    }
+  "locations": [],
+  "environments": [
+    "Augusta Main — encuentro submarino"
   ],
-  "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "confirmed",
+  "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "SpiderDivingBellOGRE",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
     "locationStatus": "not_resolved",
-    "spawn": "extractor_spawn_coordinates_high_confidence"
+    "spawn": "extractor_actor_reference_pending_runtime_confirmation"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "A diving bell spider with something seriously wrong going on. They are resistant to the flavor of their mutation.",
@@ -237,5 +233,9 @@
     "gold": "T_UI_Tier2_DivingBell_OGRR_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Araña campana mutada que se encuentra bajo el agua. Su repertorio resuelto coincide con el de la araña campana común: mordida, embestida y esquiva acuática.",
+  "interactionWithPlayer": "Trátala como una amenaza submarina de corto alcance: sus dos ataques de daño aplican Veneno pequeño y su esquiva acuática puede reposicionarla.",
+  "interactionWithCreatures": "Hay un encuentro de Araña campana de buceo común registrado a unas 322 unidades del mundo. También hay Pulgas de agua y Pulgas de agua espinosas en el agua circundante; la cercanía confirma zona compartida, no cooperación.",
+  "strategy": "Lleva el equipo necesario para moverte bajo el agua, reserva resistencia para desplazarte de lado tras su embestida y no dependas del daño perforante: la mutación lo resiste. El corte es su debilidad verificada."
 }

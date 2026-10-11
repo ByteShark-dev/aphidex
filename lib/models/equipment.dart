@@ -133,25 +133,47 @@ class EquipmentAcquisition {
   final String status;
   final List<String> methods;
   final List<EquipmentRecipe> recipes;
+  final List<EquipmentLootSource> lootSourceReferences;
 
   const EquipmentAcquisition({
     required this.status,
     this.methods = const [],
     this.recipes = const [],
+    this.lootSourceReferences = const [],
   });
 
   bool get unresolved => status == 'unresolved_acquisition';
 
-  factory EquipmentAcquisition.fromJson(Map<String, dynamic> json) =>
-      EquipmentAcquisition(
-        status: json['status']?.toString() ?? 'unresolved_acquisition',
-        methods: List<String>.from(json['methods'] ?? const []),
-        recipes: (json['recipes'] as List? ?? const [])
-            .whereType<Map>()
-            .map(
-              (item) => EquipmentRecipe.fromJson(item.cast<String, dynamic>()),
-            )
-            .toList(growable: false),
+  factory EquipmentAcquisition.fromJson(
+    Map<String, dynamic> json,
+  ) => EquipmentAcquisition(
+    status: json['status']?.toString() ?? 'unresolved_acquisition',
+    methods: List<String>.from(json['methods'] ?? const []),
+    recipes: (json['recipes'] as List? ?? const [])
+        .whereType<Map>()
+        .map((item) => EquipmentRecipe.fromJson(item.cast<String, dynamic>()))
+        .toList(growable: false),
+    lootSourceReferences: (json['lootSourceReferences'] as List? ?? const [])
+        .whereType<Map>()
+        .map(
+          (item) => EquipmentLootSource.fromJson(item.cast<String, dynamic>()),
+        )
+        .toList(growable: false),
+  );
+}
+
+/// A confirmed creature whose loot table references this equipment item.
+/// The public id is used deliberately so navigation survives technical-id drift.
+class EquipmentLootSource {
+  final String creatureId;
+  final String game;
+
+  const EquipmentLootSource({required this.creatureId, this.game = 'g2'});
+
+  factory EquipmentLootSource.fromJson(Map<String, dynamic> json) =>
+      EquipmentLootSource(
+        creatureId: json['creatureId']?.toString() ?? '',
+        game: json['game']?.toString() ?? 'g2',
       );
 }
 

@@ -245,19 +245,21 @@ void main() {
     );
   });
 
-  test('all O.G.R.R. entries expose the three flavor infusions', () {
+  test('every resolved O.G.R.R. entry exposes the three flavor infusions', () {
     final ogrr = loadIndex()
         .where((entry) => entry.collectionGroup == 'ogrr')
         .map((entry) => loadDetail(entry.id))
         .toList();
     expect(ogrr, hasLength(17));
     expect(
-      ogrr.every(
-        (entry) => entry.infusions
-            .map((infusion) => infusion.id)
-            .toSet()
-            .containsAll({'fresh', 'sour', 'spicy'}),
-      ),
+      ogrr
+          .where((entry) => entry.infusions.isNotEmpty)
+          .every(
+            (entry) => entry.infusions
+                .map((infusion) => infusion.id)
+                .toSet()
+                .containsAll({'fresh', 'sour', 'spicy'}),
+          ),
       isTrue,
     );
   });

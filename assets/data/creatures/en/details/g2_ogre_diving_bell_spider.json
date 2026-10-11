@@ -6,7 +6,8 @@
   "name": "O.G.R.R. Diving Bell Spider",
   "game": "g2",
   "tier": 2,
-  "danger": "muy_alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -22,8 +23,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "ogrr",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -50,7 +51,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Spider Diving Bell Bite Augusta",
+      "name": "Bite",
       "technicalId": "SpiderDivingBellBite_Augusta",
       "tags": [
         "stabbing"
@@ -76,10 +77,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "It closes to biting range and turns toward its target.",
+      "howToAvoid": "Block if stamina allows or move out of its front before it connects.",
+      "notes": "50 stabbing damage, 8 stun, and VenomSmall. Shared with the ordinary Diving Bell Spider."
     },
     {
-      "name": "Spider Diving Bell Lunge Augusta",
+      "name": "Lunge",
       "technicalId": "SpiderDivingBellLunge_Augusta",
       "tags": [
         "stabbing"
@@ -105,10 +109,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "It pauses briefly before committing forward.",
+      "howToAvoid": "Move decisively to the side; backing straight away leaves little margin.",
+      "notes": "68 stabbing damage, 12 stun, and VenomSmall. Its 10-second cooldown creates the clearest reset window."
     },
     {
-      "name": "O.G.R.E. Spider Diving Bell Water Dodge Augusta",
+      "name": "Aquatic dodge",
       "technicalId": "SpiderDivingBell_WaterDodge_Augusta",
       "tags": [],
       "damageTypes": [],
@@ -122,13 +129,16 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "It shifts through the water instead of committing to a direct strike.",
+      "howToAvoid": "Keep it in view and reserve stamina for the follow-up bite or lunge.",
+      "notes": "No direct damage is resolved for this action; it is a repositioning tool shared with the ordinary spider."
     }
   ],
   "combatStats": {
     "health": 1600,
-    "stunThreshold": 90.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {
@@ -201,34 +211,20 @@
       "notes": null
     }
   ],
-  "locations": [
-    {
-      "id": "release_0_6_spiderdivingbellogre_0",
-      "targetType": "creature",
-      "targetId": "g2_ogre_diving_bell_spider",
-      "technicalId": "SpiderDivingBellOGRE",
-      "map": "surface",
-      "world": {
-        "x": -28800.74,
-        "y": 7415.3267,
-        "z": -11530.327
-      },
-      "type": "encounter_spawn",
-      "conditional": false,
-      "environmentHazards": []
-    }
+  "locations": [],
+  "environments": [
+    "Augusta Main — underwater encounter"
   ],
-  "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "confirmed",
+  "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "SpiderDivingBellOGRE",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
     "locationStatus": "not_resolved",
-    "spawn": "extractor_spawn_coordinates_high_confidence"
+    "spawn": "extractor_actor_reference_pending_runtime_confirmation"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "A diving bell spider with something seriously wrong going on. They are resistant to the flavor of their mutation.",
@@ -237,5 +233,9 @@
     "gold": "T_UI_Tier2_DivingBell_OGRR_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "A mutated diving bell spider encountered underwater. Its resolved move set matches the ordinary diving bell spider's bite, lunge, and aquatic dodge pattern.",
+  "interactionWithPlayer": "Treat it as a close-range underwater threat: both damaging moves apply VenomSmall, while its aquatic dodge can reset its position.",
+  "interactionWithCreatures": "A normal Diving Bell Spider encounter is recorded about 322 world units from this encounter. Water Fleas and Spiny Water Fleas also have recorded spawns in the surrounding water; proximity confirms a shared area, not cooperation.",
+  "strategy": "Bring the equipment needed for underwater travel, keep enough stamina to move sideways after its lunge, and do not rely on stabbing damage because the mutation resists it. Slashing is the verified weakness."
 }

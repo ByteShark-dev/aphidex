@@ -19817,6 +19817,587 @@
       "normalizedSubtype": "accessory",
       "classificationSource": "extractor_domain",
       "classificationFallbackUsed": false
+    },
+    {
+      "id": "SplinterCannon",
+      "technicalId": "SplinterCannon",
+      "domain": "weapon",
+      "name": {
+        "en": "Splinter Cannon",
+        "es": "Cañón de astillas",
+        "ru": "Осколочная пушка"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::MainHand",
+      "twoHanded": true,
+      "canBlock": true,
+      "durability": 580,
+      "icon": "assets/g2/equipment/icons/ICO_TermiteGun.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "WeaponBow",
+        "SplinterCannonParryStabbing"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "weapon",
+      "normalizedSubtype": "weapon",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "weapon",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.Default"
+      ],
+      "repair": [
+        {
+          "itemId": "TermitePartKing",
+          "count": 1
+        },
+        {
+          "itemId": "WoodSplinter",
+          "count": 1
+        }
+      ],
+      "ammoAttackReferences": [
+        "SplinterCannonShot",
+        "SplinterCannonShotMint",
+        "SplinterCannonShotSpicy",
+        "SplinterCannonShotSour"
+      ]
+    },
+    {
+      "id": "StaffCentipede",
+      "technicalId": "StaffCentipede",
+      "domain": "weapon",
+      "name": {
+        "en": "Centipede Staff",
+        "es": "Bastón de ciempiés",
+        "ru": "Посох многоножки"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::MainHand",
+      "twoHanded": true,
+      "canBlock": true,
+      "durability": 580,
+      "icon": "assets/g2/equipment/icons/ICO_Centipede_Staff.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "VenomAttackPerk",
+        "CentipedeSummonEffectVenom"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "weapon",
+      "normalizedSubtype": "weapon",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "weapon",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.Special"
+      ],
+      "repair": [
+        {
+          "itemId": "BossCentipedeVenom",
+          "count": 1
+        },
+        {
+          "itemId": "BossCentipedeLeg",
+          "count": 1
+        }
+      ],
+      "attackReferences": [
+        "StaffCentipedeVenom1",
+        "StaffCentipedeVenom2",
+        "StaffCentipedeVenom3"
+      ]
+    },
+    {
+      "id": "AccessoryCentipede",
+      "technicalId": "AccessoryCentipede",
+      "domain": "trinket",
+      "name": {
+        "en": "Centipede Trinket",
+        "es": "Amuleto de ciempiés",
+        "ru": "Талисман многоножки"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Glider",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 0,
+      "icon": "",
+      "iconProvenance": "unresolved_material_icon",
+      "effects": [
+        "CentipedeSummonEffectDeathTrigger"
+      ],
+      "acquisition": {
+        "status": "resolved",
+        "methods": [
+          "loot_source"
+        ],
+        "recipes": [],
+        "lootSourceReferences": [
+          {
+            "creatureId": "g2_centipede",
+            "game": "g2"
+          }
+        ],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "trinket",
+      "normalizedSubtype": "trinket",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "trinket",
+      "attacks": [],
+      "upgradeRoutes": [],
+      "repair": []
+    },
+    {
+      "id": "AccessoryTermite",
+      "technicalId": "AccessoryTermite",
+      "domain": "trinket",
+      "name": {
+        "en": "Termite King Trinket",
+        "es": "Amuleto del rey termita",
+        "ru": "Талисман короля термитов"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Glider",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 0,
+      "icon": "",
+      "iconProvenance": "unresolved_material_icon",
+      "effects": [
+        "TermiteTrinketPerfectBlockTrigger"
+      ],
+      "acquisition": {
+        "status": "resolved",
+        "methods": [
+          "loot_source"
+        ],
+        "recipes": [],
+        "lootSourceReferences": [
+          {
+            "creatureId": "g2_termite_king",
+            "game": "g2"
+          },
+          {
+            "creatureId": "g2_ogre_termite_king",
+            "game": "g2"
+          }
+        ],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "trinket",
+      "normalizedSubtype": "trinket",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "trinket",
+      "attacks": [],
+      "upgradeRoutes": [],
+      "repair": []
+    },
+    {
+      "id": "HeadCentipede",
+      "technicalId": "HeadCentipede",
+      "domain": "armor",
+      "name": {
+        "en": "Centipede Headpiece",
+        "es": "Casco de ciempiés",
+        "ru": "Шлем многоножки"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Head",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 75,
+      "icon": "assets/g2/equipment/icons/ICO_Head_Centipede.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "MageStaffStaminaReduction",
+        "PoisonGasReductionLarge",
+        "SummonEffectAttackSpeed"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "BossCentipedeAntenna",
+          "count": 1
+        },
+        {
+          "itemId": "Lint",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 8.5,
+        "percentageDamageReduction": 0.035
+      }
+    },
+    {
+      "id": "ChestCentipede",
+      "technicalId": "ChestCentipede",
+      "domain": "armor",
+      "name": {
+        "en": "Centipede Chestpiece",
+        "es": "Pechera de ciempiés",
+        "ru": "Нагрудник многоножки"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Chest",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 75,
+      "icon": "assets/g2/equipment/icons/ICO_Chest_Centipede.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "MageStaffStaminaReduction",
+        "CentipedeSummonEffectCritTrigger",
+        "SummonEffectAttackSpeed"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "BossCentipedeChunk",
+          "count": 1
+        },
+        {
+          "itemId": "Lint",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 17.0,
+        "percentageDamageReduction": 0.07
+      }
+    },
+    {
+      "id": "LegsCentipede",
+      "technicalId": "LegsCentipede",
+      "domain": "armor",
+      "name": {
+        "en": "Centipede Leggings",
+        "es": "Perneras de ciempiés",
+        "ru": "Поножи многоножки"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Legs",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 75,
+      "icon": "assets/g2/equipment/icons/ICO_Leg_Centipede.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "MageStaffStaminaReduction",
+        "CentipedeSummonEffectCritTrigger",
+        "SummonEffectAttackSpeed"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "BossCentipedeChunk",
+          "count": 1
+        },
+        {
+          "itemId": "Lint",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 8.5,
+        "percentageDamageReduction": 0.035
+      }
+    },
+    {
+      "id": "HeadTermite",
+      "technicalId": "HeadTermite",
+      "domain": "armor",
+      "name": {
+        "en": "Termite Headpiece",
+        "es": "Casco de termita",
+        "ru": "Шлем термита"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Head",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 95,
+      "icon": "assets/g2/equipment/icons/ICO_Head_Termite.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "RangerWeakPointDamage",
+        "DustImmunity",
+        "TermiteStunDamage"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "TermitePart",
+          "count": 1
+        },
+        {
+          "itemId": "LeatherPupa",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 9.5,
+        "percentageDamageReduction": 0.06
+      }
+    },
+    {
+      "id": "ChestTermite",
+      "technicalId": "ChestTermite",
+      "domain": "armor",
+      "name": {
+        "en": "Termite Chestpiece",
+        "es": "Pechera de termita",
+        "ru": "Нагрудник термита"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Chest",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 95,
+      "icon": "assets/g2/equipment/icons/ICO_Chest_Termite.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "RangerWeakPointDamage",
+        "TermitePerfectBlockDamage",
+        "TermiteStunDamage"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "TermitePart",
+          "count": 1
+        },
+        {
+          "itemId": "LeatherPupa",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 19.0,
+        "percentageDamageReduction": 0.12
+      }
+    },
+    {
+      "id": "LegsTermite",
+      "technicalId": "LegsTermite",
+      "domain": "armor",
+      "name": {
+        "en": "Termite Leggings",
+        "es": "Perneras de termita",
+        "ru": "Поножи термита"
+      },
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      },
+      "tier": 4,
+      "slot": "EEquipmentSlot::Legs",
+      "twoHanded": false,
+      "canBlock": false,
+      "durability": 95,
+      "icon": "assets/g2/equipment/icons/ICO_Legs_Termite.png",
+      "iconProvenance": "texture_export",
+      "effects": [
+        "RangerWeakPointDamage",
+        "TermitePerfectBlockDamage",
+        "TermiteStunDamage"
+      ],
+      "acquisition": {
+        "status": "unresolved_acquisition",
+        "methods": [],
+        "recipes": [],
+        "lootSourceReferences": [],
+        "bossCachedDrops": []
+      },
+      "locations": [],
+      "environmentHazards": [],
+      "normalizedType": "armor",
+      "normalizedSubtype": "armor",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "kind": "armor",
+      "attacks": [],
+      "upgradeRoutes": [
+        "WeaponUpgrade.ArmorDefault",
+        "WeaponUpgrade.ArmorHiddenStatus"
+      ],
+      "repair": [
+        {
+          "itemId": "TermitePart",
+          "count": 1
+        },
+        {
+          "itemId": "LintWoven",
+          "count": 1
+        }
+      ],
+      "protection": {
+        "flatDamageReductionRaw": 9.5,
+        "percentageDamageReduction": 0.06
+      }
     }
   ],
   "armorSets": [
@@ -20941,6 +21522,66 @@
         "en": "technical_source",
         "es": "pending_review",
         "ru": "pending_native_review"
+      }
+    },
+    {
+      "id": "BP_Equippable_Centipede_Armor",
+      "name": {
+        "en": "Centipede Armor",
+        "es": "Armadura de ciempiés",
+        "ru": "Броня многоножки"
+      },
+      "pieces": [
+        "HeadCentipede",
+        "ChestCentipede",
+        "LegsCentipede"
+      ],
+      "tiers": [
+        4
+      ],
+      "protection": {},
+      "effects": [],
+      "allPiecesEnhanceable": true,
+      "icon": "assets/g2/equipment/icons/ICO_Head_Centipede.png",
+      "iconStrategy": "primary_piece_fallback",
+      "normalizedType": "armor_set",
+      "normalizedSubtype": "set",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
+      }
+    },
+    {
+      "id": "BP_Equippable_Termite_Armor",
+      "name": {
+        "en": "Termite Armor",
+        "es": "Armadura de termita",
+        "ru": "Броня термита"
+      },
+      "pieces": [
+        "HeadTermite",
+        "ChestTermite",
+        "LegsTermite"
+      ],
+      "tiers": [
+        4
+      ],
+      "protection": {},
+      "effects": [],
+      "allPiecesEnhanceable": true,
+      "icon": "assets/g2/equipment/icons/ICO_Head_Termite.png",
+      "iconStrategy": "primary_piece_fallback",
+      "normalizedType": "armor_set",
+      "normalizedSubtype": "set",
+      "classificationSource": "extractor_structure_probe",
+      "classificationFallbackUsed": false,
+      "translationStatus": {
+        "en": "technical_source",
+        "es": "aphidex_translation",
+        "ru": "aphidex_translation"
       }
     }
   ]

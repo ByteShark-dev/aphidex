@@ -6,7 +6,8 @@
   "name": "Водолазный паук O.G.R.R.",
   "game": "g2",
   "tier": 2,
-  "danger": "muy_alta",
+  "danger": "proximamente",
+  "underConstruction": true,
   "isBoss": false,
   "order": 0,
   "defaultGold": false,
@@ -22,8 +23,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "ogrr",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -50,7 +51,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Spider Diving Bell Bite Augusta",
+      "name": "Укус",
       "technicalId": "SpiderDivingBellBite_Augusta",
       "tags": [
         "stabbing"
@@ -76,10 +77,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Паук входит в радиус укуса и разворачивается к цели.",
+      "howToAvoid": "Блокируйте при наличии выносливости или уйдите из сектора перед собой до попадания.",
+      "notes": "50 колющего урона, 8 оглушения и VenomSmall. Приём общий с обычным водолазным пауком."
     },
     {
-      "name": "Spider Diving Bell Lunge Augusta",
+      "name": "Рывок",
       "technicalId": "SpiderDivingBellLunge_Augusta",
       "tags": [
         "stabbing"
@@ -105,10 +109,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Перед броском вперёд он ненадолго замирает.",
+      "howToAvoid": "Резко уходите в сторону: отступление по прямой оставляет мало запаса.",
+      "notes": "68 колющего урона, 12 оглушения и VenomSmall. Перезарядка в 10 секунд — самое удобное окно для восстановления темпа."
     },
     {
-      "name": "O.G.R.E. Spider Diving Bell Water Dodge Augusta",
+      "name": "Водное уклонение",
       "technicalId": "SpiderDivingBell_WaterDodge_Augusta",
       "tags": [],
       "damageTypes": [],
@@ -122,13 +129,16 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Он смещается в воде вместо прямой атаки.",
+      "howToAvoid": "Не теряйте его из вида и сохраните выносливость для следующего укуса или рывка.",
+      "notes": "Прямой урон для этого действия не подтверждён; это инструмент смены позиции, общий с обычным пауком."
     }
   ],
   "combatStats": {
     "health": 1600,
-    "stunThreshold": 90.0,
-    "stunCooldownSeconds": 20.0
+    "stunThreshold": 90,
+    "stunCooldownSeconds": 20
   },
   "loot": [
     {
@@ -201,34 +211,20 @@
       "notes": null
     }
   ],
-  "locations": [
-    {
-      "id": "release_0_6_spiderdivingbellogre_0",
-      "targetType": "creature",
-      "targetId": "g2_ogre_diving_bell_spider",
-      "technicalId": "SpiderDivingBellOGRE",
-      "map": "surface",
-      "world": {
-        "x": -28800.74,
-        "y": 7415.3267,
-        "z": -11530.327
-      },
-      "type": "encounter_spawn",
-      "conditional": false,
-      "environmentHazards": []
-    }
+  "locations": [],
+  "environments": [
+    "Augusta Main — подводная встреча"
   ],
-  "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
-  "availabilityStatus": "confirmed",
+  "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "SpiderDivingBellOGRE",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
     "locationStatus": "not_resolved",
-    "spawn": "extractor_spawn_coordinates_high_confidence"
+    "spawn": "extractor_actor_reference_pending_runtime_confirmation"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "С этим водолазным пауком явно происходит что-то серьёзно неладное. Он устойчив к вкусу своей мутации.",
@@ -237,5 +233,9 @@
     "gold": "T_UI_Tier2_DivingBell_OGRR_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Мутировавший водолазный паук, встречающийся под водой. Его подтверждённый набор приёмов совпадает с обычным водолазным пауком: укус, рывок и водное уклонение.",
+  "interactionWithPlayer": "Считайте его подводной угрозой ближнего боя: оба наносящих урон приёма накладывают VenomSmall, а водное уклонение позволяет ему сменить позицию.",
+  "interactionWithCreatures": "Примерно в 322 игровых единицах зарегистрирована обычная особь водолазного паука. В окружающей воде также есть водяные блохи и колючие водяные блохи; близость подтверждает общую зону, но не сотрудничество.",
+  "strategy": "Возьмите снаряжение для передвижения под водой, сохраняйте выносливость для ухода в сторону после рывка и не полагайтесь на колющий урон: мутация ему сопротивляется. Подтверждённая слабость — рубящий урон."
 }

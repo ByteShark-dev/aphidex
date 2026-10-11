@@ -66,6 +66,90 @@ RELEASE_PHOTOS = {
 POTATO_BUGGY_PHOTO = "assets/g2/creatures/photos/release_0_6_buggy_potato_beetle.webp"
 ELEMENTAL = {"fresh", "salty", "sour", "spicy"}
 
+# Release 0.6 equipment rows recovered from the extractor's structured
+# equipment probe.  Names are Aphidex translations of their technical ids;
+# gameplay values are copied only where the probe resolves them.
+RELEASE_EQUIPMENT = {
+    "SplinterCannon": ("weapon", "Splinter Cannon", "Cañón de astillas", "Осколочная пушка", 4, "EEquipmentSlot::MainHand", True, True, 580, "ICO_TermiteGun.png", ["WeaponBow", "SplinterCannonParryStabbing"], ["TermitePartKing", "WoodSplinter"], ["WeaponUpgrade.Default"], []),
+    "StaffCentipede": ("weapon", "Centipede Staff", "Bastón de ciempiés", "Посох многоножки", 4, "EEquipmentSlot::MainHand", True, True, 580, "ICO_Centipede_Staff.png", ["VenomAttackPerk", "CentipedeSummonEffectVenom"], ["BossCentipedeVenom", "BossCentipedeLeg"], ["WeaponUpgrade.Special"], []),
+    "AccessoryCentipede": ("trinket", "Centipede Trinket", "Amuleto de ciempiés", "Талисман многоножки", 4, "EEquipmentSlot::Glider", False, False, 0, "", ["CentipedeSummonEffectDeathTrigger"], [], [], ["g2_centipede"]),
+    "AccessoryTermite": ("trinket", "Termite King Trinket", "Amuleto del rey termita", "Талисман короля термитов", 4, "EEquipmentSlot::Glider", False, False, 0, "", ["TermiteTrinketPerfectBlockTrigger"], [], [], ["g2_termite_king", "g2_ogre_termite_king"]),
+    "HeadCentipede": ("armor", "Centipede Headpiece", "Casco de ciempiés", "Шлем многоножки", 4, "EEquipmentSlot::Head", False, False, 75, "ICO_Head_Centipede.png", ["MageStaffStaminaReduction", "PoisonGasReductionLarge", "SummonEffectAttackSpeed"], ["BossCentipedeAntenna", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+    "ChestCentipede": ("armor", "Centipede Chestpiece", "Pechera de ciempiés", "Нагрудник многоножки", 4, "EEquipmentSlot::Chest", False, False, 75, "ICO_Chest_Centipede.png", ["MageStaffStaminaReduction", "CentipedeSummonEffectCritTrigger", "SummonEffectAttackSpeed"], ["BossCentipedeChunk", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+    "LegsCentipede": ("armor", "Centipede Leggings", "Perneras de ciempiés", "Поножи многоножки", 4, "EEquipmentSlot::Legs", False, False, 75, "ICO_Leg_Centipede.png", ["MageStaffStaminaReduction", "CentipedeSummonEffectCritTrigger", "SummonEffectAttackSpeed"], ["BossCentipedeChunk", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+    "HeadTermite": ("armor", "Termite Headpiece", "Casco de termita", "Шлем термита", 4, "EEquipmentSlot::Head", False, False, 95, "ICO_Head_Termite.png", ["RangerWeakPointDamage", "DustImmunity", "TermiteStunDamage"], ["TermitePart", "LeatherPupa"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+    "ChestTermite": ("armor", "Termite Chestpiece", "Pechera de termita", "Нагрудник термита", 4, "EEquipmentSlot::Chest", False, False, 95, "ICO_Chest_Termite.png", ["RangerWeakPointDamage", "TermitePerfectBlockDamage", "TermiteStunDamage"], ["TermitePart", "LeatherPupa"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+    "LegsTermite": ("armor", "Termite Leggings", "Perneras de termita", "Поножи термита", 4, "EEquipmentSlot::Legs", False, False, 95, "ICO_Legs_Termite.png", ["RangerWeakPointDamage", "TermitePerfectBlockDamage", "TermiteStunDamage"], ["TermitePart", "LintWoven"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
+}
+
+
+def sync_release_equipment() -> None:
+    """Add the resolved Release 0.6 equipment without guessing recipes."""
+    path = DATA / "g2" / "equipment.json"
+    catalog = read_json(path)
+    by_id = {item["id"]: item for item in catalog["items"]}
+    for item_id, values in RELEASE_EQUIPMENT.items():
+        (domain, en, es, ru, tier, slot, two_handed, can_block, durability,
+         icon_name, effects, repair_ids, upgrade_routes, creature_ids) = values
+        item = {
+            "id": item_id, "technicalId": item_id, "domain": domain,
+            "name": {"en": en, "es": es, "ru": ru},
+            "translationStatus": {"en": "technical_source", "es": "aphidex_translation", "ru": "aphidex_translation"},
+            "tier": tier, "slot": slot, "twoHanded": two_handed,
+            "canBlock": can_block, "durability": durability,
+            "icon": f"assets/g2/equipment/icons/{icon_name}" if icon_name else "",
+            "iconProvenance": "texture_export" if icon_name else "unresolved_material_icon",
+            "effects": effects,
+            "acquisition": {
+                "status": "resolved" if creature_ids else "unresolved_acquisition",
+                "methods": ["loot_source"] if creature_ids else [],
+                "recipes": [],
+                "lootSourceReferences": [{"creatureId": creature_id, "game": "g2"} for creature_id in creature_ids],
+                "bossCachedDrops": [],
+            },
+            "locations": [], "environmentHazards": [],
+            "normalizedType": domain, "normalizedSubtype": domain,
+            "classificationSource": "extractor_structure_probe",
+            "classificationFallbackUsed": False, "kind": domain,
+            "attacks": [], "upgradeRoutes": upgrade_routes,
+            "repair": [{"itemId": item, "count": 1} for item in repair_ids],
+        }
+        armor_defense = {
+            "HeadCentipede": (8.5, .035), "ChestCentipede": (17.0, .07),
+            "LegsCentipede": (8.5, .035), "HeadTermite": (9.5, .06),
+            "ChestTermite": (19.0, .12), "LegsTermite": (9.5, .06),
+        }.get(item_id)
+        if armor_defense:
+            item["protection"] = {
+                "flatDamageReductionRaw": armor_defense[0],
+                "percentageDamageReduction": armor_defense[1],
+            }
+        if item_id == "StaffCentipede":
+            item["attackReferences"] = [
+                "StaffCentipedeVenom1", "StaffCentipedeVenom2",
+                "StaffCentipedeVenom3",
+            ]
+        elif item_id == "SplinterCannon":
+            item["ammoAttackReferences"] = [
+                "SplinterCannonShot", "SplinterCannonShotMint",
+                "SplinterCannonShotSpicy", "SplinterCannonShotSour",
+            ]
+        by_id[item_id] = item
+    catalog["items"] = list(by_id.values())
+    sets = {row["id"]: row for row in catalog["armorSets"]}
+    for set_id, name, pieces, icon in (
+        ("BP_Equippable_Centipede_Armor", {"en": "Centipede Armor", "es": "Armadura de ciempiés", "ru": "Броня многоножки"}, ["HeadCentipede", "ChestCentipede", "LegsCentipede"], "ICO_Head_Centipede.png"),
+        ("BP_Equippable_Termite_Armor", {"en": "Termite Armor", "es": "Armadura de termita", "ru": "Броня термита"}, ["HeadTermite", "ChestTermite", "LegsTermite"], "ICO_Head_Termite.png"),
+    ):
+        sets[set_id] = {"id": set_id, "name": name, "pieces": pieces, "tiers": [4],
+                        "protection": {}, "effects": [], "allPiecesEnhanceable": True,
+                        "icon": f"assets/g2/equipment/icons/{icon}", "iconStrategy": "primary_piece_fallback",
+                        "normalizedType": "armor_set", "normalizedSubtype": "set",
+                        "classificationSource": "extractor_structure_probe", "classificationFallbackUsed": False,
+                        "translationStatus": {"en": "technical_source", "es": "aphidex_translation", "ru": "aphidex_translation"}}
+    catalog["armorSets"] = list(sets.values())
+    write_json(path, catalog)
+
 # Grounded 2 has no Russian resources for these rows.  These are Aphidex
 # translations of the extractor's official runtime English, never guesses at
 # gameplay values.  Keep the map here so a regeneration is deterministic.
@@ -215,6 +299,28 @@ USER_CONFIRMED_SPAWNS = {
     },
 }
 BUGGY_PUBLIC_IDS = frozenset(BUGGY_IDS.values())
+
+# Aphidex editorial Spanish copy for the mounts.  The gameplay facts (hatchery
+# recipes, handling and attacks) remain sourced from the extractor; this only
+# turns those facts into player-facing prose.
+BUGGY_ES_COPY = {
+    "g2_buggy_ladybug": {
+        "description": "La Buggie defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggies tendrían que retirarse.",
+        "behavior": "No persigue con la agilidad de la araña ni transporta con la fuerza bruta de las hormigas: absorbe el castigo, conserva la distancia media y usa el cuerpo para apartar a quien se acerque demasiado. Mientras tenga espacio, puede seguir disparando al avanzar.",
+    },
+    "g2_buggy_red_soldier_ant": {
+        "description": "La Buggie de carga ideal para las primeras expediciones. La hormiga soldado roja combina transporte de materiales, movilidad en túneles estrechos y un combate directo que resulta fiable cuando todavía faltan herramientas especializadas. Es una montura de trabajo que también sabe abrirse paso.",
+        "behavior": "Sigue al jugador hasta recibir una orden y defiende al jinete cuando aparece una amenaza. Su plan es sencillo y eficaz: morder, embestir y aprovechar los espacios cerrados para no dejar escapar al objetivo.",
+    },
+    "g2_buggy_black_soldier_ant": {
+        "description": "La mejora táctica de la Buggie hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
+        "behavior": "Es más pesada y segura que la variante roja. Puede fijar objetivos con mordidas y embestidas, pero su mayor ventaja es negar el paso con corrosión: obliga a los enemigos a rodear sus charcos o a combatir dentro de ellos.",
+    },
+    "g2_buggy_orb_weaver": {
+        "description": "La Buggie más agresiva y móvil del grupo. La tejedora de orbe convierte velocidad, salto y telarañas en control constante del combate: llega primero, cambia de altura con facilidad y mantiene a los enemigos bajo presión antes de que puedan organizarse.",
+        "behavior": "Acelera con rapidez, salta más alto que las demás Buggies y encadena mordidas, impulsos y telarañas cuando tiene espacio para maniobrar. Brilla al perseguir blancos o al desordenar un grupo antes de que alcance al jugador.",
+    },
+}
 
 
 def read_json(path: Path):
@@ -763,6 +869,15 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
             "ru": ["Разговорное взаимодействие", "Подношения: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned", "Награда за взаимодействие: 1 часть термита"],
         }
         detail["specialTraits"] = traits[language]
+    if technical_id in {"TermiteNymph", "TermiteQueen"}:
+        # These are not combat entries.  Classifying them as harmless is what
+        # drives Aphidex's Pacíficos/Peaceful list, rather than Other.
+        detail["temperament"] = "peaceful"
+        detail["collectionGroup"] = "harmless"
+    if technical_id == "TermiteQueen":
+        # The queen has no combat stats, but its source item/interaction tier
+        # is 4 and should remain visible in the catalogue.
+        detail["tier"] = 4
     return detail
 
 
@@ -823,6 +938,8 @@ def apply_completion(args):
                 continue
             buggy = read_json(path)
             buggy["danger"] = "unknown"
+            if language == "es" and public_id in BUGGY_ES_COPY:
+                buggy.update(BUGGY_ES_COPY[public_id])
             if language == "es" and public_id == "g2_buggy_potato_beetle":
                 buggy["name"] = "Buggie de la papa"
                 buggy.update({
@@ -847,6 +964,7 @@ def apply_completion(args):
         if public_id in by_public:
             by_public[public_id]["danger"] = "unknown"
     write_json(DATA / "g2" / "creatures.json", app)
+    sync_release_equipment()
     sync_release_map_markers(spawn_data)
     diff["applied"] = True
     write_json(ROOT / "outputs" / "release_0_6_completion_diff.json", diff)

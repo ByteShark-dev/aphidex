@@ -4,11 +4,13 @@ import '../data/content_repositories.dart';
 import '../data/effect_catalog.dart';
 import '../data/entity_asset_resolver.dart';
 import '../data/equipment_presentation.dart';
+import '../data/enemy_repository.dart';
 import '../data/ui_mapper.dart';
 import '../models/equipment.dart';
 import '../models/location.dart';
 import '../widgets/icon_badge.dart';
 import 'map_screen.dart';
+import 'enemy_detail_screen.dart';
 
 class EquipmentLibraryScreen extends StatefulWidget {
   const EquipmentLibraryScreen({
@@ -89,18 +91,45 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
 
   Widget _buildCategory(EquipmentCatalog catalog) {
     if (_category == 1) {
-      return ListView.builder(
+      final setPieceIds = catalog.armorSets.expand((set) => set.pieces).toSet();
+      final individualPieces = catalog.items
+          .where(
+            (item) =>
+                item.domain == EquipmentDomain.armor &&
+                !setPieceIds.contains(item.id),
+          )
+          .toList(growable: false);
+      return ListView(
         padding: const EdgeInsets.all(12),
-        itemCount: catalog.armorSets.length,
-        itemBuilder: (context, index) {
-          final set = catalog.armorSets[index];
-          return _EquipmentCard(
-            title: set.name.resolve(_language),
-            subtitle: '${set.pieces.length} ${_t('pieces', 'piezas', 'части')}',
-            icon: EntityAssetResolver.resolveArmorSet(set).asset,
-            onTap: () => _showSet(set, catalog),
-          );
-        },
+        children: [
+          for (final set in catalog.armorSets)
+            _EquipmentCard(
+              title: set.name.resolve(_language),
+              subtitle:
+                  '${set.pieces.length} ${_t('pieces', 'piezas', 'части')}',
+              icon: EntityAssetResolver.resolveArmorSet(set).asset,
+              onTap: () => _showSet(set, catalog),
+            ),
+          if (individualPieces.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            Text(
+              _t('Individual pieces', 'Piezas individuales', 'Отдельные части'),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            for (final item in individualPieces)
+              _EquipmentCard(
+                title: item.name.resolve(_language),
+                subtitle: [
+                  EquipmentPresentation.slotLabel(item.slot, _language),
+                  if (item.tier != null)
+                    '${_t('Tier', 'Nivel', 'Уровень')} ${item.tier}',
+                ].where((text) => text.isNotEmpty).join(' · '),
+                icon: EntityAssetResolver.resolveEquipment(item).asset,
+                onTap: () => _showItem(item),
+              ),
+          ],
+        ],
       );
     }
     final domain = _category == 0 ? null : EquipmentDomain.trinket;
@@ -181,7 +210,8 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
 
   Future<void> _showItem(EquipmentItem item) => showModalBottomSheet<void>(
     context: context,
-    showDragHandle: true,
+    showDragHandle: false,
+    useSafeArea: true,
     isScrollControlled: true,
     builder: (context) => _EquipmentDetailSheet(
       item: item,
@@ -213,7 +243,8 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
     );
     return showModalBottomSheet<void>(
       context: context,
-      showDragHandle: true,
+      showDragHandle: false,
+      useSafeArea: true,
       isScrollControlled: true,
       builder: (sheetContext) => _ArmorSetDetailSheet(
         set: set,
@@ -330,6 +361,12 @@ class _EquipmentDetailSheet extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
+                IconButton(
+                  key: const ValueKey('close-equipment-detail'),
+                  tooltip: _t('Close', 'Cerrar', 'Закрыть'),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -444,6 +481,45 @@ class _EquipmentDetailSheet extends StatelessWidget {
               ...item.acquisition.recipes.map(
                 (recipe) => _RecipeCard(recipe: recipe, language: language),
               ),
+              if (item.acquisition.lootSourceReferences.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Text(
+                  _t('Dropped by', 'Lo suelta', 'Выпадает из'),
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(height: 6),
+                ...item.acquisition.lootSourceReferences.map(
+                  (source) => OutlinedButton.icon(
+                    icon: const Icon(Icons.pets_outlined),
+                    label: Text(
+                      _t(
+                        'Open creature card',
+                        'Abrir ficha de criatura',
+                        'Открыть карточку существа',
+                      ),
+                    ),
+                    onPressed: () async {
+                      final entries = await EnemyRepository.loadGame(
+                        source.game,
+                        language,
+                      );
+                      final entry = entries.cast<dynamic>().firstWhere(
+                        (candidate) => candidate.id == source.creatureId,
+                        orElse: () => null,
+                      );
+                      if (entry == null || !context.mounted) return;
+                      await Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => EnemyDetailScreen(
+                            summary: entry,
+                            initialGame: source.game,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ],
             if (item.repair.isNotEmpty) ...[
               const Divider(),
@@ -551,6 +627,12 @@ class _ArmorSetDetailSheet extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                IconButton(
+                  key: const ValueKey('close-armor-set-detail'),
+                  tooltip: _t('Close', 'Cerrar', 'Закрыть'),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
                 ),
               ],
             ),

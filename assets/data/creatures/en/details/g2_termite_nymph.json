@@ -23,8 +23,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "peaceful",
+  "collectionGroup": "harmless",
   "entityType": "creature",
   "isKillable": true,
   "health": {

@@ -13,8 +13,8 @@ void main() {
   test('all equipment items and armor sets deserialize exhaustively', () async {
     EquipmentRepository.clearCache();
     final catalog = await EquipmentRepository.load();
-    expect(catalog.items, hasLength(209));
-    expect(catalog.armorSets, hasLength(29));
+    expect(catalog.items, hasLength(219));
+    expect(catalog.armorSets, hasLength(31));
     expect(
       catalog.items
           .expand((item) => item.attacks)
@@ -28,6 +28,10 @@ void main() {
     expect(
       catalog.items.expand((item) => item.repair),
       everyElement(isA<EquipmentIngredient>()),
+    );
+    expect(
+      catalog.items.expand((item) => item.acquisition.lootSourceReferences),
+      everyElement(isA<EquipmentLootSource>()),
     );
   });
 
@@ -50,7 +54,7 @@ void main() {
     () async {
       MapRepository.clearCache();
       final catalog = await MapRepository.load();
-      expect(catalog.markers, hasLength(4469));
+      expect(catalog.markers, hasLength(4556));
       expect(
         catalog.markers,
         everyElement(
@@ -216,6 +220,27 @@ void main() {
     expect(item.acquisition.unresolved, isTrue);
   });
 
+  test('equipment loot sources keep their creature navigation ids', () {
+    final item = EquipmentItem.fromJson({
+      'id': 'AccessoryCentipede',
+      'domain': 'trinket',
+      'name': {'en': 'Centipede Trinket'},
+      'icon': '',
+      'acquisition': {
+        'status': 'resolved',
+        'methods': ['loot_source'],
+        'lootSourceReferences': [
+          {'creatureId': 'g2_centipede', 'game': 'g2'},
+        ],
+      },
+    });
+    expect(
+      item.acquisition.lootSourceReferences.single.creatureId,
+      'g2_centipede',
+    );
+    expect(item.acquisition.lootSourceReferences.single.game, 'g2');
+  });
+
   test('scheduled group terminology preserves the source index', () {
     final event = DefenseEvent.fromJson({
       'id': 'mixr_test',
@@ -259,4 +284,34 @@ void main() {
     );
     expect(first.expand((item) => item.markers), hasLength(markers.length));
   });
+
+  test(
+    'equipment catalog keeps standalone armor reachable outside sets',
+    () async {
+      EquipmentRepository.clearCache();
+      final catalog = await EquipmentRepository.load();
+      final setPieceIds = catalog.armorSets.expand((set) => set.pieces).toSet();
+      final standaloneIds = catalog.items
+          .where(
+            (item) =>
+                item.domain == EquipmentDomain.armor &&
+                !setPieceIds.contains(item.id),
+          )
+          .map((item) => item.id)
+          .toSet();
+
+      expect(standaloneIds, {
+        'Flippers',
+        'GasMask',
+        'HeadCrowArcher',
+        'HeadEyepatch',
+        'HeadFirefly',
+        'HeadFoilHat',
+        'HeadLuckyHat',
+        'HeadMite',
+        'LegsAphid',
+        'Rebreather',
+      });
+    },
+  );
 }
