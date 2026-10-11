@@ -72,8 +72,8 @@ ELEMENTAL = {"fresh", "salty", "sour", "spicy"}
 RELEASE_EQUIPMENT = {
     "SplinterCannon": ("weapon", "Splinter Cannon", "Cañón de astillas", "Осколочная пушка", 4, "EEquipmentSlot::MainHand", True, True, 580, "ICO_TermiteGun.png", ["WeaponBow", "SplinterCannonParryStabbing"], ["TermitePartKing", "WoodSplinter"], ["WeaponUpgrade.Default"], []),
     "StaffCentipede": ("weapon", "Centipede Staff", "Bastón de ciempiés", "Посох многоножки", 4, "EEquipmentSlot::MainHand", True, True, 580, "ICO_Centipede_Staff.png", ["VenomAttackPerk", "CentipedeSummonEffectVenom"], ["BossCentipedeVenom", "BossCentipedeLeg"], ["WeaponUpgrade.Special"], []),
-    "AccessoryCentipede": ("trinket", "Centipede Trinket", "Amuleto de ciempiés", "Талисман многоножки", 4, "EEquipmentSlot::Glider", False, False, 0, "", ["CentipedeSummonEffectDeathTrigger"], [], [], ["g2_centipede"]),
-    "AccessoryTermite": ("trinket", "Termite King Trinket", "Amuleto del rey termita", "Талисман короля термитов", 4, "EEquipmentSlot::Glider", False, False, 0, "", ["TermiteTrinketPerfectBlockTrigger"], [], [], ["g2_termite_king", "g2_ogre_termite_king"]),
+    "AccessoryCentipede": ("trinket", "Centipede Trinket", "Amuleto de ciempiés", "Талисман многоножки", 4, "EEquipmentSlot::Glider", False, False, 0, "ICO_Centipede_Venom.png", ["CentipedeSummonEffectDeathTrigger"], [], [], ["g2_centipede"]),
+    "AccessoryTermite": ("trinket", "Termite King Trinket", "Amuleto del rey termita", "Талисман короля термитов", 4, "EEquipmentSlot::Glider", False, False, 0, "ICO_Termite_Part_King.png", ["TermiteTrinketPerfectBlockTrigger"], [], [], ["g2_termite_king", "g2_ogre_termite_king"]),
     "HeadCentipede": ("armor", "Centipede Headpiece", "Casco de ciempiés", "Шлем многоножки", 4, "EEquipmentSlot::Head", False, False, 75, "ICO_Head_Centipede.png", ["MageStaffStaminaReduction", "PoisonGasReductionLarge", "SummonEffectAttackSpeed"], ["BossCentipedeAntenna", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
     "ChestCentipede": ("armor", "Centipede Chestpiece", "Pechera de ciempiés", "Нагрудник многоножки", 4, "EEquipmentSlot::Chest", False, False, 75, "ICO_Chest_Centipede.png", ["MageStaffStaminaReduction", "CentipedeSummonEffectCritTrigger", "SummonEffectAttackSpeed"], ["BossCentipedeChunk", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
     "LegsCentipede": ("armor", "Centipede Leggings", "Perneras de ciempiés", "Поножи многоножки", 4, "EEquipmentSlot::Legs", False, False, 75, "ICO_Leg_Centipede.png", ["MageStaffStaminaReduction", "CentipedeSummonEffectCritTrigger", "SummonEffectAttackSpeed"], ["BossCentipedeChunk", "Lint"], ["WeaponUpgrade.ArmorDefault", "WeaponUpgrade.ArmorHiddenStatus"], []),
@@ -104,7 +104,7 @@ def sync_release_equipment() -> None:
                 "status": "resolved" if creature_ids else "unresolved_acquisition",
                 "methods": ["loot_source"] if creature_ids else [],
                 "recipes": [],
-                "lootSourceReferences": [{"creatureId": creature_id, "game": "g2"} for creature_id in creature_ids],
+                "lootSourceReferences": [loot_source_reference(creature_id) for creature_id in creature_ids],
                 "bossCachedDrops": [],
             },
             "locations": [], "environmentHazards": [],
@@ -149,6 +149,17 @@ def sync_release_equipment() -> None:
                         "translationStatus": {"en": "technical_source", "es": "aphidex_translation", "ru": "aphidex_translation"}}
     catalog["armorSets"] = list(sets.values())
     write_json(path, catalog)
+
+
+def loot_source_reference(creature_id: str) -> dict:
+    """Keep a concrete card image beside an equipment loot-source link."""
+    detail_path = DATA / "creatures" / "en" / "details" / f"{creature_id}.json"
+    detail = read_json(detail_path) if detail_path.exists() else {}
+    return {
+        "creatureId": creature_id,
+        "game": "g2",
+        "cardAsset": detail.get("cardNormal") or detail.get("cardGold") or "",
+    }
 
 # Grounded 2 has no Russian resources for these rows.  These are Aphidex
 # translations of the extractor's official runtime English, never guesses at
@@ -305,20 +316,20 @@ BUGGY_PUBLIC_IDS = frozenset(BUGGY_IDS.values())
 # turns those facts into player-facing prose.
 BUGGY_ES_COPY = {
     "g2_buggy_ladybug": {
-        "name": "Buggie mariquita",
-        "description": "La Buggie defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggies tendrían que retirarse.",
+        "name": "Buggy mariquita",
+        "description": "La Buggy defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggies tendrían que retirarse.",
         "behavior": "No persigue con la agilidad de la araña ni transporta con la fuerza bruta de las hormigas: absorbe el castigo, conserva la distancia media y usa el cuerpo para apartar a quien se acerque demasiado. Mientras tenga espacio, puede seguir disparando al avanzar.",
     },
     "g2_buggy_red_soldier_ant": {
-        "description": "La Buggie de carga ideal para las primeras expediciones. La hormiga soldado roja combina transporte de materiales, movilidad en túneles estrechos y un combate directo que resulta fiable cuando todavía faltan herramientas especializadas. Es una montura de trabajo que también sabe abrirse paso.",
+        "description": "La Buggy de carga ideal para las primeras expediciones. La hormiga soldado roja combina transporte de materiales, movilidad en túneles estrechos y un combate directo que resulta fiable cuando todavía faltan herramientas especializadas. Es una montura de trabajo que también sabe abrirse paso.",
         "behavior": "Sigue al jugador hasta recibir una orden y defiende al jinete cuando aparece una amenaza. Su plan es sencillo y eficaz: morder, embestir y aprovechar los espacios cerrados para no dejar escapar al objetivo.",
     },
     "g2_buggy_black_soldier_ant": {
-        "description": "La mejora táctica de la Buggie hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
+        "description": "La mejora táctica de la Buggy hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
         "behavior": "Es más pesada y segura que la variante roja. Puede fijar objetivos con mordidas y embestidas, pero su mayor ventaja es negar el paso con corrosión: obliga a los enemigos a rodear sus charcos o a combatir dentro de ellos.",
     },
     "g2_buggy_orb_weaver": {
-        "description": "La Buggie más agresiva y móvil del grupo. La tejedora de orbe convierte velocidad, salto y telarañas en control constante del combate: llega primero, cambia de altura con facilidad y mantiene a los enemigos bajo presión antes de que puedan organizarse.",
+        "description": "La Buggy más agresiva y móvil del grupo. La tejedora de orbe convierte velocidad, salto y telarañas en control constante del combate: llega primero, cambia de altura con facilidad y mantiene a los enemigos bajo presión antes de que puedan organizarse.",
         "behavior": "Acelera con rapidez, salta más alto que las demás Buggies y encadena mordidas, impulsos y telarañas cuando tiene espacio para maniobrar. Brilla al perseguir blancos o al desordenar un grupo antes de que alcance al jugador.",
     },
 }
@@ -522,6 +533,43 @@ def polish_es_attack(attack: dict):
     elif "Lunge" in ident or "Power" in ident or "Bodyslam" in ident: attack.update({"tell": "Se afirma un instante antes de comprometerse en un golpe frontal.", "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.", "notes": "Ataque de compromiso que abre una ventana si falla."})
     elif attack.get("damage", 0) > 0: attack.update({"tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.", "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.", "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."})
     else: attack.update({"tell": "Cambia de posición o prepara la continuación de su patrón.", "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.", "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."})
+
+
+def centipede_encounter_variant(technical_id: str, language: str) -> dict | None:
+    """Describe the confirmed Centipede arena roles without inventing stats."""
+    rows = {
+        "TermiteNymph": {
+            "en": "Centipede arena: sacrificial larva",
+            "es": "Arena de Ciempiés: larva de sacrificio",
+            "ru": "Арена Скритча: жертвенная личинка",
+        },
+        "TermiteWorker": {
+            "en": "Centipede arena: worker reinforcement",
+            "es": "Arena de Ciempiés: refuerzo obrero",
+            "ru": "Арена Скритча: подкрепление рабочих",
+        },
+        "TermiteSoldier": {
+            "en": "Centipede arena: soldier reinforcement",
+            "es": "Arena de Ciempiés: refuerzo soldado",
+            "ru": "Арена Скритча: подкрепление солдат",
+        },
+    }
+    if technical_id not in rows:
+        return None
+    return {
+        "id": f"release_0_6_centipede_{technical_id.lower()}",
+        "role": "boss_encounter_support",
+        "nameEn": rows[technical_id]["en"],
+        "nameEsMX": rows[technical_id]["es"],
+        "nameRu": rows[technical_id]["ru"],
+        "stats": {},
+        "attacks": [],
+        "weaknesses": [],
+        "resistances": [],
+        "specialCombatModifiers": [],
+        "sharedBestiaryEntry": True,
+        "provenance": "user_confirmed_centipede_boss_encounter",
+    }
 
 
 def apply_spider_diving_bell_ogre_guidance(detail: dict, language: str):
@@ -879,6 +927,9 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
         # The queen has no combat stats, but its source item/interaction tier
         # is 4 and should remain visible in the catalogue.
         detail["tier"] = 4
+    centipede_variant = centipede_encounter_variant(technical_id, language)
+    if centipede_variant is not None:
+        detail["encounterVariants"] = [centipede_variant]
     return detail
 
 
@@ -942,16 +993,36 @@ def apply_completion(args):
             if language == "es" and public_id in BUGGY_ES_COPY:
                 buggy.update(BUGGY_ES_COPY[public_id])
             if language == "es" and public_id == "g2_buggy_potato_beetle":
-                buggy["name"] = "Buggie de la papa"
+                buggy["name"] = "Buggy de la papa"
                 buggy.update({
-                    "description": "Un Buggie pesado que recicla biomasa de enemigos derrotados para alimentar su cañón de residuos biológicos.",
-                    "behavior": "Acompañante resistente, similar a Ladybuggy, diseñado para aprovechar restos de combate.",
+                    "description": "Una Buggy pesada que recicla biomasa de enemigos derrotados para alimentar su cañón de residuos biológicos.",
+                    "behavior": "Acompañante resistente, similar a la Buggy mariquita, diseñada para aprovechar restos de combate.",
                     "interactionWithPlayer": "Un aliado reciclador de biomasa; su cañón cobra valor cuando hay varios enemigos o combates prolongados.",
-                    "interactionWithCreatures": "Como los demás Buggies, combate junto al jugador en vez de comportarse como un enemigo independiente.",
+                    "interactionWithCreatures": "Como las demás Buggies, combate junto al jugador en vez de comportarse como un enemigo independiente.",
                     "strategy": "Resérvalo para enfrentamientos largos y defensas MIX.R, donde disponer de biomasa y tiempo permite aprovechar mejor su cañón.",
                     "collectionGroup": "buggy",
                 })
+            if language == "es":
+                # Obsidian uses Buggy/Buggies in the English game UI.  Spanish
+                # adopts the same proper term consistently throughout Aphidex.
+                for key, value in list(buggy.items()):
+                    if isinstance(value, str):
+                        buggy[key] = value.replace("Buggie", "Buggy")
             write_json(path, buggy)
+        # Every O.G.R.R. uses the same three documented flavour variations.
+        # Reuse the established localized template; no creature-specific stats
+        # or flavour images are inferred when the extractor does not expose them.
+        template_path = directory / "g2_ogrr_blue_butterfly.json"
+        template = read_json(template_path).get("infusions", []) if template_path.exists() else []
+        if len(template) != 3:
+            raise ValueError("Unexpected O.G.R.R. infusion template")
+        for public_id in ("g2_ogre_termite_king", "g2_ogre_diving_bell_spider"):
+            path = directory / f"{public_id}.json"
+            detail = read_json(path)
+            detail["infusions"] = copy.deepcopy(template)
+            for infusion in detail["infusions"]:
+                infusion.pop("imageAsset", None)
+            write_json(path, detail)
         updated = {row["id"]: row for row in read_json(index_path)}
         for public_id in BUGGY_PUBLIC_IDS:
             path = directory / f"{public_id}.json"

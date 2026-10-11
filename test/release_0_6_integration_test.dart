@@ -247,6 +247,52 @@ void main() {
     expect(kingMoves, contains('TermiteKingSacrifice'));
   });
 
+  test(
+    'Centipede encounter support roles and O.G.R.R. flavours are explicit',
+    () {
+      for (final language in const ['en', 'es', 'ru']) {
+        for (final id in const [
+          'g2_termite_nymph',
+          'g2_termite_worker',
+          'g2_termite_soldier',
+        ]) {
+          final detail = _json(
+            'assets/data/creatures/$language/details/$id.json',
+          );
+          final variants = detail['encounterVariants'] as List;
+          expect(variants, hasLength(1));
+          expect(variants.single['role'], 'boss_encounter_support');
+        }
+        for (final id in const [
+          'g2_ogre_termite_king',
+          'g2_ogre_diving_bell_spider',
+        ]) {
+          final detail = _json(
+            'assets/data/creatures/$language/details/$id.json',
+          );
+          expect(detail['infusions'], hasLength(3));
+        }
+      }
+    },
+  );
+
+  test('Release trinkets use source texture exports and creature cards', () {
+    final catalog = _json('assets/data/g2/equipment.json');
+    final byId = {
+      for (final item in (catalog['items'] as List).cast<Map>())
+        item['id']: item,
+    };
+    for (final id in const ['AccessoryCentipede', 'AccessoryTermite']) {
+      final item = byId[id]!;
+      expect(File(item['icon'] as String).existsSync(), isTrue);
+      final sources = item['acquisition']['lootSourceReferences'] as List;
+      expect(sources, isNotEmpty);
+      for (final source in sources.cast<Map>()) {
+        expect(File(source['cardAsset'] as String).existsSync(), isTrue);
+      }
+    }
+  });
+
   test('Potato Beetle Buggy inherits the normal Potato Beetle card state', () {
     final buggy = _json(
       'assets/data/creatures/en/details/g2_buggy_potato_beetle.json',

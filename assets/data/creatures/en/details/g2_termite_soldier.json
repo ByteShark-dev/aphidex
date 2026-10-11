@@ -595,7 +595,22 @@
   "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
-  "encounterVariants": [],
+  "encounterVariants": [
+    {
+      "id": "release_0_6_centipede_termitesoldier",
+      "role": "boss_encounter_support",
+      "nameEn": "Centipede arena: soldier reinforcement",
+      "nameEsMX": "Arena de Ciempiés: refuerzo soldado",
+      "nameRu": "Арена Скритча: подкрепление солдат",
+      "stats": {},
+      "attacks": [],
+      "weaknesses": [],
+      "resistances": [],
+      "specialCombatModifiers": [],
+      "sharedBestiaryEntry": true,
+      "provenance": "user_confirmed_centipede_boss_encounter"
+    }
+  ],
   "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteSoldier",

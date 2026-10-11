@@ -45,6 +45,7 @@ class UiMapper {
       case 'explosive':
         return '$base/Tooltype_Explosive.webp';
       case 'generic':
+      case 'all':
         return '$base/Generic_Damage.webp';
       case 'fresh':
         return '$base/Damagetype_Fresh.webp';
@@ -168,6 +169,10 @@ class UiMapper {
         return '$base/T_UI_Weakspot_Rump.webp';
       case 'stinger':
         return '$base/T_UI_Weakspot_Stinger.webp';
+      case 'abdomen':
+      case 'belly':
+      case 'butt':
+        return '$base/T_UI_Weakspot_Gut.webp';
       default:
         return 'assets/global/effects_damage/Generic_Damage.webp';
     }

@@ -1052,15 +1052,47 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                 style: const TextStyle(fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
-              for (var i = 0; i < enemy.resolvedWeakPoints.length; i++) ...[
-                _WeakPointCard(
-                  info: enemy.resolvedWeakPoints[i],
-                  tutorialEffectId: i == 0 ? tutorialEffectId : null,
-                  tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                ),
-                if (i != enemy.resolvedWeakPoints.length - 1)
-                  const SizedBox(height: 10),
-              ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final points = enemy.resolvedWeakPoints;
+                  // Two weak points remain readable side-by-side on a phone;
+                  // this makes paired regions (for example, a scorpion's rear
+                  // and stinger) comparable at a glance.
+                  final twoColumns =
+                      points.length > 1 && constraints.maxWidth >= 320;
+                  if (!twoColumns) {
+                    return Column(
+                      children: [
+                        for (var i = 0; i < points.length; i++) ...[
+                          _WeakPointCard(
+                            info: points[i],
+                            tutorialEffectId: i == 0 ? tutorialEffectId : null,
+                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                          ),
+                          if (i != points.length - 1)
+                            const SizedBox(height: 10),
+                        ],
+                      ],
+                    );
+                  }
+                  final width = (constraints.maxWidth - 10) / 2;
+                  return Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      for (var i = 0; i < points.length; i++)
+                        SizedBox(
+                          width: width,
+                          child: _WeakPointCard(
+                            info: points[i],
+                            tutorialEffectId: i == 0 ? tutorialEffectId : null,
+                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
               const SizedBox(height: 18),
             ],
             if (enemy.combatStats != null) ...[
@@ -3440,21 +3472,25 @@ class _BonusWrap extends StatelessWidget {
       spacing: 10,
       runSpacing: 10,
       children: bonuses.map((bonus) {
-        final icon = UiMapper.effectIcon(bonus.type);
+        final effectId = canonicalEffectId(bonus.type);
+        final icon = UiMapper.effectIcon(effectId);
+        final effect = effectCatalogEntryById(effectId);
+        final languageCode = Localizations.localeOf(context).languageCode;
+        final effectName = effect?.name.resolve(languageCode) ?? bonus.type;
         return Opacity(
           opacity: dim ? 0.75 : 1,
           child: Container(
             key: tutorialEffectId == null
                 ? null
-                : tutorialEffectKeyBuilder?.call(bonus.type),
+                : tutorialEffectKeyBuilder?.call(effectId),
             child: InkWell(
               key: ValueKey(
-                'effect-bonus-${dim ? 'resistance' : 'weakness'}-${bonus.type}',
+                'effect-bonus-${dim ? 'resistance' : 'weakness'}-$effectId',
               ),
               borderRadius: BorderRadius.circular(999),
               onTap: () => _openTutorialAwareEffectDetails(
                 context,
-                bonus.type,
+                effectId,
                 tutorialEffectId: tutorialEffectId,
               ),
               child: Container(
@@ -3472,7 +3508,7 @@ class _BonusWrap extends StatelessWidget {
                     IconBadge.asset(assetName: icon, size: 22),
                     const SizedBox(width: 8),
                     Text(
-                      formatBonusLabel(l10n, bonus, dim: dim),
+                      '$effectName ${formatBonusLabel(l10n, bonus, dim: dim)}',
                       style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
                   ],

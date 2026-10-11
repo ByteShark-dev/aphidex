@@ -19956,8 +19956,8 @@
       "twoHanded": false,
       "canBlock": false,
       "durability": 0,
-      "icon": "",
-      "iconProvenance": "unresolved_material_icon",
+      "icon": "assets/g2/equipment/icons/ICO_Centipede_Venom.png",
+      "iconProvenance": "texture_export",
       "effects": [
         "CentipedeSummonEffectDeathTrigger"
       ],
@@ -19970,7 +19970,8 @@
         "lootSourceReferences": [
           {
             "creatureId": "g2_centipede",
-            "game": "g2"
+            "game": "g2",
+            "cardAsset": "assets/g2/creatures/cards/T_UI_Tier4_Centipede.png"
           }
         ],
         "bossCachedDrops": []
@@ -20005,8 +20006,8 @@
       "twoHanded": false,
       "canBlock": false,
       "durability": 0,
-      "icon": "",
-      "iconProvenance": "unresolved_material_icon",
+      "icon": "assets/g2/equipment/icons/ICO_Termite_Part_King.png",
+      "iconProvenance": "texture_export",
       "effects": [
         "TermiteTrinketPerfectBlockTrigger"
       ],
@@ -20019,11 +20020,13 @@
         "lootSourceReferences": [
           {
             "creatureId": "g2_termite_king",
-            "game": "g2"
+            "game": "g2",
+            "cardAsset": "assets/g2/creatures/cards/T_UI_Tier3_KingTermite.png"
           },
           {
             "creatureId": "g2_ogre_termite_king",
-            "game": "g2"
+            "game": "g2",
+            "cardAsset": "assets/g2/creatures/cards/T_UI_Tier3_KingTermite_OGRR.png"
           }
         ],
         "bossCachedDrops": []

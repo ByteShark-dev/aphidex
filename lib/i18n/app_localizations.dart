@@ -212,7 +212,7 @@ class AppLocalizations {
       case 'ru':
         return 'O.R.C.';
       default:
-        return 'O.R.C.';
+        return 'C.R.O.';
     }
   }
 
@@ -1370,6 +1370,13 @@ class AppLocalizations {
         return _t('weakPointLegs');
       case 'rump':
         return _t('weakPointRump');
+      case 'abdomen':
+      case 'belly':
+        return _t('weakPointGut');
+      case 'butt':
+        return _t('weakPointRump');
+      case 'stinger':
+        return _t('weakPointStinger');
       default:
         return id;
     }
@@ -1395,6 +1402,8 @@ class AppLocalizations {
         return _t('damageChopping');
       case 'busting':
         return _t('damageBusting');
+      case 'unknown':
+        return _t('unknown');
       default:
         return id;
     }
@@ -1763,6 +1772,7 @@ class AppLocalizations {
       'weakPointGut': 'Abdomen',
       'weakPointLegs': 'Patas',
       'weakPointRump': 'Parte trasera',
+      'weakPointStinger': 'Aguijón',
       'damageAny': 'Cualquiera',
       'damageChoppingAndSlashing': 'Corte + tajo',
       'damageStabbingArrowsOnly': 'Perforación (arcos / ballestas)',
@@ -2023,6 +2033,7 @@ class AppLocalizations {
       'weakPointGut': 'Gut',
       'weakPointLegs': 'Legs',
       'weakPointRump': 'Rump',
+      'weakPointStinger': 'Stinger',
       'damageAny': 'Any',
       'damageChoppingAndSlashing': 'Chopping + slashing',
       'damageStabbingArrowsOnly': 'Stabbing (bows / crossbows)',
@@ -2253,6 +2264,7 @@ class AppLocalizations {
       'weakPointGut': 'Брюшко',
       'weakPointLegs': 'Ноги',
       'weakPointRump': 'Задняя часть',
+      'weakPointStinger': 'Жало',
       'damageAny': 'Любой',
       'damageChoppingAndSlashing': 'Рубящий + режущий',
       'damageStabbingArrowsOnly': 'Колющий (луки / арбалеты)',

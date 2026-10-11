@@ -753,7 +753,22 @@
   "environments": [],
   "eventAppearances": [],
   "appearanceType": "unknown",
-  "encounterVariants": [],
+  "encounterVariants": [
+    {
+      "id": "release_0_6_centipede_termiteworker",
+      "role": "boss_encounter_support",
+      "nameEn": "Centipede arena: worker reinforcement",
+      "nameEsMX": "Arena de Ciempiés: refuerzo obrero",
+      "nameRu": "Арена Скритча: подкрепление рабочих",
+      "stats": {},
+      "attacks": [],
+      "weaknesses": [],
+      "resistances": [],
+      "specialCombatModifiers": [],
+      "sharedBestiaryEntry": true,
+      "provenance": "user_confirmed_centipede_boss_encounter"
+    }
+  ],
   "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteWorker",

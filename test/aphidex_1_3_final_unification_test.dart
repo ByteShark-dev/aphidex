@@ -110,17 +110,12 @@ void main() {
             .map((row) => row['id'])
             .toSet(),
         {
-          'g2_centipede',
-          'g2_ogre_diving_bell_spider',
-          'g2_termite_king',
-          'g2_ogre_termite_king',
-          'g2_termite_nymph',
-          'g2_termite_queen',
-          'g2_termite_soldier',
-          'g2_orc_termite_soldier',
-          'g2_termite_worker',
-          'g2_orc_termite_worker',
           'g2_buggy_potato_beetle',
+          'g2_buggy_red_soldier_ant',
+          'g2_buggy_black_soldier_ant',
+          'g2_buggy_orb_weaver',
+          'g2_buggy_ladybug',
+          'g2_buggy_toe_biter',
         },
       );
     });
@@ -197,7 +192,7 @@ void main() {
       }
     });
 
-    test('all 48 trinkets resolve a real material icon', () {
+    test('all 50 trinkets resolve a real source-backed icon', () {
       final equipment = (readJson('assets/data/g2/equipment.json') as Map)
           .cast<String, dynamic>();
       final trinkets = (equipment['items'] as List)
@@ -205,11 +200,14 @@ void main() {
           .map((row) => row.cast<String, dynamic>())
           .where((row) => row['domain'] == 'trinket')
           .toList();
-      expect(trinkets, hasLength(48));
+      expect(trinkets, hasLength(50));
       for (final item in trinkets) {
         expect(item['icon'], isNotEmpty, reason: item['id'].toString());
         expect(File(item['icon'].toString()).existsSync(), isTrue);
-        expect(item['iconProvenance'], 'material_instance_icon_parameter');
+        expect(
+          item['iconProvenance'],
+          anyOf('material_instance_icon_parameter', 'texture_export'),
+        );
       }
     });
   });

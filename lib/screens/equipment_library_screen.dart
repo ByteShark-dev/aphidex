@@ -490,7 +490,19 @@ class _EquipmentDetailSheet extends StatelessWidget {
                 const SizedBox(height: 6),
                 ...item.acquisition.lootSourceReferences.map(
                   (source) => OutlinedButton.icon(
-                    icon: const Icon(Icons.pets_outlined),
+                    icon: source.cardAsset.isEmpty
+                        ? const Icon(Icons.pets_outlined)
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image.asset(
+                              source.cardAsset,
+                              width: 34,
+                              height: 34,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.pets_outlined),
+                            ),
+                          ),
                     label: Text(
                       _t(
                         'Open creature card',

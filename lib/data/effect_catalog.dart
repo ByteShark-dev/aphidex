@@ -39,6 +39,8 @@ String canonicalEffectId(String id) {
     case 'stabbing_arrrows':
     case 'projectile_piercing':
       return 'stabbing';
+    case 'general':
+      return 'generic';
     default:
       return normalized;
   }
@@ -85,6 +87,16 @@ EffectCatalogEntry? effectCatalogEntryById(String id) {
 }
 
 const effectCatalogEntries = <EffectCatalogEntry>[
+  EffectCatalogEntry(
+    id: 'all',
+    category: EffectCategory.damage,
+    name: LocalizedText(es: 'Todo el daño', en: 'All damage', ru: 'Весь урон'),
+    description: LocalizedText(
+      es: 'Modificador que afecta a todas las categorías de daño.',
+      en: 'A modifier that affects every damage category.',
+      ru: 'Модификатор, действующий на все категории урона.',
+    ),
+  ),
   EffectCatalogEntry(
     id: 'slashing',
     category: EffectCategory.damage,

@@ -230,7 +230,11 @@ void main() {
         'status': 'resolved',
         'methods': ['loot_source'],
         'lootSourceReferences': [
-          {'creatureId': 'g2_centipede', 'game': 'g2'},
+          {
+            'creatureId': 'g2_centipede',
+            'game': 'g2',
+            'cardAsset': 'assets/g2/creatures/cards/T_UI_Tier4_Centipede.png',
+          },
         ],
       },
     });
@@ -239,6 +243,10 @@ void main() {
       'g2_centipede',
     );
     expect(item.acquisition.lootSourceReferences.single.game, 'g2');
+    expect(
+      item.acquisition.lootSourceReferences.single.cardAsset,
+      'assets/g2/creatures/cards/T_UI_Tier4_Centipede.png',
+    );
   });
 
   test('scheduled group terminology preserves the source index', () {

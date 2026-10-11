@@ -23,7 +23,10 @@ class AphidexWeakpointResolver implements WeakpointResolver {
   const AphidexWeakpointResolver();
 
   static const _knownRegions = {
+    'abdomen',
     'back',
+    'belly',
+    'butt',
     'eyes',
     'gut',
     'legs',
@@ -33,7 +36,8 @@ class AphidexWeakpointResolver implements WeakpointResolver {
 
   @override
   WeakpointPresentation resolve(WeakPointInfo weakpoint) {
-    final normalized = weakpoint.part.trim().toLowerCase();
+    final raw = weakpoint.part.trim().toLowerCase();
+    final normalized = raw.replaceFirst('weakpoint.', '');
     final region = _knownRegions.contains(normalized) ? normalized : 'unknown';
     final damage = switch (weakpoint.susceptibleDamage) {
       'stabbing_arrows_only' => 'projectile_piercing',

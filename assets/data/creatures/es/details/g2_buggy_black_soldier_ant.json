@@ -32,7 +32,7 @@
       "stabbingArrowsOnly"
     ]
   },
-  "description": "La mejora táctica de la Buggie hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
+  "description": "La mejora táctica de la Buggy hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
   "behavior": "Es más pesada y segura que la variante roja. Puede fijar objetivos con mordidas y embestidas, pero su mayor ventaja es negar el paso con corrosión: obliga a los enemigos a rodear sus charcos o a combatir dentro de ellos.",
   "interactionWithPlayer": "Mantiene la capacidad de cargar materiales, construir montado y lanzar lo que transporte, pero su mejora real está en Tang Throw: una artillería corta que crea una zona corrosiva delante del buggy sin sacrificar movilidad.",
   "interactionWithCreatures": "Las hormigas negras se mantienen pasivas hacia ella salvo fuego amigo, y una Black Worker Ant reclutada peleará junto a la montura. Contra otras criaturas funciona como una montura de presión: aguanta mejor que la roja y deja terreno peligroso detrás de cada avance.",

@@ -168,12 +168,21 @@ class EquipmentLootSource {
   final String creatureId;
   final String game;
 
-  const EquipmentLootSource({required this.creatureId, this.game = 'g2'});
+  /// Card artwork is stored with the source reference so the equipment
+  /// library can show the actual creature rather than a generic footprint.
+  final String cardAsset;
+
+  const EquipmentLootSource({
+    required this.creatureId,
+    this.game = 'g2',
+    this.cardAsset = '',
+  });
 
   factory EquipmentLootSource.fromJson(Map<String, dynamic> json) =>
       EquipmentLootSource(
         creatureId: json['creatureId']?.toString() ?? '',
         game: json['game']?.toString() ?? 'g2',
+        cardAsset: json['cardAsset']?.toString() ?? '',
       );
 }
 

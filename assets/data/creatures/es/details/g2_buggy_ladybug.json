@@ -2,7 +2,7 @@
   "id": "g2_buggy_ladybug",
   "speciesKey": "buggy_ladybug",
   "collectionGroup": "buggy",
-  "name": "Buggie mariquita",
+  "name": "Buggy mariquita",
   "game": "g2",
   "tier": 2,
   "danger": "unknown",
@@ -31,7 +31,7 @@
       "slashing"
     ]
   },
-  "description": "La Buggie defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggies tendrían que retirarse.",
+  "description": "La Buggy defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggys tendrían que retirarse.",
   "behavior": "No persigue con la agilidad de la araña ni transporta con la fuerza bruta de las hormigas: absorbe el castigo, conserva la distancia media y usa el cuerpo para apartar a quien se acerque demasiado. Mientras tenga espacio, puede seguir disparando al avanzar.",
   "interactionWithPlayer": "El jugador puede moverse y disparar al mismo tiempo desde su cañón de agua. También puede rugir para curarse 160 de vida, recargar el agua en cualquier fuente o con una cantimplora llena y seguir construyendo o cargando materiales medianos mientras la monta.",
   "interactionWithCreatures": "Funciona mejor como ancla contra grupos y voladores. Los disparos de agua tumban mejor a enemigos aéreos, empujan blancos ligeros y además limpian charcos de Tang naturales o creados por otros insectos.",

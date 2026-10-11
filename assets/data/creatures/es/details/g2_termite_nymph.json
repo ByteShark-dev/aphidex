@@ -546,7 +546,22 @@
   ],
   "eventAppearances": [],
   "appearanceType": "unknown",
-  "encounterVariants": [],
+  "encounterVariants": [
+    {
+      "id": "release_0_6_centipede_termitenymph",
+      "role": "boss_encounter_support",
+      "nameEn": "Centipede arena: sacrificial larva",
+      "nameEsMX": "Arena de Ciempiés: larva de sacrificio",
+      "nameRu": "Арена Скритча: жертвенная личинка",
+      "stats": {},
+      "attacks": [],
+      "weaknesses": [],
+      "resistances": [],
+      "specialCombatModifiers": [],
+      "sharedBestiaryEntry": true,
+      "provenance": "user_confirmed_centipede_boss_encounter"
+    }
+  ],
   "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteNymph",
