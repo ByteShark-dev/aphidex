@@ -796,5 +796,366 @@
     "gold": "T_UI_Tier4_Centipede_G",
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "bossPhases": [
+    {
+      "id": "phase1",
+      "label": "Фаза 1",
+      "startsAtHealthPct": 100,
+      "trigger": "Бой начинается на арене термитника.",
+      "summary": "Скритч спускается со стен и давит маршрутами, ударами телом и сериями атак.",
+      "newPatterns": [
+        "Приоритет — падающие личинки: Скритч может съесть их и восстановить здоровье."
+      ],
+      "attacks": [
+        {
+          "name": "Centipede Eat Larva Only",
+          "technicalId": "CentipedeEatTermite",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 125.0,
+          "cooldownSeconds": 16.0,
+          "range": 1000.0,
+          "stun": 10,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Unburrow Wall CA",
+          "technicalId": "CentipedeUnburrowWall_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 0.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo3",
+          "technicalId": "CentipedeCombo3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 125.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Bodyslam",
+          "technicalId": "CentipedeBodyslam",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Bodyslam",
+          "technicalId": "CentipedeBodyslam#2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "phase2",
+      "label": "Фаза 2",
+      "startsAtHealthPct": 66,
+      "trigger": "Примерно на 66% здоровья.",
+      "summary": "Он активирует вонючие грибы, сбрасывает личинок термитов и зовёт рабочих термитов.",
+      "aggressionChange": "Головокружение и несколько целей усложняют чтение арены.",
+      "newPatterns": [
+        "Вонючие грибы вызывают головокружение.",
+        "Скритч может съесть упавших личинок.",
+        "Прибывают рабочие термиты-подкрепление."
+      ],
+      "specialTraits": [
+        "Сначала убирай личинок и рабочих, затем начинай длинную серию урона по боссу."
+      ],
+      "attacks": [
+        {
+          "name": "Centipede Combo3 Phase2",
+          "technicalId": "CentipedeCombo3Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 115.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Wall CA",
+          "technicalId": "CentipedeBurrowWall_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Go To Far Point CA",
+          "technicalId": "CentipedeGoToFarPoint_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 24.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo5 Phase2",
+          "technicalId": "CentipedeCombo5Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Wall CA",
+          "technicalId": "CentipedeBurrowWall_CA#2",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        }
+      ]
+    },
+    {
+      "id": "phase3",
+      "label": "Фаза 3",
+      "startsAtHealthPct": 33,
+      "trigger": "Примерно на 33% здоровья.",
+      "summary": "Он атакует с краёв арены и из-под земли, призывая термитов-солдат.",
+      "aggressionChange": "Вертикальные и подземные перемещения могут выбросить игрока из безопасной позиции.",
+      "newPatterns": [
+        "Подкрепление из термитов-солдат.",
+        "Атаки с краёв арены.",
+        "Подземные засады.",
+        "Может подбросить игрока в воздух."
+      ],
+      "specialTraits": [
+        "Возьми один-два парашюта: они снижают риск падения после подбрасывания."
+      ],
+      "attacks": [
+        {
+          "name": "Centipede Emerge CA",
+          "technicalId": "CentipedeEmerge_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo5 Phase3",
+          "technicalId": "CentipedeCombo5Phase3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Ground CA",
+          "technicalId": "CentipedeBurrowGround_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 16.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Emerge Melee CA",
+          "technicalId": "CentipedeEmergeMelee_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        }
+      ]
+    }
+  ]
 }

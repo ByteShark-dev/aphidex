@@ -291,6 +291,37 @@ def centipede_es_phases(attacks: list[dict]):
     ]
 
 
+def localized_centipede_phases(language: str, attacks: list[dict]):
+    phases = centipede_es_phases(attacks)
+    if language == "es":
+        return phases
+    text = {
+        "en": [
+            ("Phase 1", "The fight begins in the termite-nest arena.", "Skritch descends from the walls and pressures with routes, body slams, and combos.", ["Prioritize falling larvae: Skritch can eat them to restore health."]),
+            ("Phase 2", "At roughly 66% health.", "It activates the stinky mushrooms, throws termite larvae, and calls worker termite reinforcements.", ["Stinky mushrooms cause dizziness.", "Falling larvae can be eaten by Skritch.", "Worker termites arrive as reinforcements."]),
+            ("Phase 3", "At roughly 33% health.", "It attacks from the arena sides and underground while adding soldier termites to the reinforcements.", ["Soldier termite reinforcements.", "Attacks from the arena sides.", "Underground ambushes.", "It can launch the player into the air."]),
+        ],
+        "ru": [
+            ("Фаза 1", "Бой начинается на арене термитника.", "Скритч спускается со стен и давит маршрутами, ударами телом и сериями атак.", ["Приоритет — падающие личинки: Скритч может съесть их и восстановить здоровье."]),
+            ("Фаза 2", "Примерно на 66% здоровья.", "Он активирует вонючие грибы, сбрасывает личинок термитов и зовёт рабочих термитов.", ["Вонючие грибы вызывают головокружение.", "Скритч может съесть упавших личинок.", "Прибывают рабочие термиты-подкрепление."]),
+            ("Фаза 3", "Примерно на 33% здоровья.", "Он атакует с краёв арены и из-под земли, призывая термитов-солдат.", ["Подкрепление из термитов-солдат.", "Атаки с краёв арены.", "Подземные засады.", "Может подбросить игрока в воздух."]),
+        ],
+    }[language]
+    for phase, values in zip(phases, text):
+        phase["label"], phase["trigger"], phase["summary"], phase["newPatterns"] = values
+    if language == "en":
+        phases[1]["aggressionChange"] = "Dizziness and multiple targets make the arena harder to read."
+        phases[1]["specialTraits"] = ["Clear larvae and workers before committing to a long damage sequence on the boss."]
+        phases[2]["aggressionChange"] = "Vertical and underground movement can launch the player out of a safe position."
+        phases[2]["specialTraits"] = ["Bring one or two dandelion tufts: they reduce the danger of a fall after being launched."]
+    else:
+        phases[1]["aggressionChange"] = "Головокружение и несколько целей усложняют чтение арены."
+        phases[1]["specialTraits"] = ["Сначала убирай личинок и рабочих, затем начинай длинную серию урона по боссу."]
+        phases[2]["aggressionChange"] = "Вертикальные и подземные перемещения могут выбросить игрока из безопасной позиции."
+        phases[2]["specialTraits"] = ["Возьми один-два парашюта: они снижают риск падения после подбрасывания."]
+    return phases
+
+
 def normalized_loot(technical_id: str, loot_domain: dict):
     profile = next((item for item in (loot_domain.get("technicalCreatures", {}).get(technical_id, {}).get("profiles") or []) if item.get("role") == "primary"), None)
     if not profile:
@@ -511,8 +542,8 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
             detail["environments"] = editorial["environments"]
         for attack in detail["attacks"]:
             polish_es_attack(attack)
-        if technical_id == "Centipede":
-            detail["bossPhases"] = centipede_es_phases(detail["attacks"])
+    if technical_id == "Centipede":
+        detail["bossPhases"] = localized_centipede_phases(language, detail["attacks"])
     if technical_id == "TermiteQueen":
         interaction = fields["interaction"]
         detail["interactionInfo"] = {
