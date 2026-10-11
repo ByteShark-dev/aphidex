@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "assets" / "data"
 DEFAULT_EXTRACTOR = Path(
     "/mnt/F/ByteShark-Dev/Aphidex_extractor_v1/aphidex_extractor_v1/"
-    "output_aphidex_extractor_v1_missing_export_verification"
+    "modules/phase1/output_aphidex_extractor_v1_release_0_6_completion"
 )
 LANGUAGES = ("en", "es", "ru")
 RELEASE_0_6_IDS = {
@@ -57,6 +57,22 @@ BUGGY_IDS = {
 POTATO_BUGGY_NAME = "Potato Beetle Buggy"
 ELEMENTAL = {"fresh", "salty", "sour", "spicy"}
 
+# Grounded 2 has no Russian resources for these rows.  These are Aphidex
+# translations of the extractor's official runtime English, never guesses at
+# gameplay values.  Keep the map here so a regeneration is deterministic.
+RU_TEXT = {
+    "Centipede": ("Скритч", "Этому многоножку поклоняются термиты из поленницы и редкие сотрудники Ominent. Ты всё ещё не понимаешь почему."),
+    "SpiderDivingBellOGRE": ("Водолазный паук O.G.R.R.", "С этим водолазным пауком явно происходит что-то серьёзно неладное. Он устойчив к вкусу своей мутации."),
+    "TermiteKing": ("Король термитов", "Самый опасный термит в гнезде: король предан защите и размножению королевы. После смерти из него могут выпасть панцирь короля термитов, челюсти термита и часть термита."),
+    "TermiteKingOGRE": ("Король термитов O.G.R.R.", "Король термитов, которого абсолютная власть абсолютно развратила. Он устойчив к вкусу своей мутации."),
+    "TermiteNymph": ("Личинка термита", "Маленький термит-малыш. Он ещё не решил, станет ли рабочим или солдатом."),
+    "TermiteQueen": ("Королева термитов", "Королева гнезда оставляет сражения подданным, пока сама производит бесконечный запас наследников."),
+    "TermiteSoldier": ("Термит-солдат", "Крупный солдат, грызущий древесину и готовый на всё, чтобы не пустить чужаков в гнездо термитов, вплоть до взрыва липкой жижей. После смерти может оставить часть термита и челюсти термита."),
+    "TermiteSoldierORC": ("Термит-солдат O.R.C.", "Термит-солдат с двойной верностью. После смерти вместе с частями существа может оставить приёмник O.R.C."),
+    "TermiteWorker": ("Термит-рабочий", "Крепкие общественные насекомые, поедающие древесину и строящие гнёзда в поленницах и упавших брёвнах. После смерти оставляют часть термита."),
+    "TermiteWorkerORC": ("Термит-рабочий O.R.C.", "Термит-солдат с двойной верностью. После смерти вместе с частями существа может оставить приёмник O.R.C."),
+}
+
 
 def read_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -64,7 +80,15 @@ def read_json(path: Path):
 
 def write_json(path: Path, payload) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    content = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+    if not path.exists() or path.read_text(encoding="utf-8") != content:
+        path.write_text(content, encoding="utf-8")
+
+
+def clean_description(value):
+    """Strip UE rich-text tags while retaining their human-readable content."""
+    import re
+    return re.sub(r"</?[^>]+>", "", value or "").replace("<--->", "").strip()
 
 
 def technical_label(value: str) -> str:
@@ -98,10 +122,17 @@ def normalized_attacks(rows, existing=None):
     for row in rows or []:
         if row.get("resolved") is not True:
             continue
-        technical_id = str(row.get("id") or row.get("ability") or "")
-        # A repeated ability row is a source implementation detail, not a UI move.
-        if not technical_id or technical_id in seen:
+        base_id = str(row.get("id") or row.get("ability") or "")
+        if not base_id:
             continue
+        # Boss phases and DefaultAttackComboData can reference the same ability
+        # more than once.  Keep every proven source row, giving only duplicates
+        # a stable UI identifier rather than silently dropping them.
+        technical_id = base_id
+        duplicate = 2
+        while technical_id in seen:
+            technical_id = f"{base_id}#{duplicate}"
+            duplicate += 1
         seen.add(technical_id)
         damage = row.get("damage") or {}
         types = [str(value).lower() for value in damage.get("types") or []]
@@ -126,7 +157,7 @@ def normalized_attacks(rows, existing=None):
         # The extractor resolves mechanical fields, not localized move names.
         # Preserve an established UI label/note when the technical move ID is
         # unchanged instead of replacing it with a guessed identifier split.
-        previous = existing_by_id.get(technical_id)
+        previous = existing_by_id.get(technical_id) or existing_by_id.get(base_id)
         if previous:
             for field in ("name", "notes"):
                 if field in previous:
@@ -139,6 +170,38 @@ def normalized_attacks(rows, existing=None):
         if technical_id and technical_id not in seen:
             result.append(copy.deepcopy(previous))
     return result
+
+
+def normalized_complete_loot(loot_field: dict):
+    """Turn finalized Release 0.6 loot rolls into Aphidex's visible tables."""
+    rows = [row for row in (loot_field.get("rolls") or [])
+            if row.get("parseStatus") == "resolved" and row.get("rollKind") == "item" and row.get("itemRow")]
+    grouped = defaultdict(list)
+    for row in rows:
+        grouped[row["itemRow"]].append(row)
+    loot, advanced = [], []
+    for item_id, item_rows in sorted(grouped.items()):
+        chances = [float(row.get("baseDropChance", row.get("dropChance", 0)) or 0) for row in item_rows]
+        counts = [int(row.get("count") or 0) for row in item_rows]
+        loot.append({"section": "rare" if max(chances) <= .05 else "loot", "item": technical_label(item_id),
+                     "minCount": sum(count for count, chance in zip(counts, chances) if chance >= 1), "maxCount": sum(counts)})
+        for row, chance in zip(item_rows, chances):
+            note = "conditional" if (row.get("presentation") or {}).get("sourceConditional") else None
+            advanced.append({"item": technical_label(item_id), "countLabel": str(row.get("count") or 0),
+                             "chancePct": round(chance * 100), "rollCount": 1, "notes": note})
+    return loot, advanced
+
+
+def localized_release_text(technical_id: str, source: dict, language: str):
+    localization = source.get("localization") or {}
+    if language == "ru":
+        return RU_TEXT[technical_id]
+    locale = "es-MX" if language == "es" else "en"
+    name = (localization.get("displayName") or {}).get(locale)
+    description = (localization.get("description") or {}).get(locale)
+    if not name or not description:
+        raise ValueError(f"Missing runtime {locale} localization for {technical_id}")
+    return clean_description(name), clean_description(description)
 
 
 def normalized_loot(technical_id: str, loot_domain: dict):
@@ -303,8 +366,123 @@ def equipment_summary(extractor: Path) -> dict:
     }
 
 
+def completion_detail(technical_id: str, source: dict, completed: dict, language: str, order: int):
+    """Build one Release 0.6 detail from its enriched, final record."""
+    detail = release_detail(technical_id, source, language, order)
+    fields = completed[technical_id]["fields"]
+    name, description = localized_release_text(technical_id, source, language)
+    detail["name"], detail["description"] = name, description
+    stats = fields["hpStats"].get("value") or {}
+    health = stats.get("health")
+    detail["health"] = None if health is None else {
+        "rating": 1 if health < 400 else 2 if health < 700 else 3 if health < 1100 else 4 if health < 2000 else 5,
+        "value": round(health),
+    }
+    detail["combatStats"] = {
+        "health": None if health is None else round(health),
+        "stunThreshold": stats.get("stun", {}).get("max"),
+        "stunCooldownSeconds": stats.get("stun", {}).get("cooldown"),
+    }
+    detail["attacks"] = normalized_attacks(fields["attacks"].get("items"))
+    detail["weakPoints"] = [
+        {"part": str(part).lower(), "susceptibleDamage": "unknown", "susceptibleDamageTypes": [],
+         "weaponFamilies": [], "provenance": "extractor_region_only"}
+        for part in fields["weakpoints"].get("value", [])
+    ]
+    detail["elementalWeaknesses"] = [item for item in normalized_bonuses(source.get("weaknesses")) if item["type"] in ELEMENTAL]
+    detail["damageWeaknesses"] = [item for item in normalized_bonuses(source.get("weaknesses")) if item["type"] not in ELEMENTAL]
+    detail["resistancesV2"] = normalized_bonuses(source.get("resistances"))
+    detail["immunities"] = sorted({str(value).lower() for row in source.get("immunities") or [] for value in (row.get("damageTypes", []) if isinstance(row, dict) else [row])})
+    loot, advanced = normalized_complete_loot(fields["loot"])
+    detail["loot"], detail["advancedLootTable"] = loot, advanced
+    normal = fields["normalCard"].get("value") or {}
+    gold = fields["goldCard"].get("value") or {}
+    # The extractor proves card ownership and textures.  Image binaries are not
+    # distributed with it, therefore cards remain non-selectable until assets
+    # are imported rather than pointing the app at a nonexistent file.
+    detail["cardEvidence"] = {
+        "normal": normal.get("textureName"), "gold": gold.get("textureName"),
+        "goldChance": gold.get("chance"), "status": "source_texture_resolved_asset_not_distributed",
+    }
+    detail["sourceProvenance"] = {
+        "extractorTechnicalId": technical_id,
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": fields["locationSpawn"].get("status"),
+    }
+    detail["dataRevision"] = "extractor_release_0_6_completion"
+    if technical_id == "TermiteQueen":
+        interaction = fields["interaction"]
+        detail["interactionInfo"] = {
+            "type": interaction.get("evidence", {}).get("interactionType"),
+            "offerings": [row.get("item", {}).get("itemRow") for row in interaction.get("offerings", [])],
+            "rewards": interaction.get("triggerRewards", []),
+            "deathLoot": "not_applicable",
+        }
+        traits = {
+            "en": ["Conversation interaction", "Offerings: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned", "Interaction reward: 1 Termite Part"],
+            "es": ["Interacción de conversación", "Ofrendas: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned", "Recompensa por interacción: 1 parte de termita"],
+            "ru": ["Разговорное взаимодействие", "Подношения: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned", "Награда за взаимодействие: 1 часть термита"],
+        }
+        detail["specialTraits"] = traits[language]
+    return detail
+
+
+def apply_completion(args):
+    """Import only enriched Release 0.6 records, preserving all other edits."""
+    extractor = args.extractor_root.resolve()
+    payload = read_json(extractor / "phase1" / "aphidex_grounded2_v5_1_1.json")
+    source = {row["id"]: row for row in payload["creatures"]}
+    completed = {row["id"]: row for row in read_json(extractor / "release_0_6" / "release_0_6_entities_complete.json")["entities"]}
+    missing = sorted(set(RELEASE_0_6_IDS) - set(completed))
+    if missing:
+        raise ValueError(f"Completion export is missing Release 0.6 entities: {missing}")
+    app = read_json(DATA / "g2" / "creatures.json")
+    by_public = {row.get("publicId"): row for row in app["creatures"]}
+    diff = {"schema": "aphidex-release-0-6-completion-diff-v1", "source": str(extractor), "entities": []}
+    for technical_id, public_id in RELEASE_0_6_IDS.items():
+        if public_id not in by_public:
+            raise ValueError(f"First integration entry is missing: {public_id}")
+        fields = completed[technical_id]["fields"]
+        diff["entities"].append({"id": public_id, "technicalId": technical_id,
+            "health": fields["hpStats"].get("value", {}).get("health"),
+            "attackCount": fields["attacks"].get("count", 0),
+            "lootResolved": fields["loot"].get("status") == "resolved_finalized_loot_domain",
+            "normalCard": (fields["normalCard"].get("value") or {}).get("textureName"),
+            "goldCard": (fields["goldCard"].get("value") or {}).get("textureName")})
+    if not args.apply:
+        print(json.dumps(diff, ensure_ascii=False, indent=2))
+        return
+    for language in LANGUAGES:
+        directory = DATA / "creatures" / language / "details"
+        for technical_id, public_id in RELEASE_0_6_IDS.items():
+            prior = read_json(directory / f"{public_id}.json")
+            detail = completion_detail(technical_id, source[technical_id], completed, language, prior.get("order") or 0)
+            # Retain app-owned compatibility keys and artwork placeholders.
+            for key in ("photo", "listIconAsset", "mapMarkerAsset", "customAsset", "favoriteKey", "goldLinkId"):
+                detail[key] = prior.get(key, detail.get(key))
+            write_json(directory / f"{public_id}.json", detail)
+        index_path = DATA / "creatures" / language / "index_g2.json"
+        index = read_json(index_path)
+        updated = {row["id"]: row for row in index}
+        for technical_id, public_id in RELEASE_0_6_IDS.items():
+            updated[public_id] = summary_index(read_json(directory / f"{public_id}.json"))
+        write_json(index_path, sorted(updated.values(), key=lambda row: (row.get("order") or 0, row["id"])))
+    for technical_id, public_id in RELEASE_0_6_IDS.items():
+        detail = completion_detail(technical_id, source[technical_id], completed, "en", by_public[public_id].get("order") or 0)
+        by_public[public_id].update({key: value for key, value in detail.items() if key not in {"id", "name", "description"}})
+    write_json(DATA / "g2" / "creatures.json", app)
+    diff["applied"] = True
+    write_json(ROOT / "outputs" / "release_0_6_completion_diff.json", diff)
+    print(json.dumps(diff, ensure_ascii=False, indent=2))
+
+
 def apply(args):
     extractor = args.extractor_root.resolve()
+    # Completion exports are intentionally self-contained and do not carry the
+    # older manifest/phase2 tree.  Prefer this final, enriched import path.
+    if (extractor / "release_0_6" / "release_0_6_entities_complete.json").exists():
+        return apply_completion(args)
     qa = read_json(extractor / "final" / "aphidex_extractor_qa_v1.json")
     if qa.get("status") not in {"PASS", "PASS_WITH_SOURCE_WARNINGS"}:
         raise ValueError(f"Extractor QA did not pass: {qa.get('status')!r}")

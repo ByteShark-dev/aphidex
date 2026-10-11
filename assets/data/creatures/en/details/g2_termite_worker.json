@@ -129,15 +129,99 @@
       "hitResolutionType": "AOE",
       "actionType": "projectile",
       "blockability": "unknown"
+    },
+    {
+      "name": "Termite Worker Bite Right",
+      "technicalId": "TermiteWorkerBiteRight",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 68.0,
+      "cooldownSeconds": null,
+      "range": 150.0,
+      "stun": 4,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     }
   ],
   "combatStats": {
     "health": 800,
-    "stunThreshold": 75,
-    "stunCooldownSeconds": 10
+    "stunThreshold": 75.0,
+    "stunCooldownSeconds": 10.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "loot",
+      "item": "Acid Gland",
+      "minCount": 0,
+      "maxCount": 2
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part",
+      "minCount": 1,
+      "maxCount": 6
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "2",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -145,9 +229,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteWorker",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "Tough, wood-eating social insects that build hives in wood piles and fallen logs. Drops termite part on death.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier3_TermiteWorker",
+    "gold": "T_UI_Tier3_TermiteWorker",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }

@@ -189,15 +189,140 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Sacrifice",
+      "technicalId": "TermiteKingSacrifice",
+      "tags": [
+        "explosive"
+      ],
+      "damageTypes": [
+        "explosive"
+      ],
+      "damage": 150.0,
+      "cooldownSeconds": null,
+      "range": 600.0,
+      "stun": 0,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "AOE",
+      "actionType": "aoe",
+      "blockability": "unknown"
     }
   ],
   "combatStats": {
     "health": 1900,
-    "stunThreshold": 120,
-    "stunCooldownSeconds": 20
+    "stunThreshold": 120.0,
+    "stunCooldownSeconds": 20.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "loot",
+      "item": "Termite Chompers",
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part",
+      "minCount": 1,
+      "maxCount": 7
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part King",
+      "minCount": 4,
+      "maxCount": 6
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "2",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "4",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -205,9 +330,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteKing",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "The deadliest termite in the nest, the king is devoted to the queen's protection and reproduction. Drops termite king carapace, as well as termite chompers and termite part on death.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier3_KingTermite",
+    "gold": "T_UI_Tier3_KingTermite_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }

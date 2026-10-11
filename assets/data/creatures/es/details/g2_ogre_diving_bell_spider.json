@@ -3,7 +3,7 @@
   "speciesKey": "ogre_diving_bell_spider",
   "technicalId": "SpiderDivingBellOGRE",
   "bestiaryId": "SpiderDivingBellOGRE",
-  "name": "Diving Bell Spider O.G.R.E.",
+  "name": "O.G.R.R. Diving Bell Spider",
   "game": "g2",
   "tier": 2,
   "danger": "unknown",
@@ -127,11 +127,80 @@
   ],
   "combatStats": {
     "health": 1600,
-    "stunThreshold": 90,
-    "stunCooldownSeconds": 20
+    "stunThreshold": 90.0,
+    "stunCooldownSeconds": 20.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "loot",
+      "item": "Diving Bell Spider Chunk",
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "section": "loot",
+      "item": "Ogrr Gland",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "section": "loot",
+      "item": "Web",
+      "minCount": 0,
+      "maxCount": 5
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Diving Bell Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Diving Bell Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Diving Bell Spider Chunk",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ogrr Gland",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "3",
+      "chancePct": 80,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Web",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -139,9 +208,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "SpiderDivingBellOGRE",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "A diving bell spider with something seriously wrong going on. They are resistant to the flavor of their mutation.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier2_DivingBell_OGRR",
+    "gold": "T_UI_Tier2_DivingBell_OGRR_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }

@@ -50,9 +50,38 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteQueen",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "The queen of the nest leaves the fighting to her subjects while she produces an endless supply of heirs.",
+  "cardEvidence": {
+    "normal": null,
+    "gold": "T_UI_Tier3_QueenTermite_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  },
+  "interactionInfo": {
+    "type": "EInteractionType::Conversation",
+    "offerings": [
+      "OfferingTermiteQueenCentipede",
+      "OfferingTermiteQueenPoisoned"
+    ],
+    "rewards": [
+      {
+        "itemRow": "TermitePart",
+        "spawnType": "ELootSpawnType::SpawnOnTrigger",
+        "count": 1,
+        "dropChance": 1.0
+      }
+    ],
+    "deathLoot": "not_applicable"
+  },
+  "specialTraits": [
+    "Conversation interaction",
+    "Offerings: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned",
+    "Interaction reward: 1 Termite Part"
+  ]
 }

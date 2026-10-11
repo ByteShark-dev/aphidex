@@ -3,7 +3,7 @@
   "speciesKey": "termite_soldier",
   "technicalId": "TermiteSoldier",
   "bestiaryId": "TermiteSoldier",
-  "name": "Termite Soldier",
+  "name": "Термит-солдат",
   "game": "g2",
   "tier": 4,
   "danger": "unknown",
@@ -109,6 +109,27 @@
       "blockability": "unknown"
     },
     {
+      "name": "Termite Soldier Multi Strike",
+      "technicalId": "TermiteSoldierMultiStrike#2",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 74.0,
+      "cooldownSeconds": 10.0,
+      "range": 300.0,
+      "stun": 3,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
+    },
+    {
       "name": "Termite Soldier Power Attack",
       "technicalId": "TermiteSoldierPowerAttack",
       "tags": [
@@ -185,15 +206,119 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown"
+    },
+    {
+      "name": "Termite Soldier Bite Right",
+      "technicalId": "TermiteSoldierBiteRight",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 85.0,
+      "cooldownSeconds": null,
+      "range": 175.0,
+      "stun": 8,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     }
   ],
   "combatStats": {
     "health": 1300,
-    "stunThreshold": 90,
-    "stunCooldownSeconds": 20
+    "stunThreshold": 90.0,
+    "stunCooldownSeconds": 20.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "loot",
+      "item": "Acid Gland",
+      "minCount": 0,
+      "maxCount": 3
+    },
+    {
+      "section": "loot",
+      "item": "Termite Chompers",
+      "minCount": 1,
+      "maxCount": 2
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part",
+      "minCount": 1,
+      "maxCount": 6
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Acid Gland",
+      "countLabel": "2",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 40,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "2",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -201,9 +326,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteSoldier",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "Крупный солдат, грызущий древесину и готовый на всё, чтобы не пустить чужаков в гнездо термитов, вплоть до взрыва липкой жижей. После смерти может оставить часть термита и челюсти термита.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier3_TermiteSoldier",
+    "gold": "T_UI_Tier3_TermiteSoldier_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }

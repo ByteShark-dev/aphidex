@@ -138388,7 +138388,7 @@
       "resistances": [],
       "weakPoints": [
         {
-          "part": "underbelly",
+          "part": "weakpoint.underbelly",
           "susceptibleDamage": "unknown",
           "susceptibleDamageTypes": [],
           "weaponFamilies": [],
@@ -138435,12 +138435,377 @@
           "hitResolutionType": "Default",
           "actionType": "projectile",
           "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo3",
+          "technicalId": "CentipedeCombo3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 125.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Bodyslam",
+          "technicalId": "CentipedeBodyslam",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Take Path CA",
+          "technicalId": "CentipedeTakePath_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 12.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Take Path CA",
+          "technicalId": "CentipedeTakePath_CA#2",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 12.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo3 Phase2",
+          "technicalId": "CentipedeCombo3Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 115.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Bodyslam",
+          "technicalId": "CentipedeBodyslam#2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Wall CA",
+          "technicalId": "CentipedeBurrowWall_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Go To Far Point CA",
+          "technicalId": "CentipedeGoToFarPoint_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 24.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Take Path CA",
+          "technicalId": "CentipedeTakePath_CA#3",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 12.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo5 Phase2",
+          "technicalId": "CentipedeCombo5Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Take Path CA",
+          "technicalId": "CentipedeTakePath_CA#4",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 12.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Wall CA",
+          "technicalId": "CentipedeBurrowWall_CA#2",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Emerge CA",
+          "technicalId": "CentipedeEmerge_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Combo5 Phase3",
+          "technicalId": "CentipedeCombo5Phase3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Burrow Ground CA",
+          "technicalId": "CentipedeBurrowGround_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 16.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Emerge Melee CA",
+          "technicalId": "CentipedeEmergeMelee_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Centipede Take Path CA",
+          "technicalId": "CentipedeTakePath_CA#5",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 12.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 9000,
-        "stunThreshold": 120,
-        "stunCooldownSeconds": 25
+        "stunThreshold": 120.0,
+        "stunCooldownSeconds": 25.0
       },
       "loot": [
         {
@@ -138494,14 +138859,14 @@
           "countLabel": "1",
           "chancePct": 40,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Antenna",
           "countLabel": "1",
           "chancePct": 40,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
@@ -138515,14 +138880,14 @@
           "countLabel": "1",
           "chancePct": 50,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 100,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
@@ -138578,42 +138943,42 @@
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 0,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 0,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 0,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Chunk",
           "countLabel": "1",
           "chancePct": 0,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Leg",
@@ -138634,14 +138999,14 @@
           "countLabel": "2",
           "chancePct": 50,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Leg",
           "countLabel": "2",
           "chancePct": 50,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Leg",
@@ -138669,21 +139034,21 @@
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Leg",
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Leg",
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Venom",
@@ -138697,14 +139062,14 @@
           "countLabel": "1",
           "chancePct": 25,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Venom",
           "countLabel": "3",
           "chancePct": 50,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Venom",
@@ -138718,14 +139083,14 @@
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         },
         {
           "item": "Boss Centipede Venom",
           "countLabel": "1",
           "chancePct": 1,
           "rollCount": 1,
-          "notes": null
+          "notes": "conditional"
         }
       ],
       "locations": [],
@@ -138735,14 +139100,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "Centipede",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 5,
         "value": 9000
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": true,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_centipede",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier4_Centipede",
+        "gold": "T_UI_Tier4_Centipede_G",
+        "goldChance": 0.1,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -138855,8 +139242,8 @@
       ],
       "combatStats": {
         "health": 1600,
-        "stunThreshold": 90,
-        "stunCooldownSeconds": 20
+        "stunThreshold": 90.0,
+        "stunCooldownSeconds": 20.0
       },
       "loot": [
         {
@@ -138936,14 +139323,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "SpiderDivingBellOGRE",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 4,
         "value": 1600
+      },
+      "game": "g2",
+      "tier": 2,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_ogre_diving_bell_spider",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier2_DivingBell_OGRR",
+        "gold": "T_UI_Tier2_DivingBell_OGRR_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -139118,12 +139527,33 @@
           "hitResolutionType": "AOE",
           "actionType": "aoe",
           "blockability": "unknown"
+        },
+        {
+          "name": "Termite King Sacrifice",
+          "technicalId": "TermiteKingSacrifice",
+          "tags": [
+            "explosive"
+          ],
+          "damageTypes": [
+            "explosive"
+          ],
+          "damage": 150.0,
+          "cooldownSeconds": null,
+          "range": 600.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 1900,
-        "stunThreshold": 120,
-        "stunCooldownSeconds": 20
+        "stunThreshold": 120.0,
+        "stunCooldownSeconds": 20.0
       },
       "loot": [
         {
@@ -139238,14 +139668,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteKing",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 4,
         "value": 1900
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_termite_king",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_KingTermite",
+        "gold": "T_UI_Tier3_KingTermite_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -139407,12 +139859,33 @@
           "hitResolutionType": "AOE",
           "actionType": "aoe",
           "blockability": "unknown"
+        },
+        {
+          "name": "Termite King Sacrifice",
+          "technicalId": "TermiteKingSacrifice",
+          "tags": [
+            "explosive"
+          ],
+          "damageTypes": [
+            "explosive"
+          ],
+          "damage": 150.0,
+          "cooldownSeconds": null,
+          "range": 600.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 2400,
-        "stunThreshold": 120,
-        "stunCooldownSeconds": 20
+        "stunThreshold": 120.0,
+        "stunCooldownSeconds": 20.0
       },
       "loot": [
         {
@@ -139553,14 +140026,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteKingOGRE",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 5,
         "value": 2400
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_ogre_termite_king",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_KingTermite_OGRR",
+        "gold": "T_UI_Tier3_KingTermite_OGRR_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -139592,8 +140087,8 @@
       "attacks": [],
       "combatStats": {
         "health": 100,
-        "stunThreshold": 70,
-        "stunCooldownSeconds": 5
+        "stunThreshold": 70.0,
+        "stunCooldownSeconds": 5.0
       },
       "loot": [
         {
@@ -139640,14 +140135,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteNymph",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 1,
         "value": 100
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_termite_nymph",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier4_TermiteLarva",
+        "gold": "T_UI_Tier4_TermiteLarva_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -139686,11 +140203,55 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteQueen",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6"
+      "dataRevision": "extractor_release_0_6_completion",
+      "game": "g2",
+      "tier": 0,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_termite_queen",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "interactable",
+      "health": null,
+      "cardEvidence": {
+        "normal": null,
+        "gold": "T_UI_Tier3_QueenTermite_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
+      },
+      "interactionInfo": {
+        "type": "EInteractionType::Conversation",
+        "offerings": [
+          "OfferingTermiteQueenCentipede",
+          "OfferingTermiteQueenPoisoned"
+        ],
+        "rewards": [
+          {
+            "itemRow": "TermitePart",
+            "spawnType": "ELootSpawnType::SpawnOnTrigger",
+            "count": 1,
+            "dropChance": 1.0
+          }
+        ],
+        "deathLoot": "not_applicable"
+      },
+      "specialTraits": [
+        "Conversation interaction",
+        "Offerings: OfferingTermiteQueenCentipede; OfferingTermiteQueenPoisoned",
+        "Interaction reward: 1 Termite Part"
+      ]
     },
     {
       "publicId": "g2_termite_soldier",
@@ -139784,260 +140345,8 @@
           "blockability": "unknown"
         },
         {
-          "name": "Termite Soldier Power Attack",
-          "technicalId": "TermiteSoldierPowerAttack",
-          "tags": [
-            "chopping"
-          ],
-          "damageTypes": [
-            "chopping"
-          ],
-          "damage": 95.0,
-          "cooldownSeconds": 20.0,
-          "range": 300.0,
-          "stun": 10,
-          "statusEffects": [],
-          "statusEffectDetails": [],
-          "ranged": false,
-          "projectile": false,
-          "hitResolutionType": "Default",
-          "actionType": "melee",
-          "blockability": "unknown"
-        },
-        {
-          "name": "Block Offensive",
-          "technicalId": "BlockOffensive",
-          "tags": [
-            "projectile"
-          ],
-          "damageTypes": [],
-          "damage": 0.0,
-          "cooldownSeconds": 6.0,
-          "range": 100.0,
-          "stun": 0,
-          "statusEffects": [],
-          "statusEffectDetails": [],
-          "ranged": false,
-          "projectile": true,
-          "hitResolutionType": "Default",
-          "actionType": "projectile",
-          "blockability": "unknown"
-        },
-        {
-          "name": "Termite Soldier Shout",
-          "technicalId": "TermiteSoldierShout",
-          "tags": [],
-          "damageTypes": [],
-          "damage": 0.0,
-          "cooldownSeconds": 10.0,
-          "range": 100.0,
-          "stun": 0,
-          "statusEffects": [],
-          "statusEffectDetails": [],
-          "ranged": false,
-          "projectile": false,
-          "hitResolutionType": "Default",
-          "actionType": "melee",
-          "blockability": "unknown"
-        },
-        {
-          "name": "Termite Soldier Sacrifice",
-          "technicalId": "TermiteSoldierSacrifice",
-          "tags": [
-            "explosive"
-          ],
-          "damageTypes": [
-            "explosive"
-          ],
-          "damage": 100.0,
-          "cooldownSeconds": 0.0,
-          "range": 600.0,
-          "stun": 0,
-          "statusEffects": [],
-          "statusEffectDetails": [],
-          "ranged": false,
-          "projectile": false,
-          "hitResolutionType": "AOE",
-          "actionType": "aoe",
-          "blockability": "unknown"
-        }
-      ],
-      "combatStats": {
-        "health": 1300,
-        "stunThreshold": 90,
-        "stunCooldownSeconds": 20
-      },
-      "loot": [
-        {
-          "section": "loot",
-          "item": "Acid Gland",
-          "minCount": 0,
-          "maxCount": 3
-        },
-        {
-          "section": "loot",
-          "item": "Termite Chompers",
-          "minCount": 1,
-          "maxCount": 2
-        },
-        {
-          "section": "loot",
-          "item": "Termite Part",
-          "minCount": 1,
-          "maxCount": 6
-        }
-      ],
-      "advancedLootTable": [
-        {
-          "item": "Acid Gland",
-          "countLabel": "2",
-          "chancePct": 75,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Acid Gland",
-          "countLabel": "1",
-          "chancePct": 1,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Chompers",
-          "countLabel": "1",
-          "chancePct": 100,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Chompers",
-          "countLabel": "1",
-          "chancePct": 40,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Part",
-          "countLabel": "1",
-          "chancePct": 100,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Part",
-          "countLabel": "2",
-          "chancePct": 75,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Part",
-          "countLabel": "1",
-          "chancePct": 1,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Part",
-          "countLabel": "1",
-          "chancePct": 1,
-          "rollCount": 1,
-          "notes": null
-        },
-        {
-          "item": "Termite Part",
-          "countLabel": "1",
-          "chancePct": 1,
-          "rollCount": 1,
-          "notes": null
-        }
-      ],
-      "locations": [],
-      "environments": [],
-      "eventAppearances": [],
-      "appearanceType": "unknown",
-      "encounterVariants": [],
-      "availabilityStatus": "implemented_unconfirmed",
-      "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
-        "extractorTechnicalId": "TermiteSoldier",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
-      },
-      "dataRevision": "extractor_release_0_6",
-      "health": {
-        "rating": 4,
-        "value": 1300
-      }
-    },
-    {
-      "publicId": "g2_orc_termite_soldier",
-      "technicalId": "TermiteSoldierORC",
-      "sourceStatus": "extractor_merged",
-      "speciesKey": "orc_termite_soldier",
-      "bestiaryId": "TermiteSoldierORC",
-      "hasCreatureCard": false,
-      "hasGoldCreatureCard": false,
-      "hasSelectableCardVariants": false,
-      "defaultCardVariant": null,
-      "temperament": "unknown",
-      "collectionGroup": "unknown",
-      "isKillable": true,
-      "healthDisplay": "normal",
-      "elementalWeaknesses": [
-        {
-          "type": "sour",
-          "bonusPct": 30
-        },
-        {
-          "type": "spicy",
-          "bonusPct": 30
-        }
-      ],
-      "damageWeaknesses": [
-        {
-          "type": "stabbing",
-          "bonusPct": 15
-        }
-      ],
-      "resistancesV2": [
-        {
-          "type": "salty",
-          "bonusPct": 50
-        },
-        {
-          "type": "slashing",
-          "bonusPct": 25
-        }
-      ],
-      "immunities": [],
-      "weaknesses": [],
-      "resistances": [],
-      "weakPoints": [],
-      "attacks": [
-        {
-          "name": "Termite Soldier Bite Left",
-          "technicalId": "TermiteSoldierBiteLeft",
-          "tags": [
-            "chopping"
-          ],
-          "damageTypes": [
-            "chopping"
-          ],
-          "damage": 85.0,
-          "cooldownSeconds": 10.0,
-          "range": 175.0,
-          "stun": 3,
-          "statusEffects": [],
-          "statusEffectDetails": [],
-          "ranged": false,
-          "projectile": false,
-          "hitResolutionType": "Default",
-          "actionType": "melee",
-          "blockability": "unknown"
-        },
-        {
           "name": "Termite Soldier Multi Strike",
-          "technicalId": "TermiteSoldierMultiStrike",
+          "technicalId": "TermiteSoldierMultiStrike#2",
           "tags": [
             "chopping"
           ],
@@ -140133,12 +140442,370 @@
           "hitResolutionType": "AOE",
           "actionType": "aoe",
           "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Bite Right",
+          "technicalId": "TermiteSoldierBiteRight",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 85.0,
+          "cooldownSeconds": null,
+          "range": 175.0,
+          "stun": 8,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 1300,
-        "stunThreshold": 90,
-        "stunCooldownSeconds": 20
+        "stunThreshold": 90.0,
+        "stunCooldownSeconds": 20.0
+      },
+      "loot": [
+        {
+          "section": "loot",
+          "item": "Acid Gland",
+          "minCount": 0,
+          "maxCount": 3
+        },
+        {
+          "section": "loot",
+          "item": "Termite Chompers",
+          "minCount": 1,
+          "maxCount": 2
+        },
+        {
+          "section": "loot",
+          "item": "Termite Part",
+          "minCount": 1,
+          "maxCount": 6
+        }
+      ],
+      "advancedLootTable": [
+        {
+          "item": "Acid Gland",
+          "countLabel": "2",
+          "chancePct": 75,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Acid Gland",
+          "countLabel": "1",
+          "chancePct": 1,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Chompers",
+          "countLabel": "1",
+          "chancePct": 100,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Chompers",
+          "countLabel": "1",
+          "chancePct": 40,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Part",
+          "countLabel": "1",
+          "chancePct": 100,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Part",
+          "countLabel": "2",
+          "chancePct": 75,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Part",
+          "countLabel": "1",
+          "chancePct": 1,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Part",
+          "countLabel": "1",
+          "chancePct": 1,
+          "rollCount": 1,
+          "notes": null
+        },
+        {
+          "item": "Termite Part",
+          "countLabel": "1",
+          "chancePct": 1,
+          "rollCount": 1,
+          "notes": null
+        }
+      ],
+      "locations": [],
+      "environments": [],
+      "eventAppearances": [],
+      "appearanceType": "unknown",
+      "encounterVariants": [],
+      "availabilityStatus": "implemented_unconfirmed",
+      "sourceProvenance": {
+        "extractorTechnicalId": "TermiteSoldier",
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
+      },
+      "dataRevision": "extractor_release_0_6_completion",
+      "health": {
+        "rating": 4,
+        "value": 1300
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_termite_soldier",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_TermiteSoldier",
+        "gold": "T_UI_Tier3_TermiteSoldier_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
+      }
+    },
+    {
+      "publicId": "g2_orc_termite_soldier",
+      "technicalId": "TermiteSoldierORC",
+      "sourceStatus": "extractor_merged",
+      "speciesKey": "orc_termite_soldier",
+      "bestiaryId": "TermiteSoldierORC",
+      "hasCreatureCard": false,
+      "hasGoldCreatureCard": false,
+      "hasSelectableCardVariants": false,
+      "defaultCardVariant": null,
+      "temperament": "unknown",
+      "collectionGroup": "unknown",
+      "isKillable": true,
+      "healthDisplay": "normal",
+      "elementalWeaknesses": [
+        {
+          "type": "sour",
+          "bonusPct": 30
+        },
+        {
+          "type": "spicy",
+          "bonusPct": 30
+        }
+      ],
+      "damageWeaknesses": [
+        {
+          "type": "stabbing",
+          "bonusPct": 15
+        }
+      ],
+      "resistancesV2": [
+        {
+          "type": "salty",
+          "bonusPct": 50
+        },
+        {
+          "type": "slashing",
+          "bonusPct": 25
+        }
+      ],
+      "immunities": [],
+      "weaknesses": [],
+      "resistances": [],
+      "weakPoints": [],
+      "attacks": [
+        {
+          "name": "Termite Soldier Bite Left",
+          "technicalId": "TermiteSoldierBiteLeft",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 85.0,
+          "cooldownSeconds": 10.0,
+          "range": 175.0,
+          "stun": 3,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Multi Strike",
+          "technicalId": "TermiteSoldierMultiStrike",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 74.0,
+          "cooldownSeconds": 10.0,
+          "range": 300.0,
+          "stun": 3,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Multi Strike",
+          "technicalId": "TermiteSoldierMultiStrike#2",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 74.0,
+          "cooldownSeconds": 10.0,
+          "range": 300.0,
+          "stun": 3,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Power Attack",
+          "technicalId": "TermiteSoldierPowerAttack",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 95.0,
+          "cooldownSeconds": 20.0,
+          "range": 300.0,
+          "stun": 10,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Block Offensive",
+          "technicalId": "BlockOffensive",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 6.0,
+          "range": 100.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Shout",
+          "technicalId": "TermiteSoldierShout",
+          "tags": [],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 10.0,
+          "range": 100.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Sacrifice",
+          "technicalId": "TermiteSoldierSacrifice",
+          "tags": [
+            "explosive"
+          ],
+          "damageTypes": [
+            "explosive"
+          ],
+          "damage": 100.0,
+          "cooldownSeconds": 0.0,
+          "range": 600.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown"
+        },
+        {
+          "name": "Termite Soldier Bite Right",
+          "technicalId": "TermiteSoldierBiteRight",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 85.0,
+          "cooldownSeconds": null,
+          "range": 175.0,
+          "stun": 8,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
+        }
+      ],
+      "combatStats": {
+        "health": 1300,
+        "stunThreshold": 90.0,
+        "stunCooldownSeconds": 20.0
       },
       "loot": [
         {
@@ -140245,14 +140912,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteSoldierORC",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 4,
         "value": 1300
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_orc_termite_soldier",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_TermiteSoldier_ORC",
+        "gold": "T_UI_Tier3_TermiteSoldier_ORC_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -140367,12 +141056,33 @@
           "hitResolutionType": "AOE",
           "actionType": "projectile",
           "blockability": "unknown"
+        },
+        {
+          "name": "Termite Worker Bite Right",
+          "technicalId": "TermiteWorkerBiteRight",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 68.0,
+          "cooldownSeconds": null,
+          "range": 150.0,
+          "stun": 4,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 800,
-        "stunThreshold": 75,
-        "stunCooldownSeconds": 10
+        "stunThreshold": 75.0,
+        "stunCooldownSeconds": 10.0
       },
       "loot": [
         {
@@ -140446,14 +141156,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteWorker",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 3,
         "value": 800
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_termite_worker",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_TermiteWorker",
+        "gold": "T_UI_Tier3_TermiteWorker",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {
@@ -140564,12 +141296,33 @@
           "hitResolutionType": "AOE",
           "actionType": "projectile",
           "blockability": "unknown"
+        },
+        {
+          "name": "Termite Worker Bite Right",
+          "technicalId": "TermiteWorkerBiteRight",
+          "tags": [
+            "chopping"
+          ],
+          "damageTypes": [
+            "chopping"
+          ],
+          "damage": 68.0,
+          "cooldownSeconds": null,
+          "range": 150.0,
+          "stun": 4,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown"
         }
       ],
       "combatStats": {
         "health": 960,
-        "stunThreshold": 75,
-        "stunCooldownSeconds": 10
+        "stunThreshold": 75.0,
+        "stunCooldownSeconds": 10.0
       },
       "loot": [
         {
@@ -140656,14 +141409,36 @@
       "encounterVariants": [],
       "availabilityStatus": "implemented_unconfirmed",
       "sourceProvenance": {
-        "extractorStatus": "implemented_unconfirmed",
         "extractorTechnicalId": "TermiteWorkerORC",
-        "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+        "extractorStatus": "resolved_release_0_6_completion",
+        "localization": "resolved_runtime_en_es_MX",
+        "locationStatus": "not_resolved"
       },
-      "dataRevision": "extractor_release_0_6",
+      "dataRevision": "extractor_release_0_6_completion",
       "health": {
         "rating": 3,
         "value": 960
+      },
+      "game": "g2",
+      "tier": 4,
+      "danger": "unknown",
+      "isBoss": false,
+      "order": 0,
+      "defaultGold": false,
+      "favoriteKey": "g2_orc_termite_worker",
+      "goldLinkId": null,
+      "cardNormal": "",
+      "cardGold": "",
+      "photo": "assets/global/Aphidex_Proximamente.webp",
+      "listIconAsset": "",
+      "mapMarkerAsset": "",
+      "customAsset": "",
+      "entityType": "creature",
+      "cardEvidence": {
+        "normal": "T_UI_Tier3_TermiteWorker_ORC",
+        "gold": "T_UI_Tier3_TermiteWorker_ORC_G",
+        "goldChance": 0.01,
+        "status": "source_texture_resolved_asset_not_distributed"
       }
     },
     {

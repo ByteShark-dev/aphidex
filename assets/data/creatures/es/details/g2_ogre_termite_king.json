@@ -3,7 +3,7 @@
   "speciesKey": "ogre_termite_king",
   "technicalId": "TermiteKingOGRE",
   "bestiaryId": "TermiteKingOGRE",
-  "name": "Termite King O.G.R.E.",
+  "name": "Rey termita I.R.G.O.",
   "game": "g2",
   "tier": 4,
   "danger": "unknown",
@@ -176,15 +176,166 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown"
+    },
+    {
+      "name": "Termite King Sacrifice",
+      "technicalId": "TermiteKingSacrifice",
+      "tags": [
+        "explosive"
+      ],
+      "damageTypes": [
+        "explosive"
+      ],
+      "damage": 150.0,
+      "cooldownSeconds": null,
+      "range": 600.0,
+      "stun": 0,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "AOE",
+      "actionType": "aoe",
+      "blockability": "unknown"
     }
   ],
   "combatStats": {
     "health": 2400,
-    "stunThreshold": 120,
-    "stunCooldownSeconds": 20
+    "stunThreshold": 120.0,
+    "stunCooldownSeconds": 20.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "rare",
+      "item": "Accessory Termite",
+      "minCount": 0,
+      "maxCount": 1
+    },
+    {
+      "section": "loot",
+      "item": "Ogrr Gland",
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "section": "loot",
+      "item": "Termite Chompers",
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part",
+      "minCount": 1,
+      "maxCount": 7
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part King",
+      "minCount": 4,
+      "maxCount": 6
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Accessory Termite",
+      "countLabel": "1",
+      "chancePct": 3,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Ogrr Gland",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Chompers",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "2",
+      "chancePct": 75,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "4",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part King",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -192,9 +343,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteKingOGRE",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "Un rey termita, cuyo sumo poder lo corrompió por completo. Es resistente a la esencia de su mutación.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier3_KingTermite_OGRR",
+    "gold": "T_UI_Tier3_KingTermite_OGRR_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }

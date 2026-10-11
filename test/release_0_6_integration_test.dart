@@ -40,25 +40,58 @@ void main() {
     }
   });
 
-  test('unconfirmed Release 0.6 records do not invent encounters or loot', () {
+  test('enriched Release 0.6 records retain unknown encounters but expose resolved loot', () {
     for (final id in releaseIds) {
       final detail = _json('assets/data/creatures/en/details/$id.json');
       expect(detail['availabilityStatus'], 'implemented_unconfirmed');
       expect(detail['locations'], isEmpty);
-      expect(detail['loot'], isEmpty);
+      if (id == 'g2_termite_queen') {
+        expect(detail['loot'], isEmpty);
+      } else {
+        expect(detail['loot'], isNotEmpty);
+      }
       expect(detail['cardNormal'], isEmpty);
       expect(detail['cardGold'], isEmpty);
+      expect(detail['cardEvidence'], isA<Map>());
     }
   });
 
-  test('Centipede and Termite Queen preserve their source boundaries', () {
+  test('Skritch and Termite Queen preserve their enriched source boundaries', () {
     final centipede = _json('assets/data/creatures/en/details/g2_centipede.json');
     final queen = _json('assets/data/creatures/en/details/g2_termite_queen.json');
     expect((centipede['health'] as Map)['value'], 9000);
+    expect(centipede['name'], 'Skritch');
+    expect(centipede['description'], isNot(contains('<')));
+    expect((centipede['attacks'] as List), hasLength(19));
+    expect(centipede['cardEvidence']['normal'], 'T_UI_Tier4_Centipede');
     expect(centipede['technicalId'], 'Centipede');
     expect(queen['isKillable'], isFalse);
     expect(queen['health'], isNull);
     expect(queen['attacks'], isEmpty);
+    expect(queen['interactionInfo']['offerings'], hasLength(2));
+    expect(queen['interactionInfo']['rewards'], hasLength(1));
+  });
+
+  test('official EN/ES runtime text is clean and RU is populated', () {
+    final en = _json('assets/data/creatures/en/details/g2_termite_nymph.json');
+    final es = _json('assets/data/creatures/es/details/g2_termite_nymph.json');
+    final ru = _json('assets/data/creatures/ru/details/g2_termite_nymph.json');
+    expect(en['name'], 'Termite Larva');
+    expect(es['name'], 'Termita larva');
+    expect(ru['name'], 'Личинка термита');
+    for (final detail in [en, es, ru]) {
+      expect(detail['description'], isNot(contains('<')));
+      expect(detail['description'], isNot(contains('--->')));
+    }
+  });
+
+  test('recovered default-combo and death attacks remain visible', () {
+    final worker = _json('assets/data/creatures/en/details/g2_termite_worker.json');
+    final king = _json('assets/data/creatures/en/details/g2_termite_king.json');
+    final workerMoves = (worker['attacks'] as List).map((row) => row['technicalId']);
+    final kingMoves = (king['attacks'] as List).map((row) => row['technicalId']);
+    expect(workerMoves, contains('TermiteWorkerLunge'));
+    expect(kingMoves, contains('TermiteKingSacrifice'));
   });
 
   test('Potato Beetle Buggy has source-backed hatchery data without cards', () {

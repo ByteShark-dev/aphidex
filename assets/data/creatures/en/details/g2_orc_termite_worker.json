@@ -3,7 +3,7 @@
   "speciesKey": "orc_termite_worker",
   "technicalId": "TermiteWorkerORC",
   "bestiaryId": "TermiteWorkerORC",
-  "name": "Termite Worker O.R.C.",
+  "name": "O.R.C. Termite Worker",
   "game": "g2",
   "tier": 4,
   "danger": "unknown",
@@ -125,15 +125,112 @@
       "hitResolutionType": "AOE",
       "actionType": "projectile",
       "blockability": "unknown"
+    },
+    {
+      "name": "Termite Worker Bite Right",
+      "technicalId": "TermiteWorkerBiteRight",
+      "tags": [
+        "chopping"
+      ],
+      "damageTypes": [
+        "chopping"
+      ],
+      "damage": 68.0,
+      "cooldownSeconds": null,
+      "range": 150.0,
+      "stun": 4,
+      "statusEffects": [],
+      "statusEffectDetails": [],
+      "ranged": false,
+      "projectile": false,
+      "hitResolutionType": "Default",
+      "actionType": "melee",
+      "blockability": "unknown"
     }
   ],
   "combatStats": {
     "health": 960,
-    "stunThreshold": 75,
-    "stunCooldownSeconds": 10
+    "stunThreshold": 75.0,
+    "stunCooldownSeconds": 10.0
   },
-  "loot": [],
-  "advancedLootTable": [],
+  "loot": [
+    {
+      "section": "loot",
+      "item": "Acid Gland",
+      "minCount": 0,
+      "maxCount": 2
+    },
+    {
+      "section": "loot",
+      "item": "O.R.C.Chip",
+      "minCount": 0,
+      "maxCount": 1
+    },
+    {
+      "section": "loot",
+      "item": "Termite Part",
+      "minCount": 1,
+      "maxCount": 6
+    }
+  ],
+  "advancedLootTable": [
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Acid Gland",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "O.R.C.Chip",
+      "countLabel": "1",
+      "chancePct": 25,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "2",
+      "chancePct": 50,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 100,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    },
+    {
+      "item": "Termite Part",
+      "countLabel": "1",
+      "chancePct": 1,
+      "rollCount": 1,
+      "notes": null
+    }
+  ],
   "locations": [],
   "environments": [],
   "eventAppearances": [],
@@ -141,9 +238,17 @@
   "encounterVariants": [],
   "availabilityStatus": "implemented_unconfirmed",
   "sourceProvenance": {
-    "extractorStatus": "implemented_unconfirmed",
     "extractorTechnicalId": "TermiteWorkerORC",
-    "source": "Release 0.6 current Bestiary/CharacterData; no encounter or summon proof"
+    "extractorStatus": "resolved_release_0_6_completion",
+    "localization": "resolved_runtime_en_es_MX",
+    "locationStatus": "not_resolved"
   },
-  "dataRevision": "extractor_release_0_6"
+  "dataRevision": "extractor_release_0_6_completion",
+  "description": "A termite soldier with divided loyalties. It can drop an O.R.C. Receiver on death as well as its creature parts.",
+  "cardEvidence": {
+    "normal": "T_UI_Tier3_TermiteWorker_ORC",
+    "gold": "T_UI_Tier3_TermiteWorker_ORC_G",
+    "goldChance": 0.01,
+    "status": "source_texture_resolved_asset_not_distributed"
+  }
 }
