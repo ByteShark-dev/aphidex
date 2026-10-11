@@ -93,6 +93,18 @@ EDITORIAL_ES = {
     "TermiteWorkerORC": {"behavior": "Una obrera desviada de la colonia para servir a C.R.O.; conserva el patrón de grupo de la obrera normal.", "interactionWithPlayer": "Ataca en grupo con mordidas, embestidas y tierra a distancia.", "interactionWithCreatures": "Acompaña a las fuerzas C.R.O. y no a la colonia del termitero.", "strategy": "El daño de área sigue siendo la respuesta más eficiente; no dejes que varios proyectiles de tierra te recorten el espacio.", "temperament": "aggressive", "collectionGroup": "orc"},
 }
 
+EDITORIAL_ES_EXPANSIONS = {
+    "Centipede": {"behavior": " No pelea como un enemigo común: domina el espacio vertical de la arena y sus recorridos obligan a leer el suelo y los muros a la vez.", "interactionWithPlayer": " Su peligro real es encadenar varios impactos pequeños mientras se mueve sobre ti, no sólo un golpe aislado.", "interactionWithCreatures": " La mecánica de larvas cambia la prioridad del combate: ignorarlas puede prolongar una pelea ya muy resistente.", "strategy": " Conserva resistencia para sus cambios de posición; perseguirlo durante una excavación suele dejarte expuesto."},
+    "TermiteKing": {"behavior": " La sensación es la de un guardián de cámara, no la de una criatura errante: protege su zona hasta que el intruso cae o se retira.", "interactionWithPlayer": " Sus golpes a distancia complican curarse o recuperar resistencia fuera de su alcance inmediato.", "strategy": " No lo encierres contra una pared: deja una ruta de salida para su cadena y para la explosión de muerte."},
+    "TermiteKingOGRE": {"behavior": " La infusión no cambia su identidad de rey, pero transforma un duelo ordenado en una prueba de disciplina y selección de daño.", "strategy": " Lleva una alternativa de daño antes de entrar; insistir contra resistencias sólo alarga el combate y aumenta los errores."},
+    "TermiteNymph": {"behavior": " Su inmovilidad no significa que sea irrelevante: su valor está en los recursos y en el vínculo con los eventos del termitero.", "strategy": " Si hay combate alrededor, elimina primero las larvas que Ciempiés pueda alcanzar; después recoge con calma."},
+    "TermiteQueen": {"behavior": " La ficha la trata como autoridad social de la colonia, no como objetivo de combate.", "interactionWithPlayer": " La decisión importante es qué ofrenda entregar; Aphidex no presenta esa recompensa como botín ni como una muerte posible."},
+    "TermiteSoldier": {"behavior": " Su papel es comprar tiempo para el resto del grupo: llega tarde a la línea frontal, pero castiga al jugador que se queda rodeado.", "strategy": " Tras derribarla, no corras hacia el botín de inmediato: confirma primero que el radio del sacrificio terminó."},
+    "TermiteSoldierORC": {"behavior": " La estética C.R.O. deja claro que ya no combate por protección territorial, sino como parte de una fuerza hostil organizada.", "strategy": " Si comparte encuentro con una criatura élite, gana espacio primero y vuelve por el soldado cuando no pueda forzarte una explosión."},
+    "TermiteWorker": {"behavior": " Por sí sola es manejable; el riesgo aparece cuando varias obreras mezclan mordidas y tierra en un pasillo estrecho.", "strategy": " No te quedes retrocediendo en línea recta: abre el grupo con daño de área y desplázate por sus flancos."},
+    "TermiteWorkerORC": {"behavior": " Conserva su función de masa y control de espacio, ahora al servicio de C.R.O.", "strategy": " Separa al grupo antes de comprometerte con enemigos de mayor rango; sus ataques sencillos se vuelven peligrosos por acumulación."},
+}
+
 RELEASE_DANGER = {
     "Centipede": "imposible",  # one level below King Dozer
     "SpiderDivingBellOGRE": "muy_alta",
@@ -244,12 +256,12 @@ def polish_es_attack(attack: dict):
     ident = attack.get("technicalId", "").split("#")[0]
     names = {"CentipedeEatTermite": "Devorar larva", "CentipedeUnburrowWall_CA": "Salida desde el muro", "CentipedeCombo3": "Combo de tres golpes", "CentipedeCombo3Phase2": "Combo de tres golpes — fase 2", "CentipedeCombo5Phase2": "Combo de cinco golpes — fase 2", "CentipedeCombo5Phase3": "Combo de cinco golpes — fase 3", "CentipedeBodyslam": "Golpe corporal", "CentipedeTakePath_CA": "Recorrido por la arena", "CentipedeBurrowWall_CA": "Excavación en muro", "CentipedeGoToFarPoint_CA": "Reposicionamiento lejano", "CentipedeEmerge_CA": "Salida subterránea", "CentipedeBurrowGround_CA": "Excavación", "CentipedeEmergeMelee_CA": "Salida de emboscada", "SpiderDivingBellBite_Augusta": "Mordida", "SpiderDivingBellLunge_Augusta": "Embestida", "SpiderDivingBell_WaterDodge_Augusta": "Esquiva acuática", "TermiteKingBiteLeft": "Mordida", "TermiteKingMultiStrike": "Cadena de mandíbulas", "TermiteKingMultiStrike_5": "Cadena larga de mandíbulas", "TermiteKingPowerAttack": "Golpe potente", "TermiteKingRange": "Lanzamiento de tierra", "TermiteKingSacrifice": "Sacrificio explosivo", "TermiteSoldierBiteLeft": "Mordida", "TermiteSoldierBiteRight": "Mordida", "TermiteSoldierMultiStrike": "Cadena de mandíbulas", "TermiteSoldierPowerAttack": "Golpe potente", "TermiteSoldierShout": "Grito de combate", "TermiteSoldierSacrifice": "Sacrificio explosivo", "TermiteWorkerBiteLeft": "Mordida", "TermiteWorkerBiteRight": "Mordida", "TermiteWorkerLunge": "Embestida", "TermiteWorkerRange": "Lanzamiento de tierra", "BlockOffensive": "Bloqueo ofensivo"}
     attack["name"] = names.get(ident, attack.get("name"))
-    if ident == "CentipedeEatTermite": attack.update({"tell": "Caen larvas del techo y Ciempiés corre hacia ellas.", "howToAvoid": "Elimina las larvas antes de que las alcance.", "notes": "Puede curarse al devorarlas; el daño de área corta la curación."})
-    elif "Sacrifice" in ident: attack.update({"tell": "La termita queda expuesta al final de su vida.", "howToAvoid": "Aléjate en cuanto caiga.", "notes": "Explosión de área."})
-    elif "Range" in ident: attack.update({"tell": "Se orienta a distancia y prepara tierra para lanzar.", "howToAvoid": "Muévete lateralmente; no te quedes quieto.", "notes": "Presión a distancia."})
-    elif "Lunge" in ident or "Power" in ident or "Bodyslam" in ident: attack.update({"tell": "Se afirma antes de lanzarse.", "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.", "notes": "Ataque de compromiso."})
-    elif attack.get("damage", 0) > 0: attack.update({"tell": "Entra en alcance con las mandíbulas preparadas.", "howToAvoid": "Bloquea o desplázate fuera de su frente.", "notes": "Ataque directo."})
-    else: attack.update({"tell": "Cambia de posición o prepara su siguiente patrón.", "howToAvoid": "Mantén distancia y observa la continuación.", "notes": "Movimiento o utilidad; no confirma daño directo."})
+    if ident == "CentipedeEatTermite": attack.update({"tell": "Caen larvas del techo y Ciempiés corre hacia ellas, ignorando momentáneamente al jugador.", "howToAvoid": "Elimina las larvas antes de que las alcance; el área es más segura que perseguirlo a melee.", "notes": "Puede curarse al devorarlas. Es una prioridad de control de objetivos, no un ataque directo."})
+    elif "Sacrifice" in ident: attack.update({"tell": "La termita queda expuesta al final de su vida y su cuerpo anuncia la detonación.", "howToAvoid": "Aléjate en cuanto caiga y espera a que termine el radio antes de volver.", "notes": "Explosión de área: el peligro es castigarla demasiado cerca al rematarla."})
+    elif "Range" in ident: attack.update({"tell": "Se orienta a distancia y prepara tierra para lanzarla hacia tu posición.", "howToAvoid": "Muévete lateralmente y evita curarte quieto; retroceder recto suele conservar su línea de tiro.", "notes": "Presión a distancia para obligarte a entrar en su grupo."})
+    elif "Lunge" in ident or "Power" in ident or "Bodyslam" in ident: attack.update({"tell": "Se afirma un instante antes de comprometerse en un golpe frontal.", "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.", "notes": "Ataque de compromiso que abre una ventana si falla."})
+    elif attack.get("damage", 0) > 0: attack.update({"tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.", "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.", "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."})
+    else: attack.update({"tell": "Cambia de posición o prepara la continuación de su patrón.", "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.", "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."})
 
 
 def normalized_loot(technical_id: str, loot_domain: dict):
@@ -466,6 +478,8 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
     if language == "es" and technical_id in EDITORIAL_ES:
         editorial = EDITORIAL_ES[technical_id]
         detail.update({key: value for key, value in editorial.items() if key != "environments"})
+        for field, addition in EDITORIAL_ES_EXPANSIONS.get(technical_id, {}).items():
+            detail[field] = f"{detail[field]}{addition}"
         if editorial.get("environments"):
             detail["environments"] = editorial["environments"]
         for attack in detail["attacks"]:

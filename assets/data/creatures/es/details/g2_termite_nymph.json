@@ -110,8 +110,8 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "Permanece en el suelo girando y brillando en pequeños grupos; no tiene ataques enlazados demostrables.",
+  "behavior": "Permanece en el suelo girando y brillando en pequeños grupos; no tiene ataques enlazados demostrables. Su inmovilidad no significa que sea irrelevante: su valor está en los recursos y en el vínculo con los eventos del termitero.",
   "interactionWithPlayer": "No huye ni contraataca: es una presa fácil y una fuente de recursos.",
   "interactionWithCreatures": "Las larvas aparecen junto a termitas y sirven de alimento a Ciempiés; encontrarlas suele delatar actividad del termitero.",
-  "strategy": "Un golpe cargado basta. Contra grupos, el disparo ácido de la Buggie hormiga soldado negra ayuda a despejar sin acercarte a todas."
+  "strategy": "Un golpe cargado basta. Contra grupos, el disparo ácido de la Buggie hormiga soldado negra ayuda a despejar sin acercarte a todas. Si hay combate alrededor, elimina primero las larvas que Ciempiés pueda alcanzar; después recoge con calma."
 }

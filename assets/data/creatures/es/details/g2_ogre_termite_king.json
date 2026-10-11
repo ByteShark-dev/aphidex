@@ -73,9 +73,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Cadena de mandíbulas",
@@ -97,9 +97,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Golpe potente",
@@ -121,9 +121,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Se afirma antes de lanzarse.",
-      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
-      "notes": "Ataque de compromiso."
+      "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+      "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+      "notes": "Ataque de compromiso que abre una ventana si falla."
     },
     {
       "name": "Cadena larga de mandíbulas",
@@ -145,9 +145,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Bloqueo ofensivo",
@@ -167,9 +167,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Lanzamiento de tierra",
@@ -191,9 +191,9 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown",
-      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
-      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
-      "notes": "Presión a distancia."
+      "tell": "Se orienta a distancia y prepara tierra para lanzarla hacia tu posición.",
+      "howToAvoid": "Muévete lateralmente y evita curarte quieto; retroceder recto suele conservar su línea de tiro.",
+      "notes": "Presión a distancia para obligarte a entrar en su grupo."
     },
     {
       "name": "Sacrificio explosivo",
@@ -215,9 +215,9 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown",
-      "tell": "La termita queda expuesta al final de su vida.",
-      "howToAvoid": "Aléjate en cuanto caiga.",
-      "notes": "Explosión de área."
+      "tell": "La termita queda expuesta al final de su vida y su cuerpo anuncia la detonación.",
+      "howToAvoid": "Aléjate en cuanto caiga y espera a que termine el radio antes de volver.",
+      "notes": "Explosión de área: el peligro es castigarla demasiado cerca al rematarla."
     }
   ],
   "combatStats": {
@@ -377,8 +377,8 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "La versión I.R.G.O. sustituye al rey normal en la versión actual del contenido; mantiene su patrón, pero su infusión lo vuelve mucho más exigente.",
+  "behavior": "La versión I.R.G.O. sustituye al rey normal en la versión actual del contenido; mantiene su patrón, pero su infusión lo vuelve mucho más exigente. La infusión no cambia su identidad de rey, pero transforma un duelo ordenado en una prueba de disciplina y selección de daño.",
   "interactionWithPlayer": "Presiona con el mismo repertorio del rey mientras sus resistencias reducen las opciones cómodas de daño.",
   "interactionWithCreatures": "Dirige a las termitas bajo control I.R.G.O., separado de la colonia normal.",
-  "strategy": "Trátalo como al rey, pero no intercambies golpes: despeja los acompañantes, respeta sus ventanas y evita el sacrificio final."
+  "strategy": "Trátalo como al rey, pero no intercambies golpes: despeja los acompañantes, respeta sus ventanas y evita el sacrificio final. Lleva una alternativa de daño antes de entrar; insistir contra resistencias sólo alarga el combate y aumenta los errores."
 }

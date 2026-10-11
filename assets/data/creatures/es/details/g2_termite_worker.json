@@ -86,9 +86,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Embestida",
@@ -110,9 +110,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Se afirma antes de lanzarse.",
-      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
-      "notes": "Ataque de compromiso."
+      "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+      "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+      "notes": "Ataque de compromiso que abre una ventana si falla."
     },
     {
       "name": "Lanzamiento de tierra",
@@ -135,9 +135,9 @@
       "hitResolutionType": "AOE",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
-      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
-      "notes": "Presión a distancia."
+      "tell": "Se orienta a distancia y prepara tierra para lanzarla hacia tu posición.",
+      "howToAvoid": "Muévete lateralmente y evita curarte quieto; retroceder recto suele conservar su línea de tiro.",
+      "notes": "Presión a distancia para obligarte a entrar en su grupo."
     },
     {
       "name": "Mordida",
@@ -159,9 +159,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     }
   ],
   "combatStats": {
@@ -256,8 +256,8 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "A diferencia de G1, se mantiene dentro del nido para proteger a su colonia y a sus reyes.",
+  "behavior": "A diferencia de G1, se mantiene dentro del nido para proteger a su colonia y a sus reyes. Por sí sola es manejable; el riesgo aparece cuando varias obreras mezclan mordidas y tierra en un pasillo estrecho.",
   "interactionWithPlayer": "Lanza tierra y muerde al jugador al detectarlo.",
   "interactionWithCreatures": "Forma grupos densos con otras termitas y con frecuencia comparte espacio con Ciempiés.",
-  "strategy": "Usa daño de área para controlar los grupos antes de que sus mordidas y proyectiles te encierren."
+  "strategy": "Usa daño de área para controlar los grupos antes de que sus mordidas y proyectiles te encierren. No te quedes retrocediendo en línea recta: abre el grupo con daño de área y desplázate por sus flancos."
 }

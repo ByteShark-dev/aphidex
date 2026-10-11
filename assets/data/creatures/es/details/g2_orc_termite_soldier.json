@@ -82,9 +82,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Cadena de mandíbulas",
@@ -106,9 +106,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Cadena de mandíbulas",
@@ -130,9 +130,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Golpe potente",
@@ -154,9 +154,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Se afirma antes de lanzarse.",
-      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
-      "notes": "Ataque de compromiso."
+      "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+      "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+      "notes": "Ataque de compromiso que abre una ventana si falla."
     },
     {
       "name": "Bloqueo ofensivo",
@@ -176,9 +176,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Grito de combate",
@@ -196,9 +196,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Sacrificio explosivo",
@@ -220,9 +220,9 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown",
-      "tell": "La termita queda expuesta al final de su vida.",
-      "howToAvoid": "Aléjate en cuanto caiga.",
-      "notes": "Explosión de área."
+      "tell": "La termita queda expuesta al final de su vida y su cuerpo anuncia la detonación.",
+      "howToAvoid": "Aléjate en cuanto caiga y espera a que termine el radio antes de volver.",
+      "notes": "Explosión de área: el peligro es castigarla demasiado cerca al rematarla."
     },
     {
       "name": "Mordida",
@@ -244,9 +244,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     }
   ],
   "combatStats": {
@@ -372,8 +372,8 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "Controlada por C.R.O., combate para el ejército de la Enmascarada y deja atrás la defensa de su colonia.",
+  "behavior": "Controlada por C.R.O., combate para el ejército de la Enmascarada y deja atrás la defensa de su colonia. La estética C.R.O. deja claro que ya no combate por protección territorial, sino como parte de una fuerza hostil organizada.",
   "interactionWithPlayer": "En encuentros de la Enmascarada puede ser una molestia secundaria; evita quedarte a su alcance si hay una amenaza mayor.",
   "interactionWithCreatures": "Actúa junto a fuerzas C.R.O. en vez de respaldar al termitero.",
-  "strategy": "No la ignores si prepara el sacrificio, pero prioriza la amenaza principal y elimina al soldado cuando tengas una ventana segura."
+  "strategy": "No la ignores si prepara el sacrificio, pero prioriza la amenaza principal y elimina al soldado cuando tengas una ventana segura. Si comparte encuentro con una criatura élite, gana espacio primero y vuelve por el soldado cuando no pueda forzarte una explosión."
 }

@@ -100,9 +100,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Caen larvas del techo y Ciempiés corre hacia ellas.",
-      "howToAvoid": "Elimina las larvas antes de que las alcance.",
-      "notes": "Puede curarse al devorarlas; el daño de área corta la curación."
+      "tell": "Caen larvas del techo y Ciempiés corre hacia ellas, ignorando momentáneamente al jugador.",
+      "howToAvoid": "Elimina las larvas antes de que las alcance; el área es más segura que perseguirlo a melee.",
+      "notes": "Puede curarse al devorarlas. Es una prioridad de control de objetivos, no un ataque directo."
     },
     {
       "name": "Salida desde el muro",
@@ -122,9 +122,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Combo de tres golpes",
@@ -146,9 +146,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Golpe corporal",
@@ -170,9 +170,9 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown",
-      "tell": "Se afirma antes de lanzarse.",
-      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
-      "notes": "Ataque de compromiso."
+      "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+      "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+      "notes": "Ataque de compromiso que abre una ventana si falla."
     },
     {
       "name": "Recorrido por la arena",
@@ -192,9 +192,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Recorrido por la arena",
@@ -214,9 +214,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Combo de tres golpes — fase 2",
@@ -246,9 +246,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Golpe corporal",
@@ -270,9 +270,9 @@
       "hitResolutionType": "AOE",
       "actionType": "aoe",
       "blockability": "unknown",
-      "tell": "Se afirma antes de lanzarse.",
-      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
-      "notes": "Ataque de compromiso."
+      "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+      "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+      "notes": "Ataque de compromiso que abre una ventana si falla."
     },
     {
       "name": "Excavación en muro",
@@ -292,9 +292,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Reposicionamiento lejano",
@@ -314,9 +314,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Recorrido por la arena",
@@ -336,9 +336,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Combo de cinco golpes — fase 2",
@@ -368,9 +368,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Recorrido por la arena",
@@ -390,9 +390,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Excavación en muro",
@@ -412,9 +412,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Salida subterránea",
@@ -437,9 +437,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Combo de cinco golpes — fase 3",
@@ -469,9 +469,9 @@
       "hitResolutionType": "Default",
       "actionType": "melee",
       "blockability": "unknown",
-      "tell": "Entra en alcance con las mandíbulas preparadas.",
-      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
-      "notes": "Ataque directo."
+      "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+      "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+      "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
     },
     {
       "name": "Excavación",
@@ -491,9 +491,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Salida de emboscada",
@@ -516,9 +516,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     },
     {
       "name": "Recorrido por la arena",
@@ -538,9 +538,9 @@
       "hitResolutionType": "Default",
       "actionType": "projectile",
       "blockability": "unknown",
-      "tell": "Cambia de posición o prepara su siguiente patrón.",
-      "howToAvoid": "Mantén distancia y observa la continuación.",
-      "notes": "Movimiento o utilidad; no confirma daño directo."
+      "tell": "Cambia de posición o prepara la continuación de su patrón.",
+      "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+      "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
     }
   ],
   "combatStats": {
@@ -856,8 +856,8 @@
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos.",
-  "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable.",
-  "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada.",
-  "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto."
+  "behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos. No pelea como un enemigo común: domina el espacio vertical de la arena y sus recorridos obligan a leer el suelo y los muros a la vez.",
+  "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable. Su peligro real es encadenar varios impactos pequeños mientras se mueve sobre ti, no sólo un golpe aislado.",
+  "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada. La mecánica de larvas cambia la prioridad del combate: ignorarlas puede prolongar una pelea ya muy resistente.",
+  "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto. Conserva resistencia para sus cambios de posición; perseguirlo durante una excavación suele dejarte expuesto."
 }

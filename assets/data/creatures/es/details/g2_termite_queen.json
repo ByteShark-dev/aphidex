@@ -65,8 +65,8 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
-  "behavior": "Gobierna desde el fondo del termitero mientras las larvas y las termitas sostienen su colonia. No combate; espera propuestas de intercambio.",
-  "interactionWithPlayer": "Su interacción es por ofrendas. Hay dos rutas de alimento; el extractor confirma una recompensa de interacción, no botín de muerte.",
+  "behavior": "Gobierna desde el fondo del termitero mientras las larvas y las termitas sostienen su colonia. No combate; espera propuestas de intercambio. La ficha la trata como autoridad social de la colonia, no como objetivo de combate.",
+  "interactionWithPlayer": "Su interacción es por ofrendas. Hay dos rutas de alimento; el extractor confirma una recompensa de interacción, no botín de muerte. La decisión importante es qué ofrenda entregar; Aphidex no presenta esa recompensa como botín ni como una muerte posible.",
   "interactionWithCreatures": "Es el centro de la colonia: recibe la protección de sus súbditos y mantiene el ciclo de larvas, aun separada del rey.",
   "interactionInfo": {
     "type": "EInteractionType::Conversation",
