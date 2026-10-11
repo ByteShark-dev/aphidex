@@ -305,6 +305,7 @@ BUGGY_PUBLIC_IDS = frozenset(BUGGY_IDS.values())
 # turns those facts into player-facing prose.
 BUGGY_ES_COPY = {
     "g2_buggy_ladybug": {
+        "name": "Buggie mariquita",
         "description": "La Buggie defensiva por excelencia. Incubada a partir de una mariquita, sacrifica velocidad por una resistencia excepcional y un cañón de agua que le permite avanzar mientras mantiene la presión. Es la compañera indicada para sostener una posición, proteger al jinete y sobrevivir donde otras Buggies tendrían que retirarse.",
         "behavior": "No persigue con la agilidad de la araña ni transporta con la fuerza bruta de las hormigas: absorbe el castigo, conserva la distancia media y usa el cuerpo para apartar a quien se acerque demasiado. Mientras tenga espacio, puede seguir disparando al avanzar.",
     },

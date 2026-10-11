@@ -29,8 +29,8 @@
       "stabbingArrowsOnly"
     ]
   },
-  "description": "La montura temprana de carga de Grounded 2. Se incuba en el Hatchery con 1 Red Soldier Ant Egg, 2 Grub Hide, 3 Sprig y 1 Acorn Shell, y destaca por transportar materiales, abrir paso por túneles estrechos y pelear con una agresividad simple pero muy práctica.",
-  "behavior": "Sigue al jugador de forma pasiva hasta recibir una orden y entra en combate automáticamente si algo amenaza al jinete. Su patrón es directo: muerde, embiste y aprovecha bien el espacio corto, así que se siente como una montura de trabajo antes que como una bestia técnica.",
+  "description": "La Buggie de carga ideal para las primeras expediciones. La hormiga soldado roja combina transporte de materiales, movilidad en túneles estrechos y un combate directo que resulta fiable cuando todavía faltan herramientas especializadas. Es una montura de trabajo que también sabe abrirse paso.",
+  "behavior": "Sigue al jugador hasta recibir una orden y defiende al jinete cuando aparece una amenaza. Su plan es sencillo y eficaz: morder, embestir y aprovechar los espacios cerrados para no dejar escapar al objetivo.",
   "interactionWithPlayer": "Puede cargar hasta 12 objetos de acarreo o 1 huevo separado del jugador, permite construir mientras vas montado y puede lanzar lo que lleve en las mandíbulas. Cerca de una Red Worker Ant también puede reclutar una obrera para que siga a la montura y pelee contigo.",
   "interactionWithCreatures": "Las hormigas rojas no la atacan mientras no haya fuego amigo, y la obrera reclutada hereda esa misma alianza. Fuera de la colonia se comporta como una montura territorial: responde rápido a cualquier criatura que se meta en su camino.",
   "strategy": "Es la mejor opción para progreso temprano y para cargar base entre zonas estrechas. Recluta una obrera antes de una pelea larga, usa la embestida para abrir distancia y guarda la orden de lanzamiento para mover huevos, materiales o rematar blancos pequeños.",

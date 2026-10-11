@@ -32,8 +32,8 @@
       "stabbingArrowsOnly"
     ]
   },
-  "description": "La mejora tardía de la buggy hormiga roja. Se incuba con 1 Black Soldier Ant Egg, 2 Pinecone Piece, 3 Pine Needle y 2 Chrysalis Leather, y conserva la utilidad de carga y reclutamiento mientras añade un lanzamiento corrosivo de Tang para controlar espacio.",
-  "behavior": "Se mueve como una versión más pesada y segura de la buggy roja. Sigue mordiendo y embistiendo para fijar objetivos, pero ahora también corta rutas con corrosión, así que obliga a pelear alrededor de sus charcos y no solo frente a sus mandíbulas.",
+  "description": "La mejora táctica de la Buggie hormiga soldado roja. Conserva su capacidad de carga y reclutamiento, pero añade el lanzamiento corrosivo de Tang para controlar rutas, separar grupos y convertir una zona estrecha en territorio peligroso para los enemigos.",
+  "behavior": "Es más pesada y segura que la variante roja. Puede fijar objetivos con mordidas y embestidas, pero su mayor ventaja es negar el paso con corrosión: obliga a los enemigos a rodear sus charcos o a combatir dentro de ellos.",
   "interactionWithPlayer": "Mantiene la capacidad de cargar materiales, construir montado y lanzar lo que transporte, pero su mejora real está en Tang Throw: una artillería corta que crea una zona corrosiva delante del buggy sin sacrificar movilidad.",
   "interactionWithCreatures": "Las hormigas negras se mantienen pasivas hacia ella salvo fuego amigo, y una Black Worker Ant reclutada peleará junto a la montura. Contra otras criaturas funciona como una montura de presión: aguanta mejor que la roja y deja terreno peligroso detrás de cada avance.",
   "strategy": "Úsala cuando la ruta y la pelea importan al mismo tiempo. Recluta una obrera negra para sumar daño gratis, usa Tang Throw para cerrar accesos o limpiar una retirada, y aprovecha su mejor resistencia para empujar donde la buggy roja ya sufriría demasiado.",
