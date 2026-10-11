@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "termite",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -67,7 +67,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Termite King Bite Left",
+      "name": "Mordida",
       "technicalId": "TermiteKingBiteLeft",
       "tags": [
         "chopping"
@@ -85,10 +85,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite King Multi Strike",
+      "name": "Cadena de mandíbulas",
       "technicalId": "TermiteKingMultiStrike",
       "tags": [
         "chopping"
@@ -106,10 +109,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite King Power Attack",
+      "name": "Golpe potente",
       "technicalId": "TermiteKingPowerAttack",
       "tags": [
         "chopping"
@@ -127,10 +133,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Termite King Multi Strike 5",
+      "name": "Cadena larga de mandíbulas",
       "technicalId": "TermiteKingMultiStrike_5",
       "tags": [
         "chopping"
@@ -148,10 +157,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Block Offensive",
+      "name": "Bloqueo ofensivo",
       "technicalId": "BlockOffensive",
       "tags": [
         "projectile"
@@ -167,10 +179,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Termite King Range",
+      "name": "Lanzamiento de tierra",
       "technicalId": "TermiteKingRange",
       "tags": [
         "chopping"
@@ -188,10 +203,13 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
+      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
+      "notes": "Presión a distancia."
     },
     {
-      "name": "Termite King Sacrifice",
+      "name": "Sacrificio explosivo",
       "technicalId": "TermiteKingSacrifice",
       "tags": [
         "explosive"
@@ -209,7 +227,10 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "La termita queda expuesta al final de su vida.",
+      "howToAvoid": "Aléjate en cuanto caiga.",
+      "notes": "Explosión de área."
     }
   ],
   "combatStats": {
@@ -324,7 +345,9 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termitero — sala del rey (sin spawn confirmado)"
+  ],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
@@ -342,5 +365,9 @@
     "gold": "T_UI_Tier3_KingTermite_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Permanece en su cámara y responde al intruso con una rotación de mordidas, golpes y tierra a distancia. Al morir libera una explosión.",
+  "interactionWithPlayer": "Ataca de inmediato y combina mordidas, empujones y proyectiles de tierra.",
+  "interactionWithCreatures": "Aunque está apartado de la reina, conserva autoridad sobre el termitero y combate rodeado de sus súbditos.",
+  "strategy": "Limpia primero a las termitas cercanas; después aprende el ritmo de su cadena de ataques y aléjate al caer para evitar el sacrificio explosivo."
 }

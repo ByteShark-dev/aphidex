@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "passive",
+  "collectionGroup": "termite",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -88,7 +88,10 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termitero",
+    "Pozo de sacrificios"
+  ],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
@@ -106,5 +109,9 @@
     "gold": "T_UI_Tier4_TermiteLarva_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Permanece en el suelo girando y brillando en pequeños grupos; no tiene ataques enlazados demostrables.",
+  "interactionWithPlayer": "No huye ni contraataca: es una presa fácil y una fuente de recursos.",
+  "interactionWithCreatures": "Las larvas aparecen junto a termitas y sirven de alimento a Ciempiés; encontrarlas suele delatar actividad del termitero.",
+  "strategy": "Un golpe cargado basta. Contra grupos, el disparo ácido de la Buggie hormiga soldado negra ayuda a despejar sin acercarte a todas."
 }

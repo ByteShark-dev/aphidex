@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "termite",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -67,7 +67,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Termite Worker Bite Left",
+      "name": "Mordida",
       "technicalId": "TermiteWorkerBiteLeft",
       "tags": [
         "chopping"
@@ -85,10 +85,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite Worker Lunge",
+      "name": "Embestida",
       "technicalId": "TermiteWorkerLunge",
       "tags": [
         "chopping"
@@ -106,10 +109,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Termite Worker Range",
+      "name": "Lanzamiento de tierra",
       "technicalId": "TermiteWorkerRange",
       "tags": [
         "general",
@@ -128,10 +134,13 @@
       "projectile": true,
       "hitResolutionType": "AOE",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
+      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
+      "notes": "Presión a distancia."
     },
     {
-      "name": "Termite Worker Bite Right",
+      "name": "Mordida",
       "technicalId": "TermiteWorkerBiteRight",
       "tags": [
         "chopping"
@@ -149,7 +158,10 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     }
   ],
   "combatStats": {
@@ -223,7 +235,9 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termitero"
+  ],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
@@ -241,5 +255,9 @@
     "gold": "T_UI_Tier3_TermiteWorker",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "A diferencia de G1, se mantiene dentro del nido para proteger a su colonia y a sus reyes.",
+  "interactionWithPlayer": "Lanza tierra y muerde al jugador al detectarlo.",
+  "interactionWithCreatures": "Forma grupos densos con otras termitas y con frecuencia comparte espacio con Ciempiés.",
+  "strategy": "Usa daño de área para controlar los grupos antes de que sus mordidas y proyectiles te encierren."
 }

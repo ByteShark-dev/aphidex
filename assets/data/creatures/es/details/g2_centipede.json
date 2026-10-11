@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "boss",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -81,7 +81,7 @@
   ],
   "attacks": [
     {
-      "name": "Centipede Eat Larva Only",
+      "name": "Devorar larva",
       "technicalId": "CentipedeEatTermite",
       "tags": [
         "general"
@@ -99,10 +99,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Caen larvas del techo y Ciempiés corre hacia ellas.",
+      "howToAvoid": "Elimina las larvas antes de que las alcance.",
+      "notes": "Puede curarse al devorarlas; el daño de área corta la curación."
     },
     {
-      "name": "Centipede Unburrow Wall CA",
+      "name": "Salida desde el muro",
       "technicalId": "CentipedeUnburrowWall_CA",
       "tags": [
         "projectile"
@@ -118,10 +121,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Combo3",
+      "name": "Combo de tres golpes",
       "technicalId": "CentipedeCombo3",
       "tags": [
         "general"
@@ -139,10 +145,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Centipede Bodyslam",
+      "name": "Golpe corporal",
       "technicalId": "CentipedeBodyslam",
       "tags": [
         "general"
@@ -160,10 +169,13 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Centipede Take Path CA",
+      "name": "Recorrido por la arena",
       "technicalId": "CentipedeTakePath_CA",
       "tags": [
         "projectile"
@@ -179,10 +191,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Take Path CA",
+      "name": "Recorrido por la arena",
       "technicalId": "CentipedeTakePath_CA#2",
       "tags": [
         "projectile"
@@ -198,10 +213,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Combo3 Phase2",
+      "name": "Combo de tres golpes — fase 2",
       "technicalId": "CentipedeCombo3Phase2",
       "tags": [
         "general"
@@ -227,10 +245,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Centipede Bodyslam",
+      "name": "Golpe corporal",
       "technicalId": "CentipedeBodyslam#2",
       "tags": [
         "general"
@@ -248,10 +269,13 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Centipede Burrow Wall CA",
+      "name": "Excavación en muro",
       "technicalId": "CentipedeBurrowWall_CA",
       "tags": [
         "projectile"
@@ -267,10 +291,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Go To Far Point CA",
+      "name": "Reposicionamiento lejano",
       "technicalId": "CentipedeGoToFarPoint_CA",
       "tags": [
         "projectile"
@@ -286,10 +313,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Take Path CA",
+      "name": "Recorrido por la arena",
       "technicalId": "CentipedeTakePath_CA#3",
       "tags": [
         "projectile"
@@ -305,10 +335,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Combo5 Phase2",
+      "name": "Combo de cinco golpes — fase 2",
       "technicalId": "CentipedeCombo5Phase2",
       "tags": [
         "general"
@@ -334,10 +367,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Centipede Take Path CA",
+      "name": "Recorrido por la arena",
       "technicalId": "CentipedeTakePath_CA#4",
       "tags": [
         "projectile"
@@ -353,10 +389,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Burrow Wall CA",
+      "name": "Excavación en muro",
       "technicalId": "CentipedeBurrowWall_CA#2",
       "tags": [
         "projectile"
@@ -372,10 +411,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Emerge CA",
+      "name": "Salida subterránea",
       "technicalId": "CentipedeEmerge_CA",
       "tags": [
         "general",
@@ -394,10 +436,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Combo5 Phase3",
+      "name": "Combo de cinco golpes — fase 3",
       "technicalId": "CentipedeCombo5Phase3",
       "tags": [
         "general"
@@ -423,10 +468,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Centipede Burrow Ground CA",
+      "name": "Excavación",
       "technicalId": "CentipedeBurrowGround_CA",
       "tags": [
         "projectile"
@@ -442,10 +490,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Emerge Melee CA",
+      "name": "Salida de emboscada",
       "technicalId": "CentipedeEmergeMelee_CA",
       "tags": [
         "general",
@@ -464,10 +515,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Centipede Take Path CA",
+      "name": "Recorrido por la arena",
       "technicalId": "CentipedeTakePath_CA#5",
       "tags": [
         "projectile"
@@ -483,7 +537,10 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     }
   ],
   "combatStats": {
@@ -778,7 +835,9 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termitero — arena profunda (invocación)"
+  ],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
@@ -796,5 +855,9 @@
     "gold": "T_UI_Tier4_Centipede_G",
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos.",
+  "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable.",
+  "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada.",
+  "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto."
 }

@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "orc",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -63,7 +63,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Termite Worker Bite Left",
+      "name": "Mordida",
       "technicalId": "TermiteWorkerBiteLeft",
       "tags": [
         "chopping"
@@ -81,10 +81,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite Worker Lunge",
+      "name": "Embestida",
       "technicalId": "TermiteWorkerLunge",
       "tags": [
         "chopping"
@@ -102,10 +105,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Termite Worker Range",
+      "name": "Lanzamiento de tierra",
       "technicalId": "TermiteWorkerRange",
       "tags": [
         "general",
@@ -124,10 +130,13 @@
       "projectile": true,
       "hitResolutionType": "AOE",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
+      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
+      "notes": "Presión a distancia."
     },
     {
-      "name": "Termite Worker Bite Right",
+      "name": "Mordida",
       "technicalId": "TermiteWorkerBiteRight",
       "tags": [
         "chopping"
@@ -145,7 +154,10 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     }
   ],
   "combatStats": {
@@ -250,5 +262,9 @@
     "gold": "T_UI_Tier3_TermiteWorker_ORC_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Una obrera desviada de la colonia para servir a C.R.O.; conserva el patrón de grupo de la obrera normal.",
+  "interactionWithPlayer": "Ataca en grupo con mordidas, embestidas y tierra a distancia.",
+  "interactionWithCreatures": "Acompaña a las fuerzas C.R.O. y no a la colonia del termitero.",
+  "strategy": "El daño de área sigue siendo la respuesta más eficiente; no dejes que varios proyectiles de tierra te recorten el espacio."
 }

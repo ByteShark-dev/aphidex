@@ -81,6 +81,18 @@ APHIDEX_ES_NAME_OVERRIDES = {
     "SpiderDivingBellOGRE": "Araña campana buceadora I.R.G.O.",
 }
 
+EDITORIAL_ES = {
+    "Centipede": {"behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos.", "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable.", "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada.", "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto.", "temperament": "aggressive", "collectionGroup": "boss", "environments": ["Termitero — arena profunda (invocación)"]},
+    "TermiteKing": {"behavior": "Permanece en su cámara y responde al intruso con una rotación de mordidas, golpes y tierra a distancia. Al morir libera una explosión.", "interactionWithPlayer": "Ataca de inmediato y combina mordidas, empujones y proyectiles de tierra.", "interactionWithCreatures": "Aunque está apartado de la reina, conserva autoridad sobre el termitero y combate rodeado de sus súbditos.", "strategy": "Limpia primero a las termitas cercanas; después aprende el ritmo de su cadena de ataques y aléjate al caer para evitar el sacrificio explosivo.", "temperament": "aggressive", "collectionGroup": "termite", "environments": ["Termitero — sala del rey (sin spawn confirmado)"]},
+    "TermiteKingOGRE": {"behavior": "La versión I.R.G.O. sustituye al rey normal en la versión actual del contenido; mantiene su patrón, pero su infusión lo vuelve mucho más exigente.", "interactionWithPlayer": "Presiona con el mismo repertorio del rey mientras sus resistencias reducen las opciones cómodas de daño.", "interactionWithCreatures": "Dirige a las termitas bajo control I.R.G.O., separado de la colonia normal.", "strategy": "Trátalo como al rey, pero no intercambies golpes: despeja los acompañantes, respeta sus ventanas y evita el sacrificio final.", "temperament": "aggressive", "collectionGroup": "ogrr"},
+    "TermiteNymph": {"behavior": "Permanece en el suelo girando y brillando en pequeños grupos; no tiene ataques enlazados demostrables.", "interactionWithPlayer": "No huye ni contraataca: es una presa fácil y una fuente de recursos.", "interactionWithCreatures": "Las larvas aparecen junto a termitas y sirven de alimento a Ciempiés; encontrarlas suele delatar actividad del termitero.", "strategy": "Un golpe cargado basta. Contra grupos, el disparo ácido de la Buggie hormiga soldado negra ayuda a despejar sin acercarte a todas.", "temperament": "passive", "collectionGroup": "termite", "environments": ["Termitero", "Pozo de sacrificios"]},
+    "TermiteQueen": {"behavior": "Gobierna desde el fondo del termitero mientras las larvas y las termitas sostienen su colonia. No combate; espera propuestas de intercambio.", "interactionWithPlayer": "Su interacción es por ofrendas. Hay dos rutas de alimento; el extractor confirma una recompensa de interacción, no botín de muerte.", "interactionWithCreatures": "Es el centro de la colonia: recibe la protección de sus súbditos y mantiene el ciclo de larvas, aun separada del rey.", "temperament": "passive", "collectionGroup": "termite", "environments": ["Termitero — fondo (ubicación editorial pendiente de confirmar)"]},
+    "TermiteSoldier": {"behavior": "Permanece dentro del termitero, defendiendo a la colonia. Al caer puede explotar.", "interactionWithPlayer": "Ataca en cuanto detecta al jugador y usa mordidas, cadenas cortas y sacrificio explosivo.", "interactionWithCreatures": "Suele ir detrás de obreras y otras termitas, dejando que el grupo abra el combate.", "strategy": "Priorízala antes que a las obreras cuando el grupo se cierre y aléjate en cuanto caiga para no recibir la explosión.", "temperament": "aggressive", "collectionGroup": "termite", "environments": ["Termitero"]},
+    "TermiteSoldierORC": {"behavior": "Controlada por C.R.O., combate para el ejército de la Enmascarada y deja atrás la defensa de su colonia.", "interactionWithPlayer": "En encuentros de la Enmascarada puede ser una molestia secundaria; evita quedarte a su alcance si hay una amenaza mayor.", "interactionWithCreatures": "Actúa junto a fuerzas C.R.O. en vez de respaldar al termitero.", "strategy": "No la ignores si prepara el sacrificio, pero prioriza la amenaza principal y elimina al soldado cuando tengas una ventana segura.", "temperament": "aggressive", "collectionGroup": "orc"},
+    "TermiteWorker": {"behavior": "A diferencia de G1, se mantiene dentro del nido para proteger a su colonia y a sus reyes.", "interactionWithPlayer": "Lanza tierra y muerde al jugador al detectarlo.", "interactionWithCreatures": "Forma grupos densos con otras termitas y con frecuencia comparte espacio con Ciempiés.", "strategy": "Usa daño de área para controlar los grupos antes de que sus mordidas y proyectiles te encierren.", "temperament": "aggressive", "collectionGroup": "termite", "environments": ["Termitero"]},
+    "TermiteWorkerORC": {"behavior": "Una obrera desviada de la colonia para servir a C.R.O.; conserva el patrón de grupo de la obrera normal.", "interactionWithPlayer": "Ataca en grupo con mordidas, embestidas y tierra a distancia.", "interactionWithCreatures": "Acompaña a las fuerzas C.R.O. y no a la colonia del termitero.", "strategy": "El daño de área sigue siendo la respuesta más eficiente; no dejes que varios proyectiles de tierra te recorten el espacio.", "temperament": "aggressive", "collectionGroup": "orc"},
+}
+
 RELEASE_DANGER = {
     "Centipede": "imposible",  # one level below King Dozer
     "SpiderDivingBellOGRE": "muy_alta",
@@ -226,6 +238,18 @@ def localized_release_text(technical_id: str, source: dict, language: str):
     if language == "es":
         name = APHIDEX_ES_NAME_OVERRIDES.get(technical_id, name)
     return clean_description(name), clean_description(description)
+
+
+def polish_es_attack(attack: dict):
+    ident = attack.get("technicalId", "").split("#")[0]
+    names = {"CentipedeEatTermite": "Devorar larva", "CentipedeUnburrowWall_CA": "Salida desde el muro", "CentipedeCombo3": "Combo de tres golpes", "CentipedeCombo3Phase2": "Combo de tres golpes — fase 2", "CentipedeCombo5Phase2": "Combo de cinco golpes — fase 2", "CentipedeCombo5Phase3": "Combo de cinco golpes — fase 3", "CentipedeBodyslam": "Golpe corporal", "CentipedeTakePath_CA": "Recorrido por la arena", "CentipedeBurrowWall_CA": "Excavación en muro", "CentipedeGoToFarPoint_CA": "Reposicionamiento lejano", "CentipedeEmerge_CA": "Salida subterránea", "CentipedeBurrowGround_CA": "Excavación", "CentipedeEmergeMelee_CA": "Salida de emboscada", "SpiderDivingBellBite_Augusta": "Mordida", "SpiderDivingBellLunge_Augusta": "Embestida", "SpiderDivingBell_WaterDodge_Augusta": "Esquiva acuática", "TermiteKingBiteLeft": "Mordida", "TermiteKingMultiStrike": "Cadena de mandíbulas", "TermiteKingMultiStrike_5": "Cadena larga de mandíbulas", "TermiteKingPowerAttack": "Golpe potente", "TermiteKingRange": "Lanzamiento de tierra", "TermiteKingSacrifice": "Sacrificio explosivo", "TermiteSoldierBiteLeft": "Mordida", "TermiteSoldierBiteRight": "Mordida", "TermiteSoldierMultiStrike": "Cadena de mandíbulas", "TermiteSoldierPowerAttack": "Golpe potente", "TermiteSoldierShout": "Grito de combate", "TermiteSoldierSacrifice": "Sacrificio explosivo", "TermiteWorkerBiteLeft": "Mordida", "TermiteWorkerBiteRight": "Mordida", "TermiteWorkerLunge": "Embestida", "TermiteWorkerRange": "Lanzamiento de tierra", "BlockOffensive": "Bloqueo ofensivo"}
+    attack["name"] = names.get(ident, attack.get("name"))
+    if ident == "CentipedeEatTermite": attack.update({"tell": "Caen larvas del techo y Ciempiés corre hacia ellas.", "howToAvoid": "Elimina las larvas antes de que las alcance.", "notes": "Puede curarse al devorarlas; el daño de área corta la curación."})
+    elif "Sacrifice" in ident: attack.update({"tell": "La termita queda expuesta al final de su vida.", "howToAvoid": "Aléjate en cuanto caiga.", "notes": "Explosión de área."})
+    elif "Range" in ident: attack.update({"tell": "Se orienta a distancia y prepara tierra para lanzar.", "howToAvoid": "Muévete lateralmente; no te quedes quieto.", "notes": "Presión a distancia."})
+    elif "Lunge" in ident or "Power" in ident or "Bodyslam" in ident: attack.update({"tell": "Se afirma antes de lanzarse.", "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.", "notes": "Ataque de compromiso."})
+    elif attack.get("damage", 0) > 0: attack.update({"tell": "Entra en alcance con las mandíbulas preparadas.", "howToAvoid": "Bloquea o desplázate fuera de su frente.", "notes": "Ataque directo."})
+    else: attack.update({"tell": "Cambia de posición o prepara su siguiente patrón.", "howToAvoid": "Mantén distancia y observa la continuación.", "notes": "Movimiento o utilidad; no confirma daño directo."})
 
 
 def normalized_loot(technical_id: str, loot_domain: dict):
@@ -439,6 +463,13 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
         "locationStatus": fields["locationSpawn"].get("status"),
     }
     detail["dataRevision"] = "extractor_release_0_6_completion"
+    if language == "es" and technical_id in EDITORIAL_ES:
+        editorial = EDITORIAL_ES[technical_id]
+        detail.update({key: value for key, value in editorial.items() if key != "environments"})
+        if editorial.get("environments"):
+            detail["environments"] = editorial["environments"]
+        for attack in detail["attacks"]:
+            polish_es_attack(attack)
     if technical_id == "TermiteQueen":
         interaction = fields["interaction"]
         detail["interactionInfo"] = {
@@ -506,6 +537,14 @@ def apply_completion(args):
             buggy["danger"] = "unknown"
             if language == "es" and public_id == "g2_buggy_potato_beetle":
                 buggy["name"] = "Buggie Escarabajo de la papa"
+                buggy.update({
+                    "description": "Un Buggie pesado que recicla biomasa de enemigos derrotados para alimentar su cañón de residuos biológicos.",
+                    "behavior": "Acompañante resistente, similar a Ladybuggy, diseñado para aprovechar restos de combate.",
+                    "interactionWithPlayer": "Un aliado reciclador de biomasa; su cañón cobra valor cuando hay varios enemigos o combates prolongados.",
+                    "interactionWithCreatures": "Como los demás Buggies, combate junto al jugador en vez de comportarse como un enemigo independiente.",
+                    "strategy": "Resérvalo para enfrentamientos largos y defensas MIX.R, donde disponer de biomasa y tiempo permite aprovechar mejor su cañón.",
+                    "collectionGroup": "buggy",
+                })
             write_json(path, buggy)
         updated = {row["id"]: row for row in read_json(index_path)}
         for public_id in BUGGY_PUBLIC_IDS:

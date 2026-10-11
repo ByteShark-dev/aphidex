@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "passive",
+  "collectionGroup": "termite",
   "entityType": "interactable",
   "isKillable": false,
   "health": null,
@@ -44,7 +44,9 @@
   "loot": [],
   "advancedLootTable": [],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termitero — fondo (ubicación editorial pendiente de confirmar)"
+  ],
   "eventAppearances": [],
   "appearanceType": "unknown",
   "encounterVariants": [],
@@ -63,6 +65,9 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "behavior": "Gobierna desde el fondo del termitero mientras las larvas y las termitas sostienen su colonia. No combate; espera propuestas de intercambio.",
+  "interactionWithPlayer": "Su interacción es por ofrendas. Hay dos rutas de alimento; el extractor confirma una recompensa de interacción, no botín de muerte.",
+  "interactionWithCreatures": "Es el centro de la colonia: recibe la protección de sus súbditos y mantiene el ciclo de larvas, aun separada del rey.",
   "interactionInfo": {
     "type": "EInteractionType::Conversation",
     "offerings": [

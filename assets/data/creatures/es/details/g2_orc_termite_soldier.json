@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "orc",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -63,7 +63,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Termite Soldier Bite Left",
+      "name": "Mordida",
       "technicalId": "TermiteSoldierBiteLeft",
       "tags": [
         "chopping"
@@ -81,10 +81,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite Soldier Multi Strike",
+      "name": "Cadena de mandíbulas",
       "technicalId": "TermiteSoldierMultiStrike",
       "tags": [
         "chopping"
@@ -102,10 +105,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite Soldier Multi Strike",
+      "name": "Cadena de mandíbulas",
       "technicalId": "TermiteSoldierMultiStrike#2",
       "tags": [
         "chopping"
@@ -123,10 +129,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite Soldier Power Attack",
+      "name": "Golpe potente",
       "technicalId": "TermiteSoldierPowerAttack",
       "tags": [
         "chopping"
@@ -144,10 +153,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Block Offensive",
+      "name": "Bloqueo ofensivo",
       "technicalId": "BlockOffensive",
       "tags": [
         "projectile"
@@ -163,10 +175,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Termite Soldier Shout",
+      "name": "Grito de combate",
       "technicalId": "TermiteSoldierShout",
       "tags": [],
       "damageTypes": [],
@@ -180,10 +195,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Termite Soldier Sacrifice",
+      "name": "Sacrificio explosivo",
       "technicalId": "TermiteSoldierSacrifice",
       "tags": [
         "explosive"
@@ -201,10 +219,13 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "La termita queda expuesta al final de su vida.",
+      "howToAvoid": "Aléjate en cuanto caiga.",
+      "notes": "Explosión de área."
     },
     {
-      "name": "Termite Soldier Bite Right",
+      "name": "Mordida",
       "technicalId": "TermiteSoldierBiteRight",
       "tags": [
         "chopping"
@@ -222,7 +243,10 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     }
   ],
   "combatStats": {
@@ -347,5 +371,9 @@
     "gold": "T_UI_Tier3_TermiteSoldier_ORC_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "Controlada por C.R.O., combate para el ejército de la Enmascarada y deja atrás la defensa de su colonia.",
+  "interactionWithPlayer": "En encuentros de la Enmascarada puede ser una molestia secundaria; evita quedarte a su alcance si hay una amenaza mayor.",
+  "interactionWithCreatures": "Actúa junto a fuerzas C.R.O. en vez de respaldar al termitero.",
+  "strategy": "No la ignores si prepara el sacrificio, pero prioriza la amenaza principal y elimina al soldado cuando tengas una ventana segura."
 }

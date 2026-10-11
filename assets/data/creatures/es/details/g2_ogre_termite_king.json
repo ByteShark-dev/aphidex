@@ -22,8 +22,8 @@
   "listIconAsset": "",
   "mapMarkerAsset": "",
   "customAsset": "",
-  "temperament": "unknown",
-  "collectionGroup": "unknown",
+  "temperament": "aggressive",
+  "collectionGroup": "ogrr",
   "entityType": "creature",
   "isKillable": true,
   "health": {
@@ -54,7 +54,7 @@
   "weakPoints": [],
   "attacks": [
     {
-      "name": "Termite King Bite Left",
+      "name": "Mordida",
       "technicalId": "TermiteKingBiteLeft",
       "tags": [
         "chopping"
@@ -72,10 +72,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite King Multi Strike",
+      "name": "Cadena de mandíbulas",
       "technicalId": "TermiteKingMultiStrike",
       "tags": [
         "chopping"
@@ -93,10 +96,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "Termite King Power Attack",
+      "name": "Golpe potente",
       "technicalId": "TermiteKingPowerAttack",
       "tags": [
         "chopping"
@@ -114,10 +120,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se afirma antes de lanzarse.",
+      "howToAvoid": "Esquiva hacia un lado, no retrocedas en línea recta.",
+      "notes": "Ataque de compromiso."
     },
     {
-      "name": "Termite King Multi Strike 5",
+      "name": "Cadena larga de mandíbulas",
       "technicalId": "TermiteKingMultiStrike_5",
       "tags": [
         "chopping"
@@ -135,10 +144,13 @@
       "projectile": false,
       "hitResolutionType": "Default",
       "actionType": "melee",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Entra en alcance con las mandíbulas preparadas.",
+      "howToAvoid": "Bloquea o desplázate fuera de su frente.",
+      "notes": "Ataque directo."
     },
     {
-      "name": "O.G.R.E. Block Offensive",
+      "name": "Bloqueo ofensivo",
       "technicalId": "BlockOffensive",
       "tags": [
         "projectile"
@@ -154,10 +166,13 @@
       "projectile": true,
       "hitResolutionType": "Default",
       "actionType": "projectile",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Cambia de posición o prepara su siguiente patrón.",
+      "howToAvoid": "Mantén distancia y observa la continuación.",
+      "notes": "Movimiento o utilidad; no confirma daño directo."
     },
     {
-      "name": "Termite King Range",
+      "name": "Lanzamiento de tierra",
       "technicalId": "TermiteKingRange",
       "tags": [
         "chopping"
@@ -175,10 +190,13 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "Se orienta a distancia y prepara tierra para lanzar.",
+      "howToAvoid": "Muévete lateralmente; no te quedes quieto.",
+      "notes": "Presión a distancia."
     },
     {
-      "name": "Termite King Sacrifice",
+      "name": "Sacrificio explosivo",
       "technicalId": "TermiteKingSacrifice",
       "tags": [
         "explosive"
@@ -196,7 +214,10 @@
       "projectile": false,
       "hitResolutionType": "AOE",
       "actionType": "aoe",
-      "blockability": "unknown"
+      "blockability": "unknown",
+      "tell": "La termita queda expuesta al final de su vida.",
+      "howToAvoid": "Aléjate en cuanto caiga.",
+      "notes": "Explosión de área."
     }
   ],
   "combatStats": {
@@ -355,5 +376,9 @@
     "gold": "T_UI_Tier3_KingTermite_OGRR_G",
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
-  }
+  },
+  "behavior": "La versión I.R.G.O. sustituye al rey normal en la versión actual del contenido; mantiene su patrón, pero su infusión lo vuelve mucho más exigente.",
+  "interactionWithPlayer": "Presiona con el mismo repertorio del rey mientras sus resistencias reducen las opciones cómodas de daño.",
+  "interactionWithCreatures": "Dirige a las termitas bajo control I.R.G.O., separado de la colonia normal.",
+  "strategy": "Trátalo como al rey, pero no intercambies golpes: despeja los acompañantes, respeta sus ventanas y evita el sacrificio final."
 }
