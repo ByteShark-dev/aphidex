@@ -15410,9 +15410,9 @@
       "tier": 2,
       "slot": "EEquipmentSlot::Legs",
       "twoHanded": null,
-      "icon": "",
-      "iconProvenance": "technical_fallback",
-      "iconSource": null,
+      "icon": "assets/g2/equipment/icons/ICO_Flippers_3D.png",
+      "iconProvenance": "texture_export",
+      "iconSource": "BS_Assets/Icons/ICO_Flippers_3D.png",
       "effects": [
         "SprintStaminaDownSmall",
         "SwimSpeedMedium"
@@ -15480,9 +15480,9 @@
       "tier": 2,
       "slot": "EEquipmentSlot::Head",
       "twoHanded": null,
-      "icon": "",
-      "iconProvenance": "technical_fallback",
-      "iconSource": null,
+      "icon": "assets/g2/equipment/icons/ICO_Rebreather.png",
+      "iconProvenance": "texture_export",
+      "iconSource": "BS_Assets/Icons/ICO_Rebreather.png",
       "effects": [
         "StaminaRegenMedium",
         "WaterBreathingRateMedium"
