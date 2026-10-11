@@ -45,17 +45,18 @@
   "advancedLootTable": [],
   "locations": [],
   "environments": [
-    "Termitero — fondo (ubicación editorial pendiente de confirmar)"
+    "Termitero — fondo"
   ],
   "eventAppearances": [],
-  "appearanceType": "unknown",
+  "appearanceType": "interactable",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteQueen",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "user_confirmed_editorial_no_coordinates"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "La reina del nido les deja la pelea a sus súbditos y se dedica a producir un interminable suministro de herederos.",
@@ -65,6 +66,7 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "appearanceCondition": "Se encuentra al fondo del termitero como interacción no combatible.",
   "behavior": "Gobierna desde el fondo del termitero mientras las larvas y las termitas sostienen su colonia. No combate; espera propuestas de intercambio. La ficha la trata como autoridad social de la colonia, no como objetivo de combate.",
   "interactionWithPlayer": "Su interacción es por ofrendas. Hay dos rutas de alimento; el extractor confirma una recompensa de interacción, no botín de muerte. La decisión importante es qué ofrenda entregar; Aphidex no presenta esa recompensa como botín ni como una muerte posible.",
   "interactionWithCreatures": "Es el centro de la colonia: recibe la protección de sus súbditos y mantiene el ciclo de larvas, aun separada del rey.",

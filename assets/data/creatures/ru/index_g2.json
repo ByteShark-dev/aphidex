@@ -31,7 +31,7 @@
       "rating": 5,
       "value": 9000
     },
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_ogre_diving_bell_spider",
@@ -266,7 +266,7 @@
     "bestiaryId": "TermiteQueen",
     "entityType": "interactable",
     "health": null,
-    "availabilityStatus": "implemented_unconfirmed"
+    "availabilityStatus": "confirmed"
   },
   {
     "id": "g2_termite_soldier",

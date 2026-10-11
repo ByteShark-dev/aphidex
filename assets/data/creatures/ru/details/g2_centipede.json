@@ -778,16 +778,19 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Термитник — самая глубокая арена"
+  ],
   "eventAppearances": [],
-  "appearanceType": "unknown",
+  "appearanceType": "summoned",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "Centipede",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "user_confirmed_editorial_no_coordinates"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "Этому многоножку поклоняются термиты из поленницы и редкие сотрудники Ominent. Ты всё ещё не понимаешь почему.",
@@ -797,6 +800,7 @@
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "appearanceCondition": "Его можно призывать повторно по рецепту из частей термитов в самой глубокой части термитника.",
   "bossPhases": [
     {
       "id": "phase1",

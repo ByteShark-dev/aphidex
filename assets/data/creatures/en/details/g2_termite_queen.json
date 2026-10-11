@@ -44,16 +44,19 @@
   "loot": [],
   "advancedLootTable": [],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termite Nest — deepest chamber"
+  ],
   "eventAppearances": [],
-  "appearanceType": "unknown",
+  "appearanceType": "interactable",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "TermiteQueen",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "user_confirmed_editorial_no_coordinates"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "The queen of the nest leaves the fighting to her subjects while she produces an endless supply of heirs.",
@@ -63,6 +66,7 @@
     "goldChance": 0.01,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "appearanceCondition": "Found at the back of the termite nest as a non-combat interaction.",
   "interactionInfo": {
     "type": "EInteractionType::Conversation",
     "offerings": [

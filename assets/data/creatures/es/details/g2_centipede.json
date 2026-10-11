@@ -836,17 +836,18 @@
   ],
   "locations": [],
   "environments": [
-    "Termitero — arena profunda (invocación)"
+    "Termitero — arena más profunda"
   ],
   "eventAppearances": [],
-  "appearanceType": "unknown",
+  "appearanceType": "summoned",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "Centipede",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "user_confirmed_editorial_no_coordinates"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "Las termitas de la pila de madera y el empleado esporádico de Ominent adoraban a este ciempiés. Todavía no lo entiendes.",
@@ -856,6 +857,7 @@
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "appearanceCondition": "Se invoca repetidamente con una receta de partes de termita en lo más profundo del termitero.",
   "behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos. No pelea como un enemigo común: domina el espacio vertical de la arena y sus recorridos obligan a leer el suelo y los muros a la vez.",
   "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable. Su peligro real es encadenar varios impactos pequeños mientras se mueve sobre ti, no sólo un golpe aislado.",
   "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada. La mecánica de larvas cambia la prioridad del combate: ignorarlas puede prolongar una pelea ya muy resistente.",

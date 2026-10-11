@@ -117,6 +117,18 @@ RELEASE_DANGER = {
     "TermiteWorker": "intermedia",
     "TermiteWorkerORC": "alta",
 }
+USER_CONFIRMED_SPAWNS = {
+    "Centipede": {
+        "es": ("Termitero — arena más profunda", "Se invoca repetidamente con una receta de partes de termita en lo más profundo del termitero."),
+        "en": ("Termite Nest — deepest arena", "Repeatedly summoned with a termite-part recipe in the deepest area of the termite nest."),
+        "ru": ("Термитник — самая глубокая арена", "Его можно призывать повторно по рецепту из частей термитов в самой глубокой части термитника."),
+    },
+    "TermiteQueen": {
+        "es": ("Termitero — fondo", "Se encuentra al fondo del termitero como interacción no combatible."),
+        "en": ("Termite Nest — deepest chamber", "Found at the back of the termite nest as a non-combat interaction."),
+        "ru": ("Термитник — дальняя камера", "Находится в глубине термитника как небоевое взаимодействие."),
+    },
+}
 BUGGY_PUBLIC_IDS = frozenset(BUGGY_IDS.values())
 
 
@@ -533,12 +545,16 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
         "locationStatus": fields["locationSpawn"].get("status"),
     }
     detail["dataRevision"] = "extractor_release_0_6_completion"
+    if technical_id in USER_CONFIRMED_SPAWNS:
+        environment, condition = USER_CONFIRMED_SPAWNS[technical_id][language]
+        detail.update({"environments": [environment], "appearanceType": "summoned" if technical_id == "Centipede" else "interactable", "appearanceCondition": condition, "availabilityStatus": "confirmed"})
+        detail["sourceProvenance"]["spawn"] = "user_confirmed_editorial_no_coordinates"
     if language == "es" and technical_id in EDITORIAL_ES:
         editorial = EDITORIAL_ES[technical_id]
         detail.update({key: value for key, value in editorial.items() if key != "environments"})
         for field, addition in EDITORIAL_ES_EXPANSIONS.get(technical_id, {}).items():
             detail[field] = f"{detail[field]}{addition}"
-        if editorial.get("environments"):
+        if editorial.get("environments") and technical_id not in USER_CONFIRMED_SPAWNS:
             detail["environments"] = editorial["environments"]
         for attack in detail["attacks"]:
             polish_es_attack(attack)

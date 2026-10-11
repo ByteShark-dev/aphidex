@@ -778,16 +778,19 @@
     }
   ],
   "locations": [],
-  "environments": [],
+  "environments": [
+    "Termite Nest — deepest arena"
+  ],
   "eventAppearances": [],
-  "appearanceType": "unknown",
+  "appearanceType": "summoned",
   "encounterVariants": [],
-  "availabilityStatus": "implemented_unconfirmed",
+  "availabilityStatus": "confirmed",
   "sourceProvenance": {
     "extractorTechnicalId": "Centipede",
     "extractorStatus": "resolved_release_0_6_completion",
     "localization": "resolved_runtime_en_es_MX",
-    "locationStatus": "not_resolved"
+    "locationStatus": "not_resolved",
+    "spawn": "user_confirmed_editorial_no_coordinates"
   },
   "dataRevision": "extractor_release_0_6_completion",
   "description": "This centipede has been worshipped by the wood pile's termites and the occasional Ominent employee. You don't really get it.",
@@ -797,6 +800,7 @@
     "goldChance": 0.1,
     "status": "source_texture_resolved_asset_not_distributed"
   },
+  "appearanceCondition": "Repeatedly summoned with a termite-part recipe in the deepest area of the termite nest.",
   "bossPhases": [
     {
       "id": "phase1",
