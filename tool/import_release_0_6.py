@@ -264,6 +264,33 @@ def polish_es_attack(attack: dict):
     else: attack.update({"tell": "Cambia de posición o prepara la continuación de su patrón.", "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.", "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."})
 
 
+def centipede_es_phases(attacks: list[dict]):
+    def selected(*ids):
+        wanted = set(ids)
+        return [copy.deepcopy(row) for row in attacks if row.get("technicalId", "").split("#")[0] in wanted]
+    return [
+        {"id": "phase1", "label": "Fase 1", "startsAtHealthPct": 100,
+         "trigger": "El combate comienza en la arena del termitero.",
+         "summary": "Ciempiés desciende de los muros y presiona con recorridos, golpes corporales y combos.",
+         "newPatterns": ["Prioriza las larvas que caen: si las devora, recupera vida."],
+         "attacks": selected("CentipedeEatTermite", "CentipedeUnburrowWall_CA", "CentipedeCombo3", "CentipedeBodyslam")},
+        {"id": "phase2", "label": "Fase 2", "startsAtHealthPct": 66,
+         "trigger": "Al llegar aproximadamente al 66% de vida.",
+         "summary": "Activa los hongos apestosos de la arena, arroja larvas de termita y llama refuerzos obreros.",
+         "aggressionChange": "La arena se vuelve más difícil de leer por el mareo y por la presión de varios objetivos.",
+         "newPatterns": ["Los hongos apestosos causan mareo.", "Caen larvas que Ciempiés puede devorar.", "Llegan termitas obreras como refuerzos."],
+         "specialTraits": ["Limpia larvas y obreras antes de intentar una cadena larga de daño al jefe."],
+         "attacks": selected("CentipedeCombo3Phase2", "CentipedeCombo5Phase2", "CentipedeBurrowWall_CA", "CentipedeGoToFarPoint_CA")},
+        {"id": "phase3", "label": "Fase 3", "startsAtHealthPct": 33,
+         "trigger": "Al llegar aproximadamente al 33% de vida.",
+         "summary": "Pasa a atacar desde los laterales y bajo tierra; suma termitas soldado a los refuerzos.",
+         "aggressionChange": "La movilidad vertical y subterránea puede sacar al jugador volando fuera de una posición segura.",
+         "newPatterns": ["Refuerzos de termitas soldado.", "Ataques desde los lados de la arena.", "Emboscadas desde debajo de tierra.", "Puede lanzar al jugador por el aire."],
+         "specialTraits": ["Lleva uno o dos paracaídas: reducen el riesgo de una caída tras ser lanzado."],
+         "attacks": selected("CentipedeCombo5Phase3", "CentipedeBurrowGround_CA", "CentipedeEmerge_CA", "CentipedeEmergeMelee_CA")},
+    ]
+
+
 def normalized_loot(technical_id: str, loot_domain: dict):
     profile = next((item for item in (loot_domain.get("technicalCreatures", {}).get(technical_id, {}).get("profiles") or []) if item.get("role") == "primary"), None)
     if not profile:
@@ -484,6 +511,8 @@ def completion_detail(technical_id: str, source: dict, completed: dict, language
             detail["environments"] = editorial["environments"]
         for attack in detail["attacks"]:
             polish_es_attack(attack)
+        if technical_id == "Centipede":
+            detail["bossPhases"] = centipede_es_phases(detail["attacks"])
     if technical_id == "TermiteQueen":
         interaction = fields["interaction"]
         detail["interactionInfo"] = {

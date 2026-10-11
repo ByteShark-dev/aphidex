@@ -859,5 +859,408 @@
   "behavior": "Cuelga de los muros de la arena y se descuelga para arrollar al jugador. Al bajar su vida alterna excavaciones, emboscadas y refuerzos. No pelea como un enemigo común: domina el espacio vertical de la arena y sus recorridos obligan a leer el suelo y los muros a la vez.",
   "interactionWithPlayer": "Funciona como un miniboss: sus pisotones y recorridos con muchas zonas de daño hacen que bloquear toda la secuencia sea poco fiable. Su peligro real es encadenar varios impactos pequeños mientras se mueve sobre ti, no sólo un golpe aislado.",
   "interactionWithCreatures": "Las termitas lo veneran y le ofrecen larvas. Cuando consume una larva puede curarse; es una relación de explotación ritual, no una alianza equilibrada. La mecánica de larvas cambia la prioridad del combate: ignorarlas puede prolongar una pelea ya muy resistente.",
-  "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto. Conserva resistencia para sus cambios de posición; perseguirlo durante una excavación suele dejarte expuesto."
+  "strategy": "Elimina las larvas en cuanto caigan para cortar su curación. Las armas a distancia permiten castigar sus desplazamientos; a melee, busca el aturdimiento y golpea el vientre expuesto. Conserva resistencia para sus cambios de posición; perseguirlo durante una excavación suele dejarte expuesto.",
+  "bossPhases": [
+    {
+      "id": "phase1",
+      "label": "Fase 1",
+      "startsAtHealthPct": 100,
+      "trigger": "El combate comienza en la arena del termitero.",
+      "summary": "Ciempiés desciende de los muros y presiona con recorridos, golpes corporales y combos.",
+      "newPatterns": [
+        "Prioriza las larvas que caen: si las devora, recupera vida."
+      ],
+      "attacks": [
+        {
+          "name": "Devorar larva",
+          "technicalId": "CentipedeEatTermite",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 125.0,
+          "cooldownSeconds": 16.0,
+          "range": 1000.0,
+          "stun": 10,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown",
+          "tell": "Caen larvas del techo y Ciempiés corre hacia ellas, ignorando momentáneamente al jugador.",
+          "howToAvoid": "Elimina las larvas antes de que las alcance; el área es más segura que perseguirlo a melee.",
+          "notes": "Puede curarse al devorarlas. Es una prioridad de control de objetivos, no un ataque directo."
+        },
+        {
+          "name": "Salida desde el muro",
+          "technicalId": "CentipedeUnburrowWall_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 0.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        },
+        {
+          "name": "Combo de tres golpes",
+          "technicalId": "CentipedeCombo3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 125.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown",
+          "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+          "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+          "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
+        },
+        {
+          "name": "Golpe corporal",
+          "technicalId": "CentipedeBodyslam",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown",
+          "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+          "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+          "notes": "Ataque de compromiso que abre una ventana si falla."
+        },
+        {
+          "name": "Golpe corporal",
+          "technicalId": "CentipedeBodyslam#2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 130.0,
+          "cooldownSeconds": 8.0,
+          "range": 800.0,
+          "stun": 15,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "AOE",
+          "actionType": "aoe",
+          "blockability": "unknown",
+          "tell": "Se afirma un instante antes de comprometerse en un golpe frontal.",
+          "howToAvoid": "Esquiva hacia un lado con decisión; retroceder en línea recta deja poco margen.",
+          "notes": "Ataque de compromiso que abre una ventana si falla."
+        }
+      ]
+    },
+    {
+      "id": "phase2",
+      "label": "Fase 2",
+      "startsAtHealthPct": 66,
+      "trigger": "Al llegar aproximadamente al 66% de vida.",
+      "summary": "Activa los hongos apestosos de la arena, arroja larvas de termita y llama refuerzos obreros.",
+      "aggressionChange": "La arena se vuelve más difícil de leer por el mareo y por la presión de varios objetivos.",
+      "newPatterns": [
+        "Los hongos apestosos causan mareo.",
+        "Caen larvas que Ciempiés puede devorar.",
+        "Llegan termitas obreras como refuerzos."
+      ],
+      "specialTraits": [
+        "Limpia larvas y obreras antes de intentar una cadena larga de daño al jefe."
+      ],
+      "attacks": [
+        {
+          "name": "Combo de tres golpes — fase 2",
+          "technicalId": "CentipedeCombo3Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 115.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown",
+          "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+          "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+          "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
+        },
+        {
+          "name": "Excavación en muro",
+          "technicalId": "CentipedeBurrowWall_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        },
+        {
+          "name": "Reposicionamiento lejano",
+          "technicalId": "CentipedeGoToFarPoint_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 24.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        },
+        {
+          "name": "Combo de cinco golpes — fase 2",
+          "technicalId": "CentipedeCombo5Phase2",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown",
+          "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+          "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+          "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
+        },
+        {
+          "name": "Excavación en muro",
+          "technicalId": "CentipedeBurrowWall_CA#2",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 32.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        }
+      ]
+    },
+    {
+      "id": "phase3",
+      "label": "Fase 3",
+      "startsAtHealthPct": 33,
+      "trigger": "Al llegar aproximadamente al 33% de vida.",
+      "summary": "Pasa a atacar desde los laterales y bajo tierra; suma termitas soldado a los refuerzos.",
+      "aggressionChange": "La movilidad vertical y subterránea puede sacar al jugador volando fuera de una posición segura.",
+      "newPatterns": [
+        "Refuerzos de termitas soldado.",
+        "Ataques desde los lados de la arena.",
+        "Emboscadas desde debajo de tierra.",
+        "Puede lanzar al jugador por el aire."
+      ],
+      "specialTraits": [
+        "Lleva uno o dos paracaídas: reducen el riesgo de una caída tras ser lanzado."
+      ],
+      "attacks": [
+        {
+          "name": "Salida subterránea",
+          "technicalId": "CentipedeEmerge_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        },
+        {
+          "name": "Combo de cinco golpes — fase 3",
+          "technicalId": "CentipedeCombo5Phase3",
+          "tags": [
+            "general"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 120.0,
+          "cooldownSeconds": 8.0,
+          "range": 1000.0,
+          "stun": 8,
+          "statusEffects": [
+            "VenomLarge"
+          ],
+          "statusEffectDetails": [
+            {
+              "id": "VenomLarge",
+              "value": null,
+              "durationSeconds": null
+            }
+          ],
+          "ranged": false,
+          "projectile": false,
+          "hitResolutionType": "Default",
+          "actionType": "melee",
+          "blockability": "unknown",
+          "tell": "Entra en alcance con las mandíbulas preparadas y orienta el cuerpo hacia el objetivo.",
+          "howToAvoid": "Bloquea si tienes resistencia o desplázate fuera de su frente antes de la conexión.",
+          "notes": "Ataque directo; se vuelve peligroso cuando otras termitas ocupan tus flancos."
+        },
+        {
+          "name": "Excavación",
+          "technicalId": "CentipedeBurrowGround_CA",
+          "tags": [
+            "projectile"
+          ],
+          "damageTypes": [],
+          "damage": 0.0,
+          "cooldownSeconds": 16.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        },
+        {
+          "name": "Salida de emboscada",
+          "technicalId": "CentipedeEmergeMelee_CA",
+          "tags": [
+            "general",
+            "projectile"
+          ],
+          "damageTypes": [
+            "general"
+          ],
+          "damage": 0.0,
+          "cooldownSeconds": 8.0,
+          "range": 650.0,
+          "stun": 0,
+          "statusEffects": [],
+          "statusEffectDetails": [],
+          "ranged": false,
+          "projectile": true,
+          "hitResolutionType": "Default",
+          "actionType": "projectile",
+          "blockability": "unknown",
+          "tell": "Cambia de posición o prepara la continuación de su patrón.",
+          "howToAvoid": "Mantén distancia, no gastes toda la resistencia y observa si enlaza con un ataque de daño.",
+          "notes": "Movimiento o utilidad; el extractor no confirma daño directo en esta acción."
+        }
+      ]
+    }
+  ]
 }
