@@ -65,16 +65,19 @@ bool _isValidTutorialEnemy(Enemy enemy) {
     return false;
   }
 
-  final hasDetails =
-      enemy.health != null ||
+  final hasWeakness =
       enemy.elementalWeaknesses.isNotEmpty ||
       enemy.damageWeaknesses.isNotEmpty ||
-      enemy.resistancesV2.isNotEmpty ||
-      enemy.resolvedWeakPoints.isNotEmpty ||
-      enemy.weaknesses.isNotEmpty ||
-      enemy.resistances.isNotEmpty;
+      enemy.weaknesses.isNotEmpty;
+  final hasResistance =
+      enemy.resistancesV2.isNotEmpty || enemy.resistances.isNotEmpty;
 
-  return hasDetails && tutorialEffectIdsForEnemy(enemy).isNotEmpty;
+  // The guided example must visibly demonstrate both sides of the effect
+  // system. This also guarantees the G2 recommendation step has combat data
+  // rather than landing on an entry which only has a weak point.
+  return hasWeakness &&
+      hasResistance &&
+      tutorialEffectIdsForEnemy(enemy).isNotEmpty;
 }
 
 List<String> tutorialEffectIdsForEnemy(Enemy enemy) {
@@ -190,12 +193,9 @@ List<Enemy>? pickTutorialEnemyVariants(List<Enemy> enemies, {Random? random}) {
 }
 
 bool _isValidTutorialEnemySummary(EnemyIndexEntry enemy) {
-  final hasDetails =
-      enemy.health != null ||
-      enemy.weaknesses.isNotEmpty ||
-      enemy.resistances.isNotEmpty;
-
-  return hasDetails && tutorialEffectIdsForEnemySummary(enemy).isNotEmpty;
+  return enemy.weaknesses.isNotEmpty &&
+      enemy.resistances.isNotEmpty &&
+      tutorialEffectIdsForEnemySummary(enemy).isNotEmpty;
 }
 
 EnemyIndexEntry? pickTutorialEnemySummary(

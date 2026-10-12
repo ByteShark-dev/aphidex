@@ -12,7 +12,10 @@ class RecommendationEngine {
 
   RecommendationEngine({required this.combat, required this.equipment});
 
-  List<CombatRecommendation> recommend(Enemy enemy) {
+  List<CombatRecommendation> recommend(
+    Enemy enemy, {
+    CreatureInfusion? infusion,
+  }) {
     if (enemy.game != 'g2') return const [];
     final items = {for (final item in equipment.items) item.id: item};
     final bestShield = combat.shields
@@ -37,9 +40,11 @@ class RecommendationEngine {
       final compatibleAmmo = combat.projectiles
           .where((projectile) => projectile.launcherIds.contains(profile.id))
           .toList(growable: false);
-      final ammoOptions = compatibleAmmo.isEmpty
-          ? const <ProjectileItem?>[null]
-          : compatibleAmmo.cast<ProjectileItem?>();
+      // A launcher can be useful without a compatible consumable in the
+      // current source snapshot. Keep its neutral build and let the damage
+      // engine rank projectiles on their actual type instead of forcing every
+      // launcher into the recommendation list.
+      final ammoOptions = <ProjectileItem?>[null, ...compatibleAmmo];
       for (final tier in tiers) {
         for (final route in routes) {
           for (final projectile in ammoOptions) {
@@ -51,6 +56,11 @@ class RecommendationEngine {
               physical: base.physical,
               element: base.element,
               weaponFamily: family,
+              additionalWeaknesses: [
+                ...?infusion?.elementalWeaknesses,
+                ...?infusion?.damageWeaknesses,
+              ],
+              additionalResistances: infusion?.resistances ?? const [],
             );
             final buildTier = [
               tier,
@@ -64,6 +74,7 @@ class RecommendationEngine {
               enhancementLevel: route?.maxLevel ?? 0,
               route: route,
               projectile: projectile,
+              flavor: base.element,
             );
             out.add(
               CombatRecommendation(
@@ -88,6 +99,7 @@ class RecommendationEngine {
                       route: route,
                       projectile: projectile,
                       shield: shield,
+                      flavor: base.element,
                     ),
                     damage: damage,
                     reasons: [

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../data/content_repositories.dart';
@@ -18,10 +20,12 @@ class EquipmentLibraryScreen extends StatefulWidget {
     super.key,
     this.embedded = false,
     this.initialEquipmentId,
+    this.initialProjectileId,
   });
 
   final bool embedded;
   final String? initialEquipmentId;
+  final String? initialProjectileId;
 
   @override
   State<EquipmentLibraryScreen> createState() => _EquipmentLibraryScreenState();
@@ -174,10 +178,19 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
   }
 
   void _openInitialOnce(EquipmentCatalog catalog) {
-    if (_openedInitial || widget.initialEquipmentId == null) return;
+    if (_openedInitial ||
+        (widget.initialEquipmentId == null &&
+            widget.initialProjectileId == null)) {
+      return;
+    }
     _openedInitial = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      final projectileId = widget.initialProjectileId;
+      if (projectileId != null) {
+        unawaited(_openProjectileInitial(projectileId));
+        return;
+      }
       final query = widget.initialEquipmentId!.toLowerCase();
       final item = catalog.items.cast<EquipmentItem?>().firstWhere(
         (value) => value!.id.toLowerCase() == query,
@@ -209,6 +222,16 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
     });
   }
 
+  Future<void> _openProjectileInitial(String id) async {
+    final combat = await CombatRecommendationRepository.load();
+    if (!mounted) return;
+    final projectile = combat.projectiles.cast<ProjectileItem?>().firstWhere(
+      (value) => value?.id.toLowerCase() == id.toLowerCase(),
+      orElse: () => null,
+    );
+    if (projectile != null) _showProjectile(projectile);
+  }
+
   Future<void> _showItem(EquipmentItem item) => showModalBottomSheet<void>(
     context: context,
     showDragHandle: false,
@@ -232,6 +255,16 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
             ),
     ),
   );
+
+  Future<void> _showProjectile(ProjectileItem projectile) =>
+      showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        useSafeArea: true,
+        isScrollControlled: true,
+        builder: (_) =>
+            _ProjectileDetailSheet(projectile: projectile, language: _language),
+      );
 
   Future<void> _showSet(ArmorSet set, EquipmentCatalog catalog) {
     final pieces = catalog.items
@@ -469,7 +502,7 @@ class _EquipmentDetailSheet extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               if (item.effectRelations.isNotEmpty)
-                ...item.effectRelations.map(
+                ..._uniqueEffectRelations(item.effectRelations).map(
                   (relation) => _EquipmentEffectRelationCard(
                     relation: relation,
                     language: language,
@@ -905,6 +938,122 @@ class _ArmorSetDetailSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ProjectileDetailSheet extends StatelessWidget {
+  const _ProjectileDetailSheet({
+    required this.projectile,
+    required this.language,
+  });
+
+  final ProjectileItem projectile;
+  final String language;
+
+  String _t(String en, String es, String ru) => switch (language) {
+    'es' => es,
+    'ru' => ru,
+    _ => en,
+  };
+
+  String _number(double? value) => value == null
+      ? _t('Unknown', 'Desconocido', 'Неизвестно')
+      : value == value.roundToDouble()
+      ? '${value.round()}'
+      : value.toStringAsFixed(1);
+
+  @override
+  Widget build(BuildContext context) {
+    final attack = projectile.attack;
+    final best = [
+      attack.base,
+      attack.charged,
+      attack.perfect,
+    ].reduce((a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b);
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                SizedBox.square(
+                  dimension: 64,
+                  child: Image.asset(
+                    projectile.icon,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) =>
+                        const Icon(Icons.arrow_outward, size: 42),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    EquipmentPresentation.cleanIdentifier(projectile.id),
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                IconButton(
+                  tooltip: _t('Close', 'Cerrar', 'Закрыть'),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.close),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text('${_t('Tier', 'Nivel', 'Уровень')}: ${projectile.tier}'),
+            Text(
+              '${_t('Family', 'Familia', 'Семейство')}: ${projectile.family}',
+            ),
+            Text(
+              '${_t('Best damage', 'Mejor daño', 'Лучший урон')}: ${_number(best.damage)}',
+            ),
+            if (best.physical != null)
+              Text(
+                '${_t('Damage type', 'Tipo de daño', 'Тип урона')}: ${EquipmentPresentation.effectLabel(best.physical!, language)}',
+              ),
+            if (best.element != null)
+              Text(
+                '${_t('Element', 'Elemento', 'Элемент')}: ${EquipmentPresentation.effectLabel(best.element!, language)}',
+              ),
+            if (projectile.launcherIds.isNotEmpty) ...[
+              const Divider(height: 28),
+              Text(
+                _t(
+                  'Compatible launchers',
+                  'Lanzadores compatibles',
+                  'Совместимые пусковые устройства',
+                ),
+                style: const TextStyle(fontWeight: FontWeight.w800),
+              ),
+              const SizedBox(height: 6),
+              Text(projectile.launcherIds.join(' · ')),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Attack profiles often repeat an identical verified effect. The library is
+/// about the equipment, so present each effect once instead of repeating the
+/// same card for every combo/profile row.
+List<EquipmentEffectRelation> _uniqueEffectRelations(
+  List<EquipmentEffectRelation> relations,
+) {
+  final byEffect = <String, EquipmentEffectRelation>{};
+  for (final relation in relations) {
+    final id = effectCatalogIdForTechnicalType(relation.effectId);
+    final current = byEffect[id];
+    // Prefer an inherent/equipped relation over an attack-only duplicate; it
+    // describes the broadest source-backed availability for the same effect.
+    if (current == null ||
+        (current.origin == 'attack' && relation.origin != 'attack')) {
+      byEffect[id] = relation;
+    }
+  }
+  return byEffect.values.toList(growable: false);
 }
 
 class _EquipmentEffectRelationCard extends StatelessWidget {

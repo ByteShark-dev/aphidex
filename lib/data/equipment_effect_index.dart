@@ -29,6 +29,13 @@ class EquipmentEffectIndex {
         continue;
       }
       for (final relation in item.effectRelations) {
+        // The codex explains effects carried by the item or applied by its
+        // attacks. Optional upgrade paths are displayed in the equipment
+        // sheet, but including them here turns every elemental route into a
+        // misleading wall of otherwise unrelated weapons.
+        if (relation.origin == 'upgrade') {
+          continue;
+        }
         final effectId = effectCatalogIdForTechnicalType(relation.effectId);
         if (effectCatalogEntryById(effectId) == null || effectId == 'none') {
           continue;

@@ -795,6 +795,7 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
             if (enemy.game == 'g2' && !enemy.hideHealth) ...[
               CombatRecommendationsSection(
                 enemy: enemy,
+                selectedInfusion: selectedInfusion,
                 tutorialTargetScope: widget.tutorialTargetScope,
               ),
               const SizedBox(height: 18),
@@ -1063,9 +1064,9 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               LayoutBuilder(
                 builder: (context, constraints) {
                   final points = enemy.resolvedWeakPoints;
-                  // Two weak points remain readable side-by-side on a phone;
-                  // this makes paired regions (for example, a scorpion's rear
-                  // and stinger) comparable at a glance.
+                  // Paired regions remain comparable side-by-side, while each
+                  // card itself keeps its multiplier below the name so long
+                  // labels and two weak-point records never clip each other.
                   final twoColumns =
                       points.length > 1 && constraints.maxWidth >= 320;
                   if (!twoColumns) {
@@ -3596,57 +3597,64 @@ class _WeakPointCard extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.w800),
                 ),
               ),
-              if (presentation.damageMultiplier != null)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      l10n.weakPointDamageMultiplier(
-                        presentation.damageMultiplier!,
-                      ),
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                    if (presentation.stunMultiplier != null &&
-                        presentation.stunMultiplier != 1)
-                      Text(
-                        l10n.weakPointStunMultiplier(
-                          presentation.stunMultiplier!,
-                        ),
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                  ],
-                ),
             ],
           ),
           const SizedBox(height: 10),
+          if (presentation.damageMultiplier != null ||
+              (presentation.stunMultiplier != null &&
+                  presentation.stunMultiplier != 1)) ...[
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                if (presentation.damageMultiplier != null)
+                  Text(
+                    l10n.weakPointDamageMultiplier(
+                      presentation.damageMultiplier!,
+                    ),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                if (presentation.stunMultiplier != null &&
+                    presentation.stunMultiplier != 1)
+                  Text(
+                    l10n.weakPointStunMultiplier(presentation.stunMultiplier!),
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
-                children: damageIds
-                    .map(
-                      (effectId) => Container(
-                        key: tutorialEffectId == null
-                            ? null
-                            : tutorialEffectKeyBuilder?.call(effectId),
-                        child: InkWell(
-                          key: ValueKey('weakpoint-effect-$effectId'),
-                          borderRadius: BorderRadius.circular(999),
-                          onTap: () => _openTutorialAwareEffectDetails(
-                            context,
-                            effectId,
-                            tutorialEffectId: tutorialEffectId,
+                children:
+                    (presentation.effectiveDamageTypes.isNotEmpty
+                            ? presentation.effectiveDamageTypes
+                            : damageIds)
+                        .map(
+                          (effectId) => Container(
+                            key: tutorialEffectId == null
+                                ? null
+                                : tutorialEffectKeyBuilder?.call(effectId),
+                            child: InkWell(
+                              key: ValueKey('weakpoint-effect-$effectId'),
+                              borderRadius: BorderRadius.circular(999),
+                              onTap: () => _openTutorialAwareEffectDetails(
+                                context,
+                                effectId,
+                                tutorialEffectId: tutorialEffectId,
+                              ),
+                              child: IconBadge.asset(
+                                assetName: UiMapper.effectIcon(effectId),
+                                size: 22,
+                              ),
+                            ),
                           ),
-                          child: IconBadge.asset(
-                            assetName: UiMapper.effectIcon(effectId),
-                            size: 22,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+                        )
+                        .toList(),
               ),
               const SizedBox(height: 6),
               Text(

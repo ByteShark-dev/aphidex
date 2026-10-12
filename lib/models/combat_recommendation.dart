@@ -407,6 +407,10 @@ class CombatLoadout {
   final ProjectileItem? projectile;
   final EquipmentItem? shield;
 
+  /// Element/flavour actually used in the projected hit, never inferred from
+  /// the equipment name.
+  final String? flavor;
+
   const CombatLoadout({
     required this.weapon,
     required this.profile,
@@ -415,6 +419,7 @@ class CombatLoadout {
     this.route,
     this.projectile,
     this.shield,
+    this.flavor,
   });
 }
 

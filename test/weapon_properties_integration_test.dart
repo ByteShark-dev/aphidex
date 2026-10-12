@@ -95,12 +95,11 @@ void main() {
         venom.map((match) => match.item.domain),
         everyElement(anyOf(EquipmentDomain.weapon, EquipmentDomain.shield)),
       );
+      // Optional elemental upgrade routes stay in the equipment detail. They
+      // must not flood a codex effect with every weapon that could be infused.
       expect(
-        index
-            .forEffect('fresh')
-            .singleWhere((match) => match.item.id == 'AntClub')
-            .origins,
-        contains('upgrade'),
+        index.forEffect('fresh').map((match) => match.item.id),
+        isNot(contains('AntClub')),
       );
       expect(
         index.forEffect('generic').map((match) => match.item.id),

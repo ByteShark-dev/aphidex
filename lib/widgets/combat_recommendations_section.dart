@@ -4,6 +4,8 @@ import '../controllers/combat_recommendation_preferences_controller.dart';
 import '../controllers/tutorial_controller.dart';
 import '../data/content_repositories.dart';
 import '../data/entity_asset_resolver.dart';
+import '../data/ui_mapper.dart';
+import '../i18n/app_localizations.dart';
 import '../models/combat_recommendation.dart';
 import '../models/enemy.dart';
 import '../models/equipment.dart';
@@ -13,11 +15,13 @@ import 'fallback_asset_image.dart';
 
 class CombatRecommendationsSection extends StatefulWidget {
   final Enemy enemy;
+  final CreatureInfusion? selectedInfusion;
   final TutorialTargetScope tutorialTargetScope;
 
   const CombatRecommendationsSection({
     super.key,
     required this.enemy,
+    this.selectedInfusion,
     this.tutorialTargetScope = TutorialTargetScope.inlineDetail,
   });
 
@@ -58,7 +62,17 @@ class _CombatRecommendationsSectionState
     return RecommendationEngine(
       combat: values[0] as CombatRecommendationCatalog,
       equipment: values[1] as EquipmentCatalog,
-    ).recommend(widget.enemy);
+    ).recommend(widget.enemy, infusion: widget.selectedInfusion);
+  }
+
+  @override
+  void didUpdateWidget(covariant CombatRecommendationsSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.enemy.id != widget.enemy.id ||
+        oldWidget.selectedInfusion?.id != widget.selectedInfusion?.id) {
+      _selectedTier = null;
+      _future = _load();
+    }
   }
 
   Future<void> _expand() async {
@@ -265,6 +279,14 @@ class _CombatRecommendationsSectionState
               ),
             );
           },
+          onProjectileTap: (id) {
+            Navigator.pop(sheetContext);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => EquipmentLibraryScreen(initialProjectileId: id),
+              ),
+            );
+          },
         ),
       );
 }
@@ -322,18 +344,7 @@ class _RecommendationCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: FallbackAssetImage.asset(
-                  assetName: EntityAssetResolver.resolveEquipment(
-                    loadout.weapon,
-                  ).asset,
-                  fallbackAssetName:
-                      'assets/global/Creaturecard_Proximamente.webp',
-                  fit: BoxFit.contain,
-                ),
-              ),
+              _LoadoutVisual(loadout: loadout, size: 50),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -361,6 +372,13 @@ class _RecommendationCard extends StatelessWidget {
                         if (loadout.route != null)
                           Chip(
                             visualDensity: VisualDensity.compact,
+                            avatar: loadout.flavor == null
+                                ? null
+                                : Image.asset(
+                                    UiMapper.effectIcon(loadout.flavor!),
+                                    width: 16,
+                                    height: 16,
+                                  ),
                             label: Text(
                               _humanize(loadout.route!.tag.split('.').last),
                             ),
@@ -368,7 +386,13 @@ class _RecommendationCard extends StatelessWidget {
                         if (loadout.projectile != null)
                           Chip(
                             visualDensity: VisualDensity.compact,
-                            avatar: const Icon(Icons.arrow_outward, size: 15),
+                            avatar: Image.asset(
+                              loadout.projectile!.icon,
+                              width: 16,
+                              height: 16,
+                              errorBuilder: (_, _, _) =>
+                                  const Icon(Icons.arrow_outward, size: 15),
+                            ),
                             label: Text(_humanize(loadout.projectile!.id)),
                           ),
                         if (loadout.shield != null)
@@ -408,11 +432,13 @@ class _RecommendationDetails extends StatelessWidget {
   final CombatRecommendation recommendation;
   final String language;
   final ValueChanged<String> onEquipmentTap;
+  final ValueChanged<String> onProjectileTap;
 
   const _RecommendationDetails({
     required this.recommendation,
     required this.language,
     required this.onEquipmentTap,
+    required this.onProjectileTap,
   });
 
   String _t(String en, String es, String ru) => language == 'es'
@@ -434,9 +460,17 @@ class _RecommendationDetails extends StatelessWidget {
         controller: controller,
         padding: const EdgeInsets.fromLTRB(18, 0, 18, 24),
         children: [
-          Text(
-            loadout.weapon.name.resolve(language),
-            style: Theme.of(context).textTheme.headlineSmall,
+          Row(
+            children: [
+              _LoadoutVisual(loadout: loadout, size: 62),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  loadout.weapon.name.resolve(language),
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
           Text(
@@ -455,15 +489,18 @@ class _RecommendationDetails extends StatelessWidget {
             ),
             value.damage.generalDamage,
           ),
-          _metric(
-            _t(
-              'Best-zone damage',
-              'Daño en la mejor zona',
-              'Урон по лучшей зоне',
+          if (_hasDistinctBestZone(value.damage))
+            _metric(
+              _t(
+                'Best-zone damage',
+                'Daño en la mejor zona',
+                'Урон по лучшей зоне',
+              ),
+              value.damage.bestDamage,
             ),
-            value.damage.bestDamage,
-          ),
-          if (value.damage.zones.isNotEmpty) ...[
+          if (value.damage.zones.any(
+            (zone) => zone.compatible && zone.modifier != 1,
+          )) ...[
             const SizedBox(height: 12),
             Text(
               _t('Hit zones', 'Zonas de impacto', 'Зоны попадания'),
@@ -485,8 +522,14 @@ class _RecommendationDetails extends StatelessWidget {
                           : Colors.grey.withValues(alpha: .12),
                       child: Column(
                         children: [
+                          Image.asset(
+                            UiMapper.weakPointIcon(zone.part),
+                            width: 23,
+                            height: 23,
+                          ),
+                          const SizedBox(height: 3),
                           Text(
-                            _humanize(zone.part),
+                            context.l10n.weakPointPartLabel(zone.part),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -522,7 +565,17 @@ class _RecommendationDetails extends StatelessWidget {
           const Divider(),
           ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.gavel),
+            leading: SizedBox.square(
+              dimension: 38,
+              child: FallbackAssetImage.asset(
+                assetName: EntityAssetResolver.resolveEquipment(
+                  loadout.weapon,
+                ).asset,
+                fallbackAssetName:
+                    'assets/global/Creaturecard_Proximamente.webp',
+                fit: BoxFit.contain,
+              ),
+            ),
             title: Text(loadout.weapon.name.resolve(language)),
             trailing: const Icon(Icons.open_in_new),
             onTap: () => onEquipmentTap(loadout.weapon.id),
@@ -530,13 +583,32 @@ class _RecommendationDetails extends StatelessWidget {
           if (loadout.projectile != null)
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.arrow_outward),
+              leading: SizedBox.square(
+                dimension: 38,
+                child: Image.asset(
+                  loadout.projectile!.icon,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, _, _) => const Icon(Icons.arrow_outward),
+                ),
+              ),
               title: Text(_humanize(loadout.projectile!.id)),
+              trailing: const Icon(Icons.open_in_new),
+              onTap: () => onProjectileTap(loadout.projectile!.id),
             ),
           if (loadout.shield != null)
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.shield),
+              leading: SizedBox.square(
+                dimension: 38,
+                child: FallbackAssetImage.asset(
+                  assetName: EntityAssetResolver.resolveEquipment(
+                    loadout.shield!,
+                  ).asset,
+                  fallbackAssetName:
+                      'assets/global/Creaturecard_Proximamente.webp',
+                  fit: BoxFit.contain,
+                ),
+              ),
               title: Text(loadout.shield!.name.resolve(language)),
               trailing: const Icon(Icons.open_in_new),
               onTap: () => onEquipmentTap(loadout.shield!.id),
@@ -580,6 +652,87 @@ class _RecommendationDetails extends StatelessWidget {
       'Некоторые данные неизвестны',
     ),
   };
+}
+
+bool _hasDistinctBestZone(DamageCalculationResult damage) {
+  final general = damage.generalDamage;
+  final best = damage.bestDamage;
+  return general != null && best != null && (best - general).abs() > .001;
+}
+
+class _LoadoutVisual extends StatelessWidget {
+  const _LoadoutVisual({required this.loadout, required this.size});
+
+  final CombatLoadout loadout;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final badgeSize = size * .42;
+    return SizedBox(
+      width: size + badgeSize * .3,
+      height: size + badgeSize * .25,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: FallbackAssetImage.asset(
+              assetName: EntityAssetResolver.resolveEquipment(
+                loadout.weapon,
+              ).asset,
+              fallbackAssetName: 'assets/global/Creaturecard_Proximamente.webp',
+              fit: BoxFit.contain,
+            ),
+          ),
+          if (loadout.projectile != null)
+            Positioned(
+              right: -2,
+              bottom: -2,
+              child: _LoadoutBadge(
+                size: badgeSize,
+                child: Image.asset(
+                  loadout.projectile!.icon,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, _, _) => const Icon(Icons.arrow_outward),
+                ),
+              ),
+            ),
+          if (loadout.flavor != null)
+            Positioned(
+              right: -2,
+              top: -2,
+              child: _LoadoutBadge(
+                size: badgeSize,
+                child: Image.asset(
+                  UiMapper.effectIcon(loadout.flavor!),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LoadoutBadge extends StatelessWidget {
+  const _LoadoutBadge({required this.size, required this.child});
+
+  final double size;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: size,
+    height: size,
+    padding: const EdgeInsets.all(2),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surface,
+      shape: BoxShape.circle,
+      border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+    ),
+    child: child,
+  );
 }
 
 String _humanize(String value) => value

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:aphidex/models/combat_recommendation.dart';
 import 'package:aphidex/models/enemy.dart';
 import 'package:aphidex/models/equipment.dart';
+import 'package:aphidex/data/weakpoint_resolver.dart';
 import 'package:aphidex/services/damage_calculation_engine.dart';
 import 'package:aphidex/services/recommendation_engine.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -90,6 +91,31 @@ void main() {
     ).calculate(enemy: enemy(), baseDamage: null);
     expect(result.generalDamage, isNull);
     expect(result.effectiveness, EffectivenessLevel.unknown);
+  });
+
+  test('structured weak point types override legacy any damage labels', () {
+    final presentation = const AphidexWeakpointResolver().resolve(
+      const WeakPointInfo(
+        part: 'tail',
+        susceptibleDamage: 'any',
+        susceptibleDamageTypes: ['stabbing'],
+        weaponFamilies: ['bow', 'spear'],
+      ),
+    );
+    expect(presentation.effectiveDamage, 'stabbing');
+    expect(presentation.effectiveDamageTypes, ['stabbing']);
+    expect(presentation.weaponFamilies, ['bow', 'spear']);
+  });
+
+  test('infusion resistance can make a flavour ineffective', () {
+    final result = const DamageCalculationEngine(thresholds).calculate(
+      enemy: enemy(),
+      baseDamage: 100,
+      element: 'fresh',
+      additionalResistances: const [BonusInfo(type: 'fresh', bonusPct: 100)],
+    );
+    expect(result.generalDamage, 0);
+    expect(result.effectiveness, EffectivenessLevel.ineffective);
   });
 
   test('recommendations are hidden completely for Grounded 1', () {

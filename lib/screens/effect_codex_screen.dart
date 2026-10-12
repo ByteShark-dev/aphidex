@@ -296,12 +296,10 @@ class _EffectCard extends StatelessWidget {
                     )
                   else ...[
                     const SizedBox(height: 4),
-                    ...equipment.map(
-                      (match) => _RelatedEquipmentTile(
-                        match: match,
-                        languageCode: languageCode,
-                        onOpenEquipment: onOpenEquipment,
-                      ),
+                    _RelatedEquipmentList(
+                      equipment: equipment,
+                      languageCode: languageCode,
+                      onOpenEquipment: onOpenEquipment,
                     ),
                   ],
                 ],
@@ -310,6 +308,64 @@ class _EffectCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Keeps long effect pages scannable. More linked equipment remains available
+/// on demand instead of making common effects (especially flavours) dominate
+/// the entire codex.
+class _RelatedEquipmentList extends StatefulWidget {
+  const _RelatedEquipmentList({
+    required this.equipment,
+    required this.languageCode,
+    required this.onOpenEquipment,
+  });
+
+  final List<EquipmentEffectMatch> equipment;
+  final String languageCode;
+  final void Function(BuildContext context, EquipmentItem item)?
+  onOpenEquipment;
+
+  @override
+  State<_RelatedEquipmentList> createState() => _RelatedEquipmentListState();
+}
+
+class _RelatedEquipmentListState extends State<_RelatedEquipmentList> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    const previewCount = 3;
+    final visible = _expanded
+        ? widget.equipment
+        : widget.equipment.take(previewCount).toList(growable: false);
+    final remaining = widget.equipment.length - visible.length;
+    return Column(
+      children: [
+        for (final match in visible)
+          _RelatedEquipmentTile(
+            match: match,
+            languageCode: widget.languageCode,
+            onOpenEquipment: widget.onOpenEquipment,
+          ),
+        if (remaining > 0)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton.icon(
+              onPressed: () => setState(() => _expanded = true),
+              icon: const Icon(Icons.expand_more),
+              label: Text(
+                _effectText(
+                  widget.languageCode,
+                  'Load $remaining more',
+                  'Cargar $remaining más',
+                  'Показать ещё: $remaining',
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
