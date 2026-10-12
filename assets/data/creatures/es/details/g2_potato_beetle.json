@@ -27,10 +27,32 @@
   },
   "weakPoint": {
     "part": "legs",
-    "susceptibleDamage": "slashing",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "slashing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "axe",
+      "sword",
+      "dagger"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Axe",
+      "Stats.Attacks.Sword",
+      "Stats.Attacks.Dagger"
+    ],
+    "sourceComponents": [
+      "LeftLegWeakpoint1",
+      "LeftLegWeakpoint2",
+      "RightLegWeakpoint1",
+      "RightLegWeakpoint2"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "El flagelo del jardín, que se hace un festín durante la cosecha de otoño. Al morir, puede soltar caparazón del escarabajo de la papa y su cabeza.",
   "behavior": "Se mueve despacio por sus zonas de aparición y a veces duerme bajo dientes de león, casi igual que una mariquita. La diferencia real no está en la patrulla, sino en lo mucho mejor que convierte cada hueco en daño cuando se enfurece.",
@@ -189,12 +211,32 @@
   "weakPoints": [
     {
       "part": "legs",
-      "susceptibleDamage": "slashing",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "slashing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "axe",
+        "sword",
+        "dagger"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Axe",
+        "Stats.Attacks.Sword",
+        "Stats.Attacks.Dagger"
+      ],
+      "sourceComponents": [
+        "LeftLegWeakpoint1",
+        "LeftLegWeakpoint2",
+        "RightLegWeakpoint1",
+        "RightLegWeakpoint2"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

@@ -4925,7 +4925,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [],
@@ -5204,7 +5213,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Boss_Tarantula.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Boss_Tarantula_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Axl.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Axl.webp",
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_baby_garden_snail",
@@ -5236,15 +5263,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakPoint",
+            "RightEyeWeakPoint"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [],
@@ -5850,7 +5888,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_SnailBaby.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_SnailBaby_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakPoint",
+          "RightEyeWeakPoint"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_bee",
@@ -5888,15 +5949,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 3.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -7156,7 +7228,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Bee.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Bee_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Bee.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Bee.webp",
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 3.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_black_soldier_ant",
@@ -7204,15 +7299,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -9130,7 +9236,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_BlackAntSoldier.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_BlackAntSoldier_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Black_Soldier_Ant.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Black_Soldier_Ant.webp",
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_black_worker_ant",
@@ -9174,15 +9303,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -10337,7 +10477,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_BlackAnt.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_BlackAnt_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_blue_butterfly",
@@ -11230,7 +11393,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -12241,7 +12413,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Bombardier.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Bombardier_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_buggy_black_soldier_ant",
@@ -15063,7 +15253,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "VentWeakpoint"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -15521,7 +15720,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Tayzt.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Tayzt_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "vent",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "VentWeakpoint"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_cku",
@@ -15554,7 +15771,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "VentWeakpoint"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -15962,7 +16188,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier1_Ruzt.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier1_Ruzt_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "vent",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "VentWeakpoint"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_cockroach",
@@ -24308,15 +24552,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakPoint",
+            "RightEyeWeakPoint"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [],
@@ -25061,7 +25316,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_Snail.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_Snail_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakPoint",
+          "RightEyeWeakPoint"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_garter_snake",
@@ -34533,8 +34811,40 @@
           "susceptibleDamageTypes": [
             "any"
           ],
+          "weaponFamilies": [
+            "bow"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "WeakpointLeftEye",
+            "WeakpointRightEye"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 1.5,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "eyes",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "WeakpointTongue"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [],
@@ -34772,7 +35082,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Boss_Lizard.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Boss_Lizard_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "WeakpointLeftEye",
+          "WeakpointRightEye"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 1.5,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_koi_calico",
@@ -35503,12 +35836,32 @@
       "weakPoints": [
         {
           "part": "legs",
-          "susceptibleDamage": "slashing",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "slashing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "axe",
+            "sword",
+            "dagger"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Axe",
+            "Stats.Attacks.Sword",
+            "Stats.Attacks.Dagger"
+          ],
+          "sourceComponents": [
+            "LeftLegWeakpoint1",
+            "LeftLegWeakpoint2",
+            "RightLegWeakpoint1",
+            "RightLegWeakpoint2"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -37874,7 +38227,36 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Ladybug.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Ladybug_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Ladybug.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Ladybug.webp",
+      "weakPoint": {
+        "part": "legs",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "axe",
+          "sword",
+          "dagger"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Axe",
+          "Stats.Attacks.Sword",
+          "Stats.Attacks.Dagger"
+        ],
+        "sourceComponents": [
+          "LeftLegWeakpoint1",
+          "LeftLegWeakpoint2",
+          "RightLegWeakpoint1",
+          "RightLegWeakpoint2"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_larva",
@@ -43979,13 +44361,46 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "stinger",
-          "susceptibleDamage": "stabbing",
+          "part": "tail",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "stinger",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -45000,7 +45415,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_northern_scorpion_jr",
@@ -45040,13 +45473,46 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "stinger",
-          "susceptibleDamage": "stabbing",
+          "part": "tail",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "stinger",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -46442,7 +46908,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_Jr.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_Jr_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_northern_scorpling",
@@ -49967,12 +50451,32 @@
       "weakPoints": [
         {
           "part": "legs",
-          "susceptibleDamage": "slashing",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "slashing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "axe",
+            "sword",
+            "dagger"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Axe",
+            "Stats.Attacks.Sword",
+            "Stats.Attacks.Dagger"
+          ],
+          "sourceComponents": [
+            "LeftLegWeakpoint1",
+            "LeftLegWeakpoint2",
+            "RightLegWeakpoint1",
+            "RightLegWeakpoint2"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -50353,7 +50857,36 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Ladybug_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Ladybug_OGRR_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Ladybug.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Ladybug.webp",
+      "weakPoint": {
+        "part": "legs",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "axe",
+          "sword",
+          "dagger"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Axe",
+          "Stats.Attacks.Sword",
+          "Stats.Attacks.Dagger"
+        ],
+        "sourceComponents": [
+          "LeftLegWeakpoint1",
+          "LeftLegWeakpoint2",
+          "RightLegWeakpoint1",
+          "RightLegWeakpoint2"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_northern_scorpion",
@@ -50389,13 +50922,46 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "stinger",
-          "susceptibleDamage": "stabbing",
+          "part": "tail",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "stinger",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -50783,7 +51349,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_OGRR_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_pincher_earwig",
@@ -51141,12 +51725,30 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_bows_and_spears",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear",
+            "thrown_spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear",
+            "Stats.Attacks.Thrown.Spear"
+          ],
+          "sourceComponents": [
+            "LeftEyeCollision",
+            "RightEyeCollision"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -51607,7 +52209,34 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PrayingMantis_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PrayingMantis_OGRR_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Praying_Mantis_Nymph.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Praying_Mantis_Nymph.webp",
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow",
+          "spear",
+          "thrown_spear"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow",
+          "Stats.Attacks.Spear",
+          "Stats.Attacks.Thrown.Spear"
+        ],
+        "sourceComponents": [
+          "LeftEyeCollision",
+          "RightEyeCollision"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_rust_beetle",
@@ -51645,7 +52274,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -52277,7 +52915,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_RustBeetle_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_RustBeetle_OGRR_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_striped_bark_scorpion",
@@ -52313,13 +52969,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "tail",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         },
         {
           "part": "stinger",
@@ -52327,8 +52992,23 @@
           "susceptibleDamageTypes": [
             "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -52698,7 +53378,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_StripedBark_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_StripedBark_OGRR_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Striped_Bark_Scorpion.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Striped_Bark_Scorpion.webp",
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_tiger_mosquito",
@@ -53017,13 +53715,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -53367,7 +54074,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_ToeBiter_Adult_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_ToeBiter_Adult_OGRR_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Toe_Biter.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/OGRR_Toe_Biter.webp",
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_toe_biter_leviathan",
@@ -53402,13 +54127,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -53793,7 +54527,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier4_ToeBiter_Leviathan_OGRR.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier4_ToeBiter_Leviathan_OGRR_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_ogrr_wasp",
@@ -63762,15 +64514,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 3.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -64443,7 +65206,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Bee_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Bee_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 3.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_black_soldier_ant",
@@ -64485,15 +65271,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -66431,7 +67228,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_BlackAntSoldier_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_BlackAntSoldier_ORC_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Black_Soldier_Ant.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Black_Soldier_Ant.webp",
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_blue_butterfly",
@@ -67512,7 +68332,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -68116,7 +68945,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Bombardier_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Bombardier_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_broodmother",
@@ -75102,12 +75949,32 @@
       "weakPoints": [
         {
           "part": "legs",
-          "susceptibleDamage": "slashing",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "slashing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "axe",
+            "sword",
+            "dagger"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Axe",
+            "Stats.Attacks.Sword",
+            "Stats.Attacks.Dagger"
+          ],
+          "sourceComponents": [
+            "LeftLegWeakpoint1",
+            "LeftLegWeakpoint2",
+            "RightLegWeakpoint1",
+            "RightLegWeakpoint2"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -75964,7 +76831,36 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Ladybug_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Ladybug_ORC_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Ladybug.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Ladybug.webp",
+      "weakPoint": {
+        "part": "legs",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "axe",
+          "sword",
+          "dagger"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Axe",
+          "Stats.Attacks.Sword",
+          "Stats.Attacks.Dagger"
+        ],
+        "sourceComponents": [
+          "LeftLegWeakpoint1",
+          "LeftLegWeakpoint2",
+          "RightLegWeakpoint1",
+          "RightLegWeakpoint2"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_larva",
@@ -77546,13 +78442,46 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "stinger",
-          "susceptibleDamage": "stabbing",
+          "part": "tail",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "stinger",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -79331,7 +80260,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_northern_scorpion_jr",
@@ -79371,13 +80318,46 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "stinger",
-          "susceptibleDamage": "stabbing",
+          "part": "tail",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        },
+        {
+          "part": "stinger",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -80191,7 +81171,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_Jr_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_Jr_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_northern_scorpling",
@@ -81922,12 +82920,32 @@
       "weakPoints": [
         {
           "part": "legs",
-          "susceptibleDamage": "slashing",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "slashing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "axe",
+            "sword",
+            "dagger"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Axe",
+            "Stats.Attacks.Sword",
+            "Stats.Attacks.Dagger"
+          ],
+          "sourceComponents": [
+            "LeftLegWeakpoint1",
+            "LeftLegWeakpoint2",
+            "RightLegWeakpoint1",
+            "RightLegWeakpoint2"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -83952,7 +84970,36 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PotatoBeetle_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PotatoBeetle_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "legs",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "axe",
+          "sword",
+          "dagger"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Axe",
+          "Stats.Attacks.Sword",
+          "Stats.Attacks.Dagger"
+        ],
+        "sourceComponents": [
+          "LeftLegWeakpoint1",
+          "LeftLegWeakpoint2",
+          "RightLegWeakpoint1",
+          "RightLegWeakpoint2"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_praying_mantis_nymph",
@@ -83998,12 +85045,30 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_bows_and_spears",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear",
+            "thrown_spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear",
+            "Stats.Attacks.Thrown.Spear"
+          ],
+          "sourceComponents": [
+            "LeftEyeCollision",
+            "RightEyeCollision"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -85398,7 +86463,34 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PrayingMantis_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PrayingMantis_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow",
+          "spear",
+          "thrown_spear"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow",
+          "Stats.Attacks.Spear",
+          "Stats.Attacks.Thrown.Spear"
+        ],
+        "sourceComponents": [
+          "LeftEyeCollision",
+          "RightEyeCollision"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_red_soldier_ant",
@@ -85436,15 +86528,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -86464,7 +87567,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier1_RedAntSoldier_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier1_RedAntSoldier_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_rust_beetle",
@@ -86506,7 +87632,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -87788,7 +88923,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_RustBeetle_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_RustBeetle_ORC_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Rust_Beetle.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Rust_Beetle.webp",
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_spiderling",
@@ -89529,13 +90682,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "tail",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         },
         {
           "part": "stinger",
@@ -89543,8 +90705,23 @@
           "susceptibleDamageTypes": [
             "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -90583,7 +91760,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_StripedBark_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_StripedBark_G_ORC.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Striped_Bark_Scorpion.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Striped_Bark_Scorpion.webp",
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_striped_bark_scorpion_jr",
@@ -90623,13 +91818,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "tail",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         },
         {
           "part": "stinger",
@@ -90637,8 +91841,23 @@
           "susceptibleDamageTypes": [
             "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -91382,7 +92601,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_Jr_StripedBark_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_Jr_StripedBark_G_ORC.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Striped_Bark_Scorpion_Jr.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Striped_Bark_Scorpion_Jr.webp",
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_striped_bark_scorpling",
@@ -92966,13 +94203,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -94091,7 +95337,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_ToeBiter_Adult_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_ToeBiter_Adult_ORC_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Toe_Biter.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/ORC_Toe_Biter.webp",
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_toe_biter_leviathan",
@@ -94135,13 +95399,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -95753,7 +97026,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier4_ToeBiter_Leviathan_ORC.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier4_ToeBiter_Leviathan_ORC_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_orc_toe_biter_nymph",
@@ -103205,13 +104496,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -103608,7 +104908,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier4_ToeBiter_LeviathanEggs.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier4_ToeBiter_LeviathanEggs_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_pincher_earwig",
@@ -106675,12 +107993,32 @@
       "weakPoints": [
         {
           "part": "legs",
-          "susceptibleDamage": "slashing",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "slashing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "axe",
+            "sword",
+            "dagger"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Axe",
+            "Stats.Attacks.Sword",
+            "Stats.Attacks.Dagger"
+          ],
+          "sourceComponents": [
+            "LeftLegWeakpoint1",
+            "LeftLegWeakpoint2",
+            "RightLegWeakpoint1",
+            "RightLegWeakpoint2"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -107557,7 +108895,36 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PotatoBeetle.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PotatoBeetle_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "legs",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "axe",
+          "sword",
+          "dagger"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Axe",
+          "Stats.Attacks.Sword",
+          "Stats.Attacks.Dagger"
+        ],
+        "sourceComponents": [
+          "LeftLegWeakpoint1",
+          "LeftLegWeakpoint2",
+          "RightLegWeakpoint1",
+          "RightLegWeakpoint2"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_praying_mantis_nymph",
@@ -107603,12 +108970,30 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_bows_and_spears",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbing"
+            "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear",
+            "thrown_spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear",
+            "Stats.Attacks.Thrown.Spear"
+          ],
+          "sourceComponents": [
+            "LeftEyeCollision",
+            "RightEyeCollision"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -108267,7 +109652,34 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_PrayingMantis.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_PrayingMantis_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow",
+          "spear",
+          "thrown_spear"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow",
+          "Stats.Attacks.Spear",
+          "Stats.Attacks.Thrown.Spear"
+        ],
+        "sourceComponents": [
+          "LeftEyeCollision",
+          "RightEyeCollision"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_red_soldier_ant",
@@ -108305,15 +109717,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -109832,7 +111255,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier1_RedAntSoldier.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier1_RedAntSoldier_G.png",
-      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Red_Soldier_Ant.webp"
+      "mapMarkerAsset": "assets/g2/creatures/thumbnails/Red_Soldier_Ant.webp",
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_red_worker_ant",
@@ -109865,15 +111311,26 @@
       "weakPoints": [
         {
           "part": "eyes",
-          "susceptibleDamage": "stabbing_arrows_only",
+          "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
-            "stabbingArrowsOnly"
+            "any"
           ],
           "weaponFamilies": [
-            "bow",
-            "crossbow"
+            "bow"
           ],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow"
+          ],
+          "sourceComponents": [
+            "LeftEyeWeakspot",
+            "RightEyeWeakspot"
+          ],
+          "tagResolutions": [
+            "component_name_matches_declared_tag"
+          ],
+          "damageMultiplier": 5.0,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -112586,7 +114043,30 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier1_RedAntWorker.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier1_RedAntWorker_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "eyes",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [
+          "bow"
+        ],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [
+          "Stats.Attacks.Bow"
+        ],
+        "sourceComponents": [
+          "LeftEyeWeakspot",
+          "RightEyeWeakspot"
+        ],
+        "tagResolutions": [
+          "component_name_matches_declared_tag"
+        ],
+        "damageMultiplier": 5.0,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_rust_beetle",
@@ -112634,7 +114114,16 @@
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -113827,7 +115316,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_RustBeetle.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_RustBeetle_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_sauc_r",
@@ -113865,7 +115372,26 @@
         }
       ],
       "immunities": [],
-      "weakPoints": [],
+      "weakPoints": [
+        {
+          "part": "vent",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
+          "weaponFamilies": [],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "VentWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
+        }
+      ],
       "attacks": [
         {
           "name": {
@@ -114164,7 +115690,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Arcr.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Arcr_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "vent",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "VentWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_spiderling",
@@ -120017,13 +121561,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "tail",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         },
         {
           "part": "stinger",
@@ -120031,8 +121584,23 @@
           "susceptibleDamageTypes": [
             "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -120525,7 +122093,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_StripedBark.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_StripedBark_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_striped_bark_scorpion_jr",
@@ -120565,13 +122151,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "tail",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         },
         {
           "part": "stinger",
@@ -120579,8 +122174,23 @@
           "susceptibleDamageTypes": [
             "any"
           ],
-          "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "weaponFamilies": [
+            "bow",
+            "spear"
+          ],
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [
+            "Stats.Attacks.Bow",
+            "Stats.Attacks.Spear"
+          ],
+          "sourceComponents": [
+            "TailWeakpoint"
+          ],
+          "tagResolutions": [
+            "no_declared_tag_match"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -121257,7 +122867,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier2_Scorpion_Jr_StripedBark.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier2_Scorpion_Jr_StripedBark_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "tail",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "no_declared_tag_match"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_striped_bark_scorpling",
@@ -125434,13 +127062,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -126239,7 +127876,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier3_ToeBiter_Adult.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier3_ToeBiter_Adult_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_toe_biter_leviathan",
@@ -126287,13 +127942,22 @@
       "immunities": [],
       "weakPoints": [
         {
-          "part": "butt",
+          "part": "rump",
           "susceptibleDamage": "any",
           "susceptibleDamageTypes": [
             "any"
           ],
           "weaponFamilies": [],
-          "provenance": "historical_editorial"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BackWeakpoint"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 1.25,
+          "stunMultiplier": 1.0
         }
       ],
       "attacks": [
@@ -126680,7 +128344,25 @@
       ],
       "cardNormal": "assets/g2/creatures/cards/Creaturecard_T_UI_Tier4_ToeBiter_Leviathan.png",
       "cardGold": "assets/g2/creatures/cards_golden/Creaturecardgold_T_UI_Tier4_ToeBiter_Leviathan_G.png",
-      "mapMarkerAsset": null
+      "mapMarkerAsset": null,
+      "weakPoint": {
+        "part": "rump",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BackWeakpoint"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 1.25,
+        "stunMultiplier": 1.0
+      }
     },
     {
       "publicId": "g2_toe_biter_nymph",
@@ -138393,11 +140075,38 @@
       "resistances": [],
       "weakPoints": [
         {
-          "part": "weakpoint.underbelly",
-          "susceptibleDamage": "unknown",
-          "susceptibleDamageTypes": [],
+          "part": "belly",
+          "susceptibleDamage": "any",
+          "susceptibleDamageTypes": [
+            "any"
+          ],
           "weaponFamilies": [],
-          "provenance": "extractor_region_only"
+          "provenance": "extractor_anatomical_weakpoints_v1",
+          "sourceDamageTags": [],
+          "sourceComponents": [
+            "BoxCollision_Weakpoint_010",
+            "BoxCollision_Weakpoint_011",
+            "BoxCollision_Weakpoint_012",
+            "BoxCollision_Weakpoint_013",
+            "BoxCollision_Weakpoint_014",
+            "BoxCollision_Weakpoint_015",
+            "BoxCollision_Weakpoint_016",
+            "BoxCollision_Weakpoint_017",
+            "BoxCollision_Weakpoint_018",
+            "BoxCollision_Weakpoint_02",
+            "BoxCollision_Weakpoint_03",
+            "BoxCollision_Weakpoint_04",
+            "BoxCollision_Weakpoint_05",
+            "BoxCollision_Weakpoint_06",
+            "BoxCollision_Weakpoint_07",
+            "BoxCollision_Weakpoint_08",
+            "BoxCollision_Weakpoint_09"
+          ],
+          "tagResolutions": [
+            "single_declared_bestiary_tag"
+          ],
+          "damageMultiplier": 2.0,
+          "stunMultiplier": 8.0
         }
       ],
       "attacks": [
@@ -139517,7 +141226,41 @@
         }
       ],
       "appearanceCondition": "Repeatedly summoned with a termite-part recipe in the deepest area of the termite nest.",
-      "underConstruction": false
+      "underConstruction": false,
+      "weakPoint": {
+        "part": "belly",
+        "susceptibleDamage": "any",
+        "susceptibleDamageTypes": [
+          "any"
+        ],
+        "weaponFamilies": [],
+        "provenance": "extractor_anatomical_weakpoints_v1",
+        "sourceDamageTags": [],
+        "sourceComponents": [
+          "BoxCollision_Weakpoint_010",
+          "BoxCollision_Weakpoint_011",
+          "BoxCollision_Weakpoint_012",
+          "BoxCollision_Weakpoint_013",
+          "BoxCollision_Weakpoint_014",
+          "BoxCollision_Weakpoint_015",
+          "BoxCollision_Weakpoint_016",
+          "BoxCollision_Weakpoint_017",
+          "BoxCollision_Weakpoint_018",
+          "BoxCollision_Weakpoint_02",
+          "BoxCollision_Weakpoint_03",
+          "BoxCollision_Weakpoint_04",
+          "BoxCollision_Weakpoint_05",
+          "BoxCollision_Weakpoint_06",
+          "BoxCollision_Weakpoint_07",
+          "BoxCollision_Weakpoint_08",
+          "BoxCollision_Weakpoint_09"
+        ],
+        "tagResolutions": [
+          "single_declared_bestiary_tag"
+        ],
+        "damageMultiplier": 2.0,
+        "stunMultiplier": 8.0
+      }
     },
     {
       "publicId": "g2_ogre_diving_bell_spider",
@@ -141021,7 +142764,22 @@
       "environments": [],
       "eventAppearances": [],
       "appearanceType": "unknown",
-      "encounterVariants": [],
+      "encounterVariants": [
+        {
+          "id": "release_0_6_centipede_termitenymph",
+          "role": "boss_encounter_support",
+          "nameEn": "Centipede arena: sacrificial larva",
+          "nameEsMX": "Arena de Ciempiés: larva de sacrificio",
+          "nameRu": "Арена Скритча: жертвенная личинка",
+          "stats": {},
+          "attacks": [],
+          "weaknesses": [],
+          "resistances": [],
+          "specialCombatModifiers": [],
+          "sharedBestiaryEntry": true,
+          "provenance": "user_confirmed_centipede_boss_encounter"
+        }
+      ],
       "availabilityStatus": "confirmed",
       "sourceProvenance": {
         "extractorTechnicalId": "TermiteNymph",
@@ -141742,7 +143500,22 @@
       "environments": [],
       "eventAppearances": [],
       "appearanceType": "unknown",
-      "encounterVariants": [],
+      "encounterVariants": [
+        {
+          "id": "release_0_6_centipede_termitesoldier",
+          "role": "boss_encounter_support",
+          "nameEn": "Centipede arena: soldier reinforcement",
+          "nameEsMX": "Arena de Ciempiés: refuerzo soldado",
+          "nameRu": "Арена Скритча: подкрепление солдат",
+          "stats": {},
+          "attacks": [],
+          "weaknesses": [],
+          "resistances": [],
+          "specialCombatModifiers": [],
+          "sharedBestiaryEntry": true,
+          "provenance": "user_confirmed_centipede_boss_encounter"
+        }
+      ],
       "availabilityStatus": "confirmed",
       "sourceProvenance": {
         "extractorTechnicalId": "TermiteSoldier",
@@ -142865,7 +144638,22 @@
       "environments": [],
       "eventAppearances": [],
       "appearanceType": "unknown",
-      "encounterVariants": [],
+      "encounterVariants": [
+        {
+          "id": "release_0_6_centipede_termiteworker",
+          "role": "boss_encounter_support",
+          "nameEn": "Centipede arena: worker reinforcement",
+          "nameEsMX": "Arena de Ciempiés: refuerzo obrero",
+          "nameRu": "Арена Скритча: подкрепление рабочих",
+          "stats": {},
+          "attacks": [],
+          "weaknesses": [],
+          "resistances": [],
+          "specialCombatModifiers": [],
+          "sharedBestiaryEntry": true,
+          "provenance": "user_confirmed_centipede_boss_encounter"
+        }
+      ],
       "availabilityStatus": "confirmed",
       "sourceProvenance": {
         "extractorTechnicalId": "TermiteWorker",

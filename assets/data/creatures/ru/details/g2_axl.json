@@ -31,7 +31,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Axl — гигантский тарантул и необязательный босс, спрятанный в Pine Hill. Почти всё его тело выдерживает чудовищное количество ударов, пока ты не собьёшь его с ног и не откроешь настоящее окно на шраме брюшка.",
   "behavior": "Он открывает бой укусами, сериями и ударами лап, постоянно удерживая тебя под непосредственным давлением. Пока он не оглушён, бронированные участки тела сильно режут входящий урон и заставляют строить весь бой вокруг stagger-окон.",
@@ -308,7 +319,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [],

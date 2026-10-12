@@ -31,7 +31,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Axl roams the park. Drops tarantula chunks, fangs, talon and venom on death.",
   "behavior": "It opens with bites, combos, and leg stomps to keep you trapped under immediate pressure. Until it is stunned, the armored sections of its body heavily reduce incoming damage and force the whole fight around stagger windows.",
@@ -308,7 +319,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [],

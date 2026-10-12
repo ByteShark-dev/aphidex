@@ -26,10 +26,26 @@
   },
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_arrows_only",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbingArrowsOnly"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "LeftEyeWeakspot",
+      "RightEyeWeakspot"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 3.0,
+    "stunMultiplier": 1.0
   },
   "description": "Благородное и обычно мирное существо, патрулирующее небо парка в поисках нектара и пыльцы. Найти её уже бывает непросто, а разозлить — значит быстро получить очень серьёзную воздушную угрозу.",
   "behavior": "Большую часть дня она летает высоко, а затем опускается к цветам и жёлтым одуванчикам за пыльцой. Ночью часто засыпает на крупных камнях и широких листьях — это одно из немногих удобных окон, чтобы подойти до начала боя.",
@@ -197,15 +213,26 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_arrows_only",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbingArrowsOnly"
+        "any"
       ],
       "weaponFamilies": [
-        "bow",
-        "crossbow"
+        "bow"
       ],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "LeftEyeWeakspot",
+        "RightEyeWeakspot"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 3.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

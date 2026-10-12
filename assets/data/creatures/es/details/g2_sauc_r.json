@@ -74,7 +74,26 @@
       "bonusPct": 50
     }
   ],
-  "weakPoints": [],
+  "weakPoints": [
+    {
+      "part": "vent",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "VentWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    }
+  ],
   "attacks": [
     {
       "name": "A distancia",
@@ -345,5 +364,23 @@
       "notes": null
     }
   ],
-  "sourceStatus": "extractor_merged"
+  "sourceStatus": "extractor_merged",
+  "weakPoint": {
+    "part": "vent",
+    "susceptibleDamage": "any",
+    "susceptibleDamageTypes": [
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "VentWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
+  }
 }

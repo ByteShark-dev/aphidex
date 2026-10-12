@@ -26,10 +26,26 @@
   },
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_arrows_only",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbingArrowsOnly"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "LeftEyeWeakspot",
+      "RightEyeWeakspot"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 3.0,
+    "stunMultiplier": 1.0
   },
   "description": "A noble creature that surveys most of the park looking for nectar from flowering plants. Can drop bee fuzz, bee stinger and pollen on death.",
   "behavior": "It spends much of the day flying high before dropping to flowers and yellow dandelions to collect pollen. At night it often sleeps on large rocks and broad leaves, creating one of the few comfortable windows to approach before a fight starts.",
@@ -197,15 +213,26 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_arrows_only",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbingArrowsOnly"
+        "any"
       ],
       "weaponFamilies": [
-        "bow",
-        "crossbow"
+        "bow"
       ],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "LeftEyeWeakspot",
+        "RightEyeWeakspot"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 3.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

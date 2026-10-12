@@ -31,7 +31,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Axl acecha el parque. Al morir, suelta trozos de tarántula, colmillos, garra y veneno.",
   "behavior": "Abre el combate con mordidas, combos y pisotones de pata para mantenerte siempre debajo de su amenaza inmediata. Mientras no esté aturdido, sus zonas blindadas reducen muchísimo el daño recibido y te obligan a jugar alrededor del stagger.",
@@ -308,7 +319,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [],

@@ -27,10 +27,32 @@
   },
   "weakPoint": {
     "part": "legs",
-    "susceptibleDamage": "slashing",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "slashing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "axe",
+      "sword",
+      "dagger"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Axe",
+      "Stats.Attacks.Sword",
+      "Stats.Attacks.Dagger"
+    ],
+    "sourceComponents": [
+      "LeftLegWeakpoint1",
+      "LeftLegWeakpoint2",
+      "RightLegWeakpoint1",
+      "RightLegWeakpoint2"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Нейтральное существо 2-го тира, встречающееся во многих ранних зонах парка. С виду она спокойна, но для неподготовленного игрока всё ещё остаётся одной из первых настоящих стен.",
   "behavior": "Она медленно бродит без чёткого маршрута и иногда укладывается спать под широкими листьями. В Grounded 2 у неё по-прежнему есть вариант O.R.C., а в огороде её более жёстким родственником выступает Potato Beetle.",
@@ -147,12 +169,32 @@
   "weakPoints": [
     {
       "part": "legs",
-      "susceptibleDamage": "slashing",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "slashing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "axe",
+        "sword",
+        "dagger"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Axe",
+        "Stats.Attacks.Sword",
+        "Stats.Attacks.Dagger"
+      ],
+      "sourceComponents": [
+        "LeftLegWeakpoint1",
+        "LeftLegWeakpoint2",
+        "RightLegWeakpoint1",
+        "RightLegWeakpoint2"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

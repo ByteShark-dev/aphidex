@@ -111,7 +111,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "healthDisplay": "normal",
   "health": {
@@ -133,7 +144,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

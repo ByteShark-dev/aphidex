@@ -24,10 +24,26 @@
   },
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_arrows_only",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbingArrowsOnly"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "LeftEyeWeakspot",
+      "RightEyeWeakspot"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 5.0,
+    "stunMultiplier": 1.0
   },
   "description": "Este bichito es inofensivo, a menos que lo ataquen. Se lo puede encontrar patrullando las colinas de pinos. Al morir, puede soltar cabeza de hormiga roja y parte de hormiga roja.",
   "behavior": "Patrulla las salidas de varios hormigueros mientras busca comida para la colonia. Caza gorgojos, recoge néctar del suelo y transporta recursos grandes hasta las cámaras internas, manteniendo siempre la sensación de una colonia activa y ocupada.",
@@ -109,15 +125,26 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_arrows_only",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbingArrowsOnly"
+        "any"
       ],
       "weaponFamilies": [
-        "bow",
-        "crossbow"
+        "bow"
       ],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "LeftEyeWeakspot",
+        "RightEyeWeakspot"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 5.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

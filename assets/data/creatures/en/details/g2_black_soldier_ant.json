@@ -28,10 +28,26 @@
   },
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_arrows_only",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbingArrowsOnly"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "LeftEyeWeakspot",
+      "RightEyeWeakspot"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 5.0,
+    "stunMultiplier": 1.0
   },
   "description": "Guards areas with high human-made resources and their home, the black ant hill. Can drop black ant head, black ant mandibles, and black ant part on death.",
   "behavior": "It patrols wide stretches of the Community Garden and often investigates nearby worker ant sounds and local fights. It shares much of the red soldier ant moveset, but adds a tang spit projectile that leaves lingering area denial.",
@@ -212,15 +228,26 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_arrows_only",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbingArrowsOnly"
+        "any"
       ],
       "weaponFamilies": [
-        "bow",
-        "crossbow"
+        "bow"
       ],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "LeftEyeWeakspot",
+        "RightEyeWeakspot"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 5.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

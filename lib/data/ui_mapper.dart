@@ -166,13 +166,15 @@ class UiMapper {
       case 'legs':
         return '$base/T_UI_Weakspot_Legs.webp';
       case 'rump':
+      case 'tail':
         return '$base/T_UI_Weakspot_Rump.webp';
       case 'stinger':
         return '$base/T_UI_Weakspot_Stinger.webp';
       case 'abdomen':
       case 'belly':
-      case 'butt':
         return '$base/T_UI_Weakspot_Gut.webp';
+      case 'butt':
+        return '$base/T_UI_Weakspot_Rump.webp';
       default:
         return 'assets/global/effects_damage/Generic_Damage.webp';
     }

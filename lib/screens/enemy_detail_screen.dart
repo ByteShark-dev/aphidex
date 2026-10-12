@@ -2171,9 +2171,12 @@ class _ExtractorAvailabilityNotice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final message = switch (languageCode) {
-      'es' => 'Implementado en los datos actuales del juego; su aparición jugable aún no está confirmada.',
-      'ru' => 'Объект присутствует в текущих данных игры, но его появление в игровом мире ещё не подтверждено.',
-      _ => 'Implemented in the current game data; its playable encounter has not been confirmed yet.',
+      'es' =>
+        'Implementado en los datos actuales del juego; su aparición jugable aún no está confirmada.',
+      'ru' =>
+        'Объект присутствует в текущих данных игры, но его появление в игровом мире ещё не подтверждено.',
+      _ =>
+        'Implemented in the current game data; its playable encounter has not been confirmed yet.',
     };
     return Container(
       width: double.infinity,
@@ -2210,24 +2213,42 @@ class _BuggyProfileSection extends StatelessWidget {
       'ru' => 'Данные багги',
       _ => 'Buggy data',
     };
-    final health = profile.stat('tamedMaxHealth') ?? profile.stat('maxHealthRaw');
-    final damage = profile.stat('averageDamageRaw') ?? profile.stat('defaultBaseDamageFirstAttack');
+    final health =
+        profile.stat('tamedMaxHealth') ?? profile.stat('maxHealthRaw');
+    final damage =
+        profile.stat('averageDamageRaw') ??
+        profile.stat('defaultBaseDamageFirstAttack');
     final stamina = profile.stat('stamina');
     final hauling = profile.stat('haulingCapacity');
     final labels = <MapEntry<String, String>>[];
     void add(String en, String es, String ru, num? value, String suffix) {
       if (value != null) {
-        labels.add(MapEntry(switch (languageCode) {
-          'es' => es,
-          'ru' => ru,
-          _ => en,
-        }, '$value$suffix'));
+        labels.add(
+          MapEntry(switch (languageCode) {
+            'es' => es,
+            'ru' => ru,
+            _ => en,
+          }, '$value$suffix'),
+        );
       }
     }
-    add('Tamed health', 'Vida domesticada', 'Здоровье прирученного', health, ' HP');
+
+    add(
+      'Tamed health',
+      'Vida domesticada',
+      'Здоровье прирученного',
+      health,
+      ' HP',
+    );
     add('Base damage', 'Daño base', 'Базовый урон', damage, '');
     add('Stamina', 'Resistencia', 'Выносливость', stamina, '');
-    add('Hauling capacity', 'Capacidad de carga', 'Грузоподъёмность', hauling, '');
+    add(
+      'Hauling capacity',
+      'Capacidad de carga',
+      'Грузоподъёмность',
+      hauling,
+      '',
+    );
     final ingredients = profile.ingredients;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2244,31 +2265,37 @@ class _BuggyProfileSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ...labels.map((row) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  children: [
-                    Expanded(child: Text(row.key, style: const TextStyle(fontWeight: FontWeight.w700))),
-                    Text(row.value),
-                  ],
+              ...labels.map(
+                (row) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          row.key,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Text(row.value),
+                    ],
+                  ),
                 ),
-              )),
+              ),
               if (profile.recipeRow != null) ...[
                 const SizedBox(height: 4),
-                Text(
-                  switch (languageCode) {
-                    'es' => 'Incubadora: ${profile.recipeRow}',
-                    'ru' => 'Инкубатор: ${profile.recipeRow}',
-                    _ => 'Hatchery: ${profile.recipeRow}',
-                  },
-                  style: const TextStyle(fontWeight: FontWeight.w700),
-                ),
+                Text(switch (languageCode) {
+                  'es' => 'Incubadora: ${profile.recipeRow}',
+                  'ru' => 'Инкубатор: ${profile.recipeRow}',
+                  _ => 'Hatchery: ${profile.recipeRow}',
+                }, style: const TextStyle(fontWeight: FontWeight.w700)),
               ],
               if (ingredients.isNotEmpty) ...[
                 const SizedBox(height: 6),
-                ...ingredients.map((item) => Text(
-                  '• ${item['itemRow'] ?? item['type'] ?? 'Unknown'} × ${item['count'] ?? '?'}',
-                )),
+                ...ingredients.map(
+                  (item) => Text(
+                    '• ${item['itemRow'] ?? item['type'] ?? 'Unknown'} × ${item['count'] ?? '?'}',
+                  ),
+                ),
               ],
             ],
           ),
@@ -3563,10 +3590,32 @@ class _WeakPointCard extends StatelessWidget {
             children: [
               Image.asset(partIcon, width: 28, height: 28),
               const SizedBox(width: 10),
-              Text(
-                l10n.weakPointPartLabel(presentation.region),
-                style: const TextStyle(fontWeight: FontWeight.w800),
+              Expanded(
+                child: Text(
+                  l10n.weakPointPartLabel(presentation.region),
+                  style: const TextStyle(fontWeight: FontWeight.w800),
+                ),
               ),
+              if (presentation.damageMultiplier != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      l10n.weakPointDamageMultiplier(
+                        presentation.damageMultiplier!,
+                      ),
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    if (presentation.stunMultiplier != null &&
+                        presentation.stunMultiplier != 1)
+                      Text(
+                        l10n.weakPointStunMultiplier(
+                          presentation.stunMultiplier!,
+                        ),
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                  ],
+                ),
             ],
           ),
           const SizedBox(height: 10),
@@ -3604,6 +3653,10 @@ class _WeakPointCard extends StatelessWidget {
                 l10n.susceptibleDamageLabel(presentation.effectiveDamage),
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
+              if (presentation.weaponFamilies.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Text(l10n.weakPointWeaponsLabel(presentation.weaponFamilies)),
+              ],
             ],
           ),
         ],

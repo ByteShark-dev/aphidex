@@ -28,10 +28,26 @@
   },
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_arrows_only",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbingArrowsOnly"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "LeftEyeWeakspot",
+      "RightEyeWeakspot"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 5.0,
+    "stunMultiplier": 1.0
   },
   "description": "Vigila zonas ricas en recursos fabricados por los humanos y también su hogar, el hormiguero negro. Al morir, puede soltar cabeza de hormiga negra, mandíbulas de hormiga negra y parte de hormiga negra.",
   "behavior": "Patrulla amplias zonas del Community Garden y suele investigar el ruido de obreras negras y otros combates cercanos. Comparte ataques con la hormiga soldado roja, pero añade un disparo corrosivo que deja zona residual.",
@@ -212,15 +228,26 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_arrows_only",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbingArrowsOnly"
+        "any"
       ],
       "weaponFamilies": [
-        "bow",
-        "crossbow"
+        "bow"
       ],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "LeftEyeWeakspot",
+        "RightEyeWeakspot"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 5.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

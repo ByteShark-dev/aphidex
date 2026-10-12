@@ -126,6 +126,37 @@ void main() {
     },
   );
 
+  test('anatomical weakpoint export retains multiplier, weapons, and any damage', () {
+    for (final language in const ['en', 'es', 'ru']) {
+      final centipede = _json(
+        'assets/data/creatures/$language/details/g2_centipede.json',
+      );
+      final centipedePoint = (centipede['weakPoints'] as List).single as Map;
+      expect(centipedePoint['part'], 'belly');
+      expect(centipedePoint['damageMultiplier'], 2.0);
+      expect(centipedePoint['stunMultiplier'], 8.0);
+      expect(centipedePoint['susceptibleDamage'], 'any');
+      expect(centipedePoint['weaponFamilies'], isEmpty);
+
+      final scorpion = _json(
+        'assets/data/creatures/$language/details/g2_striped_bark_scorpion.json',
+      );
+      final points = (scorpion['weakPoints'] as List).cast<Map>();
+      expect(points.map((point) => point['part']), containsAll(['tail', 'stinger']));
+      final stinger = points.singleWhere((point) => point['part'] == 'stinger');
+      expect(stinger['damageMultiplier'], 1.25);
+      expect(stinger['weaponFamilies'], ['bow', 'spear']);
+
+      final ladybug = _json(
+        'assets/data/creatures/$language/details/g2_ladybug.json',
+      );
+      final legs = (ladybug['weakPoints'] as List).single as Map;
+      expect(legs['damageMultiplier'], 2.0);
+      expect(legs['weaponFamilies'], ['axe', 'sword', 'dagger']);
+      expect(legs['susceptibleDamage'], 'any');
+    }
+  });
+
   test('Termite Larva is shown with peaceful creatures', () {
     for (final language in const ['en', 'es', 'ru']) {
       final larva = _json(

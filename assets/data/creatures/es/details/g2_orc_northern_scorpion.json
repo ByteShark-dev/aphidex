@@ -22,11 +22,22 @@
   ],
   "temperament": "aggressive",
   "weakPoint": {
-    "part": "stinger",
-    "susceptibleDamage": "stabbing",
+    "part": "tail",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "Un agresivo escorpión norteño a control remoto con habilidades especiales. Al morir, puede soltar un receptor C.R.O. y partes de criatura.",
   "behavior": "Patrulla zonas O.R.C. abiertas y cuevas con recorridos cortos, usando enterradas para cerrar líneas y pinzas para fijarte delante de él. Mantiene una presencia mucho más constante que el escorpión base.",
@@ -133,13 +144,46 @@
   ],
   "weakPoints": [
     {
-      "part": "stinger",
-      "susceptibleDamage": "stabbing",
+      "part": "tail",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "stinger",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [
+        "bow",
+        "spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear"
+      ],
+      "sourceComponents": [
+        "TailWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "healthDisplay": "normal",

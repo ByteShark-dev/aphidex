@@ -26,11 +26,22 @@
     "value": 600
   },
   "weakPoint": {
-    "part": "stinger",
-    "susceptibleDamage": "stabbing",
+    "part": "tail",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "Un joven escorpión norteño excavador preparado para la batalla. Al morir, puede soltar trozos de escorpión norteño.",
   "behavior": "Se mueve con rapidez y aprovecha el espacio reducido para acortar distancias.",
@@ -117,13 +128,46 @@
   ],
   "weakPoints": [
     {
-      "part": "stinger",
-      "susceptibleDamage": "stabbing",
+      "part": "tail",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "stinger",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [
+        "bow",
+        "spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear"
+      ],
+      "sourceComponents": [
+        "TailWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "groupId": null,

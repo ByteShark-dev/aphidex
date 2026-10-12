@@ -30,7 +30,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "A beetle with a big blasting booty that patrols the park. A highly volatile boiling gland and bombardier part can be dropped on death.",
   "behavior": "It patrols specific areas and in combat rotates through bites, close spray, ranged acid shots, and high volleys to cover different angles. It does not beat you with raw speed so much as by gradually turning the floor into bad decisions.",
@@ -231,7 +242,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

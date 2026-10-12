@@ -22,11 +22,22 @@
   ],
   "temperament": "aggressive",
   "weakPoint": {
-    "part": "stinger",
-    "susceptibleDamage": "stabbing",
+    "part": "tail",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "An aggressive northern scorpion with special abilities. It can drop an O.R.C. Receiver on death as well as its creature parts.",
   "behavior": "It patrols open O.R.C. zones and caves on short routes, using burrows to close lines and its claws to pin you in front of it. It maintains a much steadier pressure than the base scorpion.",
@@ -133,13 +144,46 @@
   ],
   "weakPoints": [
     {
-      "part": "stinger",
-      "susceptibleDamage": "stabbing",
+      "part": "tail",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "stinger",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [
+        "bow",
+        "spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear"
+      ],
+      "sourceComponents": [
+        "TailWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "healthDisplay": "normal",

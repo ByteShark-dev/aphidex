@@ -213,16 +213,33 @@ void main() {
   });
 
   group('weakpoints and actions', () {
-    test('Bee families retain eyes, projectile piercing and bows', () {
+    test('Bee families retain extractor eye multipliers and bow filters', () {
       const resolver = AphidexWeakpointResolver();
       for (final id in ['g2_bee', 'g2_orc_bee']) {
         final enemy = Enemy.fromJson(detail('en', id));
         final presentation = resolver.resolve(enemy.resolvedWeakPoints.single);
         expect(presentation.region, 'eyes');
-        expect(presentation.effectiveDamage, 'projectile_piercing');
-        expect(presentation.weaponFamilies, ['bow', 'crossbow']);
+        expect(presentation.effectiveDamage, 'any');
+        expect(presentation.weaponFamilies, ['bow']);
+        expect(presentation.damageMultiplier, 3);
         expect(presentation.iconAsset, contains('Weakspot_Eyes'));
       }
+    });
+
+    test('underbelly uses the lower-body weakpoint icon', () {
+      const resolver = AphidexWeakpointResolver();
+      final presentation = resolver.resolve(
+        const WeakPointInfo(
+          part: 'weakpoint.underbelly',
+          susceptibleDamage: 'any',
+          damageMultiplier: 2,
+          stunMultiplier: 8,
+        ),
+      );
+      expect(presentation.region, 'belly');
+      expect(presentation.iconAsset, contains('Weakspot_Gut'));
+      expect(presentation.damageMultiplier, 2);
+      expect(presentation.stunMultiplier, 8);
     });
 
     test('unknown weakpoint never borrows another region icon', () {

@@ -794,6 +794,8 @@ class WeakPointInfo {
   final String susceptibleDamage;
   final List<String> susceptibleDamageTypes;
   final List<String> weaponFamilies;
+  final double? damageMultiplier;
+  final double? stunMultiplier;
   final String provenance;
 
   const WeakPointInfo({
@@ -801,18 +803,30 @@ class WeakPointInfo {
     required this.susceptibleDamage,
     this.susceptibleDamageTypes = const [],
     this.weaponFamilies = const [],
+    this.damageMultiplier,
+    this.stunMultiplier,
     this.provenance = 'unknown',
   });
 
-  factory WeakPointInfo.fromJson(Map<String, dynamic> json) => WeakPointInfo(
-    part: (json['part'] ?? '') as String,
-    susceptibleDamage: (json['susceptibleDamage'] ?? 'unknown') as String,
-    susceptibleDamageTypes: List<String>.from(
-      json['susceptibleDamageTypes'] ?? const [],
-    ),
-    weaponFamilies: List<String>.from(json['weaponFamilies'] ?? const []),
-    provenance: json['provenance']?.toString() ?? 'unknown',
-  );
+  factory WeakPointInfo.fromJson(Map<String, dynamic> json) {
+    final rawMultiplier = json['damageMultiplier'];
+    final rawStunMultiplier = json['stunMultiplier'];
+    return WeakPointInfo(
+      part: (json['part'] ?? '') as String,
+      susceptibleDamage: (json['susceptibleDamage'] ?? 'unknown') as String,
+      susceptibleDamageTypes: List<String>.from(
+        json['susceptibleDamageTypes'] ?? const [],
+      ),
+      weaponFamilies: List<String>.from(json['weaponFamilies'] ?? const []),
+      damageMultiplier: rawMultiplier is num
+          ? rawMultiplier.toDouble()
+          : double.tryParse(rawMultiplier?.toString() ?? ''),
+      stunMultiplier: rawStunMultiplier is num
+          ? rawStunMultiplier.toDouble()
+          : double.tryParse(rawStunMultiplier?.toString() ?? ''),
+      provenance: json['provenance']?.toString() ?? 'unknown',
+    );
+  }
 }
 
 enum ActionType {

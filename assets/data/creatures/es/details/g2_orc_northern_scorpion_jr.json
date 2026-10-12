@@ -26,11 +26,22 @@
     "value": 600
   },
   "weakPoint": {
-    "part": "stinger",
-    "susceptibleDamage": "stabbing",
+    "part": "tail",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "Un escorpión norteño joven a control remoto. Puede soltar su receptor C.R.O. y partes de criatura.",
   "behavior": "Patrulla cuevas y puntos O.R.C. con trayectorias cortas, mezclando pinzas rápidas con enterradas agresivas. Es más móvil que el adulto y mucho más insistente de lo que su tamaño sugiere.",
@@ -120,13 +131,46 @@
   ],
   "weakPoints": [
     {
-      "part": "stinger",
-      "susceptibleDamage": "stabbing",
+      "part": "tail",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "stinger",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [
+        "bow",
+        "spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear"
+      ],
+      "sourceComponents": [
+        "TailWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "groupId": null,

@@ -26,11 +26,22 @@
     "value": 875
   },
   "weakPoint": {
-    "part": "stinger",
-    "susceptibleDamage": "stabbing",
+    "part": "tail",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "no_declared_tag_match"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "A burrowing scorpion with pincers and a stinger. On death, it may drop its killing tools as well as northern scorpion chunks.",
   "behavior": "It patrols its area aggressively and uses rushes, claws, and burrowing to control space.",
@@ -138,13 +149,46 @@
   ],
   "weakPoints": [
     {
-      "part": "stinger",
-      "susceptibleDamage": "stabbing",
+      "part": "tail",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "stinger",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
+      "weaponFamilies": [
+        "bow",
+        "spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear"
+      ],
+      "sourceComponents": [
+        "TailWeakpoint"
+      ],
+      "tagResolutions": [
+        "no_declared_tag_match"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "groupId": null,

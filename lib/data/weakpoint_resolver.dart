@@ -6,12 +6,16 @@ class WeakpointPresentation {
   final String iconAsset;
   final String effectiveDamage;
   final List<String> weaponFamilies;
+  final double? damageMultiplier;
+  final double? stunMultiplier;
 
   const WeakpointPresentation({
     required this.region,
     required this.iconAsset,
     required this.effectiveDamage,
     required this.weaponFamilies,
+    required this.damageMultiplier,
+    required this.stunMultiplier,
   });
 }
 
@@ -32,12 +36,18 @@ class AphidexWeakpointResolver implements WeakpointResolver {
     'legs',
     'rump',
     'stinger',
+    'tail',
+    'vent',
   };
 
   @override
   WeakpointPresentation resolve(WeakPointInfo weakpoint) {
     final raw = weakpoint.part.trim().toLowerCase();
-    final normalized = raw.replaceFirst('weakpoint.', '');
+    final normalized = switch (raw.replaceFirst('weakpoint.', '')) {
+      'underbelly' || 'abdomen' => 'belly',
+      'butt' => 'rump',
+      final value => value,
+    };
     final region = _knownRegions.contains(normalized) ? normalized : 'unknown';
     final damage = switch (weakpoint.susceptibleDamage) {
       'stabbing_arrows_only' => 'projectile_piercing',
@@ -54,6 +64,8 @@ class AphidexWeakpointResolver implements WeakpointResolver {
       iconAsset: UiMapper.weakPointIcon(region),
       effectiveDamage: damage,
       weaponFamilies: families,
+      damageMultiplier: weakpoint.damageMultiplier,
+      stunMultiplier: weakpoint.stunMultiplier,
     );
   }
 }

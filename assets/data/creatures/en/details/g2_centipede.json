@@ -73,11 +73,38 @@
   "resistances": [],
   "weakPoints": [
     {
-      "part": "weakpoint.underbelly",
-      "susceptibleDamage": "unknown",
-      "susceptibleDamageTypes": [],
+      "part": "belly",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
       "weaponFamilies": [],
-      "provenance": "extractor_region_only"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BoxCollision_Weakpoint_010",
+        "BoxCollision_Weakpoint_011",
+        "BoxCollision_Weakpoint_012",
+        "BoxCollision_Weakpoint_013",
+        "BoxCollision_Weakpoint_014",
+        "BoxCollision_Weakpoint_015",
+        "BoxCollision_Weakpoint_016",
+        "BoxCollision_Weakpoint_017",
+        "BoxCollision_Weakpoint_018",
+        "BoxCollision_Weakpoint_02",
+        "BoxCollision_Weakpoint_03",
+        "BoxCollision_Weakpoint_04",
+        "BoxCollision_Weakpoint_05",
+        "BoxCollision_Weakpoint_06",
+        "BoxCollision_Weakpoint_07",
+        "BoxCollision_Weakpoint_08",
+        "BoxCollision_Weakpoint_09"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 8.0
     }
   ],
   "attacks": [
@@ -1178,5 +1205,39 @@
         }
       ]
     }
-  ]
+  ],
+  "weakPoint": {
+    "part": "belly",
+    "susceptibleDamage": "any",
+    "susceptibleDamageTypes": [
+      "any"
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BoxCollision_Weakpoint_010",
+      "BoxCollision_Weakpoint_011",
+      "BoxCollision_Weakpoint_012",
+      "BoxCollision_Weakpoint_013",
+      "BoxCollision_Weakpoint_014",
+      "BoxCollision_Weakpoint_015",
+      "BoxCollision_Weakpoint_016",
+      "BoxCollision_Weakpoint_017",
+      "BoxCollision_Weakpoint_018",
+      "BoxCollision_Weakpoint_02",
+      "BoxCollision_Weakpoint_03",
+      "BoxCollision_Weakpoint_04",
+      "BoxCollision_Weakpoint_05",
+      "BoxCollision_Weakpoint_06",
+      "BoxCollision_Weakpoint_07",
+      "BoxCollision_Weakpoint_08",
+      "BoxCollision_Weakpoint_09"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 8.0
+  }
 }

@@ -27,10 +27,32 @@
   },
   "weakPoint": {
     "part": "legs",
-    "susceptibleDamage": "slashing",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "slashing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "axe",
+      "sword",
+      "dagger"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Axe",
+      "Stats.Attacks.Sword",
+      "Stats.Attacks.Dagger"
+    ],
+    "sourceComponents": [
+      "LeftLegWeakpoint1",
+      "LeftLegWeakpoint2",
+      "RightLegWeakpoint1",
+      "RightLegWeakpoint2"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Trundles through the park looking for aphid snacks. Can drop a ladybug head and ladybug parts on death.",
   "behavior": "It wanders slowly with no clear route and sometimes lies down to sleep under broad leaves. In Grounded 2 it still has an O.R.C. variant and shares its broader niche with the Potato Beetle, a tougher relative in the veggie plots.",
@@ -147,12 +169,32 @@
   "weakPoints": [
     {
       "part": "legs",
-      "susceptibleDamage": "slashing",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "slashing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "axe",
+        "sword",
+        "dagger"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Axe",
+        "Stats.Attacks.Sword",
+        "Stats.Attacks.Dagger"
+      ],
+      "sourceComponents": [
+        "LeftLegWeakpoint1",
+        "LeftLegWeakpoint2",
+        "RightLegWeakpoint1",
+        "RightLegWeakpoint2"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

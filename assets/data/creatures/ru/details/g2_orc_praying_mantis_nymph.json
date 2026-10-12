@@ -128,10 +128,30 @@
   ],
   "weakPoint": {
     "part": "eyes",
-    "susceptibleDamage": "stabbing_bows_and_spears",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "stabbing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "bow",
+      "spear",
+      "thrown_spear"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow",
+      "Stats.Attacks.Spear",
+      "Stats.Attacks.Thrown.Spear"
+    ],
+    "sourceComponents": [
+      "LeftEyeCollision",
+      "RightEyeCollision"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "healthDisplay": "normal",
   "health": {
@@ -153,12 +173,30 @@
   "weakPoints": [
     {
       "part": "eyes",
-      "susceptibleDamage": "stabbing_bows_and_spears",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "stabbing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "bow",
+        "spear",
+        "thrown_spear"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow",
+        "Stats.Attacks.Spear",
+        "Stats.Attacks.Thrown.Spear"
+      ],
+      "sourceComponents": [
+        "LeftEyeCollision",
+        "RightEyeCollision"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

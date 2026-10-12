@@ -30,7 +30,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "Un escarabajo con un gran trasero explosivo que patrulla el parque. Al morir, puede soltar una glándula de ebullición muy volátil y una parte de escarabajo bombardero.",
   "behavior": "Patrulla zonas concretas y en combate alterna mordida, rocío corto, disparo ácido a distancia y ráfagas altas para cubrir distintos ángulos. No te gana por velocidad bruta, sino por cómo va llenando el suelo de malas decisiones.",
@@ -231,7 +242,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

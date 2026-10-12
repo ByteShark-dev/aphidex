@@ -27,10 +27,32 @@
   },
   "weakPoint": {
     "part": "legs",
-    "susceptibleDamage": "slashing",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "slashing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "axe",
+      "sword",
+      "dagger"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Axe",
+      "Stats.Attacks.Sword",
+      "Stats.Attacks.Dagger"
+    ],
+    "sourceComponents": [
+      "LeftLegWeakpoint1",
+      "LeftLegWeakpoint2",
+      "RightLegWeakpoint1",
+      "RightLegWeakpoint2"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Avanza lentamente por el parque en busca de pulgones para comer. Al morir, puede soltar una cabeza de catarinita y partes de catarinita.",
   "behavior": "Deambula despacio, sin rumbo claro, y a veces se tumba a dormir bajo hojas grandes. En Grounded 2 conserva su variante O.R.C. y comparte ecosistema con el Potato Beetle, que actúa como un pariente más duro en el huerto.",
@@ -147,12 +169,32 @@
   "weakPoints": [
     {
       "part": "legs",
-      "susceptibleDamage": "slashing",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "slashing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "axe",
+        "sword",
+        "dagger"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Axe",
+        "Stats.Attacks.Sword",
+        "Stats.Attacks.Dagger"
+      ],
+      "sourceComponents": [
+        "LeftLegWeakpoint1",
+        "LeftLegWeakpoint2",
+        "RightLegWeakpoint1",
+        "RightLegWeakpoint2"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

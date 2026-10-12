@@ -30,7 +30,18 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [],
+    "sourceComponents": [
+      "BackWeakpoint"
+    ],
+    "tagResolutions": [
+      "single_declared_bestiary_tag"
+    ],
+    "damageMultiplier": 1.25,
+    "stunMultiplier": 1.0
   },
   "description": "Враг 2-го тира с очень ценными частями, но и один из самых жёстко наказывающих в своём диапазоне, если позволить ему загнать тебя в кислоту. Любой бой с ним на самом деле сводится к тому, чтобы не драться там, где удобно ему.",
   "behavior": "Он патрулирует конкретные зоны и в бою чередует укус, короткий распыл, дальний кислотный выстрел и высокие залпы, перекрывая разные углы. Побеждает он не сырой скоростью, а тем, как постепенно превращает весь пол в набор плохих решений.",
@@ -231,7 +242,16 @@
         "any"
       ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "BackWeakpoint"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 1.25,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [

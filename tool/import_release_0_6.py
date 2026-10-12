@@ -346,6 +346,159 @@ def write_json(path: Path, payload) -> None:
         path.write_text(content, encoding="utf-8")
 
 
+# The extractor records the HealthComponent's exact collider filters. Aphidex
+# shows the weapon-family labels, not a speculative list of individual items.
+WEAPON_FAMILY_BY_SOURCE_TAG = {
+    "Stats.Attacks.Axe": "axe",
+    "Stats.Attacks.Sword": "sword",
+    "Stats.Attacks.Dagger": "dagger",
+    "Stats.Attacks.Bow": "bow",
+    "Stats.Attacks.Spear": "spear",
+    "Stats.Attacks.Thrown.Spear": "thrown_spear",
+}
+WEAKPOINT_REGION_ALIASES = {
+    "abdomen": "belly",
+    "butt": "rump",
+    "tail": "tail",
+    "underbelly": "belly",
+}
+
+
+def anatomical_weakpoint_region(entity_id: str, entry: dict) -> str:
+    """Map an extractor anatomical tag or collider name to an Aphidex icon id."""
+    tags = entry.get("anatomicalTags") or []
+    if tags:
+        raw = str(tags[0]).lower().replace("weakpoint.", "")
+        return WEAKPOINT_REGION_ALIASES.get(raw, raw)
+    component = str(entry.get("componentName") or "").lower()
+    if "scorpion" in entity_id.lower():
+        # The extractor has no declared Bestiary tags here. Player observation
+        # resolves the scorpion's rear collider as the tail base and its tail
+        # collider as the stinger, so both attackable regions stay distinct.
+        if "back" in component:
+            return "tail"
+        if "tail" in component:
+            return "stinger"
+    # These rows have no declared Bestiary tag, but the exported collider names
+    # identify the same visible regions without editorial inference.
+    if "underbelly" in component or "belly" in component:
+        return "belly"
+    if "back" in component:
+        return "back"
+    if "tail" in component or "stinger" in component:
+        return "stinger"
+    if "leg" in component:
+        return "legs"
+    if "eye" in component:
+        return "eyes"
+    if "vent" in component:
+        return "vent"
+    return "unknown"
+
+
+def anatomical_weakpoint_rows(entity: dict) -> list[dict]:
+    """Collapse repeated collider boxes while retaining every distinct rule."""
+    grouped = {}
+    for entry in entity.get("entries") or []:
+        region = anatomical_weakpoint_region(str(entity.get("entity") or ""), entry)
+        source_tags = [str(value) for value in entry.get("damageSourceTags") or []]
+        families = [
+            WEAPON_FAMILY_BY_SOURCE_TAG[tag]
+            for tag in source_tags
+            if tag in WEAPON_FAMILY_BY_SOURCE_TAG
+        ]
+        damage_types = [str(value).lower() for value in entry.get("damageTypes") or []]
+        multiplier = entry.get("damageMultiplier")
+        multiplier = float(multiplier) if isinstance(multiplier, (int, float)) else None
+        stun_multiplier = entry.get("stunMultiplier")
+        stun_multiplier = float(stun_multiplier) if isinstance(stun_multiplier, (int, float)) else None
+        key = (region, multiplier, stun_multiplier, tuple(families), tuple(damage_types))
+        row = grouped.setdefault(key, {
+            "part": region,
+            # An empty damage-type filter is explicit source evidence that this
+            # collider accepts any damage type. Weapon filters, if present,
+            # remain independently visible to the player.
+            "susceptibleDamage": damage_types[0] if len(damage_types) == 1 else "any",
+            "susceptibleDamageTypes": damage_types or ["any"],
+            "weaponFamilies": families,
+            "provenance": "extractor_anatomical_weakpoints_v1",
+            "sourceDamageTags": source_tags,
+            "sourceComponents": [],
+            "tagResolutions": [],
+        })
+        if multiplier is not None:
+            row["damageMultiplier"] = multiplier
+        if stun_multiplier is not None:
+            row["stunMultiplier"] = stun_multiplier
+        component = str(entry.get("componentName") or "")
+        if component and component not in row["sourceComponents"]:
+            row["sourceComponents"].append(component)
+        resolution = str(entry.get("tagResolution") or "")
+        if resolution and resolution not in row["tagResolutions"]:
+            row["tagResolutions"].append(resolution)
+    return list(grouped.values())
+
+
+def load_anatomical_weakpoints(extractor: Path) -> dict[str, list[dict]]:
+    path = extractor / "phase1" / "combat" / "anatomical_weakpoints_damage_relations.json"
+    payload = read_json(path)
+    if payload.get("schema") != "aphidex-grounded2-anatomical-weakpoints-v1":
+        raise ValueError(f"Unexpected anatomical weakpoint schema: {payload.get('schema')!r}")
+    return {
+        str(entity["entity"]): anatomical_weakpoint_rows(entity)
+        for entity in payload.get("entities") or []
+        if entity.get("status") == "resolved"
+    }
+
+
+def anatomical_weakpoint_diff(extractor: Path) -> dict:
+    """Report exact G2 matches before changing any localized detail file."""
+    resolved = load_anatomical_weakpoints(extractor)
+    details = DATA / "creatures" / "en" / "details"
+    present = {}
+    for path in details.glob("g2_*.json"):
+        detail = read_json(path)
+        technical_id = detail.get("technicalId")
+        if technical_id in resolved:
+            present[str(technical_id)] = detail
+    changed = [
+        technical_id for technical_id, detail in present.items()
+        if detail.get("weakPoints") != resolved[technical_id]
+        or detail.get("weakPoint") != resolved[technical_id][0]
+    ]
+    return {
+        "sourceEntities": len(resolved),
+        "g2EntitiesMatched": len(present),
+        "g2EntitiesChanging": len(changed),
+        "changedTechnicalIds": sorted(changed),
+        "unmatchedSourceEntities": sorted(set(resolved) - set(present)),
+    }
+
+
+def sync_anatomical_weakpoints(extractor: Path, app_creatures: dict) -> dict:
+    """Synchronize verified collider rules into every localized G2 detail."""
+    resolved = load_anatomical_weakpoints(extractor)
+    report = anatomical_weakpoint_diff(extractor)
+    for language in LANGUAGES:
+        directory = DATA / "creatures" / language / "details"
+        for path in directory.glob("g2_*.json"):
+            detail = read_json(path)
+            rows = resolved.get(detail.get("technicalId"))
+            if not rows:
+                continue
+            detail["weakPoints"] = copy.deepcopy(rows)
+            # Keep the old singular field in step for any legacy reader.
+            detail["weakPoint"] = copy.deepcopy(rows[0])
+            write_json(path, detail)
+    for creature in app_creatures.get("creatures") or []:
+        rows = resolved.get(creature.get("technicalId"))
+        if not rows:
+            continue
+        creature["weakPoints"] = copy.deepcopy(rows)
+        creature["weakPoint"] = copy.deepcopy(rows[0])
+    return report
+
+
 def map_position(world: dict, map_definition: dict) -> tuple[float, float]:
     """Convert an extractor world coordinate to Aphidex's displayed map space."""
     bounds = map_definition["worldBounds"]
@@ -964,6 +1117,7 @@ def apply_completion(args):
             "lootResolved": fields["loot"].get("status") == "resolved_finalized_loot_domain",
             "normalCard": (fields["normalCard"].get("value") or {}).get("textureName"),
             "goldCard": (fields["goldCard"].get("value") or {}).get("textureName")})
+    diff["anatomicalWeakpoints"] = anatomical_weakpoint_diff(extractor)
     if not args.apply:
         print(json.dumps(diff, ensure_ascii=False, indent=2))
         return
@@ -1035,6 +1189,7 @@ def apply_completion(args):
     for public_id in BUGGY_PUBLIC_IDS:
         if public_id in by_public:
             by_public[public_id]["danger"] = "unknown"
+    diff["anatomicalWeakpoints"] = sync_anatomical_weakpoints(extractor, app)
     write_json(DATA / "g2" / "creatures.json", app)
     sync_release_equipment()
     sync_release_map_markers(spawn_data)

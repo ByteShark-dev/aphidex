@@ -29,7 +29,23 @@
     "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
       "any"
-    ]
+    ],
+    "weaponFamilies": [
+      "bow"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Bow"
+    ],
+    "sourceComponents": [
+      "WeakpointLeftEye",
+      "WeakpointRightEye"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 1.5,
+    "stunMultiplier": 1.0
   },
   "description": "Огромная необязательная ящерица, спрятанная в северо-восточной пещере Greenhouse Surroundings. С виду она кажется спокойной, пока бой не начинается и вся арена не превращается в шторм из топотов, хвоста и spicy-огня.",
   "behavior": "Он начинает с укусов, топотов и взмахов когтями, чтобы сразу подчинить переднюю дугу. По мере потери здоровья добавляет удары хвостом и spicy-выстрелы глазами, а под конец ещё сильнее запирает пространство огнём.",
@@ -282,8 +298,40 @@
       "susceptibleDamageTypes": [
         "any"
       ],
+      "weaponFamilies": [
+        "bow"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Bow"
+      ],
+      "sourceComponents": [
+        "WeakpointLeftEye",
+        "WeakpointRightEye"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 1.5,
+      "stunMultiplier": 1.0
+    },
+    {
+      "part": "eyes",
+      "susceptibleDamage": "any",
+      "susceptibleDamageTypes": [
+        "any"
+      ],
       "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [],
+      "sourceComponents": [
+        "WeakpointTongue"
+      ],
+      "tagResolutions": [
+        "single_declared_bestiary_tag"
+      ],
+      "damageMultiplier": 1.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [],

@@ -27,10 +27,32 @@
   },
   "weakPoint": {
     "part": "legs",
-    "susceptibleDamage": "slashing",
+    "susceptibleDamage": "any",
     "susceptibleDamageTypes": [
-      "slashing"
-    ]
+      "any"
+    ],
+    "weaponFamilies": [
+      "axe",
+      "sword",
+      "dagger"
+    ],
+    "provenance": "extractor_anatomical_weakpoints_v1",
+    "sourceDamageTags": [
+      "Stats.Attacks.Axe",
+      "Stats.Attacks.Sword",
+      "Stats.Attacks.Dagger"
+    ],
+    "sourceComponents": [
+      "LeftLegWeakpoint1",
+      "LeftLegWeakpoint2",
+      "RightLegWeakpoint1",
+      "RightLegWeakpoint2"
+    ],
+    "tagResolutions": [
+      "component_name_matches_declared_tag"
+    ],
+    "damageMultiplier": 2.0,
+    "stunMultiplier": 1.0
   },
   "description": "Гораздо более жёсткая разновидность, похожая на божью коровку, которая бродит по овощным грядкам. Большую часть времени она нейтральна, но в бою бьёт так сильно, что ощущается как естественная следующая ступень после обычной коровки.",
   "behavior": "Он медленно бродит по своим точкам появления и иногда спит под одуванчиками почти как обычная божья коровка. Настоящая разница не в патруле, а в том, насколько лучше он превращает любое окно в урон после агра.",
@@ -189,12 +211,32 @@
   "weakPoints": [
     {
       "part": "legs",
-      "susceptibleDamage": "slashing",
+      "susceptibleDamage": "any",
       "susceptibleDamageTypes": [
-        "slashing"
+        "any"
       ],
-      "weaponFamilies": [],
-      "provenance": "historical_editorial"
+      "weaponFamilies": [
+        "axe",
+        "sword",
+        "dagger"
+      ],
+      "provenance": "extractor_anatomical_weakpoints_v1",
+      "sourceDamageTags": [
+        "Stats.Attacks.Axe",
+        "Stats.Attacks.Sword",
+        "Stats.Attacks.Dagger"
+      ],
+      "sourceComponents": [
+        "LeftLegWeakpoint1",
+        "LeftLegWeakpoint2",
+        "RightLegWeakpoint1",
+        "RightLegWeakpoint2"
+      ],
+      "tagResolutions": [
+        "component_name_matches_declared_tag"
+      ],
+      "damageMultiplier": 2.0,
+      "stunMultiplier": 1.0
     }
   ],
   "attacks": [
