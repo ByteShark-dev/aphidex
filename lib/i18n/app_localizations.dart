@@ -1371,15 +1371,105 @@ class AppLocalizations {
       case 'rump':
         return _t('weakPointRump');
       case 'abdomen':
-      case 'belly':
         return _t('weakPointGut');
+      case 'belly':
+        return _t('weakPointBelly');
       case 'butt':
         return _t('weakPointRump');
       case 'stinger':
         return _t('weakPointStinger');
+      case 'tail':
+        return _t('weakPointTail');
+      case 'vent':
+        return _t('weakPointVent');
       default:
         return id;
     }
+  }
+
+  String weakPointDamageMultiplier(double multiplier) {
+    return _weakPointMultiplierLabel(
+      multiplier,
+      esLabel: 'Daño',
+      enLabel: 'Damage',
+      ruLabel: 'Урон',
+    );
+  }
+
+  String weakPointStunMultiplier(double multiplier) {
+    return _weakPointMultiplierLabel(
+      multiplier,
+      esLabel: 'Aturdimiento',
+      enLabel: 'Stun',
+      ruLabel: 'Оглушение',
+    );
+  }
+
+  String _weakPointMultiplierLabel(
+    double multiplier, {
+    required String esLabel,
+    required String enLabel,
+    required String ruLabel,
+  }) {
+    final value = multiplier == multiplier.roundToDouble()
+        ? multiplier.toStringAsFixed(0)
+        : multiplier.toStringAsFixed(2).replaceFirst(RegExp(r'0+$'), '');
+    return switch (languageCode) {
+      'en' => '$enLabel ×$value',
+      'ru' => '$ruLabel ×$value',
+      _ => '$esLabel ×$value',
+    };
+  }
+
+  String weakPointWeaponsLabel(List<String> families) {
+    final values = families.map(weaponFamilyLabel).join(', ');
+    return switch (languageCode) {
+      'en' => 'Weapons: $values',
+      'ru' => 'Оружие: $values',
+      _ => 'Armas: $values',
+    };
+  }
+
+  String weaponFamilyLabel(String id) {
+    return switch (id) {
+      'axe' =>
+        languageCode == 'ru'
+            ? 'Топор'
+            : languageCode == 'en'
+            ? 'Axe'
+            : 'Hacha',
+      'sword' =>
+        languageCode == 'ru'
+            ? 'Меч'
+            : languageCode == 'en'
+            ? 'Sword'
+            : 'Espada',
+      'dagger' =>
+        languageCode == 'ru'
+            ? 'Кинжал'
+            : languageCode == 'en'
+            ? 'Dagger'
+            : 'Daga',
+      'bow' =>
+        languageCode == 'ru'
+            ? 'Лук'
+            : languageCode == 'en'
+            ? 'Bow'
+            : 'Arco',
+      'spear' =>
+        languageCode == 'ru'
+            ? 'Копьё'
+            : languageCode == 'en'
+            ? 'Spear'
+            : 'Lanza',
+      'thrown_spear' =>
+        languageCode == 'ru'
+            ? 'Брошенное копьё'
+            : languageCode == 'en'
+            ? 'Thrown spear'
+            : 'Lanza arrojada',
+      _ => id,
+    };
   }
 
   String susceptibleDamageLabel(String id) {
@@ -1432,6 +1522,10 @@ class AppLocalizations {
         return _t('effectCategoryElement');
       case 'status':
         return _t('effectCategoryStatus');
+      case 'attribute':
+        return _t('effectCategoryAttribute');
+      case 'trigger':
+        return _t('effectCategoryTrigger');
       default:
         return id;
     }
@@ -1686,7 +1780,9 @@ class AppLocalizations {
       'effectCategoryDamage': 'Tipos de da\u00f1o',
       'effectCategoryElement': 'Elementos',
       'effectCategoryStatus': 'Estados',
-      'effectEquipmentTitle': 'Armas y armaduras con este efecto',
+      'effectCategoryAttribute': 'Atributos',
+      'effectCategoryTrigger': 'Activadores',
+      'effectEquipmentTitle': 'Armas y escudos con este efecto',
       'effectEquipmentComingSoon': 'Pr\u00f3ximamente.',
       'creditsAppTagline': 'Fan-made app · Grounded 1 y Grounded 2',
       'creditsContentTitle': 'Contenido y licencias',
@@ -1770,9 +1866,12 @@ class AppLocalizations {
       'weakPointBack': 'Espalda',
       'weakPointEyes': 'Ojos',
       'weakPointGut': 'Abdomen',
+      'weakPointBelly': 'Vientre',
       'weakPointLegs': 'Patas',
       'weakPointRump': 'Parte trasera',
       'weakPointStinger': 'Aguijón',
+      'weakPointTail': 'Cola',
+      'weakPointVent': 'Respiradero',
       'damageAny': 'Cualquiera',
       'damageChoppingAndSlashing': 'Corte + tajo',
       'damageStabbingArrowsOnly': 'Perforación (arcos / ballestas)',
@@ -1948,7 +2047,9 @@ class AppLocalizations {
       'effectCategoryDamage': 'Damage types',
       'effectCategoryElement': 'Elements',
       'effectCategoryStatus': 'Status effects',
-      'effectEquipmentTitle': 'Weapons and armor with this effect',
+      'effectCategoryAttribute': 'Attributes',
+      'effectCategoryTrigger': 'Triggers',
+      'effectEquipmentTitle': 'Weapons and shields with this effect',
       'effectEquipmentComingSoon': 'Coming soon.',
       'creditsAppTagline': 'Fan-made app · Grounded 1 and Grounded 2',
       'creditsContentTitle': 'Content and licenses',
@@ -2031,9 +2132,12 @@ class AppLocalizations {
       'weakPointBack': 'Back',
       'weakPointEyes': 'Eyes',
       'weakPointGut': 'Gut',
+      'weakPointBelly': 'Underbelly',
       'weakPointLegs': 'Legs',
       'weakPointRump': 'Rump',
       'weakPointStinger': 'Stinger',
+      'weakPointTail': 'Tail',
+      'weakPointVent': 'Vent',
       'damageAny': 'Any',
       'damageChoppingAndSlashing': 'Chopping + slashing',
       'damageStabbingArrowsOnly': 'Stabbing (bows / crossbows)',
@@ -2262,9 +2366,12 @@ class AppLocalizations {
       'weakPointBack': 'Спина',
       'weakPointEyes': 'Глаза',
       'weakPointGut': 'Брюшко',
+      'weakPointBelly': 'Нижняя часть брюшка',
       'weakPointLegs': 'Ноги',
       'weakPointRump': 'Задняя часть',
       'weakPointStinger': 'Жало',
+      'weakPointTail': 'Хвост',
+      'weakPointVent': 'Вентиль',
       'damageAny': 'Любой',
       'damageChoppingAndSlashing': 'Рубящий + режущий',
       'damageStabbingArrowsOnly': 'Колющий (луки / арбалеты)',
@@ -2284,7 +2391,9 @@ class AppLocalizations {
       'effectCategoryDamage': 'Типы урона',
       'effectCategoryElement': 'Элементы',
       'effectCategoryStatus': 'Статусы',
-      'effectEquipmentTitle': 'Оружие и броня с этим эффектом',
+      'effectCategoryAttribute': 'Атрибуты',
+      'effectCategoryTrigger': 'Активаторы',
+      'effectEquipmentTitle': 'Оружие и щиты с этим эффектом',
       'effectEquipmentComingSoon': 'Скоро.',
       'immuneLabel': '\u0418\u043c\u043c\u0443\u043d\u0438\u0442\u0435\u0442',
       'playerProfileTooltip':

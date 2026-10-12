@@ -1,6 +1,8 @@
 import '../models/enemy.dart';
 
-enum EffectCategory { damage, element, status }
+part 'generated_equipment_effect_catalog.dart';
+
+enum EffectCategory { damage, element, status, attribute, trigger }
 
 class EffectCatalogEntry {
   final String id;
@@ -18,6 +20,8 @@ class EffectCatalogEntry {
 
 String canonicalEffectId(String id) {
   final normalized = id.trim().toLowerCase();
+  final technicalAlias = extractorTechnicalEffectIdAliases[id];
+  if (technicalAlias != null) return technicalAlias;
   switch (normalized) {
     case 'gas_hazard':
       return 'gas';
@@ -76,6 +80,15 @@ String normalizedTechnicalEffectId(String id) {
   return canonical;
 }
 
+/// Resolves a type emitted by the equipment-effect extractor. Existing app
+/// aliases remain valid, while generated technical types use their stable
+/// snake-case IDs.
+String effectCatalogIdForTechnicalType(String id) {
+  final direct = extractorTechnicalEffectIdAliases[id];
+  if (direct != null) return direct;
+  return canonicalEffectId(id);
+}
+
 EffectCatalogEntry? effectCatalogEntryById(String id) {
   final canonicalId = canonicalEffectId(id);
   for (final entry in effectCatalogEntries) {
@@ -86,7 +99,7 @@ EffectCatalogEntry? effectCatalogEntryById(String id) {
   return null;
 }
 
-const effectCatalogEntries = <EffectCatalogEntry>[
+const _legacyEffectCatalogEntries = <EffectCatalogEntry>[
   EffectCatalogEntry(
     id: 'all',
     category: EffectCategory.damage,
@@ -344,3 +357,12 @@ const effectCatalogEntries = <EffectCatalogEntry>[
     ),
   ),
 ];
+
+/// Legacy combat entries remain addressable for creature data and saved deep
+/// links. The generated list contains the extractor's full equipment-effect
+/// domain; a handful of technical types intentionally map to an existing
+/// legacy entry (for example Venom and Chill).
+final effectCatalogEntries = List<EffectCatalogEntry>.unmodifiable([
+  ..._legacyEffectCatalogEntries,
+  ...generatedEquipmentEffectCatalogEntries,
+]);

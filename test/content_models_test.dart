@@ -13,7 +13,7 @@ void main() {
   test('all equipment items and armor sets deserialize exhaustively', () async {
     EquipmentRepository.clearCache();
     final catalog = await EquipmentRepository.load();
-    expect(catalog.items, hasLength(219));
+    expect(catalog.items, hasLength(220));
     expect(catalog.armorSets, hasLength(31));
     expect(
       catalog.items

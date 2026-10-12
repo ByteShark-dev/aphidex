@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/tutorial_controller.dart';
+import '../data/content_repositories.dart';
+import '../data/entity_asset_resolver.dart';
 import '../data/effect_catalog.dart';
+import '../data/equipment_effect_index.dart';
+import '../data/equipment_presentation.dart';
 import '../data/ui_mapper.dart';
 import '../i18n/app_localizations.dart';
+import '../models/equipment.dart';
+import 'equipment_library_screen.dart';
 
 Future<void> openEffectCodex(BuildContext context, {String? initialEffectId}) {
   return Navigator.push(
@@ -34,11 +40,16 @@ Future<void> showEffectInfoSheet(
 class EffectCodexScreen extends StatefulWidget {
   final String? initialEffectId;
   final bool autoScrollToInitialEffect;
+  final Future<EquipmentEffectIndex>? equipmentIndex;
+  final void Function(BuildContext context, EquipmentItem item)?
+  onOpenEquipment;
 
   const EffectCodexScreen({
     super.key,
     this.initialEffectId,
     this.autoScrollToInitialEffect = true,
+    this.equipmentIndex,
+    this.onOpenEquipment,
   });
 
   @override
@@ -48,6 +59,7 @@ class EffectCodexScreen extends StatefulWidget {
 class _EffectCodexScreenState extends State<EffectCodexScreen> {
   late final String? _highlightedId;
   late final Map<String, GlobalKey> _entryKeys;
+  late final Future<EquipmentEffectIndex> _equipmentIndex;
 
   @override
   void initState() {
@@ -58,6 +70,9 @@ class _EffectCodexScreenState extends State<EffectCodexScreen> {
     _entryKeys = {
       for (final entry in effectCatalogEntries) entry.id: GlobalKey(),
     };
+    _equipmentIndex =
+        widget.equipmentIndex ??
+        EquipmentRepository.load().then(EquipmentEffectIndex.fromCatalog);
 
     if (_highlightedId != null && widget.autoScrollToInitialEffect) {
       WidgetsBinding.instance.addPostFrameCallback(
@@ -91,46 +106,36 @@ class _EffectCodexScreenState extends State<EffectCodexScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.effectCodexTitle)),
-      body: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.only(bottom: 12),
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                l10n.effectCodexSubtitle,
-                style: TextStyle(color: Theme.of(context).hintColor),
-              ),
-              const SizedBox(height: 18),
-              _EffectSection(
-                title: l10n.effectCategoryLabel('damage'),
-                entries: effectCatalogEntries
-                    .where((entry) => entry.category == EffectCategory.damage)
-                    .toList(),
-                highlightedId: _highlightedId,
-                entryKeys: _entryKeys,
-              ),
-              const SizedBox(height: 18),
-              _EffectSection(
-                title: l10n.effectCategoryLabel('element'),
-                entries: effectCatalogEntries
-                    .where((entry) => entry.category == EffectCategory.element)
-                    .toList(),
-                highlightedId: _highlightedId,
-                entryKeys: _entryKeys,
-              ),
-              const SizedBox(height: 18),
-              _EffectSection(
-                title: l10n.effectCategoryLabel('status'),
-                entries: effectCatalogEntries
-                    .where((entry) => entry.category == EffectCategory.status)
-                    .toList(),
-                highlightedId: _highlightedId,
-                entryKeys: _entryKeys,
-              ),
-            ],
+      body: FutureBuilder<EquipmentEffectIndex>(
+        future: _equipmentIndex,
+        builder: (context, snapshot) => SafeArea(
+          top: false,
+          minimum: const EdgeInsets.only(bottom: 12),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.effectCodexSubtitle,
+                  style: TextStyle(color: Theme.of(context).hintColor),
+                ),
+                const SizedBox(height: 18),
+                for (final category in EffectCategory.values) ...[
+                  _EffectSection(
+                    title: l10n.effectCategoryLabel(category.name),
+                    entries: effectCatalogEntries
+                        .where((entry) => entry.category == category)
+                        .toList(),
+                    highlightedId: _highlightedId,
+                    entryKeys: _entryKeys,
+                    equipmentIndex: snapshot.data,
+                    onOpenEquipment: widget.onOpenEquipment,
+                  ),
+                  const SizedBox(height: 18),
+                ],
+              ],
+            ),
           ),
         ),
       ),
@@ -143,12 +148,17 @@ class _EffectSection extends StatelessWidget {
   final List<EffectCatalogEntry> entries;
   final String? highlightedId;
   final Map<String, GlobalKey> entryKeys;
+  final EquipmentEffectIndex? equipmentIndex;
+  final void Function(BuildContext context, EquipmentItem item)?
+  onOpenEquipment;
 
   const _EffectSection({
     required this.title,
     required this.entries,
     required this.highlightedId,
     required this.entryKeys,
+    required this.equipmentIndex,
+    required this.onOpenEquipment,
   });
 
   @override
@@ -174,6 +184,8 @@ class _EffectSection extends StatelessWidget {
                 ),
                 entry: entry,
                 isHighlighted: highlightedId == entry.id,
+                equipment: equipmentIndex?.forEffect(entry.id) ?? const [],
+                onOpenEquipment: onOpenEquipment,
               ),
             ),
           ),
@@ -188,12 +200,17 @@ class _EffectCard extends StatelessWidget {
   final bool isHighlighted;
   final GlobalKey tutorialCardKey;
   final GlobalKey tutorialEquipmentKey;
+  final List<EquipmentEffectMatch> equipment;
+  final void Function(BuildContext context, EquipmentItem item)?
+  onOpenEquipment;
 
   const _EffectCard({
     required this.entry,
     required this.isHighlighted,
     required this.tutorialCardKey,
     required this.tutorialEquipmentKey,
+    required this.equipment,
+    required this.onOpenEquipment,
   });
 
   @override
@@ -268,7 +285,25 @@ class _EffectCard extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 4),
-                  Text(l10n.effectEquipmentComingSoon),
+                  if (equipment.isEmpty)
+                    Text(
+                      _effectText(
+                        languageCode,
+                        'No weapons or shields are currently linked to this effect.',
+                        'Aún no hay armas ni escudos vinculados a este efecto.',
+                        'С этим эффектом пока не связаны оружие или щиты.',
+                      ),
+                    )
+                  else ...[
+                    const SizedBox(height: 4),
+                    ...equipment.map(
+                      (match) => _RelatedEquipmentTile(
+                        match: match,
+                        languageCode: languageCode,
+                        onOpenEquipment: onOpenEquipment,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -278,6 +313,81 @@ class _EffectCard extends StatelessWidget {
     );
   }
 }
+
+class _RelatedEquipmentTile extends StatelessWidget {
+  const _RelatedEquipmentTile({
+    required this.match,
+    required this.languageCode,
+    required this.onOpenEquipment,
+  });
+
+  final EquipmentEffectMatch match;
+  final String languageCode;
+  final void Function(BuildContext context, EquipmentItem item)?
+  onOpenEquipment;
+
+  @override
+  Widget build(BuildContext context) {
+    final item = match.item;
+    final icon = EntityAssetResolver.resolveEquipment(item).asset;
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      dense: true,
+      leading: SizedBox.square(
+        dimension: 38,
+        child: Image.asset(
+          icon,
+          fit: BoxFit.contain,
+          errorBuilder: (_, _, _) => const Icon(Icons.inventory_2_outlined),
+        ),
+      ),
+      title: Text(item.name.resolve(languageCode)),
+      subtitle: Wrap(
+        spacing: 4,
+        runSpacing: 2,
+        children: [
+          Text(
+            EquipmentPresentation.subtypeLabel(
+              item.normalizedSubtype,
+              languageCode,
+            ),
+          ),
+          for (final origin in match.origins)
+            Chip(
+              visualDensity: VisualDensity.compact,
+              label: Text(_effectOriginLabel(origin, languageCode)),
+            ),
+        ],
+      ),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: () {
+        final opener = onOpenEquipment;
+        if (opener != null) {
+          opener(context, item);
+          return;
+        }
+        Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (_) => EquipmentLibraryScreen(initialEquipmentId: item.id),
+          ),
+        );
+      },
+    );
+  }
+}
+
+String _effectOriginLabel(String origin, String language) => switch (origin) {
+  'upgrade' => _effectText(language, 'Upgrade', 'Mejora', 'Улучшение'),
+  'attack' => _effectText(language, 'Attack', 'Ataque', 'Атака'),
+  _ => _effectText(language, 'Equipped', 'Equipado', 'Экипировано'),
+};
+
+String _effectText(String language, String en, String es, String ru) =>
+    switch (language) {
+      'es' => es,
+      'ru' => ru,
+      _ => en,
+    };
 
 class _EffectInfoSheet extends StatelessWidget {
   final EffectCatalogEntry entry;

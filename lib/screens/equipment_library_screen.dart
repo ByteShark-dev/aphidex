@@ -398,6 +398,40 @@ class _EquipmentDetailSheet extends StatelessWidget {
                 _t('Durability', 'Durabilidad', 'Прочность'): _number(
                   item.durability!,
                 ),
+              if (item.combat.critChance != null)
+                _t(
+                  'Critical chance',
+                  'Probabilidad crítica',
+                  'Шанс критического удара',
+                ): '${_number(item.combat.critChance! * 100)}%',
+              if (item.combat.blockDamageMultiplier != null)
+                _t(
+                  'Block damage multiplier',
+                  'Multiplicador de daño al bloquear',
+                  'Множитель урона при блокировании',
+                ): _number(
+                  item.combat.blockDamageMultiplier!,
+                ),
+              if (item.combat.blockStaminaCost != null)
+                _t(
+                  'Block stamina cost',
+                  'Coste de aguante al bloquear',
+                  'Расход выносливости при блокировании',
+                ): _number(
+                  item.combat.blockStaminaCost!,
+                ),
+              if (item.combat.blockStaminaRegenMultiplier != null)
+                _t(
+                  'Block stamina regeneration',
+                  'Regeneración de aguante al bloquear',
+                  'Восстановление выносливости при блокировании',
+                ): _number(
+                  item.combat.blockStaminaRegenMultiplier!,
+                ),
+              if (item.combat.ammoAttackSlots != null &&
+                  item.combat.ammoAttackSlots! > 0)
+                _t('Ammo modes', 'Modos de munición', 'Режимы боеприпасов'):
+                    '${item.combat.ammoAttackSlots}',
               if (protection['flatDamageReductionRaw'] is num)
                 _t('Defense', 'Defensa', 'Защита'): _number(
                   (protection['flatDamageReductionRaw'] as num).toDouble(),
@@ -422,30 +456,42 @@ class _EquipmentDetailSheet extends StatelessWidget {
                 ),
               ),
             ],
-            if (item.effects.isNotEmpty) ...[
+            if (item.effectRelations.isNotEmpty || item.effects.isNotEmpty) ...[
               const Divider(),
               Text(
-                _t('Effects', 'Efectos', 'Эффекты'),
+                _t(
+                  'Verified effects',
+                  'Efectos verificados',
+                  'Подтверждённые эффекты',
+                ),
                 style: const TextStyle(fontWeight: FontWeight.w800),
               ),
               const SizedBox(height: 8),
-              Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                children: item.effects.map((effect) {
-                  final effectType = normalizedTechnicalEffectId(effect);
-                  return Chip(
-                    avatar: IconBadge.asset(
-                      assetName: UiMapper.effectIcon(effectType),
-                      size: 18,
-                      padding: EdgeInsets.zero,
-                    ),
-                    label: Text(
-                      EquipmentPresentation.effectLabel(effect, language),
-                    ),
-                  );
-                }).toList(),
-              ),
+              if (item.effectRelations.isNotEmpty)
+                ...item.effectRelations.map(
+                  (relation) => _EquipmentEffectRelationCard(
+                    relation: relation,
+                    language: language,
+                  ),
+                )
+              else
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: item.effects.map((effect) {
+                    final effectType = normalizedTechnicalEffectId(effect);
+                    return Chip(
+                      avatar: IconBadge.asset(
+                        assetName: UiMapper.effectIcon(effectType),
+                        size: 18,
+                        padding: EdgeInsets.zero,
+                      ),
+                      label: Text(
+                        EquipmentPresentation.effectLabel(effect, language),
+                      ),
+                    );
+                  }).toList(),
+                ),
             ],
             const Divider(),
             Text(
@@ -736,6 +782,67 @@ class _ArmorSetDetailSheet extends StatelessWidget {
   }
 }
 
+class _EquipmentEffectRelationCard extends StatelessWidget {
+  const _EquipmentEffectRelationCard({
+    required this.relation,
+    required this.language,
+  });
+
+  final EquipmentEffectRelation relation;
+  final String language;
+
+  String _t(String en, String es, String ru) => switch (language) {
+    'es' => es,
+    'ru' => ru,
+    _ => en,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final effectId = effectCatalogIdForTechnicalType(relation.effectId);
+    final entry = effectCatalogEntryById(effectId);
+    final values = <String>[
+      _originLabel(relation.origin),
+      if (relation.activation != null && relation.activation!.isNotEmpty)
+        '${_t('Activation', 'Activación', 'Активация')}: ${EquipmentPresentation.cleanIdentifier(relation.activation!)}',
+      if (relation.value != null)
+        '${_t('Value', 'Valor', 'Значение')}: ${_number(relation.value!)}',
+      if (relation.duration != null && relation.duration! > 0)
+        '${_t('Duration', 'Duración', 'Длительность')}: ${_number(relation.duration!)} s',
+    ];
+    return Card(
+      margin: const EdgeInsets.only(bottom: 6),
+      child: ListTile(
+        dense: true,
+        leading: IconBadge.asset(
+          assetName: UiMapper.effectIcon(effectId),
+          size: 24,
+          padding: EdgeInsets.zero,
+        ),
+        title: Text(
+          entry?.name.resolve(language) ??
+              EquipmentPresentation.effectLabel(relation.effectId, language),
+        ),
+        subtitle: Text(values.join(' · ')),
+      ),
+    );
+  }
+
+  String _originLabel(String origin) => switch (origin) {
+    'upgrade' => _t('Upgrade route', 'Ruta de mejora', 'Путь улучшения'),
+    'attack' => _t(
+      'Attack-applied',
+      'Aplicado por ataque',
+      'Накладывается атакой',
+    ),
+    _ => _t('Equipped', 'Equipado', 'Экипировано'),
+  };
+
+  String _number(double value) => value == value.roundToDouble()
+      ? '${value.round()}'
+      : value.toStringAsFixed(2);
+}
+
 class _EquipmentAttackCard extends StatelessWidget {
   const _EquipmentAttackCard({
     required this.attack,
@@ -764,11 +871,23 @@ class _EquipmentAttackCard extends StatelessWidget {
         '${_t('Damage', 'Daño', 'Урон')}: ${_number(attack.damage!)}',
       if (attack.chargedDamage != null)
         '${_t('Charged', 'Cargado', 'Заряженный')}: ${_number(attack.chargedDamage!)}',
+      if (attack.perfectChargedDamage != null)
+        '${_t('Perfect charged', 'Carga perfecta', 'Идеальный заряд')}: ${_number(attack.perfectChargedDamage!)}',
       if (attack.stun != null) 'Stun: ${_number(attack.stun!)}',
+      if (attack.poiseDamage != null)
+        '${_t('Poise', 'Postura', 'Стойкость')}: ${_number(attack.poiseDamage!)}',
+      if (attack.pushback != null && attack.pushback != 0)
+        '${_t('Pushback', 'Empuje', 'Отбрасывание')}: ${_number(attack.pushback!)}',
       if (attack.stamina != null)
         '${_t('Stamina', 'Aguante', 'Выносливость')}: ${_number(attack.stamina!)}',
+      if (attack.chargedStamina != null)
+        '${_t('Charged stamina', 'Aguante cargado', 'Выносливость заряда')}: ${_number(attack.chargedStamina!)}',
       if (attack.range != null)
         '${_t('Range', 'Alcance', 'Дальность')}: ${_number(attack.range!)}',
+      if (attack.chargedRange != null && attack.chargedRange != 0)
+        '${_t('Charged range', 'Alcance cargado', 'Дальность заряда')}: ${_number(attack.chargedRange!)}',
+      if (attack.chargeTime != null && attack.chargeTime != 0)
+        '${_t('Charge time', 'Tiempo de carga', 'Время заряда')}: ${_number(attack.chargeTime!)} s',
     ];
     return Card(
       margin: const EdgeInsets.only(bottom: 8),

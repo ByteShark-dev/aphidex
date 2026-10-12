@@ -28,42 +28,132 @@ class EquipmentLabel {
 enum EquipmentDomain { weapon, shield, armor, trinket }
 
 class EquipmentAttack {
+  final String? sourceRow;
+  final String? sourceTable;
   final double? damage;
   final double? chargedDamage;
+  final double? perfectChargedDamage;
   final double? stun;
+  final double? poiseDamage;
+  final double? pushback;
   final double? stamina;
+  final double? chargedStamina;
   final double? range;
+  final double? chargedRange;
+  final double? chargeTime;
+  final double? perfectChargedWindow;
   final String? physical;
   final String? element;
   final List<EquipmentStatusEffect> statusEffects;
 
   const EquipmentAttack({
+    this.sourceRow,
+    this.sourceTable,
     this.damage,
     this.chargedDamage,
+    this.perfectChargedDamage,
     this.stun,
+    this.poiseDamage,
+    this.pushback,
     this.stamina,
+    this.chargedStamina,
     this.range,
+    this.chargedRange,
+    this.chargeTime,
+    this.perfectChargedWindow,
     this.physical,
     this.element,
     this.statusEffects = const [],
   });
 
-  factory EquipmentAttack.fromJson(Map<String, dynamic> json) =>
-      EquipmentAttack(
-        damage: (json['damage'] as num?)?.toDouble(),
-        chargedDamage: (json['chargedDamage'] as num?)?.toDouble(),
-        stun: (json['stun'] as num?)?.toDouble(),
-        stamina: (json['stamina'] as num?)?.toDouble(),
-        range: (json['range'] as num?)?.toDouble(),
-        physical: json['physical']?.toString(),
-        element: json['element']?.toString(),
-        statusEffects: (json['statusEffects'] as List? ?? const [])
-            .whereType<Map>()
-            .map(
-              (item) =>
-                  EquipmentStatusEffect.fromJson(item.cast<String, dynamic>()),
-            )
-            .toList(growable: false),
+  factory EquipmentAttack.fromJson(
+    Map<String, dynamic> json,
+  ) => EquipmentAttack(
+    sourceRow: json['sourceRow']?.toString(),
+    sourceTable: json['sourceTable']?.toString(),
+    damage: (json['damage'] as num?)?.toDouble(),
+    chargedDamage: (json['chargedDamage'] as num?)?.toDouble(),
+    perfectChargedDamage: (json['perfectChargedDamage'] as num?)?.toDouble(),
+    stun: (json['stun'] as num?)?.toDouble(),
+    poiseDamage: (json['poiseDamage'] as num?)?.toDouble(),
+    pushback: (json['pushback'] as num?)?.toDouble(),
+    stamina: (json['stamina'] as num?)?.toDouble(),
+    chargedStamina: (json['chargedStamina'] as num?)?.toDouble(),
+    range: (json['range'] as num?)?.toDouble(),
+    chargedRange: (json['chargedRange'] as num?)?.toDouble(),
+    chargeTime: (json['chargeTime'] as num?)?.toDouble(),
+    perfectChargedWindow: (json['perfectChargedWindow'] as num?)?.toDouble(),
+    physical: json['physical']?.toString(),
+    element: json['element']?.toString(),
+    statusEffects: (json['statusEffects'] as List? ?? const [])
+        .whereType<Map>()
+        .map(
+          (item) =>
+              EquipmentStatusEffect.fromJson(item.cast<String, dynamic>()),
+        )
+        .toList(growable: false),
+  );
+}
+
+/// A source-backed effect relationship for an equipment item.
+///
+/// The [origin] is deliberately stored as data rather than inferred by the
+/// UI: a weapon can expose the same effect naturally, through an attack and
+/// through an optional elemental upgrade.
+class EquipmentEffectRelation {
+  final String effectId;
+  final String origin;
+  final String? sourceRow;
+  final String? activation;
+  final double? value;
+  final double? duration;
+
+  const EquipmentEffectRelation({
+    required this.effectId,
+    required this.origin,
+    this.sourceRow,
+    this.activation,
+    this.value,
+    this.duration,
+  });
+
+  factory EquipmentEffectRelation.fromJson(Map<String, dynamic> json) =>
+      EquipmentEffectRelation(
+        effectId: json['effectId']?.toString() ?? '',
+        origin: json['origin']?.toString() ?? 'equipped',
+        sourceRow: json['sourceRow']?.toString(),
+        activation: json['activation']?.toString(),
+        value: (json['value'] as num?)?.toDouble(),
+        duration: (json['duration'] as num?)?.toDouble(),
+      );
+}
+
+/// Combat properties that belong to the equipment itself instead of to a
+/// single attack in a combo.
+class EquipmentCombatStats {
+  final double? critChance;
+  final double? blockDamageMultiplier;
+  final double? blockStaminaCost;
+  final double? blockStaminaRegenMultiplier;
+  final int? ammoAttackSlots;
+
+  const EquipmentCombatStats({
+    this.critChance,
+    this.blockDamageMultiplier,
+    this.blockStaminaCost,
+    this.blockStaminaRegenMultiplier,
+    this.ammoAttackSlots,
+  });
+
+  factory EquipmentCombatStats.fromJson(Map<String, dynamic> json) =>
+      EquipmentCombatStats(
+        critChance: (json['critChance'] as num?)?.toDouble(),
+        blockDamageMultiplier: (json['blockDamageMultiplier'] as num?)
+            ?.toDouble(),
+        blockStaminaCost: (json['blockStaminaCost'] as num?)?.toDouble(),
+        blockStaminaRegenMultiplier:
+            (json['blockStaminaRegenMultiplier'] as num?)?.toDouble(),
+        ammoAttackSlots: (json['ammoAttackSlots'] as num?)?.round(),
       );
 }
 
@@ -201,6 +291,8 @@ class EquipmentItem {
   final String classificationSource;
   final bool classificationFallbackUsed;
   final List<String> effects;
+  final List<EquipmentEffectRelation> effectRelations;
+  final EquipmentCombatStats combat;
   final List<EquipmentAttack> attacks;
   final List<String> upgradeRoutes;
   final List<EquipmentIngredient> repair;
@@ -223,6 +315,8 @@ class EquipmentItem {
     required this.classificationSource,
     required this.classificationFallbackUsed,
     this.effects = const [],
+    this.effectRelations = const [],
+    this.combat = const EquipmentCombatStats(),
     this.attacks = const [],
     this.upgradeRoutes = const [],
     this.repair = const [],
@@ -256,6 +350,16 @@ class EquipmentItem {
     classificationFallbackUsed:
         json['classificationFallbackUsed'] as bool? ?? true,
     effects: List<String>.from(json['effects'] ?? const []),
+    effectRelations: (json['effectRelations'] as List? ?? const [])
+        .whereType<Map>()
+        .map(
+          (item) =>
+              EquipmentEffectRelation.fromJson(item.cast<String, dynamic>()),
+        )
+        .toList(growable: false),
+    combat: EquipmentCombatStats.fromJson(
+      (json['combat'] as Map? ?? const {}).cast<String, dynamic>(),
+    ),
     attacks: (json['attacks'] as List? ?? const [])
         .whereType<Map>()
         .map((item) => EquipmentAttack.fromJson(item.cast<String, dynamic>()))

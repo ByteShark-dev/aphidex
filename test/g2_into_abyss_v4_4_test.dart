@@ -86,7 +86,7 @@ void main() {
 
     expect(named, hasLength(20));
     expect(waves, hasLength(40));
-    expect(variants, hasLength(60));
+    expect(variants, hasLength(63));
     expect(named.every((variant) => variant.health?.value != null), isTrue);
     expect(named.every((variant) => variant.attacks.isNotEmpty), isTrue);
     expect(waves.every((variant) => variant.id.startsWith('g2_wave_')), isTrue);

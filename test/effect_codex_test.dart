@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aphidex/controllers/tutorial_controller.dart';
+import 'package:aphidex/data/content_repositories.dart';
 import 'package:aphidex/data/enemy_repository.dart';
 import 'package:aphidex/data/effect_catalog.dart';
+import 'package:aphidex/data/equipment_effect_index.dart';
 import 'package:aphidex/data/local_storage.dart';
 import 'package:aphidex/i18n/app_localizations.dart';
 import 'package:aphidex/models/enemy.dart';
+import 'package:aphidex/models/equipment.dart';
 import 'package:aphidex/screens/effect_codex_screen.dart';
 import 'package:aphidex/screens/enemy_detail_screen.dart';
 import 'package:aphidex/screens/enemy_list_screen.dart';
@@ -39,32 +42,36 @@ void main() {
   });
 
   group('effect catalog', () {
-    test('contains all canonical effect ids', () {
-      expect(effectCatalogEntries.map((entry) => entry.id).toSet(), {
-        'slashing',
-        'chopping',
-        'busting',
-        'stabbing',
-        'generic',
-        'explosive',
-        'water',
-        'fresh',
-        'chill',
-        'spicy',
-        'salty',
-        'sour',
-        'acid',
-        'venom',
-        'poison',
-        'gas',
-        'bleed',
-        'dust',
-        'shock',
-        'burning',
-        'sizzle',
-        'tang_buildup',
-        'infection',
-      });
+    test('retains canonical ids while including extractor effect types', () {
+      expect(
+        effectCatalogEntries.map((entry) => entry.id).toSet(),
+        containsAll({
+          'slashing',
+          'chopping',
+          'busting',
+          'stabbing',
+          'generic',
+          'explosive',
+          'water',
+          'fresh',
+          'chill',
+          'spicy',
+          'salty',
+          'sour',
+          'acid',
+          'venom',
+          'poison',
+          'gas',
+          'bleed',
+          'dust',
+          'shock',
+          'burning',
+          'sizzle',
+          'tang_buildup',
+          'infection',
+        }),
+      );
+      expect(extractorTechnicalEffectIdAliases, hasLength(72));
     });
 
     test('normalizes aliases to canonical ids', () {
@@ -99,7 +106,7 @@ void main() {
   });
 
   group('effect codex localizations', () {
-    test('exposes category and placeholder labels in supported locales', () {
+    test('exposes every effect-codex category in supported locales', () {
       expect(
         AppLocalizations(const Locale('es')).effectCategoryLabel('damage'),
         'Tipos de daño',
@@ -109,8 +116,8 @@ void main() {
         'Status effects',
       );
       expect(
-        AppLocalizations(const Locale('ru')).effectEquipmentComingSoon,
-        'Скоро.',
+        AppLocalizations(const Locale('ru')).effectCategoryLabel('trigger'),
+        'Активаторы',
       );
     });
   });
@@ -120,6 +127,7 @@ void main() {
 
     setUp(() {
       EnemyRepository.clearCaches();
+      EquipmentRepository.clearCache();
       handler = (message) async {
         final key = utf8.decode(
           message!.buffer.asUint8List(
@@ -147,6 +155,9 @@ void main() {
         }
         if (key.endsWith('assets/data/creatures/en/index_g2.json')) {
           return _stringData('[]');
+        }
+        if (key.endsWith('assets/data/g2/equipment.json')) {
+          return _stringData(jsonEncode(_effectTestEquipment));
         }
         if (key.endsWith(
           'assets/data/creatures/en/details/g1_test_enemy.json',
@@ -261,6 +272,30 @@ void main() {
       expect(highlightedDecoration.color, isNotNull);
       expect((highlightedDecoration.border! as Border).top.width, 2);
       expect((regularDecoration.border! as Border).top.width, 1);
+    });
+
+    testWidgets('lists linked equipment and opens its detail entry', (
+      tester,
+    ) async {
+      EquipmentItem? opened;
+      await tester.pumpWidget(
+        _buildTestApp(
+          EffectCodexScreen(
+            initialEffectId: 'generic',
+            autoScrollToInitialEffect: false,
+            equipmentIndex: Future.value(_testEquipmentIndex),
+            onOpenEquipment: (_, item) => opened = item,
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Test Weapon'), findsOneWidget);
+      expect(find.text('Attack'), findsOneWidget);
+      await tester.tap(find.text('Test Weapon'));
+      await tester.pumpAndSettle();
+
+      expect(opened?.id, 'TestWeapon');
     });
   });
 }
@@ -392,3 +427,46 @@ final Map<String, dynamic> _sampleEnemyJson = {
   'weakPoint': {'part': 'back', 'susceptibleDamage': 'chopping and slashing'},
   'attacks': [],
 };
+
+final Map<String, dynamic> _effectTestEquipment = {
+  'items': [
+    {
+      'id': 'TestWeapon',
+      'technicalId': 'TestWeapon',
+      'domain': 'weapon',
+      'name': {
+        'en': 'Test Weapon',
+        'es': 'Arma de prueba',
+        'ru': 'Тестовое оружие',
+      },
+      'icon': '',
+      'normalizedType': 'weapon',
+      'normalizedSubtype': 'sword',
+      'classificationSource': 'test',
+      'classificationFallbackUsed': false,
+      'effects': [],
+      'effectRelations': [
+        {'effectId': 'generic', 'origin': 'attack', 'sourceRow': 'TestAttack'},
+      ],
+      'attacks': [],
+      'upgradeRoutes': [],
+      'repair': [],
+      'acquisition': {'status': 'unresolved_acquisition'},
+      'locations': [],
+    },
+  ],
+  'armorSets': [],
+};
+
+final EquipmentEffectIndex _testEquipmentIndex =
+    EquipmentEffectIndex.fromCatalog(
+      EquipmentCatalog(
+        items: [
+          EquipmentItem.fromJson(
+            (_effectTestEquipment['items'] as List).single
+                as Map<String, dynamic>,
+          ),
+        ],
+        armorSets: const [],
+      ),
+    );

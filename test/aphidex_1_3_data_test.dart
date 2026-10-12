@@ -56,21 +56,21 @@ void main() {
 
     test('equipment and unresolved acquisition status stay explicit', () {
       final items = (equipment['items'] as List).cast<Map>();
-      expect(items, hasLength(209));
-      expect(equipment['armorSets'], hasLength(29));
+      expect(items, hasLength(220));
+      expect(equipment['armorSets'], hasLength(31));
       expect(
         items.where(
           (item) =>
               (item['acquisition'] as Map)['status'] ==
               'unresolved_acquisition',
         ),
-        hasLength(11),
+        hasLength(20),
       );
       for (final item in items) {
         expect((item['name'] as Map).keys, containsAll(['en', 'es', 'ru']));
         expect(
           (item['translationStatus'] as Map)['ru'],
-          'pending_native_review',
+          anyOf('pending_native_review', 'aphidex_translation'),
         );
       }
     });
@@ -81,7 +81,7 @@ void main() {
         final markers = (map['markers'] as List).cast<Map>();
         expect(
           markers.where((item) => item['targetType'] == 'creature'),
-          hasLength(4452),
+          hasLength(4539),
         );
         expect(
           markers.where((item) => item['targetType'] == 'equipment'),
@@ -150,10 +150,11 @@ void main() {
           .whereType<String>()
           .toSet();
       // Release 0.6 reintroduces these three formerly excluded technical rows.
-      expect(
-        technicalIds.intersection(excluded),
-        {'TermiteKing', 'TermiteSoldier', 'TermiteWorker'},
-      );
+      expect(technicalIds.intersection(excluded), {
+        'TermiteKing',
+        'TermiteSoldier',
+        'TermiteWorker',
+      });
     });
 
     test('map validation includes five cases per layer and no outliers', () {
