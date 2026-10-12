@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 import '../models/defense_event.dart';
+import '../models/combat_recommendation.dart';
 import '../models/equipment.dart';
 import '../models/location.dart';
 
@@ -23,6 +24,23 @@ class EquipmentRepository {
           .whereType<Map>()
           .map((item) => ArmorSet.fromJson(item.cast<String, dynamic>()))
           .toList(growable: false),
+    );
+  }
+
+  static void clearCache() => _cache = null;
+}
+
+class CombatRecommendationRepository {
+  static Future<CombatRecommendationCatalog>? _cache;
+
+  static Future<CombatRecommendationCatalog> load() => _cache ??= _load();
+
+  static Future<CombatRecommendationCatalog> _load() async {
+    final raw = await rootBundle.loadString(
+      'assets/data/g2/combat_recommendations.json',
+    );
+    return CombatRecommendationCatalog.fromJson(
+      (jsonDecode(raw) as Map).cast<String, dynamic>(),
     );
   }
 

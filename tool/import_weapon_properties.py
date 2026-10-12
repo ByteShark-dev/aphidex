@@ -15,6 +15,12 @@ import shutil
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from import_combat_recommendations import (
+    DEFAULT_PROJECTILES as DEFAULT_COMBAT_PROJECTILES,
+    DEFAULT_UPGRADES as DEFAULT_COMBAT_UPGRADES,
+    generate as generate_combat_recommendations,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "assets" / "data" / "g2" / "equipment.json"
@@ -402,6 +408,16 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
     parser.add_argument("--fmodel", type=Path, default=DEFAULT_FMODEL)
+    parser.add_argument(
+        "--combat-projectiles-source",
+        type=Path,
+        default=DEFAULT_COMBAT_PROJECTILES,
+    )
+    parser.add_argument(
+        "--combat-upgrades-source",
+        type=Path,
+        default=DEFAULT_COMBAT_UPGRADES,
+    )
     args = parser.parse_args()
     equipment_root = args.source / "phase2" / "equipment"
     weapons_doc = read_json(equipment_root / "weapon" / "grounded2_weapon_domain_v2.json")
@@ -450,6 +466,11 @@ def main() -> None:
         "addedIds": added,
         "subtypes": dict(Counter(item["normalizedSubtype"] for item in catalog["items"] if item.get("domain") == "weapon")),
     }
+    write_json(REPORT, report)
+    report["combatRecommendations"] = generate_combat_recommendations(
+        args.combat_projectiles_source,
+        args.combat_upgrades_source,
+    )
     write_json(REPORT, report)
     print(json.dumps(report, ensure_ascii=False, indent=2))
 

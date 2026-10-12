@@ -1,0 +1,48 @@
+{
+  "extractorQa": "PASS_WITH_SOURCE_WARNINGS",
+  "sourceWarnings": [
+    {
+      "code": "UNRESOLVED_EQUIPMENT_ACQUISITION",
+      "count": 11,
+      "items": [
+        "AccessoryBlockStrength",
+        "AccessoryHedgeWeb",
+        "AccessoryLips",
+        "AccessoryWidowling",
+        "BombSourUnique",
+        "OminentBadgeCustomerSatisfaction",
+        "OminentBadgeLegal",
+        "OminentBadgeMouthFeel",
+        "OminentBadgeOfficeSupplies",
+        "OminentBadgeWaspDen",
+        "RomanCandle"
+      ],
+      "note": "Preserved as unresolved; no acquisition method is invented."
+    },
+    {
+      "code": "AMMO_ECONOMY_SOURCE_GAP",
+      "count": 2,
+      "items": [
+        "PaintballWash"
+      ],
+      "note": "Unknown costs are kept non-score-safe; the extractor does not treat them as free or resolved."
+    }
+  ],
+  "projectileSource": "/mnt/F/ByteShark-Dev/Aphidex_extractor_v1/aphidex_extractor_v1/output_aphidex_extractor_v1_augusta_projectiles_full",
+  "upgradeSource": "/mnt/F/ByteShark-Dev/Aphidex_extractor_v1/aphidex_extractor_v1/output_aphidex_extractor_v1_augusta_weapon_upgrades",
+  "counts": {
+    "weapons": 58,
+    "shields": 9,
+    "projectiles": 31,
+    "tierUpgradeableWeapons": 52,
+    "reachableTiers": 73,
+    "enhancementRoutes": 158
+  },
+  "effectivenessThresholds": {
+    "excellent": 1.5,
+    "strong": 1.15,
+    "neutral": 0.85,
+    "weak": 0.5
+  },
+  "output": "/mnt/F/ByteShark-Dev/Proyectos de VS/Aphidex/assets/data/g2/combat_recommendations.json"
+}
