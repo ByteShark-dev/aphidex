@@ -7,6 +7,7 @@ import '../data/equipment_presentation.dart';
 import '../data/enemy_repository.dart';
 import '../data/ui_mapper.dart';
 import '../models/equipment.dart';
+import '../models/combat_recommendation.dart';
 import '../models/location.dart';
 import '../widgets/icon_badge.dart';
 import 'map_screen.dart';
@@ -493,6 +494,130 @@ class _EquipmentDetailSheet extends StatelessWidget {
                   }).toList(),
                 ),
             ],
+            FutureBuilder<CombatRecommendationCatalog>(
+              future: CombatRecommendationRepository.load(),
+              builder: (context, snapshot) {
+                final catalog = snapshot.data;
+                if (catalog == null) return const SizedBox.shrink();
+                final weapon = catalog.weapons
+                    .cast<CombatWeaponProfile?>()
+                    .firstWhere(
+                      (value) => value?.id == item.id,
+                      orElse: () => null,
+                    );
+                final shield = catalog.shields
+                    .cast<CombatShieldProfile?>()
+                    .firstWhere(
+                      (value) => value?.id == item.id,
+                      orElse: () => null,
+                    );
+                final ammo = catalog.projectiles
+                    .where((value) => value.launcherIds.contains(item.id))
+                    .toList(growable: false);
+                final compatibleWeapons = shield == null
+                    ? const <CombatWeaponProfile>[]
+                    : catalog.weapons
+                          .where((value) => value.shieldCompatible)
+                          .toList(growable: false);
+                if (weapon == null && shield == null) {
+                  return const SizedBox.shrink();
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Divider(),
+                    Text(
+                      _t(
+                        'Advanced upgrades and compatibility',
+                        'Mejoras y compatibilidad avanzadas',
+                        'Улучшения и совместимость',
+                      ),
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
+                    if (weapon != null && weapon.tierTargets.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        _t(
+                          'Reachable Tiers',
+                          'Niveles alcanzables',
+                          'Доступные уровни',
+                        ),
+                      ),
+                      for (final target in weapon.tierTargets)
+                        Text(
+                          '• ${_t('Tier', 'Nivel', 'Уровень')} ${target.tier}'
+                          '${target.damageBonus == null ? '' : ' · +${_number(target.damageBonus!)} ${_t('damage', 'daño', 'урона')}'}'
+                          '${target.costItem == null ? '' : ' · ${target.costItem} ×${target.costAmount ?? '?'}'}',
+                        ),
+                    ],
+                    if (weapon != null && weapon.routes.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        '${_t('Maximum Enhancement', 'Mejora máxima', 'Максимальное улучшение')}: +${catalog.maxEnhancementLevel}',
+                      ),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: weapon.routes
+                            .map(
+                              (route) => Chip(
+                                label: Text(
+                                  '${EquipmentPresentation.upgradeRoute(route.tag, language)} +${route.maxLevel}',
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                    if (ammo.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        _t(
+                          'Compatible ammunition',
+                          'Munición compatible',
+                          'Совместимые боеприпасы',
+                        ),
+                      ),
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: ammo
+                            .map(
+                              (value) => Chip(
+                                avatar: value.icon.isEmpty
+                                    ? const Icon(Icons.arrow_outward, size: 16)
+                                    : Image.asset(
+                                        value.icon,
+                                        width: 22,
+                                        height: 22,
+                                      ),
+                                label: Text(
+                                  EquipmentPresentation.cleanIdentifier(
+                                    value.id,
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                    if (compatibleWeapons.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        _t(
+                          'Compatible weapons',
+                          'Armas compatibles',
+                          'Совместимое оружие',
+                        ),
+                      ),
+                      Text(
+                        '${compatibleWeapons.length} ${_t('verified one-handed weapons', 'armas de una mano verificadas', 'подтверждённых одноручных оружий')}',
+                      ),
+                    ],
+                  ],
+                );
+              },
+            ),
             const Divider(),
             Text(
               _t('Acquisition', 'Adquisición', 'Получение'),
