@@ -130,6 +130,8 @@ class _TutorialHostState extends State<TutorialHost>
         return 'detailSummary';
       case TutorialStep.detailVariant:
         return 'detailVariant';
+      case TutorialStep.detailRecommendations:
+        return 'detailRecommendations';
       case TutorialStep.detailEffects:
         return 'detailEffects';
       case TutorialStep.detailEffect:

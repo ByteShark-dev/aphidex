@@ -27,6 +27,8 @@ const String tutorialAnchorPrimaryMap = 'tutorial-primary-map';
 const String tutorialAnchorDetailSummary = 'tutorial-detail-summary';
 const String tutorialAnchorDetailVariant = 'tutorial-detail-variant';
 const String tutorialAnchorDetailEffects = 'tutorial-detail-effects';
+const String tutorialAnchorDetailRecommendations =
+    'tutorial-detail-recommendations';
 
 String tutorialAnchorDetailEffect(String effectId) =>
     'tutorial-detail-effect-$effectId';
@@ -49,6 +51,7 @@ enum TutorialStep {
   codex,
   detailSummary,
   detailVariant,
+  detailRecommendations,
   detailEffects,
   detailEffect,
   codexCard,
@@ -485,9 +488,12 @@ class TutorialController extends ChangeNotifier {
             await _goToStep(TutorialStep.detailVariant);
             return;
           }
-          await _goToStep(TutorialStep.detailEffects);
+          await _goToStep(TutorialStep.detailRecommendations);
           return;
         case TutorialStep.detailVariant:
+          await _goToStep(TutorialStep.detailRecommendations);
+          return;
+        case TutorialStep.detailRecommendations:
           await _goToStep(TutorialStep.detailEffects);
           return;
         case TutorialStep.detailEffects:
@@ -547,6 +553,9 @@ class TutorialController extends ChangeNotifier {
           await _goToStep(TutorialStep.detailSummary);
           return;
         case TutorialStep.detailEffects:
+          await _goToStep(TutorialStep.detailRecommendations);
+          return;
+        case TutorialStep.detailRecommendations:
           if (_demoVariants.length > 1) {
             await _goToStep(TutorialStep.detailVariant);
           } else {
@@ -867,6 +876,8 @@ class TutorialController extends ChangeNotifier {
         return tutorialAnchorDetailSummary;
       case TutorialStep.detailVariant:
         return _demoVariants.length > 1 ? tutorialAnchorDetailVariant : null;
+      case TutorialStep.detailRecommendations:
+        return tutorialAnchorDetailRecommendations;
       case TutorialStep.detailEffects:
         return tutorialAnchorDetailEffects;
       case TutorialStep.detailEffect:
@@ -898,6 +909,9 @@ class TutorialController extends ChangeNotifier {
         await _goToStep(TutorialStep.codex);
         return;
       case TutorialStep.detailVariant:
+        await _goToStep(TutorialStep.detailRecommendations);
+        return;
+      case TutorialStep.detailRecommendations:
         await _goToStep(TutorialStep.detailEffects);
         return;
       case TutorialStep.detailEffects:
@@ -933,6 +947,7 @@ class TutorialController extends ChangeNotifier {
     switch (_step) {
       case TutorialStep.detailSummary:
       case TutorialStep.detailVariant:
+      case TutorialStep.detailRecommendations:
       case TutorialStep.detailEffects:
       case TutorialStep.detailEffect:
         return _detailTargetScope;

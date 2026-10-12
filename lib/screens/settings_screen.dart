@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_links.dart';
 import '../controllers/locale_controller.dart';
+import '../controllers/combat_recommendation_preferences_controller.dart';
 import '../controllers/monetization_controller.dart';
 import '../controllers/review_prompt_controller.dart';
 import '../controllers/theme_controller.dart';
@@ -30,6 +31,8 @@ class SettingsScreen extends StatelessWidget {
     final theme = ThemeController.instance;
     final locale = LocaleController.instance;
     final monetization = MonetizationController.instance;
+    final recommendationPreferences =
+        CombatRecommendationPreferencesController.instance..load();
     final l10n = context.l10n;
     final dataStrings = DataManagementStrings.forLanguage(l10n.languageCode);
     final systemLanguage = l10n.languageNameForCode(
@@ -150,6 +153,61 @@ class SettingsScreen extends StatelessWidget {
                           ],
                         );
                       },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.languageCode == 'es'
+                          ? 'Recomendaciones de combate'
+                          : l10n.languageCode == 'ru'
+                          ? 'Боевые рекомендации'
+                          : 'Combat recommendations',
+                      style: const TextStyle(fontWeight: FontWeight.w800),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      l10n.languageCode == 'es'
+                          ? 'Armas mostradas'
+                          : l10n.languageCode == 'ru'
+                          ? 'Показано оружия'
+                          : 'Weapons shown',
+                    ),
+                    ValueListenableBuilder<int>(
+                      valueListenable:
+                          recommendationPreferences.weaponRecommendationCount,
+                      builder: (context, count, _) => Semantics(
+                        label: l10n.languageCode == 'es'
+                            ? 'Armas mostradas'
+                            : l10n.languageCode == 'ru'
+                            ? 'Показано оружия'
+                            : 'Weapons shown',
+                        value: '$count',
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Slider(
+                                value: count.toDouble(),
+                                min: 3,
+                                max: 8,
+                                divisions: 5,
+                                label: '$count',
+                                onChanged: (value) => recommendationPreferences
+                                    .setCount(value.round()),
+                              ),
+                            ),
+                            SizedBox(width: 28, child: Text('$count')),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

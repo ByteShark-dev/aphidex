@@ -1850,6 +1850,9 @@ class AppLocalizations {
       'tutorial_detailVariant_title': 'Cambia de variante',
       'tutorial_detailVariant_body':
           'Cuando una entrada tiene varias versiones, aqu\u00ED eliges la variante que quieres consultar. La ficha cambia sus datos y conserva tu selecci\u00F3n al navegar.',
+      'tutorial_detailRecommendations_title': 'Recomendaciones de combate',
+      'tutorial_detailRecommendations_body':
+          'Aphidex muestra primero la mejor arma. Expande la secci\u00F3n para elegir entre 3 y 8 configuraciones, comparar niveles, colores y zonas de impacto, y abrir el detalle completo.',
       'tutorial_detailEffects_title': 'Debilidades y resistencias',
       'tutorial_detailEffects_body':
           'Aqu\u00ED ver\u00E1s debilidades, resistencias y el da\u00F1o o estado que puede infligir el enemigo.',
@@ -2116,6 +2119,9 @@ class AppLocalizations {
       'tutorial_detailVariant_title': 'Switch variants',
       'tutorial_detailVariant_body':
           'When an entry has multiple versions, choose the variant you want to inspect here. The sheet updates its data and keeps your selection while navigating.',
+      'tutorial_detailRecommendations_title': 'Combat recommendations',
+      'tutorial_detailRecommendations_body':
+          'Aphidex starts with the top weapon. Expand the section to choose 3–8 builds, compare Tiers, colors and hit zones, and open the full recommendation details.',
       'tutorial_detailEffects_title': 'Weaknesses and resistances',
       'tutorial_detailEffects_body':
           'Here you can review weaknesses, resistances, and the damage or status that the creature can inflict.',
@@ -2346,6 +2352,9 @@ class AppLocalizations {
       'tutorial_detailVariant_title': 'Переключение вариантов',
       'tutorial_detailVariant_body':
           'Если у записи есть несколько версий, здесь можно выбрать нужный вариант. Карточка обновит данные и сохранит выбор при навигации.',
+      'tutorial_detailRecommendations_title': 'Боевые рекомендации',
+      'tutorial_detailRecommendations_body':
+          'Сначала Aphidex показывает лучшее оружие. Разверните раздел, чтобы выбрать 3–8 сборок, сравнить уровни, цвета и зоны попадания и открыть подробности.',
       'tutorial_detailEffects_title':
           '\u0421\u043B\u0430\u0431\u043E\u0441\u0442\u0438 \u0438 \u0441\u043E\u043F\u0440\u043E\u0442\u0438\u0432\u043B\u0435\u043D\u0438\u044F',
       'tutorial_detailEffects_body':
