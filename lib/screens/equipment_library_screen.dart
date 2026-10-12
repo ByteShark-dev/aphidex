@@ -15,6 +15,14 @@ import '../widgets/icon_badge.dart';
 import 'map_screen.dart';
 import 'enemy_detail_screen.dart';
 
+String _projectileGroupKey(String id) {
+  if (id.contains('Splinter')) return 'splinter';
+  if (id.startsWith('GreatArrow')) return 'great_arrow';
+  if (id.startsWith('Arrow')) return 'arrow';
+  if (id.startsWith('Paintball')) return 'paintball';
+  return 'other';
+}
+
 class EquipmentLibraryScreen extends StatefulWidget {
   const EquipmentLibraryScreen({
     super.key,
@@ -137,6 +145,17 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
         ],
       );
     }
+    if (_category == 0) {
+      return FutureBuilder<CombatRecommendationCatalog>(
+        future: CombatRecommendationRepository.load(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return _buildWeaponsAndAmmunition(catalog, snapshot.data!);
+        },
+      );
+    }
     final domain = _category == 0 ? null : EquipmentDomain.trinket;
     final items = catalog.items
         .where((item) {
@@ -175,6 +194,185 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
         );
       },
     );
+  }
+
+  Widget _buildWeaponsAndAmmunition(
+    EquipmentCatalog catalog,
+    CombatRecommendationCatalog combat,
+  ) {
+    final weapons = catalog.items
+        .where(
+          (item) =>
+              item.domain == EquipmentDomain.weapon ||
+              item.domain == EquipmentDomain.shield,
+        )
+        .toList(growable: false);
+    final grouped = <String, List<ProjectileItem>>{};
+    for (final projectile in combat.projectiles) {
+      grouped
+          .putIfAbsent(_projectileGroupKey(projectile.id), () => [])
+          .add(projectile);
+    }
+    final groupKeys = grouped.keys.toList()..sort();
+    for (final key in groupKeys) {
+      grouped[key]!.sort((a, b) {
+        final tier = a.tier.compareTo(b.tier);
+        return tier != 0 ? tier : a.id.compareTo(b.id);
+      });
+    }
+    return ListView(
+      padding: const EdgeInsets.all(12),
+      children: [
+        for (final item in weapons)
+          _EquipmentCard(
+            title: item.name.resolve(_language),
+            subtitle: [
+              EquipmentPresentation.typeLabel(item.normalizedType, _language),
+              if (item.normalizedSubtype != item.normalizedType)
+                EquipmentPresentation.subtypeLabel(
+                  item.normalizedSubtype,
+                  _language,
+                ),
+              if (item.tier != null)
+                '${_t('Tier', 'Nivel', 'Уровень')} ${item.tier}',
+            ].join(' · '),
+            icon: EntityAssetResolver.resolveEquipment(item).asset,
+            onTap: () => _showItem(item),
+          ),
+        const SizedBox(height: 14),
+        Text(
+          _t('Ammunition', 'Munición', 'Боеприпасы'),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          _t(
+            'Choose ammunition to inspect its damage, flavour and compatible launchers.',
+            'Elige munición para revisar su daño, sabor y lanzadores compatibles.',
+            'Выберите боеприпас, чтобы посмотреть урон, вкус и совместимые пусковые устройства.',
+          ),
+          style: TextStyle(color: Theme.of(context).hintColor),
+        ),
+        for (final key in groupKeys) ...[
+          const SizedBox(height: 14),
+          Text(
+            _projectileGroupLabel(key),
+            style: const TextStyle(fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 6),
+          for (final projectile in grouped[key]!)
+            _EquipmentCard(
+              title: _projectileLabel(projectile.id),
+              subtitle: [
+                '${_t('Tier', 'Nivel', 'Уровень')} ${projectile.tier}',
+                _projectileDamageLabel(projectile),
+              ].join(' · '),
+              icon: projectile.icon,
+              onTap: () => _showProjectile(projectile),
+            ),
+        ],
+      ],
+    );
+  }
+
+  String _projectileDamageLabel(ProjectileItem projectile) {
+    final attack = [
+      projectile.attack.base,
+      projectile.attack.charged,
+      projectile.attack.perfect,
+    ].reduce((a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b);
+    final type = attack.element ?? attack.physical;
+    return type == null
+        ? _t('Damage unknown', 'Daño desconocido', 'Урон неизвестен')
+        : EquipmentPresentation.effectLabel(type, _language);
+  }
+
+  String _projectileGroupLabel(String key) => switch (key) {
+    'arrow' => _t('Arrows', 'Flechas', 'Стрелы'),
+    'great_arrow' => _t('Great arrows', 'Flechas grandes', 'Большие стрелы'),
+    'paintball' => _t('Paintballs', 'Bolas de pintura', 'Шарики с краской'),
+    'splinter' => _t(
+      'Splinter shots',
+      'Flechas de astilla',
+      'Осколочные выстрелы',
+    ),
+    _ => _t('Other ammunition', 'Otra munición', 'Другие боеприпасы'),
+  };
+
+  String _projectileLabel(String id) {
+    const es = <String, String>{
+      'Arrow': 'Flecha',
+      'ArrowCrow': 'Flecha de cuervo',
+      'ArrowEMP': 'Flecha PEM',
+      'ArrowGas': 'Flecha de gas',
+      'ArrowHealing': 'Flecha curativa',
+      'ArrowLips': 'Flecha Lips',
+      'ArrowMint': 'Flecha fresca',
+      'ArrowPoison': 'Flecha venenosa',
+      'ArrowPollen': 'Flecha de polen',
+      'ArrowSour': 'Flecha agria',
+      'ArrowSpicy': 'Flecha picante',
+      'ArrowSplinter': 'Flecha de astilla',
+      'ArrowSplinterGas': 'Flecha de astilla gaseosa',
+      'ArrowUnderwater': 'Flecha subacuática',
+      'GreatArrowCrow': 'Flecha grande de cuervo',
+      'GreatArrowLips': 'Flecha grande Lips',
+      'GreatArrowMint': 'Flecha grande fresca',
+      'GreatArrowSour': 'Flecha grande agria',
+      'GreatArrowSpicy': 'Flecha grande picante',
+      'GreatArrowVenom': 'Flecha grande venenosa',
+      'PaintballBlue': 'Bola de pintura azul',
+      'PaintballGreen': 'Bola de pintura verde',
+      'PaintballOrange': 'Bola de pintura naranja',
+      'PaintballPurple': 'Bola de pintura morada',
+      'PaintballRed': 'Bola de pintura roja',
+      'PaintballWash': 'Bola de pintura de lavado',
+      'PaintballYellow': 'Bola de pintura amarilla',
+      'SplinterShot': 'Flecha de astilla',
+      'SplinterShotMint': 'Flecha de astilla fresca',
+      'SplinterShotSour': 'Flecha de astilla agria',
+      'SplinterShotSpicy': 'Flecha de astilla picante',
+    };
+    const en = <String, String>{
+      'Arrow': 'Arrow',
+      'ArrowCrow': 'Crow Arrow',
+      'ArrowEMP': 'EMP Arrow',
+      'ArrowGas': 'Gas Arrow',
+      'ArrowHealing': 'Healing Arrow',
+      'ArrowLips': 'Lips Arrow',
+      'ArrowMint': 'Fresh Arrow',
+      'ArrowPoison': 'Poison Arrow',
+      'ArrowPollen': 'Pollen Arrow',
+      'ArrowSour': 'Sour Arrow',
+      'ArrowSpicy': 'Spicy Arrow',
+      'ArrowSplinter': 'Splinter Arrow',
+      'ArrowSplinterGas': 'Gas Splinter Arrow',
+      'ArrowUnderwater': 'Underwater Arrow',
+      'GreatArrowCrow': 'Great Crow Arrow',
+      'GreatArrowLips': 'Great Lips Arrow',
+      'GreatArrowMint': 'Great Fresh Arrow',
+      'GreatArrowSour': 'Great Sour Arrow',
+      'GreatArrowSpicy': 'Great Spicy Arrow',
+      'GreatArrowVenom': 'Great Venom Arrow',
+      'PaintballBlue': 'Blue Paintball',
+      'PaintballGreen': 'Green Paintball',
+      'PaintballOrange': 'Orange Paintball',
+      'PaintballPurple': 'Purple Paintball',
+      'PaintballRed': 'Red Paintball',
+      'PaintballWash': 'Wash Paintball',
+      'PaintballYellow': 'Yellow Paintball',
+      'SplinterShot': 'Splinter Arrow',
+      'SplinterShotMint': 'Fresh Splinter Arrow',
+      'SplinterShotSour': 'Sour Splinter Arrow',
+      'SplinterShotSpicy': 'Spicy Splinter Arrow',
+    };
+    // No official RU strings were supplied by the projectile extractor. Keep
+    // the stable, readable English fallback rather than inventing translations.
+    return switch (_language) {
+      'es' => es[id] ?? EquipmentPresentation.cleanIdentifier(id),
+      'en' => en[id] ?? EquipmentPresentation.cleanIdentifier(id),
+      _ => en[id] ?? EquipmentPresentation.cleanIdentifier(id),
+    };
   }
 
   void _openInitialOnce(EquipmentCatalog catalog) {
