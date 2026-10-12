@@ -23,6 +23,7 @@ import '../models/location.dart';
 import '../widgets/fallback_asset_image.dart';
 import '../widgets/icon_badge.dart';
 import '../widgets/inline_banner_ad_card.dart';
+import '../widgets/combat_recommendations_section.dart';
 import '../widgets/overflow_marquee_text.dart';
 import '../widgets/state_panels.dart';
 import 'defense_detail_screen.dart';
@@ -788,6 +789,13 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               _HealthBar(
                 health: effectiveHealth,
                 displayMode: enemy.healthDisplay,
+              ),
+              const SizedBox(height: 18),
+            ],
+            if (enemy.game == 'g2' && !enemy.hideHealth) ...[
+              CombatRecommendationsSection(
+                enemy: enemy,
+                tutorialTargetScope: widget.tutorialTargetScope,
               ),
               const SizedBox(height: 18),
             ],
