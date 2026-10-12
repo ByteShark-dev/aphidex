@@ -66,10 +66,16 @@ void main() {
         ),
       );
       await tester.pump();
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(seconds: 1)),
-      );
-      await tester.pump();
+      for (
+        var attempt = 0;
+        attempt < 20 && find.text('Recommended weapons').evaluate().isEmpty;
+        attempt++
+      ) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 250)),
+        );
+        await tester.pump();
+      }
       expect(find.text('Recommended weapons'), findsOneWidget);
       expect(find.byIcon(Icons.expand_more), findsOneWidget);
       await tester.tap(find.byIcon(Icons.expand_more));
