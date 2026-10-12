@@ -330,48 +330,52 @@ class _RelatedEquipmentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = match.item;
     final icon = EntityAssetResolver.resolveEquipment(item).asset;
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      dense: true,
-      leading: SizedBox.square(
-        dimension: 38,
-        child: Image.asset(
-          icon,
-          fit: BoxFit.contain,
-          errorBuilder: (_, _, _) => const Icon(Icons.inventory_2_outlined),
+    return Material(
+      type: MaterialType.transparency,
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        dense: true,
+        leading: SizedBox.square(
+          dimension: 38,
+          child: Image.asset(
+            icon,
+            fit: BoxFit.contain,
+            errorBuilder: (_, _, _) => const Icon(Icons.inventory_2_outlined),
+          ),
         ),
-      ),
-      title: Text(item.name.resolve(languageCode)),
-      subtitle: Wrap(
-        spacing: 4,
-        runSpacing: 2,
-        children: [
-          Text(
-            EquipmentPresentation.subtypeLabel(
-              item.normalizedSubtype,
-              languageCode,
+        title: Text(item.name.resolve(languageCode)),
+        subtitle: Wrap(
+          spacing: 4,
+          runSpacing: 2,
+          children: [
+            Text(
+              EquipmentPresentation.subtypeLabel(
+                item.normalizedSubtype,
+                languageCode,
+              ),
             ),
-          ),
-          for (final origin in match.origins)
-            Chip(
-              visualDensity: VisualDensity.compact,
-              label: Text(_effectOriginLabel(origin, languageCode)),
+            for (final origin in match.origins)
+              Chip(
+                visualDensity: VisualDensity.compact,
+                label: Text(_effectOriginLabel(origin, languageCode)),
+              ),
+          ],
+        ),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {
+          final opener = onOpenEquipment;
+          if (opener != null) {
+            opener(context, item);
+            return;
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) =>
+                  EquipmentLibraryScreen(initialEquipmentId: item.id),
             ),
-        ],
+          );
+        },
       ),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {
-        final opener = onOpenEquipment;
-        if (opener != null) {
-          opener(context, item);
-          return;
-        }
-        Navigator.of(context).push(
-          MaterialPageRoute<void>(
-            builder: (_) => EquipmentLibraryScreen(initialEquipmentId: item.id),
-          ),
-        );
-      },
     );
   }
 }
