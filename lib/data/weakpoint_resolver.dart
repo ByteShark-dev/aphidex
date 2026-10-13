@@ -89,9 +89,7 @@ class AphidexWeakpointResolver implements WeakpointResolver {
     return WeakpointPresentation(
       region: region,
       iconAsset: UiMapper.weakPointIcon(region),
-      effectiveDamage: effectiveTypes.length == 1
-          ? effectiveTypes.single
-          : damage,
+      effectiveDamage: _damageLabelId(effectiveTypes, damage),
       effectiveDamageTypes: effectiveTypes,
       weaponFamilies: families,
       damageMultiplier: weakpoint.damageMultiplier,
@@ -101,13 +99,35 @@ class AphidexWeakpointResolver implements WeakpointResolver {
 
   List<String> _typesFromWeaponFamilies(List<String> families) {
     if (families.isEmpty) return const [];
-    const piercingFamilies = {'bow', 'crossbow', 'spear'};
+    const typeByFamily = <String, String>{
+      'axe': 'chopping',
+      'bow': 'stabbing',
+      'crossbow': 'stabbing',
+      'dagger': 'stabbing',
+      'spear': 'stabbing',
+      'sword': 'slashing',
+      'thrown_spear': 'stabbing',
+    };
     final normalized = families
         .map((value) => value.trim().toLowerCase())
         .where((value) => value.isNotEmpty)
         .toSet();
-    return normalized.isNotEmpty && normalized.every(piercingFamilies.contains)
-        ? const ['stabbing']
-        : const [];
+    if (normalized.isEmpty || !normalized.every(typeByFamily.containsKey)) {
+      return const [];
+    }
+    return normalized
+        .map((family) => typeByFamily[family]!)
+        .toSet()
+        .toList(growable: false);
+  }
+
+  String _damageLabelId(List<String> types, String fallback) {
+    if (types.length == 1) return types.single;
+    final values = types.toSet();
+    if (values.length == 3 &&
+        values.containsAll(const {'chopping', 'slashing', 'stabbing'})) {
+      return 'chopping_slashing_stabbing';
+    }
+    return fallback;
   }
 }

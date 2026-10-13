@@ -219,7 +219,8 @@ void main() {
         final enemy = Enemy.fromJson(detail('en', id));
         final presentation = resolver.resolve(enemy.resolvedWeakPoints.single);
         expect(presentation.region, 'eyes');
-        expect(presentation.effectiveDamage, 'any');
+        expect(presentation.effectiveDamage, 'stabbing');
+        expect(presentation.effectiveDamageTypes, ['stabbing']);
         expect(presentation.weaponFamilies, ['bow']);
         expect(presentation.damageMultiplier, 3);
         expect(presentation.iconAsset, contains('Weakspot_Eyes'));

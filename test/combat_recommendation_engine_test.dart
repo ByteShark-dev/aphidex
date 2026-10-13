@@ -120,6 +120,26 @@ void main() {
     expect(presentation.effectiveDamageTypes, ['stabbing']);
   });
 
+  test(
+    'restricted axe sword and dagger weak points retain all three types',
+    () {
+      final presentation = const AphidexWeakpointResolver().resolve(
+        const WeakPointInfo(
+          part: 'legs',
+          susceptibleDamage: 'any',
+          susceptibleDamageTypes: ['any'],
+          weaponFamilies: ['axe', 'sword', 'dagger'],
+        ),
+      );
+      expect(presentation.effectiveDamage, 'chopping_slashing_stabbing');
+      expect(presentation.effectiveDamageTypes.toSet(), {
+        'chopping',
+        'slashing',
+        'stabbing',
+      });
+    },
+  );
+
   test('infusion resistance can make a flavour ineffective', () {
     final result = const DamageCalculationEngine(thresholds).calculate(
       enemy: enemy(),
