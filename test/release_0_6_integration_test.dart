@@ -126,36 +126,44 @@ void main() {
     },
   );
 
-  test('anatomical weakpoint export retains multiplier, weapons, and any damage', () {
-    for (final language in const ['en', 'es', 'ru']) {
-      final centipede = _json(
-        'assets/data/creatures/$language/details/g2_centipede.json',
-      );
-      final centipedePoint = (centipede['weakPoints'] as List).single as Map;
-      expect(centipedePoint['part'], 'belly');
-      expect(centipedePoint['damageMultiplier'], 2.0);
-      expect(centipedePoint['stunMultiplier'], 8.0);
-      expect(centipedePoint['susceptibleDamage'], 'any');
-      expect(centipedePoint['weaponFamilies'], isEmpty);
+  test(
+    'anatomical weakpoint export retains multiplier, weapons, and any damage',
+    () {
+      for (final language in const ['en', 'es', 'ru']) {
+        final centipede = _json(
+          'assets/data/creatures/$language/details/g2_centipede.json',
+        );
+        final centipedePoint = (centipede['weakPoints'] as List).single as Map;
+        expect(centipedePoint['part'], 'belly');
+        expect(centipedePoint['damageMultiplier'], 2.0);
+        expect(centipedePoint['stunMultiplier'], 8.0);
+        expect(centipedePoint['susceptibleDamage'], 'any');
+        expect(centipedePoint['weaponFamilies'], isEmpty);
 
-      final scorpion = _json(
-        'assets/data/creatures/$language/details/g2_striped_bark_scorpion.json',
-      );
-      final points = (scorpion['weakPoints'] as List).cast<Map>();
-      expect(points.map((point) => point['part']), containsAll(['tail', 'stinger']));
-      final stinger = points.singleWhere((point) => point['part'] == 'stinger');
-      expect(stinger['damageMultiplier'], 1.25);
-      expect(stinger['weaponFamilies'], ['bow', 'spear']);
+        final scorpion = _json(
+          'assets/data/creatures/$language/details/g2_striped_bark_scorpion.json',
+        );
+        final points = (scorpion['weakPoints'] as List).cast<Map>();
+        expect(
+          points.map((point) => point['part']),
+          containsAll(['tail', 'stinger']),
+        );
+        final stinger = points.singleWhere(
+          (point) => point['part'] == 'stinger',
+        );
+        expect(stinger['damageMultiplier'], 1.25);
+        expect(stinger['weaponFamilies'], ['bow', 'spear']);
 
-      final ladybug = _json(
-        'assets/data/creatures/$language/details/g2_ladybug.json',
-      );
-      final legs = (ladybug['weakPoints'] as List).single as Map;
-      expect(legs['damageMultiplier'], 2.0);
-      expect(legs['weaponFamilies'], ['axe', 'sword', 'dagger']);
-      expect(legs['susceptibleDamage'], 'any');
-    }
-  });
+        final ladybug = _json(
+          'assets/data/creatures/$language/details/g2_ladybug.json',
+        );
+        final legs = (ladybug['weakPoints'] as List).single as Map;
+        expect(legs['damageMultiplier'], 2.0);
+        expect(legs['weaponFamilies'], ['axe', 'sword', 'dagger']);
+        expect(legs['susceptibleDamage'], 'any');
+      }
+    },
+  );
 
   test('Termite Larva is shown with peaceful creatures', () {
     for (final language in const ['en', 'es', 'ru']) {
@@ -324,21 +332,27 @@ void main() {
     }
   });
 
-  test('Potato Beetle Buggy inherits the normal Potato Beetle card state', () {
-    final buggy = _json(
+  test('new Buggies share their base creature card state', () {
+    final cases = <String, String>{
+      'g2_buggy_potato_beetle': 'g2_potato_beetle',
+      'g2_buggy_toe_biter': 'g2_toe_biter_nymph',
+    };
+    for (final entry in cases.entries) {
+      final buggy = _json('assets/data/creatures/en/details/${entry.key}.json');
+      expect(buggy['favoriteKey'], isNull);
+      expect(buggy['goldLinkId'], entry.value);
+      final base = _json(
+        'assets/data/creatures/en/details/${entry.value}.json',
+      );
+      expect(buggy['cardNormal'], base['cardNormal']);
+      expect(buggy['cardGold'], base['cardGold']);
+    }
+    final potato = _json(
       'assets/data/creatures/en/details/g2_buggy_potato_beetle.json',
     );
-    final profile = (buggy['buggyProfile'] as Map).cast<String, dynamic>();
-    final recipe = (profile['recipe'] as Map).cast<String, dynamic>();
-    expect(buggy['id'], 'g2_buggy_potato_beetle');
-    expect(buggy['favoriteKey'], 'g2_buggy_potato_beetle');
+    final profile = (potato['buggyProfile'] as Map).cast<String, dynamic>();
     expect(profile['technicalId'], 'PotatoBug_Buggy');
-    expect(recipe['row'], 'PotatoBugHatch');
-    final potato = _json(
-      'assets/data/creatures/en/details/g2_potato_beetle.json',
-    );
-    expect(buggy['cardNormal'], potato['cardNormal']);
-    expect(buggy['cardGold'], potato['cardGold']);
+    expect((profile['recipe'] as Map)['row'], 'PotatoBugHatch');
   });
 
   test('existing buggy identifiers remain unchanged', () {

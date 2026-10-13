@@ -333,7 +333,7 @@ class RecommendationEngine {
   static bool _isUnderwaterWeapon(String id, EquipmentItem weapon) =>
       id == 'Harpoon' ||
       id == 'TridentBone' ||
-      weapon.normalizedSubtype == 'dagger';
+      weapon.normalizedSubtype == 'spear';
 
   List<CombatRecommendation> _deduplicate(List<CombatRecommendation> values) {
     final seen = <String>{};

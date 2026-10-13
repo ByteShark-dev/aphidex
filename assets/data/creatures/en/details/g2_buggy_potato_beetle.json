@@ -76,7 +76,7 @@
   "combatStats": null,
   "description": "An amphibious Toe-biter Nymph Buggy that can travel on land and through water. We're preparing the rest of its information for you.",
   "localizationStatus": "ru_automatic_pending_review",
-  "favoriteKey": "g2_buggy_potato_beetle",
+  "favoriteKey": null,
   "dataVerification": "buggy_stats_unverified",
   "listIconAsset": "",
   "hasCreatureCard": true,
@@ -269,7 +269,7 @@
     }
   },
   "availabilityStatus": "source_backed",
-  "goldLinkId": null,
+  "goldLinkId": "g2_potato_beetle",
   "locations": [],
   "sourceProvenance": {
     "extractorTechnicalId": "PotatoBug_Buggy",

@@ -504,7 +504,7 @@ def main() -> None:
     buggy.update({
         "id": "g2_buggy_toe_biter", "speciesKey": "buggy_toe_biter", "collectionGroup": "buggy",
         "name": {"en": "Toe-biter Nymph Buggy", "es": "Bichito: ninfa de mordedor de dedos", "ru": RU_NAMES["g2_buggy_toe_biter"]},
-        "favoriteKey": "g2_buggy_toe_biter", "tier": 3, "cardTier": 3,
+        "favoriteKey": None, "goldLinkId": "g2_toe_biter_nymph", "tier": 3, "cardTier": 3,
         "isBoss": False, "bossCardStyle": None, "isKillable": False, "health": None, "healthDisplay": "hidden",
         "attacks": [], "combatStats": None, "dataVerification": "buggy_stats_unverified",
         "description": {
