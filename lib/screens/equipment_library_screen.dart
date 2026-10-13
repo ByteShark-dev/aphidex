@@ -16,7 +16,8 @@ import 'map_screen.dart';
 import 'enemy_detail_screen.dart';
 
 String _projectileGroupKey(String id) {
-  if (id.contains('Splinter')) return 'splinter';
+  if (id.startsWith('SplinterShot')) return 'splinter_ammunition';
+  if (id.startsWith('ArrowSplinter')) return 'splinter_arrow';
   if (id.startsWith('GreatArrow')) return 'great_arrow';
   if (id.startsWith('Arrow')) return 'arrow';
   if (id.startsWith('Paintball')) return 'paintball';
@@ -350,7 +351,18 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
     isScrollControlled: true,
     showDragHandle: true,
     builder: (sheetContext) {
-      final keys = groups.keys.toList()..sort();
+      const groupOrder = [
+        'arrow',
+        'great_arrow',
+        'splinter_arrow',
+        'splinter_ammunition',
+        'paintball',
+        'other',
+      ];
+      final keys = groups.keys.toList()
+        ..sort(
+          (a, b) => groupOrder.indexOf(a).compareTo(groupOrder.indexOf(b)),
+        );
       return _LibraryGroupSheet(
         title: _t('Ammunition', 'Munición', 'Боеприпасы'),
         child: ListView(
@@ -429,10 +441,15 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
     'arrow' => _t('Arrows', 'Flechas', 'Стрелы'),
     'great_arrow' => _t('Great arrows', 'Flechas grandes', 'Большие стрелы'),
     'paintball' => _t('Paintballs', 'Bolas de pintura', 'Шарики с краской'),
-    'splinter' => _t(
+    'splinter_arrow' => _t(
       'Splinter shots',
       'Flechas de astilla',
       'Осколочные выстрелы',
+    ),
+    'splinter_ammunition' => _t(
+      'Splinter ammunition',
+      'Munición de astillas',
+      'Осколочные боеприпасы',
     ),
     _ => _t('Other ammunition', 'Otra munición', 'Другие боеприпасы'),
   };
@@ -466,10 +483,10 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
       'PaintballRed': 'Bola de pintura roja',
       'PaintballWash': 'Bola de pintura de lavado',
       'PaintballYellow': 'Bola de pintura amarilla',
-      'SplinterShot': 'Flecha de astilla',
-      'SplinterShotMint': 'Flecha de astilla fresca',
-      'SplinterShotSour': 'Flecha de astilla agria',
-      'SplinterShotSpicy': 'Flecha de astilla picante',
+      'SplinterShot': 'Munición de astillas',
+      'SplinterShotMint': 'Munición de astillas fresca',
+      'SplinterShotSour': 'Munición de astillas agria',
+      'SplinterShotSpicy': 'Munición de astillas picante',
     };
     const en = <String, String>{
       'Arrow': 'Arrow',
@@ -499,10 +516,10 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
       'PaintballRed': 'Red Paintball',
       'PaintballWash': 'Wash Paintball',
       'PaintballYellow': 'Yellow Paintball',
-      'SplinterShot': 'Splinter Arrow',
-      'SplinterShotMint': 'Fresh Splinter Arrow',
-      'SplinterShotSour': 'Sour Splinter Arrow',
-      'SplinterShotSpicy': 'Spicy Splinter Arrow',
+      'SplinterShot': 'Splinter Ammunition',
+      'SplinterShotMint': 'Fresh Splinter Ammunition',
+      'SplinterShotSour': 'Sour Splinter Ammunition',
+      'SplinterShotSpicy': 'Spicy Splinter Ammunition',
     };
     // No official RU strings were supplied by the projectile extractor. Keep
     // the stable, readable English fallback rather than inventing translations.
