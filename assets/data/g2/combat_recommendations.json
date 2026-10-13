@@ -27356,7 +27356,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27400,7 +27401,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27453,7 +27455,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27497,7 +27500,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27550,7 +27554,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27600,7 +27605,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27650,7 +27656,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27700,7 +27707,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27753,7 +27761,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27803,7 +27812,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27853,7 +27863,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27897,7 +27908,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27941,7 +27953,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Bow",
@@ -27985,7 +27998,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.5
       },
       "launcherIds": [
         "Harpoon"
@@ -28024,7 +28038,8 @@
           "statuses": []
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28069,7 +28084,8 @@
           ]
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28114,7 +28130,8 @@
           ]
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28159,7 +28176,8 @@
           ]
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28204,7 +28222,8 @@
           ]
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28249,7 +28268,8 @@
           ]
         },
         "stamina": 10,
-        "chargedStamina": 19
+        "chargedStamina": 19,
+        "chargeTime": 1.95
       },
       "launcherIds": [
         "BowTarantula"
@@ -28288,7 +28308,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28327,7 +28348,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28366,7 +28388,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28405,7 +28428,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28444,7 +28468,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28483,7 +28508,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28522,7 +28548,8 @@
           "statuses": []
         },
         "stamina": 0,
-        "chargedStamina": 0
+        "chargedStamina": 0,
+        "chargeTime": 30.0
       },
       "launcherIds": [
         "PaintGun"
@@ -28561,7 +28588,8 @@
           "statuses": []
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.25
       },
       "launcherIds": [
         "SplinterCannon"
@@ -28606,7 +28634,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.2
       },
       "launcherIds": [
         "SplinterCannon"
@@ -28651,7 +28680,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.2
       },
       "launcherIds": [
         "SplinterCannon"
@@ -28696,7 +28726,8 @@
           ]
         },
         "stamina": 7,
-        "chargedStamina": 14
+        "chargedStamina": 14,
+        "chargeTime": 1.2
       },
       "launcherIds": [
         "SplinterCannon"

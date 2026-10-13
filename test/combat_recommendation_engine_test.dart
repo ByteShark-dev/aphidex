@@ -81,6 +81,19 @@ void main() {
         timedAttacks.every((attack) => (attack['intervalSeconds'] as num) > 0),
         isTrue,
       );
+      final projectileAttacks = (source['projectiles'] as List)
+          .whereType<Map>()
+          .map((projectile) => projectile['attack'] as Map)
+          .toList(growable: false);
+      expect(projectileAttacks, hasLength(31));
+      expect(
+        projectileAttacks.every(
+          (attack) =>
+              (attack['chargeTime'] as num?) != null &&
+              (attack['chargeTime'] as num) > 0,
+        ),
+        isTrue,
+      );
     },
   );
 
@@ -397,4 +410,69 @@ void main() {
     expect(recommendations.first.loadout.weapon.id, 'timed');
     expect(recommendations.first.damage.generalDamagePerSecond, 150);
   });
+
+  test(
+    'projectile charge time supplies nominal DPS without a reload guess',
+    () {
+      const noDamage = CombatDamageState();
+      const chargedProjectile = CombatAttackProfile(
+        base: CombatDamageState(damage: 25, physical: 'stabbing'),
+        charged: CombatDamageState(damage: 50, physical: 'stabbing'),
+        perfect: CombatDamageState(damage: 55, physical: 'stabbing'),
+        chargeTime: 1.5,
+      );
+      final result = RecommendationEngine(
+        combat: const CombatRecommendationCatalog(
+          qaStatus: 'PASS',
+          maxEnhancementLevel: 3,
+          thresholds: thresholds,
+          weapons: [
+            CombatWeaponProfile(
+              id: 'bow',
+              tier: 2,
+              shieldCompatible: false,
+              attacks: [
+                CombatAttackProfile(
+                  base: noDamage,
+                  charged: noDamage,
+                  perfect: noDamage,
+                ),
+              ],
+            ),
+          ],
+          shields: [],
+          projectiles: [
+            ProjectileItem(
+              id: 'arrow',
+              tier: 2,
+              family: 'ammo',
+              icon: '',
+              launcherIds: ['bow'],
+              attack: chargedProjectile,
+            ),
+          ],
+        ),
+        equipment: EquipmentCatalog(
+          items: [
+            EquipmentItem.fromJson({
+              'id': 'bow',
+              'domain': 'weapon',
+              'name': {'en': 'Bow', 'es': 'Arco', 'ru': 'Лук'},
+              'tier': 2,
+              'icon': '',
+              'normalizedType': 'weapon',
+              'normalizedSubtype': 'bow',
+              'classificationSource': 'test',
+              'classificationFallbackUsed': false,
+              'acquisition': {'status': 'unresolved_acquisition'},
+            }),
+          ],
+          armorSets: const [],
+        ),
+      ).recommend(enemy());
+
+      expect(result.single.damage.generalDamage, 82.5);
+      expect(result.single.damage.generalDamagePerSecond, closeTo(55, .001));
+    },
+  );
 }

@@ -58,7 +58,12 @@ def compact_damage(node: dict | None) -> dict:
     }
 
 
-def compact_attack(attack: dict, *, interval_seconds: float | None = None) -> dict:
+def compact_attack(
+    attack: dict,
+    *,
+    interval_seconds: float | None = None,
+    include_charge_time: bool = False,
+) -> dict:
     compact = {
         "row": (attack.get("source") or {}).get("row"),
         "base": compact_damage(attack.get("base")),
@@ -67,6 +72,13 @@ def compact_attack(attack: dict, *, interval_seconds: float | None = None) -> di
         "stamina": number(attack.get("staminaCost")),
         "chargedStamina": number(attack.get("chargedStaminaCost")),
     }
+    # Projectile attacks do not have a next-combo interval. Their confirmed
+    # charge time is still a meaningful nominal cadence, and is deliberately
+    # kept separate so the app never pretends it is reload time or an inferred
+    # animation duration. Avoid storing nulls in the compact app domain.
+    charge_time = number(attack.get("chargeTime"))
+    if include_charge_time and charge_time is not None and charge_time > 0:
+        compact["chargeTime"] = charge_time
     # This is the extractor's nominal hit-to-hit interval, never inferred
     # from animation duration. Omit unverified values rather than encoding a
     # false cadence in the compact app domain.
@@ -185,7 +197,7 @@ def generate(projectiles_root: Path, upgrades_root: Path) -> dict:
             "tier": ammo.get("tier"),
             "family": "ammo",
             "icon": safe_icon_name(row, local_icon),
-            "attack": compact_attack(attack),
+            "attack": compact_attack(attack, include_charge_time=True),
             "launcherIds": sorted({value["technicalId"] for value in item.get("usableBy", [])}),
             "sourceId": item.get("id"),
         })

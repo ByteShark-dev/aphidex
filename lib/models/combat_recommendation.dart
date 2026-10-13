@@ -48,6 +48,10 @@ class CombatAttackProfile {
   final double? stamina;
   final double? intervalSeconds;
 
+  /// Confirmed charge duration. This is used as a nominal shot cadence only
+  /// when the source has no hit-to-hit combo interval (for example, ammo).
+  final double? chargeTime;
+
   const CombatAttackProfile({
     this.row,
     required this.base,
@@ -55,6 +59,7 @@ class CombatAttackProfile {
     required this.perfect,
     this.stamina,
     this.intervalSeconds,
+    this.chargeTime,
   });
 
   factory CombatAttackProfile.fromJson(Map<String, dynamic> json) =>
@@ -71,6 +76,7 @@ class CombatAttackProfile {
         ),
         stamina: (json['stamina'] as num?)?.toDouble(),
         intervalSeconds: (json['intervalSeconds'] as num?)?.toDouble(),
+        chargeTime: (json['chargeTime'] as num?)?.toDouble(),
       );
 }
 

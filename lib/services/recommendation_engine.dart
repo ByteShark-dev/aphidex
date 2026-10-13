@@ -221,9 +221,7 @@ class RecommendationEngine {
   ) {
     final timed = attacks.where(
       (attack) =>
-          attack.base.damage != null &&
-          attack.intervalSeconds != null &&
-          attack.intervalSeconds! > 0,
+          attack.base.damage != null && _nominalCadenceSeconds(attack) != null,
     );
     if (timed.isEmpty) return null;
     final values = timed.toList(growable: false);
@@ -237,7 +235,7 @@ class RecommendationEngine {
     }
     final duration = values.fold<double>(
       0,
-      (sum, attack) => sum + attack.intervalSeconds!,
+      (sum, attack) => sum + _nominalCadenceSeconds(attack)!,
     );
     if (duration <= 0) return null;
     final damage = values.fold<double>(
@@ -255,7 +253,7 @@ class RecommendationEngine {
     if (outcome.projectedDamage == null) return null;
     final interval = profile.attacks
         .where((attack) => attack.row == outcome.row)
-        .map((attack) => attack.intervalSeconds)
+        .map(_nominalCadenceSeconds)
         .firstOrNull;
     if (interval == null || interval <= 0) return null;
     return (outcome.projectedDamage! + (target?.damageBonus ?? 0)) / interval;
@@ -270,17 +268,25 @@ class RecommendationEngine {
     return CombatDamageState(
       damage: state.damage,
       damagePerSecond:
-          state.damage == null ||
-              attack.intervalSeconds == null ||
-              attack.intervalSeconds! <= 0
+          state.damage == null || _nominalCadenceSeconds(attack) == null
           ? null
-          : state.damage! / attack.intervalSeconds!,
+          : state.damage! / _nominalCadenceSeconds(attack)!,
       physical: state.physical,
       element: state.element,
       stun: state.stun,
       poise: state.poise,
       statuses: state.statuses,
     );
+  }
+
+  /// A combo interval is the strongest cadence evidence. Projectile attacks
+  /// do not expose one, but the extractor does expose their charge duration;
+  /// use it as the nominal shot cycle without inventing reload time.
+  double? _nominalCadenceSeconds(CombatAttackProfile attack) {
+    final interval = attack.intervalSeconds;
+    if (interval != null && interval > 0) return interval;
+    final charge = attack.chargeTime;
+    return charge != null && charge > 0 ? charge : null;
   }
 
   List<RecommendationReason> _reasons(
