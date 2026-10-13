@@ -121,7 +121,7 @@ void main() {
   });
 
   test(
-    'restricted axe sword and dagger weak points retain all three types',
+    'restricted axe sword and dagger weak points retain cutting and slashing',
     () {
       final presentation = const AphidexWeakpointResolver().resolve(
         const WeakPointInfo(
@@ -131,11 +131,10 @@ void main() {
           weaponFamilies: ['axe', 'sword', 'dagger'],
         ),
       );
-      expect(presentation.effectiveDamage, 'chopping_slashing_stabbing');
+      expect(presentation.effectiveDamage, 'chopping and slashing');
       expect(presentation.effectiveDamageTypes.toSet(), {
         'chopping',
         'slashing',
-        'stabbing',
       });
     },
   );

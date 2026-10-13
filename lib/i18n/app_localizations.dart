@@ -1478,8 +1478,6 @@ class AppLocalizations {
         return _t('damageAny');
       case 'chopping and slashing':
         return _t('damageChoppingAndSlashing');
-      case 'chopping_slashing_stabbing':
-        return _t('damageChoppingSlashingStabbing');
       case 'stabbing_arrows_only':
       case 'stabbing_arrrows':
       case 'projectile_piercing':
@@ -1879,7 +1877,6 @@ class AppLocalizations {
       'weakPointVent': 'Respiradero',
       'damageAny': 'Cualquiera',
       'damageChoppingAndSlashing': 'Corte + tajo',
-      'damageChoppingSlashingStabbing': 'Corte + tajo + perforación',
       'damageStabbingArrowsOnly': 'Perforación (arcos / ballestas)',
       'damageStabbingBowsAndSpears': 'Perforación (arcos / ballestas / lanzas)',
       'damageStabbing': 'Perforación',
@@ -2149,7 +2146,6 @@ class AppLocalizations {
       'weakPointVent': 'Vent',
       'damageAny': 'Any',
       'damageChoppingAndSlashing': 'Chopping + slashing',
-      'damageChoppingSlashingStabbing': 'Chopping + slashing + stabbing',
       'damageStabbingArrowsOnly': 'Stabbing (bows / crossbows)',
       'damageStabbingBowsAndSpears': 'Stabbing (bows / crossbows / spears)',
       'damageStabbing': 'Stabbing',
@@ -2387,7 +2383,6 @@ class AppLocalizations {
       'weakPointVent': 'Вентиль',
       'damageAny': 'Любой',
       'damageChoppingAndSlashing': 'Рубящий + режущий',
-      'damageChoppingSlashingStabbing': 'Рубящий + режущий + колющий',
       'damageStabbingArrowsOnly': 'Колющий (луки / арбалеты)',
       'damageStabbingBowsAndSpears': 'Колющий (луки / арбалеты / копья)',
       'damageStabbing': 'Колющий',

@@ -103,7 +103,9 @@ class AphidexWeakpointResolver implements WeakpointResolver {
       'axe': 'chopping',
       'bow': 'stabbing',
       'crossbow': 'stabbing',
-      'dagger': 'stabbing',
+      // The anatomical weakpoint export groups daggers with the cutting and
+      // slashing profile. Do not infer piercing from the weapon's name.
+      'dagger': 'slashing',
       'spear': 'stabbing',
       'sword': 'slashing',
       'thrown_spear': 'stabbing',
@@ -124,9 +126,9 @@ class AphidexWeakpointResolver implements WeakpointResolver {
   String _damageLabelId(List<String> types, String fallback) {
     if (types.length == 1) return types.single;
     final values = types.toSet();
-    if (values.length == 3 &&
-        values.containsAll(const {'chopping', 'slashing', 'stabbing'})) {
-      return 'chopping_slashing_stabbing';
+    if (values.length == 2 &&
+        values.containsAll(const {'chopping', 'slashing'})) {
+      return 'chopping and slashing';
     }
     return fallback;
   }
