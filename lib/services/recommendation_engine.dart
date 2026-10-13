@@ -1,6 +1,7 @@
 import '../models/combat_recommendation.dart';
 import '../models/enemy.dart';
 import '../models/equipment.dart';
+import '../data/effect_catalog.dart';
 import 'damage_calculation_engine.dart';
 
 class RecommendationEngine {
@@ -16,7 +17,8 @@ class RecommendationEngine {
     Enemy enemy, {
     CreatureInfusion? infusion,
   }) {
-    if (enemy.game != 'g2') return const [];
+    if (enemy.game != 'g2' || _cannotBeRecommended(enemy)) return const [];
+    final underwaterOnly = _isUnderwaterTarget(enemy.id);
     final items = {for (final item in equipment.items) item.id: item};
     final bestShield = combat.shields
         .where((shield) => items.containsKey(shield.id))
@@ -30,6 +32,9 @@ class RecommendationEngine {
     for (final profile in combat.weapons) {
       final weapon = items[profile.id];
       if (weapon == null || profile.attacks.isEmpty) continue;
+      if (underwaterOnly && !_isUnderwaterWeapon(profile.id, weapon)) {
+        continue;
+      }
       final tiers = <int>[
         profile.tier,
         ...profile.tierTargets.map((value) => value.tier),
@@ -40,11 +45,11 @@ class RecommendationEngine {
       final compatibleAmmo = combat.projectiles
           .where((projectile) => projectile.launcherIds.contains(profile.id))
           .toList(growable: false);
-      // A launcher can be useful without a compatible consumable in the
-      // current source snapshot. Keep its neutral build and let the damage
-      // engine rank projectiles on their actual type instead of forcing every
-      // launcher into the recommendation list.
-      final ammoOptions = <ProjectileItem?>[null, ...compatibleAmmo];
+      // Ranged launchers with verified compatible ammunition are never
+      // recommended unloaded. This includes the harpoon and Splinter Cannon.
+      final ammoOptions = compatibleAmmo.isEmpty
+          ? const <ProjectileItem?>[null]
+          : compatibleAmmo.cast<ProjectileItem?>();
       for (final tier in tiers) {
         for (final route in routes) {
           for (final projectile in ammoOptions) {
@@ -248,11 +253,22 @@ class RecommendationEngine {
         positive: true,
       ),
     for (final status in statuses)
-      RecommendationReason(
-        RecommendationReasonKind.status,
-        status,
-        positive: true,
-      ),
+      if (enemy.resistancesV2.any(
+        (value) =>
+            canonicalEffectId(value.type) ==
+            normalizedTechnicalEffectId(status),
+      ))
+        RecommendationReason(
+          RecommendationReasonKind.resistance,
+          normalizedTechnicalEffectId(status),
+          positive: false,
+        )
+      else
+        RecommendationReason(
+          RecommendationReasonKind.status,
+          status,
+          positive: true,
+        ),
   ];
 
   int _compare(CombatRecommendation a, CombatRecommendation b) {
@@ -284,7 +300,40 @@ class RecommendationEngine {
       value.loadout.projectile != null &&
       (value.damage.effectiveness == EffectivenessLevel.weak ||
           value.damage.effectiveness == EffectivenessLevel.ineffective ||
-          value.damage.immune);
+          value.damage.immune ||
+          value.reasons.any(
+            (reason) => reason.kind == RecommendationReasonKind.resistance,
+          ));
+
+  static const _nonCombatantIds = {
+    'g2_crow',
+    'g2_garter_snake',
+    'g2_termite_queen',
+  };
+
+  static bool _cannotBeRecommended(Enemy enemy) =>
+      !enemy.isKillable ||
+      enemy.buggyProfile != null ||
+      _nonCombatantIds.contains(enemy.id) ||
+      enemy.id.startsWith('g2_koi_');
+
+  static const _underwaterIds = {
+    'g2_tadpole',
+    'g2_diving_bell_spider',
+    'g2_ogre_diving_bell_spider',
+    'g2_toe_biter_leviathan',
+    'g2_ogrr_toe_biter_leviathan',
+    'g2_water_boatman',
+    'g2_pond_jockey',
+    'g2_ancient_pond_jockey',
+  };
+
+  static bool _isUnderwaterTarget(String id) => _underwaterIds.contains(id);
+
+  static bool _isUnderwaterWeapon(String id, EquipmentItem weapon) =>
+      id == 'Harpoon' ||
+      id == 'TridentBone' ||
+      weapon.normalizedSubtype == 'dagger';
 
   List<CombatRecommendation> _deduplicate(List<CombatRecommendation> values) {
     final seen = <String>{};

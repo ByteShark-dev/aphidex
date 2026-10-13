@@ -8,7 +8,7 @@
   "tier": 4,
   "danger": "imposible",
   "underConstruction": false,
-  "isBoss": true,
+  "isBoss": false,
   "order": 0,
   "defaultGold": false,
   "favoriteKey": "g2_centipede",
