@@ -200,80 +200,218 @@ class _EquipmentLibraryScreenState extends State<EquipmentLibraryScreen> {
     EquipmentCatalog catalog,
     CombatRecommendationCatalog combat,
   ) {
-    final weapons = catalog.items
+    final equipment = catalog.items
         .where(
           (item) =>
               item.domain == EquipmentDomain.weapon ||
               item.domain == EquipmentDomain.shield,
         )
         .toList(growable: false);
-    final grouped = <String, List<ProjectileItem>>{};
+    final weaponGroups = <String, List<EquipmentItem>>{};
+    for (final item in equipment) {
+      weaponGroups.putIfAbsent(_weaponGroupKey(item), () => []).add(item);
+    }
+    final projectileGroups = <String, List<ProjectileItem>>{};
     for (final projectile in combat.projectiles) {
-      grouped
+      projectileGroups
           .putIfAbsent(_projectileGroupKey(projectile.id), () => [])
           .add(projectile);
     }
-    final groupKeys = grouped.keys.toList()..sort();
-    for (final key in groupKeys) {
-      grouped[key]!.sort((a, b) {
+    for (final values in weaponGroups.values) {
+      values.sort(
+        (a, b) =>
+            a.name.resolve(_language).compareTo(b.name.resolve(_language)),
+      );
+    }
+    for (final values in projectileGroups.values) {
+      values.sort((a, b) {
         final tier = a.tier.compareTo(b.tier);
         return tier != 0 ? tier : a.id.compareTo(b.id);
       });
     }
+    const weaponOrder = <String>[
+      'ranged',
+      'one_handed',
+      'two_handed',
+      'shield',
+      'extra',
+    ];
     return ListView(
       padding: const EdgeInsets.all(12),
       children: [
-        for (final item in weapons)
-          _EquipmentCard(
-            title: item.name.resolve(_language),
-            subtitle: [
-              EquipmentPresentation.typeLabel(item.normalizedType, _language),
-              if (item.normalizedSubtype != item.normalizedType)
-                EquipmentPresentation.subtypeLabel(
-                  item.normalizedSubtype,
-                  _language,
-                ),
-              if (item.tier != null)
-                '${_t('Tier', 'Nivel', 'Уровень')} ${item.tier}',
-            ].join(' · '),
-            icon: EntityAssetResolver.resolveEquipment(item).asset,
-            onTap: () => _showItem(item),
-          ),
-        const SizedBox(height: 14),
-        Text(
-          _t('Ammunition', 'Munición', 'Боеприпасы'),
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          _t(
-            'Choose ammunition to inspect its damage, flavour and compatible launchers.',
-            'Elige munición para revisar su daño, sabor y lanzadores compatibles.',
-            'Выберите боеприпас, чтобы посмотреть урон, вкус и совместимые пусковые устройства.',
-          ),
-          style: TextStyle(color: Theme.of(context).hintColor),
-        ),
-        for (final key in groupKeys) ...[
-          const SizedBox(height: 14),
-          Text(
-            _projectileGroupLabel(key),
-            style: const TextStyle(fontWeight: FontWeight.w800),
-          ),
-          const SizedBox(height: 6),
-          for (final projectile in grouped[key]!)
-            _EquipmentCard(
-              title: _projectileLabel(projectile.id),
-              subtitle: [
-                '${_t('Tier', 'Nivel', 'Уровень')} ${projectile.tier}',
-                _projectileDamageLabel(projectile),
-              ].join(' · '),
-              icon: projectile.icon,
-              onTap: () => _showProjectile(projectile),
+        for (final key in weaponOrder)
+          if (weaponGroups[key]?.isNotEmpty ?? false)
+            _EquipmentFolderCard(
+              title: _weaponGroupLabel(key),
+              subtitle: _folderCount(weaponGroups[key]!.length),
+              icon: _folderIcon(key),
+              onTap: () => _showEquipmentGroup(
+                _weaponGroupLabel(key),
+                weaponGroups[key]!,
+              ),
             ),
-        ],
+        if (projectileGroups.isNotEmpty)
+          _EquipmentFolderCard(
+            title: _t('Ammunition', 'Munición', 'Боеприпасы'),
+            subtitle: _t(
+              'Grouped by family',
+              'Agrupada por familia',
+              'Сгруппировано по семейству',
+            ),
+            icon: Icons.inventory_2_outlined,
+            onTap: () => _showProjectileGroups(projectileGroups),
+          ),
       ],
     );
   }
+
+  String _weaponGroupKey(EquipmentItem item) {
+    if (item.domain == EquipmentDomain.shield) return 'shield';
+    final subtype = item.normalizedSubtype;
+    if (subtype == 'bow' || subtype == 'staff') return 'ranged';
+    if (subtype == 'special' || subtype == 'fists') return 'extra';
+    if (item.twoHanded == true) return 'two_handed';
+    if (item.twoHanded == false) return 'one_handed';
+    return 'extra';
+  }
+
+  String _weaponGroupLabel(String key) => switch (key) {
+    'ranged' => _t(
+      'Ranged weapons',
+      'Armas a distancia',
+      'Дальнобойное оружие',
+    ),
+    'one_handed' => _t(
+      'One-handed weapons',
+      'Armas de una mano',
+      'Одноручное оружие',
+    ),
+    'two_handed' => _t(
+      'Two-handed weapons',
+      'Armas de dos manos',
+      'Двуручное оружие',
+    ),
+    'shield' => _t('Shields', 'Escudos', 'Щиты'),
+    _ => _t('Extras', 'Extras', 'Дополнительно'),
+  };
+
+  IconData _folderIcon(String key) => switch (key) {
+    'ranged' => Icons.architecture_outlined,
+    'one_handed' => Icons.hardware_outlined,
+    'two_handed' => Icons.construction_outlined,
+    'shield' => Icons.shield_outlined,
+    _ => Icons.extension_outlined,
+  };
+
+  String _folderCount(int count) =>
+      '$count ${_t('items', 'objetos', 'предметов')}';
+
+  Future<void> _showEquipmentGroup(String title, List<EquipmentItem> items) =>
+      showModalBottomSheet<void>(
+        context: context,
+        useSafeArea: true,
+        isScrollControlled: true,
+        showDragHandle: true,
+        builder: (sheetContext) => _LibraryGroupSheet(
+          title: title,
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (_, index) {
+              final item = items[index];
+              return _EquipmentCard(
+                title: item.name.resolve(_language),
+                subtitle: [
+                  EquipmentPresentation.subtypeLabel(
+                    item.normalizedSubtype,
+                    _language,
+                  ),
+                  if (item.tier != null)
+                    '${_t('Tier', 'Nivel', 'Уровень')} ${item.tier}',
+                ].where((value) => value.isNotEmpty).join(' · '),
+                icon: EntityAssetResolver.resolveEquipment(item).asset,
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) _showItem(item);
+                  });
+                },
+              );
+            },
+          ),
+        ),
+      );
+
+  Future<void> _showProjectileGroups(
+    Map<String, List<ProjectileItem>> groups,
+  ) => showModalBottomSheet<void>(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (sheetContext) {
+      final keys = groups.keys.toList()..sort();
+      return _LibraryGroupSheet(
+        title: _t('Ammunition', 'Munición', 'Боеприпасы'),
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            for (final key in keys)
+              _EquipmentFolderCard(
+                title: _projectileGroupLabel(key),
+                subtitle: _folderCount(groups[key]!.length),
+                icon: Icons.folder_outlined,
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) {
+                      _showProjectileGroup(
+                        _projectileGroupLabel(key),
+                        groups[key]!,
+                      );
+                    }
+                  });
+                },
+              ),
+          ],
+        ),
+      );
+    },
+  );
+
+  Future<void> _showProjectileGroup(
+    String title,
+    List<ProjectileItem> projectiles,
+  ) => showModalBottomSheet<void>(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    showDragHandle: true,
+    builder: (sheetContext) => _LibraryGroupSheet(
+      title: title,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: projectiles.length,
+        itemBuilder: (_, index) {
+          final projectile = projectiles[index];
+          return _EquipmentCard(
+            title: _projectileLabel(projectile.id),
+            subtitle: [
+              '${_t('Tier', 'Nivel', 'Уровень')} ${projectile.tier}',
+              _projectileDamageLabel(projectile),
+            ].join(' · '),
+            icon: projectile.icon,
+            onTap: () {
+              Navigator.pop(sheetContext);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted) _showProjectile(projectile);
+              });
+            },
+          );
+        },
+      ),
+    ),
+  );
 
   String _projectileDamageLabel(ProjectileItem projectile) {
     final attack = [
@@ -541,6 +679,64 @@ class _EquipmentCard extends StatelessWidget {
       subtitle: subtitle.isEmpty ? null : Text(subtitle),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
+    ),
+  );
+}
+
+class _EquipmentFolderCard extends StatelessWidget {
+  const _EquipmentFolderCard({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Card(
+    child: ListTile(
+      leading: SizedBox.square(
+        dimension: 48,
+        child: Icon(
+          icon,
+          size: 32,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: const Icon(Icons.chevron_right),
+      onTap: onTap,
+    ),
+  );
+}
+
+class _LibraryGroupSheet extends StatelessWidget {
+  const _LibraryGroupSheet({required this.title, required this.child});
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => DraggableScrollableSheet(
+    expand: false,
+    initialChildSize: .7,
+    minChildSize: .42,
+    maxChildSize: .94,
+    builder: (context, controller) => Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.headlineSmall),
+          const SizedBox(height: 8),
+          Expanded(child: child),
+        ],
+      ),
     ),
   );
 }

@@ -177,6 +177,12 @@ class _CombatRecommendationsSectionState
             : all
                   .where((value) => value.loadout.buildTier == _selectedTier)
                   .toList();
+        if (_selectedTier != null) {
+          // Within an explicit tier, players expect a strong/excellent match
+          // to outrank a larger but resisted raw hit. The global "Top" list
+          // keeps the engine's offensive ranking intact.
+          filtered.sort(_compareWithinTier);
+        }
         final fallback = filtered.isEmpty ? all : filtered;
         final limit = _expanded
             ? CombatRecommendationPreferencesController
@@ -291,6 +297,24 @@ class _CombatRecommendationsSectionState
       );
 }
 
+int _compareWithinTier(CombatRecommendation a, CombatRecommendation b) {
+  int rank(EffectivenessLevel value) => switch (value) {
+    EffectivenessLevel.excellent => 5,
+    EffectivenessLevel.strong => 4,
+    EffectivenessLevel.neutral => 3,
+    EffectivenessLevel.weak => 2,
+    EffectivenessLevel.ineffective => 1,
+    EffectivenessLevel.unknown => 0,
+  };
+  final effectiveness = rank(
+    b.damage.effectiveness,
+  ).compareTo(rank(a.damage.effectiveness));
+  if (effectiveness != 0) return effectiveness;
+  final best = (b.damage.bestDamage ?? -1).compareTo(a.damage.bestDamage ?? -1);
+  if (best != 0) return best;
+  return (b.damage.generalDamage ?? -1).compareTo(a.damage.generalDamage ?? -1);
+}
+
 class _RecommendationCard extends StatelessWidget {
   final CombatRecommendation recommendation;
   final String language;
@@ -398,7 +422,15 @@ class _RecommendationCard extends StatelessWidget {
                         if (loadout.shield != null)
                           Chip(
                             visualDensity: VisualDensity.compact,
-                            avatar: const Icon(Icons.shield, size: 15),
+                            avatar: Image.asset(
+                              EntityAssetResolver.resolveEquipment(
+                                loadout.shield!,
+                              ).asset,
+                              width: 16,
+                              height: 16,
+                              errorBuilder: (_, _, _) =>
+                                  const Icon(Icons.shield, size: 15),
+                            ),
                             label: Text(loadout.shield!.name.resolve(language)),
                           ),
                       ],
@@ -705,6 +737,22 @@ class _LoadoutVisual extends StatelessWidget {
                 size: badgeSize,
                 child: Image.asset(
                   UiMapper.effectIcon(loadout.flavor!),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          if (loadout.shield != null)
+            Positioned(
+              left: -2,
+              bottom: -2,
+              child: _LoadoutBadge(
+                size: badgeSize,
+                child: FallbackAssetImage.asset(
+                  assetName: EntityAssetResolver.resolveEquipment(
+                    loadout.shield!,
+                  ).asset,
+                  fallbackAssetName:
+                      'assets/global/Creaturecard_Proximamente.webp',
                   fit: BoxFit.contain,
                 ),
               ),

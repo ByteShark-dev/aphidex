@@ -192,4 +192,92 @@ void main() {
     expect(withShield.damage.bestDamage, withoutShield.damage.bestDamage);
     expect(withShield.defensiveUtility, greaterThan(0));
   });
+
+  test('a full melee combo outranks a resisted projectile hit', () {
+    EquipmentItem item(String id, String subtype) => EquipmentItem.fromJson({
+      'id': id,
+      'domain': 'weapon',
+      'name': {'en': id, 'es': id, 'ru': id},
+      'tier': 2,
+      'icon': '',
+      'normalizedType': 'weapon',
+      'normalizedSubtype': subtype,
+      'classificationSource': 'test',
+      'classificationFallbackUsed': false,
+      'acquisition': {'status': 'unresolved_acquisition'},
+    });
+    final resistantTarget = Enemy.fromJson({
+      'id': 'resistant-target',
+      'speciesKey': 'resistant-target',
+      'name': {'en': 'Target', 'es': 'Objetivo', 'ru': 'Цель'},
+      'game': 'g2',
+      'tier': 2,
+      'danger': 'medium',
+      'isBoss': false,
+      'order': 1,
+      'defaultGold': false,
+      'cardNormal': '',
+      'cardGold': '',
+      'photo': '',
+      'weaknesses': const [],
+      'resistances': const [],
+      'resistancesV2': [
+        {'type': 'stabbing', 'bonusPct': 25},
+      ],
+    });
+    const noDamage = CombatDamageState();
+    const strike = CombatAttackProfile(
+      base: CombatDamageState(damage: 50, physical: 'slashing'),
+      charged: noDamage,
+      perfect: noDamage,
+    );
+    final values = RecommendationEngine(
+      combat: const CombatRecommendationCatalog(
+        qaStatus: 'PASS',
+        maxEnhancementLevel: 3,
+        thresholds: thresholds,
+        weapons: [
+          CombatWeaponProfile(
+            id: 'melee',
+            tier: 2,
+            shieldCompatible: false,
+            attacks: [strike, strike, strike],
+          ),
+          CombatWeaponProfile(
+            id: 'bow',
+            tier: 2,
+            shieldCompatible: false,
+            attacks: [
+              CombatAttackProfile(
+                base: CombatDamageState(damage: 1, physical: 'stabbing'),
+                charged: noDamage,
+                perfect: noDamage,
+              ),
+            ],
+          ),
+        ],
+        shields: [],
+        projectiles: [
+          ProjectileItem(
+            id: 'arrow',
+            tier: 2,
+            family: 'arrow',
+            icon: '',
+            launcherIds: ['bow'],
+            attack: CombatAttackProfile(
+              base: CombatDamageState(damage: 140, physical: 'stabbing'),
+              charged: noDamage,
+              perfect: noDamage,
+            ),
+          ),
+        ],
+      ),
+      equipment: EquipmentCatalog(
+        items: [item('melee', 'sword'), item('bow', 'bow')],
+        armorSets: const [],
+      ),
+    ).recommend(resistantTarget);
+    expect(values.first.loadout.weapon.id, 'melee');
+    expect(values.first.damage.generalDamage, 150);
+  });
 }

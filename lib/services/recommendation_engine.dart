@@ -147,21 +147,62 @@ class RecommendationEngine {
         element: best.element,
       );
     }
-    final state = profile.attacks
-        .map(_bestAttackState)
-        .reduce((a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b);
     final target = profile.tierTargets
         .where((value) => value.tier == tier)
         .firstOrNull;
+    final state = _comboDamage(profile.attacks, target?.damageBonus ?? 0);
     return CombatDamageState(
-      damage: state.damage == null
-          ? null
-          : state.damage! + (target?.damageBonus ?? 0),
+      damage: state.damage,
       physical: state.physical,
       element: state.element,
       stun: state.stun,
       poise: state.poise,
       statuses: state.statuses,
+    );
+  }
+
+  /// A melee profile stores the successive normal strikes in its combo.
+  /// Score their extracted base damage together so a bow's single projectile
+  /// is not compared with only one hit from a three-strike weapon. A profile
+  /// that has no normal hit remains safely represented by its best verified
+  /// attack state instead.
+  CombatDamageState _comboDamage(
+    List<CombatAttackProfile> attacks,
+    double tierDamageBonus,
+  ) {
+    final states = attacks
+        .map(
+          (attack) => attack.base.damage == null
+              ? _bestAttackState(attack)
+              : attack.base,
+        )
+        .toList(growable: false);
+    final known = states.where((state) => state.damage != null).toList();
+    if (known.isEmpty) return const CombatDamageState();
+    final physical = known.first.physical;
+    final element = known.first.element;
+    // Mixed attack types cannot be reduced to one resistance calculation;
+    // retain the best independently resolvable state rather than inventing a
+    // combined damage type.
+    if (known.any(
+      (state) => state.physical != physical || state.element != element,
+    )) {
+      return known.reduce(
+        (a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b,
+      );
+    }
+    return CombatDamageState(
+      damage: known.fold<double>(
+        0,
+        (sum, state) => sum + state.damage! + tierDamageBonus,
+      ),
+      physical: physical,
+      element: element,
+      stun: known.fold<double>(0, (sum, state) => sum + (state.stun ?? 0)),
+      poise: known.fold<double>(0, (sum, state) => sum + (state.poise ?? 0)),
+      statuses: {
+        for (final state in known) ...state.statuses,
+      }.toList(growable: false),
     );
   }
 
@@ -215,6 +256,11 @@ class RecommendationEngine {
   ];
 
   int _compare(CombatRecommendation a, CombatRecommendation b) {
+    final aResistedProjectile = _isResistedProjectile(a);
+    final bResistedProjectile = _isResistedProjectile(b);
+    if (aResistedProjectile != bResistedProjectile) {
+      return aResistedProjectile ? 1 : -1;
+    }
     final best = (b.damage.bestDamage ?? -1).compareTo(
       a.damage.bestDamage ?? -1,
     );
@@ -233,6 +279,12 @@ class RecommendationEngine {
     if (statuses != 0) return statuses;
     return b.defensiveUtility.compareTo(a.defensiveUtility);
   }
+
+  bool _isResistedProjectile(CombatRecommendation value) =>
+      value.loadout.projectile != null &&
+      (value.damage.effectiveness == EffectivenessLevel.weak ||
+          value.damage.effectiveness == EffectivenessLevel.ineffective ||
+          value.damage.immune);
 
   List<CombatRecommendation> _deduplicate(List<CombatRecommendation> values) {
     final seen = <String>{};
