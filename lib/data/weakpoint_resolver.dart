@@ -66,8 +66,16 @@ class AphidexWeakpointResolver implements WeakpointResolver {
       final value when value.trim().isNotEmpty => value,
       _ => 'unknown',
     };
+    // A few anatomical exports retain the generic legacy value "any" while
+    // also provide a verified, restrictive weapon-family tag. Do not surface
+    // that as "any damage": Bow/crossbow and spear are both the game's
+    // piercing (stabbing) families, so this is a safe structural resolution
+    // of the accompanying source tags rather than a name-based guess.
+    final familyTypes = _typesFromWeaponFamilies(weakpoint.weaponFamilies);
     final effectiveTypes = structuredTypes.isNotEmpty
         ? structuredTypes
+        : familyTypes.isNotEmpty && damage == 'any'
+        ? familyTypes
         : damage == 'unknown'
         ? const <String>[]
         : damage == 'projectile_piercing'
@@ -89,5 +97,17 @@ class AphidexWeakpointResolver implements WeakpointResolver {
       damageMultiplier: weakpoint.damageMultiplier,
       stunMultiplier: weakpoint.stunMultiplier,
     );
+  }
+
+  List<String> _typesFromWeaponFamilies(List<String> families) {
+    if (families.isEmpty) return const [];
+    const piercingFamilies = {'bow', 'crossbow', 'spear'};
+    final normalized = families
+        .map((value) => value.trim().toLowerCase())
+        .where((value) => value.isNotEmpty)
+        .toSet();
+    return normalized.isNotEmpty && normalized.every(piercingFamilies.contains)
+        ? const ['stabbing']
+        : const [];
   }
 }

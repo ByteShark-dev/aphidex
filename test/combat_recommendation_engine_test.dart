@@ -107,6 +107,19 @@ void main() {
     expect(presentation.weaponFamilies, ['bow', 'spear']);
   });
 
+  test('restricted bow and spear weak points never present as any damage', () {
+    final presentation = const AphidexWeakpointResolver().resolve(
+      const WeakPointInfo(
+        part: 'stinger',
+        susceptibleDamage: 'any',
+        susceptibleDamageTypes: ['any'],
+        weaponFamilies: ['bow', 'spear'],
+      ),
+    );
+    expect(presentation.effectiveDamage, 'stabbing');
+    expect(presentation.effectiveDamageTypes, ['stabbing']);
+  });
+
   test('infusion resistance can make a flavour ineffective', () {
     final result = const DamageCalculationEngine(thresholds).calculate(
       enemy: enemy(),
