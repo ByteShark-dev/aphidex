@@ -857,6 +857,14 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                     ),
                     const SizedBox(height: 16),
                   ],
+                  if (enemy.resolvedWeakPoints.isNotEmpty) ...[
+                    _WeakPointsSection(
+                      points: enemy.resolvedWeakPoints,
+                      tutorialEffectId: tutorialEffectId,
+                      tutorialEffectKeyBuilder: consumeTutorialEffectKey,
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                   if (effectiveResistances.isNotEmpty) ...[
                     wrapDetailEffectsAnchor(
                       Column(
@@ -915,7 +923,9 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
               const SizedBox(height: 18),
             ],
             if (!_hasV2(enemy) &&
-                (weaknessesV1.isNotEmpty || resistancesV1.isNotEmpty)) ...[
+                (weaknessesV1.isNotEmpty ||
+                    enemy.resolvedWeakPoints.isNotEmpty ||
+                    resistancesV1.isNotEmpty)) ...[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -959,6 +969,14 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                           ),
                         ],
                       ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                  if (enemy.resolvedWeakPoints.isNotEmpty) ...[
+                    _WeakPointsSection(
+                      points: enemy.resolvedWeakPoints,
+                      tutorialEffectId: tutorialEffectId,
+                      tutorialEffectKeyBuilder: consumeTutorialEffectKey,
                     ),
                     if (resistancesV1.isNotEmpty) const SizedBox(height: 16),
                   ],
@@ -1052,55 +1070,6 @@ class _EnemyDetailScreenState extends State<EnemyDetailScreen> {
                   enemy.lesserMutations,
                   languageCode,
                 ),
-              ),
-              const SizedBox(height: 18),
-            ],
-            if (enemy.resolvedWeakPoints.isNotEmpty) ...[
-              Text(
-                l10n.weakPointTitle,
-                style: const TextStyle(fontWeight: FontWeight.w800),
-              ),
-              const SizedBox(height: 8),
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  final points = enemy.resolvedWeakPoints;
-                  // Paired regions remain comparable side-by-side, while each
-                  // card itself keeps its multiplier below the name so long
-                  // labels and two weak-point records never clip each other.
-                  final twoColumns =
-                      points.length > 1 && constraints.maxWidth >= 320;
-                  if (!twoColumns) {
-                    return Column(
-                      children: [
-                        for (var i = 0; i < points.length; i++) ...[
-                          _WeakPointCard(
-                            info: points[i],
-                            tutorialEffectId: i == 0 ? tutorialEffectId : null,
-                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                          ),
-                          if (i != points.length - 1)
-                            const SizedBox(height: 10),
-                        ],
-                      ],
-                    );
-                  }
-                  final width = (constraints.maxWidth - 10) / 2;
-                  return Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      for (var i = 0; i < points.length; i++)
-                        SizedBox(
-                          width: width,
-                          child: _WeakPointCard(
-                            info: points[i],
-                            tutorialEffectId: i == 0 ? tutorialEffectId : null,
-                            tutorialEffectKeyBuilder: consumeTutorialEffectKey,
-                          ),
-                        ),
-                    ],
-                  );
-                },
               ),
               const SizedBox(height: 18),
             ],
@@ -3554,6 +3523,70 @@ class _BonusWrap extends StatelessWidget {
           ),
         );
       }).toList(),
+    );
+  }
+}
+
+class _WeakPointsSection extends StatelessWidget {
+  const _WeakPointsSection({
+    required this.points,
+    this.tutorialEffectId,
+    this.tutorialEffectKeyBuilder,
+  });
+
+  final List<WeakPointInfo> points;
+  final String? tutorialEffectId;
+  final GlobalKey? Function(String effectId)? tutorialEffectKeyBuilder;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.weakPointTitle,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(height: 8),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            // Paired regions remain comparable side-by-side, while each card
+            // keeps its multiplier below the name so long labels never clip.
+            final twoColumns = points.length > 1 && constraints.maxWidth >= 320;
+            if (!twoColumns) {
+              return Column(
+                children: [
+                  for (var i = 0; i < points.length; i++) ...[
+                    _WeakPointCard(
+                      info: points[i],
+                      tutorialEffectId: i == 0 ? tutorialEffectId : null,
+                      tutorialEffectKeyBuilder: tutorialEffectKeyBuilder,
+                    ),
+                    if (i != points.length - 1) const SizedBox(height: 10),
+                  ],
+                ],
+              );
+            }
+            final width = (constraints.maxWidth - 10) / 2;
+            return Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (var i = 0; i < points.length; i++)
+                  SizedBox(
+                    width: width,
+                    child: _WeakPointCard(
+                      info: points[i],
+                      tutorialEffectId: i == 0 ? tutorialEffectId : null,
+                      tutorialEffectKeyBuilder: tutorialEffectKeyBuilder,
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }
