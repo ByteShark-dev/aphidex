@@ -58,8 +58,8 @@ def compact_damage(node: dict | None) -> dict:
     }
 
 
-def compact_attack(attack: dict) -> dict:
-    return {
+def compact_attack(attack: dict, *, interval_seconds: float | None = None) -> dict:
+    compact = {
         "row": (attack.get("source") or {}).get("row"),
         "base": compact_damage(attack.get("base")),
         "charged": compact_damage(attack.get("charged")),
@@ -67,6 +67,12 @@ def compact_attack(attack: dict) -> dict:
         "stamina": number(attack.get("staminaCost")),
         "chargedStamina": number(attack.get("chargedStaminaCost")),
     }
+    # This is the extractor's nominal hit-to-hit interval, never inferred
+    # from animation duration. Omit unverified values rather than encoding a
+    # false cadence in the compact app domain.
+    if interval_seconds is not None and interval_seconds > 0:
+        compact["intervalSeconds"] = interval_seconds
+    return compact
 
 
 def compact_route(route: dict) -> dict:
@@ -125,6 +131,14 @@ def generate(projectiles_root: Path, upgrades_root: Path) -> dict:
     weapons = []
     for item in weapons_doc["weapons"]:
         upgrade = upgrades.get(item["technicalId"], {})
+        upgrade_intervals = {
+            (attack.get("source") or {}).get("row"): number(
+                attack.get("attackIntervalSeconds")
+            )
+            for attack in (upgrade.get("combat") or {}).get("attacks", [])
+            if number(attack.get("attackIntervalSeconds")) is not None
+            and number(attack.get("attackIntervalSeconds")) > 0
+        }
         combat = item.get("combat") or {}
         tier_upgrade = upgrade.get("tierUpgrade")
         if not (tier_upgrade or {}).get("canUpgradeTier"):
@@ -135,7 +149,15 @@ def generate(projectiles_root: Path, upgrades_root: Path) -> dict:
             "twoHanded": item.get("twoHanded"),
             # Same source-driven rule used by extractor full_build_composer v1.2.0.
             "shieldCompatible": not bool(item.get("twoHanded")) and not bool(item.get("isDualWield")),
-            "attacks": [compact_attack(value) for value in combat.get("attacks", [])],
+            "attacks": [
+                compact_attack(
+                    value,
+                    interval_seconds=upgrade_intervals.get(
+                        (value.get("source") or {}).get("row")
+                    ),
+                )
+                for value in combat.get("attacks", [])
+            ],
             "tierUpgrade": {
                 "tag": (tier_upgrade or {}).get("tierUpgradeTag"),
                 "targets": (tier_upgrade or {}).get("targetTiers", []),

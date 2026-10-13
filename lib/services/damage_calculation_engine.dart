@@ -10,6 +10,7 @@ class DamageCalculationEngine {
   DamageCalculationResult calculate({
     required Enemy enemy,
     required double? baseDamage,
+    double? baseDamagePerSecond,
     String? physical,
     String? element,
     String? weaponFamily,
@@ -54,6 +55,9 @@ class DamageCalculationEngine {
       }
     }
     final general = baseDamage * modifier;
+    final generalDamagePerSecond = baseDamagePerSecond == null
+        ? null
+        : baseDamagePerSecond * modifier;
     final zones = enemy.resolvedWeakPoints
         .map((zone) {
           final acceptedTypes = zone.susceptibleDamageTypes
@@ -71,6 +75,9 @@ class DamageCalculationEngine {
           return ZoneResult(
             part: zone.part,
             damage: general * zoneModifier,
+            damagePerSecond: generalDamagePerSecond == null
+                ? null
+                : generalDamagePerSecond * zoneModifier,
             modifier: zoneModifier,
             compatible: compatible,
           );
@@ -83,9 +90,19 @@ class DamageCalculationEngine {
           (current, zone) =>
               (zone.damage ?? 0) > (current ?? 0) ? zone.damage : current,
         );
+    final bestDamagePerSecond = zones
+        .where((zone) => zone.compatible)
+        .fold<double?>(
+          generalDamagePerSecond,
+          (current, zone) => (zone.damagePerSecond ?? 0) > (current ?? 0)
+              ? zone.damagePerSecond
+              : current,
+        );
     return DamageCalculationResult(
       generalDamage: general,
       bestDamage: best,
+      generalDamagePerSecond: generalDamagePerSecond,
+      bestDamagePerSecond: bestDamagePerSecond,
       modifier: modifier,
       effectiveness: thresholds.classify(modifier),
       zones: zones,

@@ -310,9 +310,21 @@ int _compareWithinTier(CombatRecommendation a, CombatRecommendation b) {
     b.damage.effectiveness,
   ).compareTo(rank(a.damage.effectiveness));
   if (effectiveness != 0) return effectiveness;
+  final dps = _compareKnownDps(
+    b.damage.bestDamagePerSecond,
+    a.damage.bestDamagePerSecond,
+  );
+  if (dps != 0) return dps;
   final best = (b.damage.bestDamage ?? -1).compareTo(a.damage.bestDamage ?? -1);
   if (best != 0) return best;
   return (b.damage.generalDamage ?? -1).compareTo(a.damage.generalDamage ?? -1);
+}
+
+int _compareKnownDps(double? left, double? right) {
+  if (left != null && right == null) return 1;
+  if (left == null && right != null) return -1;
+  if (left == null) return 0;
+  return left.compareTo(right!);
 }
 
 class _RecommendationCard extends StatelessWidget {
@@ -384,6 +396,9 @@ class _RecommendationCard extends StatelessWidget {
                         _effectivenessLabel(
                           recommendation.damage.effectiveness,
                         ),
+                        if (recommendation.damage.generalDamagePerSecond !=
+                            null)
+                          '${recommendation.damage.generalDamagePerSecond!.toStringAsFixed(1)} ${_t('DPS', 'DPS', 'УВС')}',
                         if (bestZone != null)
                           '${_t('Aim', 'Objetivo', 'Цель')}: ${_humanize(bestZone.part)}',
                       ].join(' · '),
@@ -521,6 +536,15 @@ class _RecommendationDetails extends StatelessWidget {
             ),
             value.damage.generalDamage,
           ),
+          if (value.damage.generalDamagePerSecond != null)
+            _metric(
+              _t(
+                'Verified nominal DPS',
+                'DPS nominal verificado',
+                'Подтверждённый номинальный УВС',
+              ),
+              value.damage.generalDamagePerSecond,
+            ),
           if (_hasDistinctBestZone(value.damage))
             _metric(
               _t(
@@ -529,6 +553,16 @@ class _RecommendationDetails extends StatelessWidget {
                 'Урон по лучшей зоне',
               ),
               value.damage.bestDamage,
+            ),
+          if (_hasDistinctBestZone(value.damage) &&
+              value.damage.bestDamagePerSecond != null)
+            _metric(
+              _t(
+                'Best-zone nominal DPS',
+                'DPS nominal en la mejor zona',
+                'Номинальный УВС по лучшей зоне',
+              ),
+              value.damage.bestDamagePerSecond,
             ),
           if (value.damage.zones.any(
             (zone) => zone.compatible && zone.modifier != 1,

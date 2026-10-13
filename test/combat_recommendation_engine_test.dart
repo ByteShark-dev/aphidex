@@ -68,6 +68,19 @@ void main() {
       expect(counts['projectiles'], 31);
       expect(source['maxEnhancementLevel'], 3);
       expect(source['manifest']['extractorQa'], 'PASS_WITH_SOURCE_WARNINGS');
+      final timedAttacks = (source['weapons'] as List)
+          .whereType<Map>()
+          .expand(
+            (weapon) =>
+                (weapon['attacks'] as List? ?? const []).whereType<Map>(),
+          )
+          .where((attack) => (attack['intervalSeconds'] as num?) != null)
+          .toList(growable: false);
+      expect(timedAttacks, hasLength(108));
+      expect(
+        timedAttacks.every((attack) => (attack['intervalSeconds'] as num) > 0),
+        isTrue,
+      );
     },
   );
 
@@ -83,6 +96,20 @@ void main() {
     expect(result.bestDamage, closeTo(225, .001));
     expect(result.zones.single.compatible, isTrue);
     expect(result.effectiveness, EffectivenessLevel.neutral);
+  });
+
+  test('verified hit intervals produce modifier-aware DPS', () {
+    final result = const DamageCalculationEngine(thresholds).calculate(
+      enemy: enemy(),
+      baseDamage: 100,
+      baseDamagePerSecond: 20,
+      physical: 'stabbing',
+      element: 'fresh',
+      weaponFamily: 'spear',
+    );
+    expect(result.generalDamagePerSecond, closeTo(22.5, .001));
+    expect(result.bestDamagePerSecond, closeTo(45, .001));
+    expect(result.zones.single.damagePerSecond, closeTo(45, .001));
   });
 
   test('unknown damage degrades safely without a fabricated score', () {
@@ -311,5 +338,63 @@ void main() {
     ).recommend(resistantTarget);
     expect(values.first.loadout.weapon.id, 'melee');
     expect(values.first.damage.generalDamage, 150);
+  });
+
+  test('known nominal DPS outranks an unmeasured damage total', () {
+    EquipmentItem item(String id) => EquipmentItem.fromJson({
+      'id': id,
+      'domain': 'weapon',
+      'name': {'en': id, 'es': id, 'ru': id},
+      'tier': 2,
+      'icon': '',
+      'normalizedType': 'weapon',
+      'normalizedSubtype': 'spear',
+      'classificationSource': 'test',
+      'classificationFallbackUsed': false,
+      'acquisition': {'status': 'unresolved_acquisition'},
+    });
+    const noDamage = CombatDamageState();
+    final recommendations = RecommendationEngine(
+      combat: CombatRecommendationCatalog(
+        qaStatus: 'PASS',
+        maxEnhancementLevel: 3,
+        thresholds: thresholds,
+        weapons: [
+          CombatWeaponProfile(
+            id: 'unmeasured',
+            tier: 2,
+            shieldCompatible: false,
+            attacks: const [
+              CombatAttackProfile(
+                base: CombatDamageState(damage: 500, physical: 'stabbing'),
+                charged: noDamage,
+                perfect: noDamage,
+              ),
+            ],
+          ),
+          CombatWeaponProfile(
+            id: 'timed',
+            tier: 2,
+            shieldCompatible: false,
+            attacks: const [
+              CombatAttackProfile(
+                base: CombatDamageState(damage: 100, physical: 'stabbing'),
+                charged: noDamage,
+                perfect: noDamage,
+                intervalSeconds: 1,
+              ),
+            ],
+          ),
+        ],
+        shields: const [],
+        projectiles: const [],
+      ),
+      equipment: EquipmentCatalog(
+        items: [item('unmeasured'), item('timed')],
+        armorSets: const [],
+      ),
+    ).recommend(enemy());
+    expect(recommendations.first.loadout.weapon.id, 'timed');
+    expect(recommendations.first.damage.generalDamagePerSecond, 150);
   });
 }

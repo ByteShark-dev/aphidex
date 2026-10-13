@@ -58,6 +58,7 @@ class RecommendationEngine {
             final damage = _damage.calculate(
               enemy: enemy,
               baseDamage: base.damage,
+              baseDamagePerSecond: base.damagePerSecond,
               physical: base.physical,
               element: base.element,
               weaponFamily: family,
@@ -150,6 +151,7 @@ class RecommendationEngine {
             : best.projectedDamage! + (target?.damageBonus ?? 0),
         physical: best.physical,
         element: best.element,
+        damagePerSecond: _routeDamagePerSecond(profile, best, target),
       );
     }
     final target = profile.tierTargets
@@ -158,6 +160,7 @@ class RecommendationEngine {
     final state = _comboDamage(profile.attacks, target?.damageBonus ?? 0);
     return CombatDamageState(
       damage: state.damage,
+      damagePerSecond: state.damagePerSecond,
       physical: state.physical,
       element: state.element,
       stun: state.stun,
@@ -205,17 +208,80 @@ class RecommendationEngine {
       element: element,
       stun: known.fold<double>(0, (sum, state) => sum + (state.stun ?? 0)),
       poise: known.fold<double>(0, (sum, state) => sum + (state.poise ?? 0)),
+      damagePerSecond: _comboDamagePerSecond(attacks, tierDamageBonus),
       statuses: {
         for (final state in known) ...state.statuses,
       }.toList(growable: false),
     );
   }
 
-  CombatDamageState _bestAttackState(CombatAttackProfile attack) => [
-    attack.base,
-    attack.charged,
-    attack.perfect,
-  ].reduce((a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b);
+  double? _comboDamagePerSecond(
+    List<CombatAttackProfile> attacks,
+    double tierDamageBonus,
+  ) {
+    final timed = attacks.where(
+      (attack) =>
+          attack.base.damage != null &&
+          attack.intervalSeconds != null &&
+          attack.intervalSeconds! > 0,
+    );
+    if (timed.isEmpty) return null;
+    final values = timed.toList(growable: false);
+    final physical = values.first.base.physical;
+    final element = values.first.base.element;
+    if (values.any(
+      (attack) =>
+          attack.base.physical != physical || attack.base.element != element,
+    )) {
+      return null;
+    }
+    final duration = values.fold<double>(
+      0,
+      (sum, attack) => sum + attack.intervalSeconds!,
+    );
+    if (duration <= 0) return null;
+    final damage = values.fold<double>(
+      0,
+      (sum, attack) => sum + attack.base.damage! + tierDamageBonus,
+    );
+    return damage / duration;
+  }
+
+  double? _routeDamagePerSecond(
+    CombatWeaponProfile profile,
+    EnhancementAttackOutcome outcome,
+    TierUpgradeTarget? target,
+  ) {
+    if (outcome.projectedDamage == null) return null;
+    final interval = profile.attacks
+        .where((attack) => attack.row == outcome.row)
+        .map((attack) => attack.intervalSeconds)
+        .firstOrNull;
+    if (interval == null || interval <= 0) return null;
+    return (outcome.projectedDamage! + (target?.damageBonus ?? 0)) / interval;
+  }
+
+  CombatDamageState _bestAttackState(CombatAttackProfile attack) {
+    final state = [
+      attack.base,
+      attack.charged,
+      attack.perfect,
+    ].reduce((a, b) => (a.damage ?? -1) >= (b.damage ?? -1) ? a : b);
+    return CombatDamageState(
+      damage: state.damage,
+      damagePerSecond:
+          state.damage == null ||
+              attack.intervalSeconds == null ||
+              attack.intervalSeconds! <= 0
+          ? null
+          : state.damage! / attack.intervalSeconds!,
+      physical: state.physical,
+      element: state.element,
+      stun: state.stun,
+      poise: state.poise,
+      statuses: state.statuses,
+    );
+  }
 
   List<RecommendationReason> _reasons(
     Enemy enemy,
@@ -277,6 +343,11 @@ class RecommendationEngine {
     if (aResistedProjectile != bResistedProjectile) {
       return aResistedProjectile ? 1 : -1;
     }
+    final dps = _compareKnown(
+      b.damage.bestDamagePerSecond,
+      a.damage.bestDamagePerSecond,
+    );
+    if (dps != 0) return dps;
     final best = (b.damage.bestDamage ?? -1).compareTo(
       a.damage.bestDamage ?? -1,
     );
@@ -294,6 +365,15 @@ class RecommendationEngine {
     final statuses = statusesB.compareTo(statusesA);
     if (statuses != 0) return statuses;
     return b.defensiveUtility.compareTo(a.defensiveUtility);
+  }
+
+  /// A measured nominal DPS is preferable to an unmeasured damage total.
+  /// When neither side has it, callers retain the existing damage fallback.
+  int _compareKnown(double? left, double? right) {
+    if (left != null && right == null) return 1;
+    if (left == null && right != null) return -1;
+    if (left == null) return 0;
+    return left.compareTo(right!);
   }
 
   bool _isResistedProjectile(CombatRecommendation value) =>

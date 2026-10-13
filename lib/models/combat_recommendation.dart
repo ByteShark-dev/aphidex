@@ -11,6 +11,7 @@ enum EffectivenessLevel {
 
 class CombatDamageState {
   final double? damage;
+  final double? damagePerSecond;
   final String? physical;
   final String? element;
   final double? stun;
@@ -19,6 +20,7 @@ class CombatDamageState {
 
   const CombatDamageState({
     this.damage,
+    this.damagePerSecond,
     this.physical,
     this.element,
     this.stun,
@@ -29,6 +31,7 @@ class CombatDamageState {
   factory CombatDamageState.fromJson(Map<String, dynamic> json) =>
       CombatDamageState(
         damage: (json['damage'] as num?)?.toDouble(),
+        damagePerSecond: (json['damagePerSecond'] as num?)?.toDouble(),
         physical: json['physical']?.toString(),
         element: json['element']?.toString(),
         stun: (json['stun'] as num?)?.toDouble(),
@@ -43,6 +46,7 @@ class CombatAttackProfile {
   final CombatDamageState charged;
   final CombatDamageState perfect;
   final double? stamina;
+  final double? intervalSeconds;
 
   const CombatAttackProfile({
     this.row,
@@ -50,6 +54,7 @@ class CombatAttackProfile {
     required this.charged,
     required this.perfect,
     this.stamina,
+    this.intervalSeconds,
   });
 
   factory CombatAttackProfile.fromJson(Map<String, dynamic> json) =>
@@ -65,6 +70,7 @@ class CombatAttackProfile {
           (json['perfect'] as Map? ?? const {}).cast<String, dynamic>(),
         ),
         stamina: (json['stamina'] as num?)?.toDouble(),
+        intervalSeconds: (json['intervalSeconds'] as num?)?.toDouble(),
       );
 }
 
@@ -349,12 +355,14 @@ class CombatRecommendationCatalog {
 class ZoneResult {
   final String part;
   final double? damage;
+  final double? damagePerSecond;
   final double modifier;
   final bool compatible;
 
   const ZoneResult({
     required this.part,
     this.damage,
+    this.damagePerSecond,
     required this.modifier,
     required this.compatible,
   });
@@ -363,6 +371,8 @@ class ZoneResult {
 class DamageCalculationResult {
   final double? generalDamage;
   final double? bestDamage;
+  final double? generalDamagePerSecond;
+  final double? bestDamagePerSecond;
   final double? modifier;
   final EffectivenessLevel effectiveness;
   final List<ZoneResult> zones;
@@ -372,6 +382,8 @@ class DamageCalculationResult {
   const DamageCalculationResult({
     this.generalDamage,
     this.bestDamage,
+    this.generalDamagePerSecond,
+    this.bestDamagePerSecond,
     this.modifier,
     required this.effectiveness,
     this.zones = const [],

@@ -83,7 +83,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "AntClub2",
@@ -112,7 +113,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "AntClub3",
@@ -8899,7 +8901,8 @@
             ]
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.767
         },
         {
           "row": "LizardClub2",
@@ -8934,7 +8937,8 @@
             ]
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.498
         },
         {
           "row": "LizardClub3",
@@ -9102,7 +9106,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.767
         },
         {
           "row": "CockroachClub2",
@@ -9131,7 +9136,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.498
         },
         {
           "row": "CockroachClub3",
@@ -9534,7 +9540,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "DaggersWeaverFang2",
@@ -9563,7 +9570,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "DaggersWeaverFang3",
@@ -9621,7 +9629,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "DaggersWeaverFang2",
@@ -9650,7 +9659,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "DaggersWeaverFang3",
@@ -10266,7 +10276,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "DaggersWolfFang2",
@@ -10301,7 +10312,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "DaggersWolfFang3",
@@ -10371,7 +10383,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "DaggersWolfFang2",
@@ -10406,7 +10419,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "DaggersWolfFang3",
@@ -11006,7 +11020,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "EarwigSickles2",
@@ -11035,7 +11050,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "EarwigSickles3",
@@ -11422,7 +11438,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "EarwigSickles2",
@@ -11451,7 +11468,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "EarwigSickles3",
@@ -11610,7 +11628,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.33
         },
         {
           "row": "FistsMitey2",
@@ -11639,7 +11658,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 0.398
         },
         {
           "row": "FistsMitey3",
@@ -12058,7 +12078,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.33
         },
         {
           "row": "FistsNorthern2",
@@ -12087,7 +12108,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 0.398
         },
         {
           "row": "FistsNorthern3",
@@ -12490,7 +12512,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.33
         },
         {
           "row": "FistsScorpionStriped2",
@@ -12519,7 +12542,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 0.398
         },
         {
           "row": "FistsScorpionStriped3",
@@ -12889,7 +12913,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.33
         },
         {
           "row": "FistsWoolly2",
@@ -12918,7 +12943,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 0.398
         },
         {
           "row": "FistsWoolly3",
@@ -13311,7 +13337,8 @@
             ]
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.33
         },
         {
           "row": "FistsWoollyUnique2",
@@ -13346,7 +13373,8 @@
             ]
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 0.398
         },
         {
           "row": "FistsWoollyUnique3",
@@ -13633,7 +13661,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 8.072
         },
         {
           "row": "KatanaSpicy2",
@@ -13668,7 +13697,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.657
         },
         {
           "row": "KatanaSpicy3",
@@ -13842,7 +13872,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 8.072
         },
         {
           "row": "KatangaSour2",
@@ -13877,7 +13908,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.657
         },
         {
           "row": "KatangaSour3",
@@ -14045,7 +14077,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 8.072
         },
         {
           "row": "MantisBlade2",
@@ -14074,7 +14107,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.657
         },
         {
           "row": "MantisBlade3",
@@ -14883,7 +14917,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "Popsickle2",
@@ -14918,7 +14953,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "Popsickle3",
@@ -15086,7 +15122,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 6.107
         },
         {
           "row": "RapierMos2",
@@ -15115,7 +15152,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 5.744
         },
         {
           "row": "RapierMos3",
@@ -15173,7 +15211,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 6.107
         },
         {
           "row": "RapierMos2",
@@ -15202,7 +15241,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 5.744
         },
         {
           "row": "RapierMos3",
@@ -15812,7 +15852,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 6.107
         },
         {
           "row": "RapierMosTiger2",
@@ -15841,7 +15882,8 @@
             "statuses": []
           },
           "stamina": 5,
-          "chargedStamina": 10
+          "chargedStamina": 10,
+          "intervalSeconds": 5.744
         },
         {
           "row": "RapierMosTiger3",
@@ -16382,7 +16424,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "ScytheToeBiter2",
@@ -16417,7 +16460,8 @@
             ]
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "ScytheToeBiter3",
@@ -16793,7 +16837,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "Spear2",
@@ -16822,7 +16867,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "Spear3",
@@ -16880,7 +16926,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "Spear2",
@@ -16909,7 +16956,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "Spear3",
@@ -17535,7 +17583,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearLarva2",
@@ -17564,7 +17613,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearLarva3",
@@ -17622,7 +17672,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearLarva2",
@@ -17651,7 +17702,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearLarva3",
@@ -18277,7 +18329,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearLarvaUnique2",
@@ -18306,7 +18359,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearLarvaUnique3",
@@ -18364,7 +18418,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearLarvaUnique2",
@@ -18393,7 +18448,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearLarvaUnique3",
@@ -19009,7 +19065,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTarantula2",
@@ -19044,7 +19101,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTarantula3",
@@ -19114,7 +19172,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTarantula2",
@@ -19149,7 +19208,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTarantula3",
@@ -19749,7 +19809,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier2-2",
@@ -19778,7 +19839,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier2-3",
@@ -19836,7 +19898,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier2-2",
@@ -19865,7 +19928,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier2-3",
@@ -20484,7 +20548,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier3-2",
@@ -20522,7 +20587,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier3-3",
@@ -20598,7 +20664,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier3-2",
@@ -20636,7 +20703,8 @@
             ]
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier3-3",
@@ -21569,7 +21637,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffCentipedeVenom2",
@@ -21604,7 +21673,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffCentipedeVenom3",
@@ -21757,7 +21827,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffMintTier2Combo2",
@@ -21792,7 +21863,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffMintTier2Combo3",
@@ -21959,7 +22031,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffMintTier3Unique2",
@@ -21994,7 +22067,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffMintTier3Unique3",
@@ -22145,7 +22219,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffSourTier3Combo2",
@@ -22180,7 +22255,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffSourTier3Combo3",
@@ -22331,7 +22407,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffSourTier3Combo2",
@@ -22366,7 +22443,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffSourTier3Combo3",
@@ -22517,7 +22595,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffSpicyTier2Combo2",
@@ -22552,7 +22631,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffSpicyTier2Combo3",
@@ -22719,7 +22799,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 2.113
         },
         {
           "row": "StaffSpicyTier2Combo2",
@@ -22754,7 +22835,8 @@
             ]
           },
           "stamina": 16,
-          "chargedStamina": 30
+          "chargedStamina": 30,
+          "intervalSeconds": 1.937
         },
         {
           "row": "StaffSpicyTier2Combo3",
@@ -22915,7 +22997,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "SwordAntBlack2",
@@ -22944,7 +23027,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "SwordAntBlack3",
@@ -23331,7 +23415,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "SwordAntRed2",
@@ -23360,7 +23445,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "SwordAntRed3",
@@ -23779,7 +23865,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "SwordAntRedUnique2",
@@ -23808,7 +23895,8 @@
             "statuses": []
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "SwordAntRedUnique3",
@@ -24220,7 +24308,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "SwordToenail2",
@@ -24258,7 +24347,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "SwordToenail3",
@@ -24646,7 +24736,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.767
         },
         {
           "row": "SwordToenailUnique2",
@@ -24684,7 +24775,8 @@
             ]
           },
           "stamina": 6,
-          "chargedStamina": 12
+          "chargedStamina": 12,
+          "intervalSeconds": 1.498
         },
         {
           "row": "SwordToenailUnique3",
@@ -24835,7 +24927,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "TaztTaser2",
@@ -24864,7 +24957,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "TaztTaser3",
@@ -25003,7 +25097,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "TickClub2",
@@ -25032,7 +25127,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "TickClub3",
@@ -25419,7 +25515,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "TickClub2",
@@ -25448,7 +25545,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "TickClub3",
@@ -25607,7 +25705,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier2Bone-2",
@@ -25636,7 +25735,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier2Bone-3",
@@ -25694,7 +25794,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 6.107
         },
         {
           "row": "SpearTier2Bone-2",
@@ -25723,7 +25824,8 @@
             "statuses": []
           },
           "stamina": 4,
-          "chargedStamina": 8
+          "chargedStamina": 8,
+          "intervalSeconds": 5.744
         },
         {
           "row": "SpearTier2Bone-3",
@@ -26317,7 +26419,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.767
         },
         {
           "row": "UniqueTazTArm2",
@@ -26346,7 +26449,8 @@
             "statuses": []
           },
           "stamina": 8,
-          "chargedStamina": 16
+          "chargedStamina": 16,
+          "intervalSeconds": 1.498
         },
         {
           "row": "UniqueTazTArm3",
@@ -26543,7 +26647,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "WarhammerPebblet2",
@@ -26572,7 +26677,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "WarhammerPebblet3",
@@ -26991,7 +27097,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.532
         },
         {
           "row": "WarhammerSpicyUnique2",
@@ -27020,7 +27127,8 @@
             "statuses": []
           },
           "stamina": 10,
-          "chargedStamina": 20
+          "chargedStamina": 20,
+          "intervalSeconds": 7.166
         },
         {
           "row": "WarhammerSpicyUnique3",
