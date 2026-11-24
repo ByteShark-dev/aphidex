@@ -1,0 +1,61 @@
+name: Deploy Aphidex Website
+
+# Keep the historical /aphidex/ Pages project in sync with the standalone web source.
+on:
+  push:
+    branches: ['main']
+    paths:
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reviewed Aphidex website
+        uses: actions/checkout@v4
+        with:
+          repository: ByteShark-dev/aphidex-web
+          ref: 28cdf0d604990e242413a8078cf62b5fdeb64ab6
+          persist-credentials: false
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Build site
+        run: |
+          npm ci
+          npm run build
+      - name: Verify current landing
+        run: |
+          test -f dist/index.html
+          test -f dist/privacy/index.html
+          grep -Fq '3,400+' dist/index.html
+          grep -Fq 'https://byteshark.app/aphidex/' dist/index.html
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
